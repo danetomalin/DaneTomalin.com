@@ -776,6 +776,22 @@
     .tag-strategist { background: rgba(219, 39, 119, 0.15); color: #F9A8D4; }
     .tag-storyteller { background: rgba(14, 165, 233, 0.15); color: #7DD3FC; }
     .tag-evangelist { background: rgba(234, 179, 8, 0.15); color: #FDE68A; }
+    .tag-writing { background: rgba(255, 255, 255, 0.08); color: #999; }
+
+    .subsection-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+      margin-top: 48px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .subsection-label:first-of-type {
+      margin-top: 0;
+    }
 
     .portfolio-title {
       font-size: 0.9rem;
@@ -960,9 +976,8 @@
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#approach">Approach</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#portfolio">Work</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="nav-toggle" aria-label="Menu">
@@ -1097,12 +1112,14 @@
     </div>
   </section>
 
-  <!-- Portfolio -->
+  <!-- Portfolio & Writing -->
   <section id="portfolio">
     <div class="container">
-      <p class="section-label">Portfolio</p>
+      <p class="section-label">Work</p>
       <h2 class="section-title">See it in practice</h2>
-      <p class="section-desc">Real work samples mapped to my four tenets of product marketing.</p>
+      <p class="section-desc">Real work samples, articles, and published pieces.</p>
+
+      <p class="subsection-label">Portfolio</p>
 
       <div class="portfolio-grid">
 
@@ -1201,6 +1218,58 @@
         </div>
 
 
+      </div>
+
+      <p class="subsection-label">Writing &amp; Published Work</p>
+      <div class="portfolio-grid">
+        <a href="https://www.linkedin.com/pulse/why-i-stopped-using-ai-apply-jobs-data-dane-tomalin-fcpgc/" target="_blank" class="portfolio-item fade-in">
+          <img src="thumbnails/writing-ai-jobs.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-writing">LinkedIn</span>
+            <h3 class="portfolio-title">Why I Stopped Using AI to Apply for Jobs (The Data)</h3>
+            <p class="portfolio-type">2025</p>
+          </div>
+        </a>
+        <a href="https://www.commerceiq.ai/ebooks-whitepapers/ai-market-impact" target="_blank" class="portfolio-item fade-in">
+          <img src="thumbnails/writing-ai-hype.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-writing">Whitepaper</span>
+            <h3 class="portfolio-title">AI: From Hype to High Impact</h3>
+            <p class="portfolio-type">2025</p>
+          </div>
+        </a>
+        <a href="https://www.commerceiq.ai/ebooks-whitepapers/2024-year-in-review" target="_blank" class="portfolio-item fade-in">
+          <img src="thumbnails/writing-2024-wrapped.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-writing">Whitepaper</span>
+            <h3 class="portfolio-title">2024 Wrapped: Key Insights for Building a Bigger, Better Brand in 2025</h3>
+            <p class="portfolio-type">2024</p>
+          </div>
+        </a>
+        <a href="https://www.commerceiq.ai/press-releases/commerceiq-secures-115-million-investment-from-softbank-vision-fund-2-at-unicorn-valuation-to-revolutionize-retail-ecommerce-management" target="_blank" class="portfolio-item fade-in">
+          <img src="thumbnails/writing-series-d.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-writing">Press &middot; Series D</span>
+            <h3 class="portfolio-title">CommerceIQ Secures $115M from SoftBank at Unicorn Valuation</h3>
+            <p class="portfolio-type">2022</p>
+          </div>
+        </a>
+        <a href="https://www.commerceiq.ai/press-releases/commerceiq-closes-explosive-first-half-2021-cementing-its-ecommerce-management-leadership-position-on-the-heels-of-series-c-funding" target="_blank" class="portfolio-item fade-in">
+          <img src="thumbnails/writing-series-c.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-writing">Press &middot; Series C</span>
+            <h3 class="portfolio-title">CommerceIQ Closes Explosive First Half, Cementing E-Commerce Leadership</h3>
+            <p class="portfolio-type">2021</p>
+          </div>
+        </a>
+        <a href="https://www.theolympian.com/opinion/letters-to-the-editor/article55818450.html" target="_blank" class="portfolio-item fade-in">
+          <img src="thumbnails/writing-pse-oped.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-writing">The Olympian</span>
+            <h3 class="portfolio-title">Op-Ed: Puget Sound Energy</h3>
+            <p class="portfolio-type">2016</p>
+          </div>
+        </a>
       </div>
 
       <!-- Portfolio Preview Modal -->
@@ -1370,46 +1439,6 @@
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section id="testimonials" style="background: var(--color-surface);">
-    <div class="container">
-      <p class="section-label">What People Say</p>
-      <h2 class="section-title">Working with me</h2>
-
-      <div class="testimonials-grid">
-
-        <div class="testimonial-card fade-in">
-          <p class="testimonial-quote">Dane will be the manager you need in the moment you need him. His ability to determine the readiness of his teams to execute&hellip;and willingness to be involved in the most effective manner, be it in the trenches or from afar, is a superpower.</p>
-          <p class="testimonial-author">Christian Rector</p>
-          <p class="testimonial-role"></p>
-          <p class="testimonial-relation">Reported to Dane</p>
-        </div>
-
-        <div class="testimonial-card fade-in">
-          <p class="testimonial-quote">Throughout my 10+ years in the eCommerce industry, I have learned more from Dane than from any other single manager. His leadership taught me the importance of building professional trust and how to leverage that trust to drive significant results.</p>
-          <p class="testimonial-author">Bradley Sodenkamp</p>
-          <p class="testimonial-role"></p>
-          <p class="testimonial-relation">Reported to Dane</p>
-        </div>
-
-        <div class="testimonial-card fade-in">
-          <p class="testimonial-quote">He strikes the perfect balance between providing clear direction, explaining the 'whys' behind our goals, and offering the autonomy needed to excel. He had a remarkable ability to clarify priorities and help me see how my role contributed to the bigger picture.</p>
-          <p class="testimonial-author">Courtney Cook</p>
-          <p class="testimonial-role"></p>
-          <p class="testimonial-relation">Reported to Dane</p>
-        </div>
-
-        <div class="testimonial-card fade-in">
-          <p class="testimonial-quote">More than others, he made a point to stay up to date with all industry trends and was willing and able to explain them to the wider team, helping us all do our jobs more effectively. He took over a reporting project that used to take weeks and streamlined it to just a few days.</p>
-          <p class="testimonial-author">Laura Grandi-Hill</p>
-          <p class="testimonial-role"></p>
-          <p class="testimonial-relation">Worked on the same team</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- Case Studies -->
   <section id="work">
     <div class="container">
@@ -1555,44 +1584,43 @@
     }
   </style>
 
-  <!-- Writing / Blog -->
-  <section id="writing">
-    <div class="container">
-      <p class="section-label">Writing &amp; Published Work</p>
-      <h2 class="section-title">Things I've written and shipped</h2>
-      <p class="section-desc">Articles, whitepapers, press, and thought leadership across product marketing, AI, and enterprise strategy.</p>
 
-      <div class="writing-list">
-        <a href="https://www.linkedin.com/pulse/why-i-stopped-using-ai-apply-jobs-data-dane-tomalin-fcpgc/" target="_blank" class="writing-item fade-in">
-          <span class="writing-date">2025</span>
-          <span class="writing-title">Why I Stopped Using AI to Apply for Jobs (The Data)</span>
-          <span class="writing-tag">LinkedIn</span>
-        </a>
-        <a href="https://www.commerceiq.ai/ebooks-whitepapers/ai-market-impact" target="_blank" class="writing-item fade-in">
-          <span class="writing-date">2025</span>
-          <span class="writing-title">AI: From Hype to High Impact</span>
-          <span class="writing-tag">Whitepaper</span>
-        </a>
-        <a href="https://www.commerceiq.ai/ebooks-whitepapers/2024-year-in-review" target="_blank" class="writing-item fade-in">
-          <span class="writing-date">2024</span>
-          <span class="writing-title">2024 Wrapped: Key Insights for Building a Bigger, Better Brand in 2025</span>
-          <span class="writing-tag">Whitepaper</span>
-        </a>
-        <a href="https://www.commerceiq.ai/press-releases/commerceiq-secures-115-million-investment-from-softbank-vision-fund-2-at-unicorn-valuation-to-revolutionize-retail-ecommerce-management" target="_blank" class="writing-item fade-in">
-          <span class="writing-date">2022</span>
-          <span class="writing-title">CommerceIQ Secures $115M from SoftBank at Unicorn Valuation</span>
-          <span class="writing-tag">Press &middot; Series D</span>
-        </a>
-        <a href="https://www.commerceiq.ai/press-releases/commerceiq-closes-explosive-first-half-2021-cementing-its-ecommerce-management-leadership-position-on-the-heels-of-series-c-funding" target="_blank" class="writing-item fade-in">
-          <span class="writing-date">2021</span>
-          <span class="writing-title">CommerceIQ Closes Explosive First Half, Cementing E-Commerce Leadership</span>
-          <span class="writing-tag">Press &middot; Series C</span>
-        </a>
-        <a href="https://www.theolympian.com/opinion/letters-to-the-editor/article55818450.html" target="_blank" class="writing-item fade-in">
-          <span class="writing-date">2016</span>
-          <span class="writing-title">Op-Ed: Puget Sound Energy</span>
-          <span class="writing-tag">The Olympian</span>
-        </a>
+  <!-- Testimonials -->
+  <section id="testimonials" style="background: var(--color-surface);">
+    <div class="container">
+      <p class="section-label">What People Say</p>
+      <h2 class="section-title">Working with me</h2>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">Dane will be the manager you need in the moment you need him. His ability to determine the readiness of his teams to execute&hellip;and willingness to be involved in the most effective manner, be it in the trenches or from afar, is a superpower.</p>
+          <p class="testimonial-author">Christian Rector</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Reported to Dane</p>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">Throughout my 10+ years in the eCommerce industry, I have learned more from Dane than from any other single manager. His leadership taught me the importance of building professional trust and how to leverage that trust to drive significant results.</p>
+          <p class="testimonial-author">Bradley Sodenkamp</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Reported to Dane</p>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">He strikes the perfect balance between providing clear direction, explaining the 'whys' behind our goals, and offering the autonomy needed to excel. He had a remarkable ability to clarify priorities and help me see how my role contributed to the bigger picture.</p>
+          <p class="testimonial-author">Courtney Cook</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Reported to Dane</p>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">More than others, he made a point to stay up to date with all industry trends and was willing and able to explain them to the wider team, helping us all do our jobs more effectively. He took over a reporting project that used to take weeks and streamlined it to just a few days.</p>
+          <p class="testimonial-author">Laura Grandi-Hill</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Worked on the same team</p>
+        </div>
+
       </div>
     </div>
   </section>
