@@ -1,0 +1,18 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.env
+
+# Old preview directory (replaced by previews_new/)
+previews/
+
+# Original/source logo files (not used on site)
+logos/*-orig.png
+logos/*-color.png
+logos/*.svg
+logos/amazon-test.png
+logos/amazon.png
+!logos/kellogg-white.svg
+!logos/kellogg-k-white.svg
+!logos/cu-boulder-white.svg

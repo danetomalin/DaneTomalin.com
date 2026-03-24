@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dane Tomalin — Product Marketing & Customer Success Leader</title>
+  <meta name="description" content="Dane Tomalin is a product marketing and customer success leader based in Seattle, WA. MBA from Kellogg School of Management.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== Reset & Base ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #0D0D12;
+      --color-surface: #16161E;
+      --color-text: #F0F0F4;
+      --color-text-secondary: #9B9BAF;
+      --color-accent: #A78BFA;
+      --color-accent-light: #C4B5FD;
+      --color-border: #2A2A3A;
+      --color-tag-bg: #1E1E2E;
+      --color-gradient-start: #7C3AED;
+      --color-gradient-end: #DB2777;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --max-width: 1080px;
+      --section-padding: 120px;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--color-accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--color-accent-light); }
+
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 32px; }
+
+    /* ========== Navigation ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(13, 13, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-text-secondary);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    /* ========== Hero ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 70%;
+      height: 80%;
+      background: radial-gradient(ellipse, rgba(124, 58, 237, 0.12) 0%, rgba(219, 39, 119, 0.06) 50%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { max-width: 720px; }
+
+    .hero-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+      margin-bottom: 28px;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-accent-light);
+      border-bottom: 1.5px solid var(--color-accent);
+      padding-bottom: 2px;
+      transition: gap 0.2s;
+    }
+
+    .hero-cta:hover { gap: 12px; }
+
+    .hero-cta svg { width: 16px; height: 16px; transition: transform 0.2s; }
+
+    /* ========== Section Styles ========== */
+    section { padding: var(--section-padding) 0; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      line-height: 1.75;
+      margin-bottom: 64px;
+    }
+
+    /* ========== About ========== */
+    .about-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--color-text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .about-details {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 32px;
+    }
+
+    .about-detail-item { }
+
+    .about-detail-item .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .education-entry {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .education-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .education-logo {
+      width: auto;
+      height: 36px;
+      opacity: 1;
+      flex-shrink: 0;
+    }
+
+    .about-detail-item .value {
+      font-size: 0.95rem;
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    /* ========== Experience ========== */
+    .experience-list { display: flex; flex-direction: column; gap: 0; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .exp-item:first-child { border-top: 1px solid var(--color-border); }
+
+    .exp-logo {
+      max-height: 64px;
+      max-width: 180px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      margin-top: 16px;
+      opacity: 1;
+    }
+
+    .exp-logo.exp-logo-lg {
+      max-height: 64px;
+    }
+
+    .exp-date {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.9);
+      padding-top: 4px;
+    }
+
+    .exp-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .exp-company {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .exp-title {
+      font-size: 1.05rem;
+      color: #ffffff;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .exp-location {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .exp-company-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      font-style: italic;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .exp-desc {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.95);
+    }
+
+    .exp-desc p { margin-bottom: 12px; }
+
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+    .exp-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      background: var(--color-tag-bg);
+      border-radius: 100px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ========== AI Proficiency ========== */
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .ai-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .ai-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border-color: var(--color-accent);
+    }
+
+    .ai-card-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .ai-card-tool {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent-light);
+      margin-bottom: 10px;
+    }
+
+    .ai-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .ai-card p.ai-card-desc {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .ai-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--color-accent-light);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .ai-card-link:hover {
+      color: var(--color-accent);
+    }
+
+    .ai-card-link svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ========== Case Studies ========== */
+    .case-studies-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .case-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 40px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .case-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border-color: var(--color-accent);
+      color: inherit;
+    }
+
+    .case-card .case-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent-light);
+      margin-bottom: 16px;
+    }
+
+    .case-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+
+    .case-card p {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .case-card .case-link {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .case-card .case-link svg { width: 14px; height: 14px; }
+
+    /* ========== Blog / Writing ========== */
+    .writing-list { display: flex; flex-direction: column; }
+
+    .writing-item {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 32px;
+      align-items: baseline;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--color-border);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+
+    .writing-item:first-child { border-top: 1px solid var(--color-border); }
+
+    .writing-item:hover { background: rgba(255,255,255,0.02); }
+
+    .writing-date {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+    }
+
+    .writing-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .writing-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      background: var(--color-tag-bg);
+      border-radius: 100px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+    }
+
+    /* ========== Philosophy ========== */
+    .philosophy-intro {
+      max-width: 640px;
+      margin-bottom: 64px;
+    }
+
+    .philosophy-intro p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--color-text-secondary);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .philosophy-card {
+      background: var(--color-surface);
+      padding: 40px 32px;
+      position: relative;
+    }
+
+    .philosophy-number {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 400;
+      background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .philosophy-role {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .philosophy-subtitle {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-accent-light);
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .philosophy-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .philosophy-goal {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      font-weight: 500;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .philosophy-goal span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ========== Portfolio Grid ========== */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .portfolio-item {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-accent);
+      color: inherit;
+    }
+
+    .portfolio-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      opacity: 0.95;
+      transition: opacity 0.2s;
+    }
+
+    .portfolio-item:hover .portfolio-thumb { opacity: 1; }
+
+    /* Portfolio Modal */
+    .portfolio-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    .portfolio-modal-overlay.active { display: flex; }
+
+    .portfolio-modal {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .portfolio-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 28px 16px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .portfolio-modal-header h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    .portfolio-modal-close {
+      background: none;
+      border: none;
+      color: var(--color-text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .portfolio-modal-close:hover { background: rgba(255,255,255,0.1); }
+
+    .portfolio-modal-body {
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .portfolio-modal-body img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      filter: blur(4px);
+    }
+
+    .preview-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .preview-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      right: -100%;
+      bottom: -100%;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.08) 80px,
+        rgba(255,255,255,0.08) 82px
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .preview-wrapper::before {
+      content: 'WORK SAMPLE';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-35deg);
+      font-size: 4rem;
+      font-weight: 800;
+      color: rgba(0,0,0,0.15);
+      letter-spacing: 0.3em;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 3;
+      text-transform: uppercase;
+    }
+
+    .preview-watermark-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 60px;
+      padding: 40px;
+      overflow: hidden;
+      transform: rotate(-35deg) scale(1.5);
+      transform-origin: center center;
+    }
+
+    .preview-watermark-grid span {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(0,0,0,0.12);
+      letter-spacing: 0.25em;
+      white-space: nowrap;
+    }
+
+    .portfolio-info {
+      padding: 14px 16px 16px;
+    }
+
+    .portfolio-tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .tag-ambassador { background: rgba(124, 58, 237, 0.15); color: #C4B5FD; }
+    .tag-strategist { background: rgba(219, 39, 119, 0.15); color: #F9A8D4; }
+    .tag-storyteller { background: rgba(14, 165, 233, 0.15); color: #7DD3FC; }
+    .tag-evangelist { background: rgba(234, 179, 8, 0.15); color: #FDE68A; }
+
+    .portfolio-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 2px;
+    }
+
+    .portfolio-type {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      font-weight: 400;
+    }
+
+    @media (max-width: 1024px) {
+      .philosophy-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .philosophy-card { padding: 32px 24px; }
+    }
+
+    /* ========== Testimonials ========== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border-color: var(--color-accent);
+    }
+
+    .testimonial-quote {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-text);
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-quote::before {
+      display: none;
+    }
+
+    .testimonial-author {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .testimonial-role {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+
+    .testimonial-relation {
+      font-size: 0.65rem;
+      color: var(--color-text-secondary);
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ========== Footer ========== */
+    footer {
+      padding: 80px 0 48px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 64px;
+    }
+
+    .footer-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .footer-text {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    .footer-links { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+
+    .footer-link {
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link svg { width: 18px; height: 18px; color: var(--color-text-secondary); }
+
+    .footer-bottom {
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);
+      opacity: 0.6;
+    }
+
+    /* ========== Animations ========== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 768px) {
+      :root { --section-padding: 80px; }
+
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(13, 13, 18, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 24px 32px;
+        gap: 20px;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .nav-toggle { display: block; }
+
+      .about-grid { gap: 32px; }
+
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      .exp-date { font-size: 0.8rem; }
+
+      .ai-grid { grid-template-columns: 1fr; }
+      .case-studies-grid { grid-template-columns: 1fr; }
+
+      .writing-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .writing-tag { display: none; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">Dane Tomalin</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-label">Seattle, WA</p>
+        <h1>I build the bridge between the product, market and field teams.</h1>
+        <p>Product marketing leader with a track record of positioning AI products, building go-to-market engines, and enabling sales teams to win. MBA from Kellogg. Previously at CommerceIQ, Amazon, and Puget Sound Energy.</p>
+        <a href="#work" class="hero-cta">
+          See my work
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">About</p>
+      <h2 class="section-title">Building products people actually use, and teams that make it happen.</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I've spent the last decade at the intersection of product, marketing, and sales in enterprise technology. Most recently, I led product marketing at CommerceIQ, where I positioned an AI-powered product suite for Fortune 500 brands, built the packaging and pricing framework, and created the sales enablement engine from the ground up.</p>
+          <p>I'm drawn to the messy, cross-functional work: taking a complex product, figuring out what story it needs to tell, and building the go-to-market systems to deliver on that story at scale. Whether that's authoring messaging frameworks for an AI agent platform, designing Good/Better/Best packaging, or arming a sales team with the competitive intelligence and demo content they need to win.</p>
+          <p>Before CommerceIQ, I managed vendor relationships at Amazon, ran product and program management at Puget Sound Energy, and founded Leeward Ventures, a micro private equity firm.</p>
+
+          <div class="about-details">
+            <div class="about-detail-item">
+              <p class="label">Education</p>
+              <div class="education-entry">
+                <img src="logos/kellogg-white.svg" alt="Kellogg School of Management" class="education-logo">
+                <span class="value">MBA, Kellogg School of Management at Northwestern University</span>
+              </div>
+              <div class="education-entry">
+                <img src="logos/cu-boulder-white.png" alt="University of Colorado Boulder" class="education-logo">
+                <span class="value">BA Political Science, University of Colorado Boulder</span>
+              </div>
+            </div>
+            <div class="about-detail-item">
+              <p class="label">Focus Areas</p>
+              <p class="value">Product Marketing, Customer Success, GTM Strategy</p>
+            </div>
+            <div class="about-detail-item">
+              <p class="label">Industries</p>
+              <p class="value">Enterprise SaaS, AI/ML, E-Commerce, Retail Media, Digital Advertising</p>
+            </div>
+            <div class="about-detail-item">
+              <p class="label">Based In</p>
+              <p class="value">Seattle, WA</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy / Approach -->
+  <section id="approach" style="background: var(--color-surface);">
+    <div class="container">
+      <p class="section-label">My Approach</p>
+      <h2 class="section-title">Four tenets of product marketing</h2>
+      <div class="philosophy-intro">
+        <p>I think of product marketing as four interconnected roles, not a single job description. The best PMMs move fluidly between all four depending on what the moment demands. Here's how each one shows up in my work.</p>
+      </div>
+
+      <div class="philosophy-grid">
+
+        <div class="philosophy-card fade-in">
+          <p class="philosophy-number">01</p>
+          <h3 class="philosophy-role">Ambassador</h3>
+          <p class="philosophy-subtitle">Connecting Customer to Product</p>
+          <p class="philosophy-desc">Bridging the market and the product team. Bringing customer pain points, competitive intelligence, and outside-in insights into the development cycle.</p>
+          <p class="philosophy-goal">
+            <span>Goal</span>
+            Ensure the product is relevant to the people it's built for.
+          </p>
+        </div>
+
+        <div class="philosophy-card fade-in">
+          <p class="philosophy-number">02</p>
+          <h3 class="philosophy-role">Strategist</h3>
+          <p class="philosophy-subtitle">Directing the Go-To-Market</p>
+          <p class="philosophy-desc">Defining the who, where, and how. Segmentation, targeting, and positioning the product on the right battlefield to compete and grow.</p>
+          <p class="philosophy-goal">
+            <span>Goal</span>
+            Align product capabilities with the most strategic market opportunities.
+          </p>
+        </div>
+
+        <div class="philosophy-card fade-in">
+          <p class="philosophy-number">03</p>
+          <h3 class="philosophy-role">Storyteller</h3>
+          <p class="philosophy-subtitle">Shaping Perception</p>
+          <p class="philosophy-desc">Crafting the narrative that turns features into benefits and products into solutions. Positioning and messaging that makes the product stand out in a noisy market.</p>
+          <p class="philosophy-goal">
+            <span>Goal</span>
+            Make the value prop so clear the customer feels "this was made for me."
+          </p>
+        </div>
+
+        <div class="philosophy-card fade-in">
+          <p class="philosophy-number">04</p>
+          <h3 class="philosophy-role">Evangelist</h3>
+          <p class="philosophy-subtitle">Enabling the Organization</p>
+          <p class="philosophy-desc">Arming Sales, Marketing, and CS with the tools, training, and confidence to tell the product story. Every touchpoint reinforces the narrative.</p>
+          <p class="philosophy-goal">
+            <span>Goal</span>
+            Consistent, powerful messaging regardless of which team the customer talks to.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <div class="container">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">See it in practice</h2>
+      <p class="section-desc">Real work samples mapped to my four tenets of product marketing.</p>
+
+      <div class="portfolio-grid">
+
+        <!-- Ambassador: Messaging docs -->
+        <div class="portfolio-item fade-in" data-title="AllyAI Messaging" data-previews="previews_new/ally-messaging-p1.png,previews_new/ally-messaging-p2.png,previews_new/ally-messaging-p3.png,previews_new/ally-messaging-p4.png,previews_new/ally-messaging-p5.png,previews_new/ally-messaging-p6.png,previews_new/ally-messaging-p7.png">
+          <img src="thumbnails/ally-messaging.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-ambassador">Ambassador</span>
+            <h3 class="portfolio-title">AllyAI Messaging</h3>
+            <p class="portfolio-type">AI agent suite positioning</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="RMM Messaging" data-previews="previews_new/rmm-messaging-p1.png,previews_new/rmm-messaging-p2.png,previews_new/rmm-messaging-p3.png,previews_new/rmm-messaging-p4.png,previews_new/rmm-messaging-p5.png">
+          <img src="thumbnails/rmm-messaging.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-ambassador">Ambassador</span>
+            <h3 class="portfolio-title">RMM Messaging</h3>
+            <p class="portfolio-type">Retail media value pillars</p>
+          </div>
+        </div>
+
+        <!-- Strategist: Product Box, Pricing & Packaging -->
+        <div class="portfolio-item fade-in" data-title="CoPilot Product Box" data-previews="previews_new/copilot-product-box-p1.png,previews_new/copilot-product-box-p2.png,previews_new/copilot-product-box-p3.png,previews_new/copilot-product-box-p4.png,previews_new/copilot-product-box-p5.png,previews_new/copilot-product-box-p6.png,previews_new/copilot-product-box-p7.png,previews_new/copilot-product-box-p8.png,previews_new/copilot-product-box-p9.png,previews_new/copilot-product-box-p10.png,previews_new/copilot-product-box-p11.png,previews_new/copilot-product-box-p12.png,previews_new/copilot-product-box-p13.png,previews_new/copilot-product-box-p14.png,previews_new/copilot-product-box-p15.png,previews_new/copilot-product-box-p16.png,previews_new/copilot-product-box-p17.png,previews_new/copilot-product-box-p18.png,previews_new/copilot-product-box-p19.png,previews_new/copilot-product-box-p20.png,previews_new/copilot-product-box-p21.png,previews_new/copilot-product-box-p22.png,previews_new/copilot-product-box-p23.png,previews_new/copilot-product-box-p24.png,previews_new/copilot-product-box-p25.png,previews_new/copilot-product-box-p26.png,previews_new/copilot-product-box-p27.png,previews_new/copilot-product-box-p28.png,previews_new/copilot-product-box-p29.png,previews_new/copilot-product-box-p30.png,previews_new/copilot-product-box-p31.png,previews_new/copilot-product-box-p32.png,previews_new/copilot-product-box-p33.png,previews_new/copilot-product-box-p34.png,previews_new/copilot-product-box-p35.png">
+          <img src="thumbnails/copilot-product-box.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-strategist">Strategist</span>
+            <h3 class="portfolio-title">CoPilot Product Box</h3>
+            <p class="portfolio-type">Visual product narrative</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="Command Center" data-previews="previews_new/command-center-box-p1.png,previews_new/command-center-box-p2.png,previews_new/command-center-box-p3.png">
+          <img src="thumbnails/command-center-box.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-strategist">Strategist</span>
+            <h3 class="portfolio-title">Command Center</h3>
+            <p class="portfolio-type">Omni-channel product box</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="Packaging &amp; Pricing" data-previews="previews_new/packaging-pricing-p1.png,previews_new/packaging-pricing-p2.png,previews_new/packaging-pricing-p3.png,previews_new/packaging-pricing-p4.png,previews_new/packaging-pricing-p5.png,previews_new/packaging-pricing-p6.png,previews_new/packaging-pricing-p7.png,previews_new/packaging-pricing-p8.png,previews_new/packaging-pricing-p9.png,previews_new/packaging-pricing-p10.png,previews_new/packaging-pricing-p11.png,previews_new/packaging-pricing-p12.png,previews_new/packaging-pricing-p13.png,previews_new/packaging-pricing-p14.png,previews_new/packaging-pricing-p15.png,previews_new/packaging-pricing-p16.png,previews_new/packaging-pricing-p17.png,previews_new/packaging-pricing-p18.png,previews_new/packaging-pricing-p19.png,previews_new/packaging-pricing-p20.png,previews_new/packaging-pricing-p21.png,previews_new/packaging-pricing-p22.png,previews_new/packaging-pricing-p23.png,previews_new/packaging-pricing-p24.png,previews_new/packaging-pricing-p25.png,previews_new/packaging-pricing-p26.png,previews_new/packaging-pricing-p27.png,previews_new/packaging-pricing-p28.png,previews_new/packaging-pricing-p29.png,previews_new/packaging-pricing-p30.png,previews_new/packaging-pricing-p31.png">
+          <img src="thumbnails/packaging-pricing.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-strategist">Strategist</span>
+            <h3 class="portfolio-title">Packaging &amp; Pricing</h3>
+            <p class="portfolio-type">Good/Better/Best tier strategy</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="Campaign Training" data-previews="previews_new/tariff-campaign-training-p1.png,previews_new/tariff-campaign-training-p2.png,previews_new/tariff-campaign-training-p3.png,previews_new/tariff-campaign-training-p4.png,previews_new/tariff-campaign-training-p5.png,previews_new/tariff-campaign-training-p6.png,previews_new/tariff-campaign-training-p7.png,previews_new/tariff-campaign-training-p8.png,previews_new/tariff-campaign-training-p9.png,previews_new/tariff-campaign-training-p10.png,previews_new/tariff-campaign-training-p11.png,previews_new/tariff-campaign-training-p12.png,previews_new/tariff-campaign-training-p13.png,previews_new/tariff-campaign-training-p14.png,previews_new/tariff-campaign-training-p15.png,previews_new/tariff-campaign-training-p16.png,previews_new/tariff-campaign-training-p17.png,previews_new/tariff-campaign-training-p18.png,previews_new/tariff-campaign-training-p19.png,previews_new/tariff-campaign-training-p20.png,previews_new/tariff-campaign-training-p21.png,previews_new/tariff-campaign-training-p22.png,previews_new/tariff-campaign-training-p23.png,previews_new/tariff-campaign-training-p24.png,previews_new/tariff-campaign-training-p25.png,previews_new/tariff-campaign-training-p26.png,previews_new/tariff-campaign-training-p27.png,previews_new/tariff-campaign-training-p28.png,previews_new/tariff-campaign-training-p29.png,previews_new/tariff-campaign-training-p30.png,previews_new/tariff-campaign-training-p31.png,previews_new/tariff-campaign-training-p32.png,previews_new/tariff-campaign-training-p33.png,previews_new/tariff-campaign-training-p34.png,previews_new/tariff-campaign-training-p35.png,previews_new/tariff-campaign-training-p36.png,previews_new/tariff-campaign-training-p37.png">
+          <img src="thumbnails/tariff-campaign-training.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-strategist">Strategist</span>
+            <h3 class="portfolio-title">Campaign Training</h3>
+            <p class="portfolio-type">Tariff GTM field enablement</p>
+          </div>
+        </div>
+
+        <!-- Storyteller: Demo Script, Customer Spotlight -->
+        <div class="portfolio-item fade-in" data-title="Customer Spotlight" data-previews="previews_new/customer-spotlight-ritual-p1.png">
+          <img src="thumbnails/customer-spotlight-ritual.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-storyteller">Storyteller</span>
+            <h3 class="portfolio-title">Customer Spotlight</h3>
+            <p class="portfolio-type">Ritual case study</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="Demo Script" data-previews="previews_new/occ-demo-script-p1.png,previews_new/occ-demo-script-p2.png,previews_new/occ-demo-script-p3.png,previews_new/occ-demo-script-p4.png,previews_new/occ-demo-script-p5.png">
+          <img src="thumbnails/occ-demo-script.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-storyteller">Storyteller</span>
+            <h3 class="portfolio-title">Demo Script</h3>
+            <p class="portfolio-type">OCC product walkthrough</p>
+          </div>
+        </div>
+
+        <!-- Evangelist: SKO Positioning, Sales Sheet, Campaign Training -->
+        <div class="portfolio-item fade-in" data-title="SKO Positioning" data-previews="previews_new/sko-positioning-p1.png,previews_new/sko-positioning-p2.png,previews_new/sko-positioning-p3.png,previews_new/sko-positioning-p4.png,previews_new/sko-positioning-p5.png,previews_new/sko-positioning-p6.png,previews_new/sko-positioning-p7.png,previews_new/sko-positioning-p8.png,previews_new/sko-positioning-p9.png,previews_new/sko-positioning-p10.png,previews_new/sko-positioning-p11.png,previews_new/sko-positioning-p12.png,previews_new/sko-positioning-p13.png,previews_new/sko-positioning-p14.png,previews_new/sko-positioning-p15.png,previews_new/sko-positioning-p16.png,previews_new/sko-positioning-p17.png,previews_new/sko-positioning-p18.png,previews_new/sko-positioning-p19.png,previews_new/sko-positioning-p20.png,previews_new/sko-positioning-p21.png,previews_new/sko-positioning-p22.png,previews_new/sko-positioning-p23.png,previews_new/sko-positioning-p24.png,previews_new/sko-positioning-p25.png,previews_new/sko-positioning-p26.png,previews_new/sko-positioning-p27.png,previews_new/sko-positioning-p28.png,previews_new/sko-positioning-p29.png,previews_new/sko-positioning-p30.png,previews_new/sko-positioning-p31.png,previews_new/sko-positioning-p32.png,previews_new/sko-positioning-p33.png,previews_new/sko-positioning-p34.png,previews_new/sko-positioning-p35.png,previews_new/sko-positioning-p36.png,previews_new/sko-positioning-p37.png,previews_new/sko-positioning-p38.png,previews_new/sko-positioning-p39.png,previews_new/sko-positioning-p40.png,previews_new/sko-positioning-p41.png,previews_new/sko-positioning-p42.png,previews_new/sko-positioning-p43.png,previews_new/sko-positioning-p44.png,previews_new/sko-positioning-p45.png,previews_new/sko-positioning-p46.png,previews_new/sko-positioning-p47.png,previews_new/sko-positioning-p48.png,previews_new/sko-positioning-p49.png,previews_new/sko-positioning-p50.png,previews_new/sko-positioning-p51.png,previews_new/sko-positioning-p52.png,previews_new/sko-positioning-p53.png,previews_new/sko-positioning-p54.png,previews_new/sko-positioning-p55.png,previews_new/sko-positioning-p56.png,previews_new/sko-positioning-p57.png,previews_new/sko-positioning-p58.png,previews_new/sko-positioning-p59.png,previews_new/sko-positioning-p60.png,previews_new/sko-positioning-p61.png,previews_new/sko-positioning-p62.png,previews_new/sko-positioning-p63.png,previews_new/sko-positioning-p64.png,previews_new/sko-positioning-p65.png,previews_new/sko-positioning-p66.png,previews_new/sko-positioning-p67.png,previews_new/sko-positioning-p68.png,previews_new/sko-positioning-p69.png,previews_new/sko-positioning-p70.png,previews_new/sko-positioning-p71.png,previews_new/sko-positioning-p72.png,previews_new/sko-positioning-p73.png,previews_new/sko-positioning-p74.png,previews_new/sko-positioning-p75.png,previews_new/sko-positioning-p76.png,previews_new/sko-positioning-p77.png,previews_new/sko-positioning-p78.png,previews_new/sko-positioning-p79.png,previews_new/sko-positioning-p80.png,previews_new/sko-positioning-p81.png,previews_new/sko-positioning-p82.png,previews_new/sko-positioning-p83.png,previews_new/sko-positioning-p84.png,previews_new/sko-positioning-p85.png,previews_new/sko-positioning-p86.png,previews_new/sko-positioning-p87.png,previews_new/sko-positioning-p88.png,previews_new/sko-positioning-p89.png">
+          <img src="thumbnails/sko-positioning.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-evangelist">Evangelist</span>
+            <h3 class="portfolio-title">SKO Positioning</h3>
+            <p class="portfolio-type">Sales kickoff GTM deck</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="Sales Sheet" data-previews="previews_new/allyai-sales-teammate-p1.png">
+          <img src="thumbnails/allyai-sales-teammate.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-evangelist">Evangelist</span>
+            <h3 class="portfolio-title">Sales Sheet</h3>
+            <p class="portfolio-type">AllyAI one-pager for field</p>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Portfolio Preview Modal -->
+      <div class="portfolio-modal-overlay" id="portfolioModal">
+        <div class="portfolio-modal">
+          <div class="portfolio-modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="portfolio-modal-close" id="modalClose">&times;</button>
+          </div>
+          <div class="portfolio-modal-body" id="modalBody"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Proficiency -->
+  <section id="ai-proficiency">
+    <div class="container">
+      <p class="section-label">AI Proficiency</p>
+      <h2 class="section-title">Building with AI, not just talking about it.</h2>
+      <p class="section-desc">I use AI tools daily to ship real work, from full-stack products to research workflows that inform product strategy.</p>
+
+      <div class="ai-grid">
+
+        <div class="ai-card fade-in">
+          <svg class="ai-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <p class="ai-card-tool">Claude &middot; Google Cloud &middot; Vibe Coding</p>
+          <h3>Dawson-AI.com</h3>
+          <p class="ai-card-desc">Vibecoded a full product for small e-commerce sellers to optimize their content. Built end-to-end with Claude as the engineering partner, running on Google Cloud infrastructure: Cloud Run, Firestore, and Cloud Functions powering the backend.</p>
+          <a href="https://dawson-ai.com" target="_blank" class="ai-card-link">
+            Visit site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+
+        <div class="ai-card fade-in">
+          <svg class="ai-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="13" y2="11"/></svg>
+          <p class="ai-card-tool">NotebookLM &middot; Google</p>
+          <h3>Win/Loss Call Analysis</h3>
+          <p class="ai-card-desc">Built a process using NotebookLM to analyze Chorus sales calls at scale, extracting field insights to inform the product roadmap. Turned unstructured call data into structured competitive and feature intelligence for product teams.</p>
+        </div>
+
+        <div class="ai-card fade-in">
+          <svg class="ai-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <p class="ai-card-tool">CommerceIQ &middot; 2019&ndash;2025</p>
+          <h3>Marketing AI Before the Hype</h3>
+          <p class="ai-card-desc">Spent six years positioning and selling AI products at CommerceIQ, starting with early machine learning models for e-commerce optimization, then evolving through generative and agentic AI solutions for Fortune 500 brands. Was translating ML capabilities into buyer-ready narratives years before GPT made AI a household term.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label">Experience</p>
+      <h2 class="section-title">Where I've worked</h2>
+      <p class="section-desc">A path from vendor management at Amazon to leading product marketing and customer success for an AI-powered commerce platform.</p>
+
+      <div class="experience-list">
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-date">2019 &ndash; 2025</div>
+            <img src="logos/commerceiq-white.png" alt="CommerceIQ" class="exp-logo exp-logo-lg">
+          </div>
+          <div>
+            <p class="exp-title">Director, Product Marketing &amp; Customer Success</p>
+            <p class="exp-location">Seattle, WA</p>
+            <p class="exp-company-desc">Series D startup ($1B+ valuation). Agentic AI platform for Fortune 500 e-commerce. ~300 employees.</p>
+            <div class="exp-desc">
+              <p>Owned product marketing and go-to-market strategy at CommerceIQ, an agentic AI company building machine learning into e-commerce before the category had a name. Founded in 2012 by an ex-Amazon engineer and valued at $1B+ by 2022, CommerceIQ deploys autonomous AI agents that execute pricing, advertising, and supply chain decisions for Fortune 500 brands like Nestl&eacute;, Colgate, and Whirlpool.</p>
+              <p>Authored positioning for 8 products including AllyAI (a generative and predictive AI "teammate" platform), designed the Good/Better/Best packaging and pricing framework, and built the sales enablement engine (battle cards, demo scripts, competitive intelligence, SKO content) that brought agentic AI concepts to market. Led messaging strategy across persona, platform, and product levels.</p>
+              <p>Also scaled the customer success organization from 4 to 105 people across three global offices, designing the SODA engagement framework and building renewal playbooks that moved NRR from red to green.</p>
+            </div>
+            <div class="exp-tags">
+              <span class="exp-tag">Product Marketing</span>
+              <span class="exp-tag">Positioning &amp; Messaging</span>
+              <span class="exp-tag">GTM Strategy</span>
+              <span class="exp-tag">Sales Enablement</span>
+              <span class="exp-tag">Packaging &amp; Pricing</span>
+              <span class="exp-tag">Agentic AI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-date">2017 &ndash; 2019</div>
+            <img src="logos/navazon-white.png" alt="Navazon" class="exp-logo">
+          </div>
+          <div>
+            <p class="exp-title">Account Manager</p>
+            <p class="exp-location">Seattle, WA</p>
+            <p class="exp-company-desc">Boutique Amazon services agency. ~30 employees.</p>
+            <div class="exp-desc">
+              <p>Managed strategic client relationships and drove account growth for an Amazon-focused services company. Developed deep expertise in the Amazon ecosystem, retail analytics, and e-commerce optimization that would become foundational for the CommerceIQ role.</p>
+            </div>
+            <div class="exp-tags">
+              <span class="exp-tag">Account Management</span>
+              <span class="exp-tag">E-Commerce</span>
+              <span class="exp-tag">Amazon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-date">2013 &ndash; 2016</div>
+            <img src="logos/pse-white.png" alt="Puget Sound Energy" class="exp-logo">
+          </div>
+          <div>
+            <p class="exp-title">Product / Program Manager</p>
+            <p class="exp-location">Bellevue, WA</p>
+            <p class="exp-company-desc">Washington State's largest energy utility. ~3,000 employees, 1.2M customers.</p>
+            <div class="exp-desc">
+              <p>Managed product and program initiatives at Washington State's largest energy utility. Led cross-functional projects spanning operations, technology, and customer experience, building the program management foundation for later leadership roles.</p>
+            </div>
+            <div class="exp-tags">
+              <span class="exp-tag">Program Management</span>
+              <span class="exp-tag">Energy</span>
+              <span class="exp-tag">Cross-Functional</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-date">2011 &ndash; 2012</div>
+            <img src="logos/amazon-white.png" alt="Amazon" class="exp-logo">
+          </div>
+          <div>
+            <p class="exp-title">Vendor Manager</p>
+            <p class="exp-location">Seattle, WA</p>
+            <p class="exp-company-desc">Global technology and e-commerce leader. ~1.5M employees, $500B+ revenue.</p>
+            <div class="exp-desc">
+              <p>Managed vendor relationships and P&amp;L for a product category at Amazon. Developed skills in data-driven decision making, negotiation, and operating at scale within Amazon's leadership principles framework.</p>
+            </div>
+            <div class="exp-tags">
+              <span class="exp-tag">Vendor Management</span>
+              <span class="exp-tag">P&amp;L</span>
+              <span class="exp-tag">E-Commerce</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item fade-in">
+          <div class="exp-left">
+            <div class="exp-date">Founded</div>
+            <img src="logos/leeward-white.png" alt="Leeward Ventures" class="exp-logo">
+          </div>
+          <div>
+            <p class="exp-title">Founder</p>
+            <p class="exp-company-desc">Self-founded micro private equity firm. Acquiring and operating small businesses.</p>
+            <div class="exp-desc">
+              <p>Founded a micro private equity firm focused on acquiring and growing small businesses. Hands-on experience in deal sourcing, due diligence, operations, and value creation across a portfolio of investments.</p>
+            </div>
+            <div class="exp-tags">
+              <span class="exp-tag">Entrepreneurship</span>
+              <span class="exp-tag">Strategy</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" style="background: var(--color-surface);">
+    <div class="container">
+      <p class="section-label">What People Say</p>
+      <h2 class="section-title">Working with me</h2>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">Dane will be the manager you need in the moment you need him. His ability to determine the readiness of his teams to execute&hellip;and willingness to be involved in the most effective manner, be it in the trenches or from afar, is a superpower.</p>
+          <p class="testimonial-author">Christian Rector</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Reported to Dane</p>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">Throughout my 10+ years in the eCommerce industry, I have learned the most from Dane than from any other single manager. His leadership taught me the importance of building professional trust and how to leverage that trust to drive significant results.</p>
+          <p class="testimonial-author">Bradley Sodenkamp</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Reported to Dane</p>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">He strikes the perfect balance between providing clear direction, explaining the 'whys' behind our goals, and offering the autonomy needed to excel. He had a remarkable ability to clarify priorities and help me see how my role contributed to the bigger picture.</p>
+          <p class="testimonial-author">Courtney Cook</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Reported to Dane</p>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <p class="testimonial-quote">More than others, he made a point to stay up to date with all industry trends and was willing and able to explain them to the wider team, helping us all do our jobs more effectively. He took over a reporting project that used to take weeks and streamlined it to just a few days.</p>
+          <p class="testimonial-author">Laura Grandi-Hill</p>
+          <p class="testimonial-role"></p>
+          <p class="testimonial-relation">Worked on the same team</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section id="work">
+    <div class="container">
+      <p class="section-label">Selected Work</p>
+      <h2 class="section-title">Things I've built and led</h2>
+      <p class="section-desc">A few projects that represent the kind of cross-functional, high-impact work I do best.</p>
+
+      <div class="case-studies-grid">
+
+        <div class="case-card fade-in" onclick="openCase('allyai')">
+          <p class="case-label">Product Marketing</p>
+          <h3>Launching AllyAI: An AI Agent Platform</h3>
+          <p>Led product positioning and go-to-market for CommerceIQ's AI agent suite, including AllyAI Sales Teammate, Media Teammate, and Category Teammate, translating complex AI capabilities into clear market narratives.</p>
+          <span class="case-link">
+            Read more
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+          </span>
+        </div>
+
+        <div class="case-card fade-in" onclick="openCase('pricing')">
+          <p class="case-label">Strategy</p>
+          <h3>Packaging &amp; Pricing a Product Suite</h3>
+          <p>Created the Good/Better/Best packaging and pricing framework across CommerceIQ's product lines, aligning product capabilities with customer segments and simplifying the sales motion.</p>
+          <span class="case-link">
+            Read more
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+          </span>
+        </div>
+
+        <div class="case-card fade-in" onclick="openCase('soda')">
+          <p class="case-label">Framework Design</p>
+          <h3>The SODA Framework</h3>
+          <p>Designed and implemented a customer engagement methodology that standardized how CS teams partnered with Fortune 500 brands, creating a shared language for strategic account planning and value delivery.</p>
+          <span class="case-link">
+            Read more
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+          </span>
+        </div>
+
+        <div class="case-card fade-in" onclick="openCase('scaling')">
+          <p class="case-label">Customer Success</p>
+          <h3>Scaling a CS Org from 4 to 105</h3>
+          <p>Built CommerceIQ's customer success organization from a scrappy team of four into a 105-person global operation across three offices, while transforming the culture from reactive support to proactive strategic partnership.</p>
+          <span class="case-link">
+            Read more
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" /></svg>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Modal -->
+  <div id="case-modal" class="case-modal" onclick="if(event.target===this)closeCase()">
+    <div class="case-modal-content">
+      <button class="case-modal-close" onclick="closeCase()">&times;</button>
+      <div id="case-modal-body"></div>
+    </div>
+  </div>
+
+  <style>
+    .case-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      overflow-y: auto;
+      padding: 40px 24px;
+    }
+    .case-modal.open { display: flex; justify-content: center; align-items: flex-start; }
+    .case-modal-content {
+      background: var(--color-surface);
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      padding: 56px;
+      position: relative;
+      margin-top: 40px;
+    }
+    .case-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      line-height: 1;
+    }
+    .case-modal-content .case-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent-light);
+      margin-bottom: 12px;
+    }
+    .case-modal-content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+    .case-modal-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+    }
+    .case-modal-content h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 28px;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+    .case-modal-content ul {
+      list-style: none;
+      padding: 0;
+    }
+    .case-modal-content ul li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .case-modal-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent-light);
+    }
+  </style>
+
+  <!-- Writing / Blog -->
+  <section id="writing">
+    <div class="container">
+      <p class="section-label">Writing &amp; Published Work</p>
+      <h2 class="section-title">Things I've written and shipped</h2>
+      <p class="section-desc">Articles, whitepapers, press, and thought leadership across product marketing, AI, and enterprise strategy.</p>
+
+      <div class="writing-list">
+        <a href="https://www.linkedin.com/pulse/why-i-stopped-using-ai-apply-jobs-data-dane-tomalin-fcpgc/" target="_blank" class="writing-item fade-in">
+          <span class="writing-date">2025</span>
+          <span class="writing-title">Why I Stopped Using AI to Apply for Jobs (The Data)</span>
+          <span class="writing-tag">LinkedIn</span>
+        </a>
+        <a href="https://www.commerceiq.ai/ebooks-whitepapers/ai-market-impact" target="_blank" class="writing-item fade-in">
+          <span class="writing-date">2025</span>
+          <span class="writing-title">AI: From Hype to High Impact</span>
+          <span class="writing-tag">Whitepaper</span>
+        </a>
+        <a href="https://www.commerceiq.ai/ebooks-whitepapers/2024-year-in-review" target="_blank" class="writing-item fade-in">
+          <span class="writing-date">2024</span>
+          <span class="writing-title">2024 Wrapped: Key Insights for Building a Bigger, Better Brand in 2025</span>
+          <span class="writing-tag">Whitepaper</span>
+        </a>
+        <a href="https://www.commerceiq.ai/press-releases/commerceiq-secures-115-million-investment-from-softbank-vision-fund-2-at-unicorn-valuation-to-revolutionize-retail-ecommerce-management" target="_blank" class="writing-item fade-in">
+          <span class="writing-date">2022</span>
+          <span class="writing-title">CommerceIQ Secures $115M from SoftBank at Unicorn Valuation</span>
+          <span class="writing-tag">Press &middot; Series D</span>
+        </a>
+        <a href="https://www.commerceiq.ai/press-releases/commerceiq-closes-explosive-first-half-2021-cementing-its-ecommerce-management-leadership-position-on-the-heels-of-series-c-funding" target="_blank" class="writing-item fade-in">
+          <span class="writing-date">2021</span>
+          <span class="writing-title">CommerceIQ Closes Explosive First Half, Cementing E-Commerce Leadership</span>
+          <span class="writing-tag">Press &middot; Series C</span>
+        </a>
+        <a href="https://www.theolympian.com/opinion/letters-to-the-editor/article55818450.html" target="_blank" class="writing-item fade-in">
+          <span class="writing-date">2016</span>
+          <span class="writing-title">Op-Ed: Puget Sound Energy</span>
+          <span class="writing-tag">The Olympian</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / Contact -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-heading">Let's talk about what's next.</h2>
+          <p class="footer-text">I'm currently exploring new opportunities in product marketing, customer success, and GTM leadership. If you're building something interesting, I'd love to hear about it.</p>
+        </div>
+        <div class="footer-links">
+          <a href="mailto:dane.tomalin@gmail.com" class="footer-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+            dane.tomalin@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/dane-t-3a44a916/" class="footer-link" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+      <p class="footer-bottom">&copy; 2026 Dane Tomalin. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Mobile nav toggle =====
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // ===== Scroll animations =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ===== Case study modal =====
+    const caseStudies = {
+      scaling: {
+        label: 'Customer Success',
+        title: 'Scaling a CS Org from 4 to 105',
+        content: `
+          <p>When I joined CommerceIQ in 2019, the customer success function was four people handling everything from onboarding to renewals to technical support. By the time I left in 2025, it was a 105-person global organization across three offices.</p>
+          <h3>The Challenge</h3>
+          <p>CommerceIQ was growing fast, signing Fortune 500 CPG brands onto an AI-powered e-commerce optimization platform. But the CS team couldn't scale with the business. There were no playbooks, no health scoring, no structured engagement model. Every account was managed through tribal knowledge and heroics.</p>
+          <h3>What I Did</h3>
+          <p>I built the organizational architecture from the ground up: role definitions, career ladders, regional team structures, and hiring profiles. But the structural work was only half the job. The bigger challenge was cultural, shifting the team from reactive firefighting to proactive strategic partnership with our clients.</p>
+          <p>This meant designing the SODA engagement framework (a separate case study), implementing Vitally as our CS platform, building health scoring and early warning systems, and creating renewal and expansion playbooks that gave the team a repeatable motion.</p>
+          <h3>Impact</h3>
+          <ul>
+            <li>Scaled from 4 to 105 team members across Seattle, Bangalore, and Gurgaon</li>
+            <li>Improved net revenue retention from negative to positive territory</li>
+            <li>Built career pathing that reduced voluntary attrition</li>
+            <li>Created the playbooks and systems that made the org scalable beyond any individual</li>
+          </ul>
+        `
+      },
+      soda: {
+        label: 'Framework Design',
+        title: 'The SODA Framework',
+        content: `
+          <p>SODA is the customer engagement framework I designed at CommerceIQ to give our CS team a shared methodology for running strategic accounts. The name stands for the four phases of the customer engagement cycle.</p>
+          <h3>The Problem</h3>
+          <p>With 100+ enterprise accounts and a rapidly growing CS team, we needed a common language for how we engage customers. New hires had no playbook. Account planning was inconsistent. Renewals were a scramble. Each CSM had their own approach, which meant quality and outcomes varied wildly.</p>
+          <h3>The Framework</h3>
+          <p>SODA provided a structured, repeatable approach to customer engagement that worked across account sizes and team experience levels. It standardized the key moments in the customer lifecycle while leaving room for CSMs to apply judgment and creativity within the framework.</p>
+          <p>Each phase had defined activities, deliverables, and success criteria. The framework integrated with our health scoring in Vitally, so we could see at a glance where every account stood in the engagement cycle.</p>
+          <h3>Impact</h3>
+          <ul>
+            <li>Adopted across the entire CS organization globally</li>
+            <li>Became the foundation for onboarding new CSMs</li>
+            <li>Standardized account planning and QBR preparation</li>
+            <li>Contributed to measurable improvement in renewal rates and expansion revenue</li>
+          </ul>
+        `
+      },
+      allyai: {
+        label: 'Product Marketing',
+        title: 'Launching AllyAI: An AI Agent Platform',
+        content: `
+          <p>AllyAI was CommerceIQ's bet on the future: a suite of AI agents that could autonomously manage e-commerce operations for enterprise brands. I owned the product positioning and go-to-market for the full suite.</p>
+          <h3>The Challenge</h3>
+          <p>Marketing an AI agent platform to enterprise CPG buyers is a specific kind of hard. These are Fortune 500 procurement teams that have been burned by AI hype before. They don't want to hear about LLMs and machine learning. They want to know: will this make my team more effective, and can I trust it?</p>
+          <h3>My Approach</h3>
+          <p>I started with the buyer, not the technology. Through customer interviews and competitive analysis, I built positioning that led with business outcomes and used AI as the "how," not the "what." Each product in the suite (Sales Teammate, Media Teammate, Category Teammate) got its own narrative tailored to its specific buyer persona.</p>
+          <p>I also created the overarching platform narrative that tied the individual products together, designed the packaging and pricing framework (Good/Better/Best), and built the sales enablement materials, including competitive battle cards, demo scripts, and objection handling guides.</p>
+          <h3>Products Launched</h3>
+          <ul>
+            <li>AllyAI Sales Teammate: AI agent for sales performance optimization</li>
+            <li>AllyAI Media Teammate: AI-powered retail media optimizer</li>
+            <li>AllyAI Category Teammate: AI agent for digital shelf and category management</li>
+            <li>Amazon Copilot: Unified Amazon management platform</li>
+            <li>CiQ AI Platform: Overarching platform positioning</li>
+          </ul>
+        `
+      },
+      pricing: {
+        label: 'Strategy',
+        title: 'Packaging & Pricing a Product Suite',
+        content: `
+          <p>As CommerceIQ's product portfolio grew from a single platform to a suite of AI-powered tools, the pricing and packaging model needed to evolve. I designed the framework that aligned product capabilities with customer segments.</p>
+          <h3>The Challenge</h3>
+          <p>CommerceIQ had grown organically, adding products and features without a cohesive packaging strategy. Sales was quoting custom deals for every prospect. Customers couldn't easily understand what they were buying. And the company was leaving money on the table by not creating clear upgrade paths.</p>
+          <h3>My Approach</h3>
+          <p>I built a Good/Better/Best packaging model across the product lines. The "Good" tier anchored on the core platform capabilities that every customer needed. "Better" added AI-powered automation and optimization. "Best" included the full AllyAI agent suite with premium support and strategic services.</p>
+          <p>The framework was designed not just for pricing, but for the sales conversation. Each tier told a story about the customer's maturity and ambition. It gave sales a natural upsell motion and gave customers a clear picture of where they could grow.</p>
+          <h3>Impact</h3>
+          <ul>
+            <li>Simplified the sales motion and reduced custom deal negotiations</li>
+            <li>Created clear upgrade paths that drove expansion revenue</li>
+            <li>Aligned product, sales, and CS around a common language for customer segments</li>
+            <li>Served as the foundation for all pricing conversations with enterprise prospects</li>
+          </ul>
+        `
+      }
+    };
+
+    function openCase(id) {
+      const study = caseStudies[id];
+      if (!study) return;
+      document.getElementById('case-modal-body').innerHTML = `
+        <p class="case-label">${study.label}</p>
+        <h2>${study.title}</h2>
+        ${study.content}
+      `;
+      document.getElementById('case-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCase() {
+      document.getElementById('case-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCase();
+    });
+
+    // Portfolio modal
+    const modal = document.getElementById('portfolioModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.portfolio-item[data-previews]').forEach(item => {
+      item.addEventListener('click', () => {
+        const title = item.dataset.title;
+        const previews = item.dataset.previews.split(',');
+        modalTitle.textContent = title;
+        const watermarks = Array(20).fill('<span>WORK SAMPLE</span>').join(' ');
+        modalBody.innerHTML = previews.map(src =>
+          '<div class="preview-wrapper">' +
+            '<img src="' + src.trim() + '" alt="' + title + ' preview" loading="lazy">' +
+            '<div class="preview-watermark-grid">' + watermarks + '</div>' +
+          '</div>'
+        ).join('');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+  </script>
+
+</body>
+</html>
