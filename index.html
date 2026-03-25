@@ -808,6 +808,42 @@
 
     .portfolio-item:hover .portfolio-thumb { opacity: 1; }
 
+        /* See More toggle */
+    .portfolio-grid:not(.expanded) .portfolio-item:nth-child(n+5) { display: none; }
+    .see-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      margin-top: 16px;
+      margin-bottom: 48px;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      color: var(--color-text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .see-more-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent-light);
+      background: rgba(124, 58, 237, 0.05);
+    }
+    .see-more-btn svg { width: 16px; height: 16px; transition: transform 0.3s; }
+    .see-more-btn.expanded svg { transform: rotate(180deg); }
+    .see-more-count {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+    }
+
     /* Portfolio Modal */
     .portfolio-modal-overlay {
       display: none;
@@ -1355,7 +1391,7 @@
 
       <p class="subsection-label">Portfolio</p>
 
-      <div class="portfolio-grid">
+      <div class="portfolio-grid" id="portfolioGrid">
 
         <!-- Ambassador: Messaging docs -->
         <div class="portfolio-item fade-in" data-title="AllyAI Messaging" data-previews="previews_new/ally-messaging-p1.png,previews_new/ally-messaging-p2.png,previews_new/ally-messaging-p3.png,previews_new/ally-messaging-p4.png,previews_new/ally-messaging-p5.png,previews_new/ally-messaging-p6.png,previews_new/ally-messaging-p7.png">
@@ -1364,6 +1400,35 @@
             <span class="portfolio-tag tag-ambassador">Ambassador</span>
             <h3 class="portfolio-title">AllyAI Messaging</h3>
             <p class="portfolio-type">AI agent suite positioning</p>
+          </div>
+        </div>
+
+        <!-- Storyteller: Demo Script, Customer Spotlight -->
+        <div class="portfolio-item fade-in" data-title="Customer Spotlight" data-previews="previews_new/customer-spotlight-ritual-p1.png">
+          <img src="thumbnails/customer-spotlight-ritual.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-storyteller">Storyteller</span>
+            <h3 class="portfolio-title">Customer Spotlight</h3>
+            <p class="portfolio-type">Ritual case study</p>
+          </div>
+        </div>
+
+        <!-- Evangelist: SKO Positioning, Sales Sheet, Campaign Training -->
+        <div class="portfolio-item fade-in" data-title="SKO Positioning" data-previews="previews_new/sko-positioning-p1.png,previews_new/sko-positioning-p2.png,previews_new/sko-positioning-p3.png,previews_new/sko-positioning-p4.png,previews_new/sko-positioning-p5.png,previews_new/sko-positioning-p6.png,previews_new/sko-positioning-p7.png,previews_new/sko-positioning-p8.png,previews_new/sko-positioning-p9.png,previews_new/sko-positioning-p10.png,previews_new/sko-positioning-p11.png,previews_new/sko-positioning-p12.png,previews_new/sko-positioning-p13.png,previews_new/sko-positioning-p14.png,previews_new/sko-positioning-p15.png,previews_new/sko-positioning-p16.png,previews_new/sko-positioning-p17.png,previews_new/sko-positioning-p18.png,previews_new/sko-positioning-p19.png,previews_new/sko-positioning-p20.png,previews_new/sko-positioning-p21.png,previews_new/sko-positioning-p22.png,previews_new/sko-positioning-p23.png,previews_new/sko-positioning-p24.png,previews_new/sko-positioning-p25.png,previews_new/sko-positioning-p26.png,previews_new/sko-positioning-p27.png,previews_new/sko-positioning-p28.png,previews_new/sko-positioning-p29.png,previews_new/sko-positioning-p30.png,previews_new/sko-positioning-p31.png,previews_new/sko-positioning-p32.png,previews_new/sko-positioning-p33.png,previews_new/sko-positioning-p34.png,previews_new/sko-positioning-p35.png,previews_new/sko-positioning-p36.png,previews_new/sko-positioning-p37.png,previews_new/sko-positioning-p38.png,previews_new/sko-positioning-p39.png,previews_new/sko-positioning-p40.png,previews_new/sko-positioning-p41.png,previews_new/sko-positioning-p42.png,previews_new/sko-positioning-p43.png,previews_new/sko-positioning-p44.png,previews_new/sko-positioning-p45.png,previews_new/sko-positioning-p46.png,previews_new/sko-positioning-p47.png,previews_new/sko-positioning-p48.png,previews_new/sko-positioning-p49.png,previews_new/sko-positioning-p50.png,previews_new/sko-positioning-p51.png,previews_new/sko-positioning-p52.png,previews_new/sko-positioning-p53.png,previews_new/sko-positioning-p54.png,previews_new/sko-positioning-p55.png,previews_new/sko-positioning-p56.png,previews_new/sko-positioning-p57.png,previews_new/sko-positioning-p58.png,previews_new/sko-positioning-p59.png,previews_new/sko-positioning-p60.png,previews_new/sko-positioning-p61.png,previews_new/sko-positioning-p62.png,previews_new/sko-positioning-p63.png,previews_new/sko-positioning-p64.png,previews_new/sko-positioning-p65.png,previews_new/sko-positioning-p66.png,previews_new/sko-positioning-p67.png,previews_new/sko-positioning-p68.png,previews_new/sko-positioning-p69.png,previews_new/sko-positioning-p70.png,previews_new/sko-positioning-p71.png,previews_new/sko-positioning-p72.png,previews_new/sko-positioning-p73.png,previews_new/sko-positioning-p74.png,previews_new/sko-positioning-p75.png,previews_new/sko-positioning-p76.png,previews_new/sko-positioning-p77.png,previews_new/sko-positioning-p78.png,previews_new/sko-positioning-p79.png,previews_new/sko-positioning-p80.png,previews_new/sko-positioning-p81.png,previews_new/sko-positioning-p82.png,previews_new/sko-positioning-p83.png,previews_new/sko-positioning-p84.png,previews_new/sko-positioning-p85.png,previews_new/sko-positioning-p86.png,previews_new/sko-positioning-p87.png,previews_new/sko-positioning-p88.png,previews_new/sko-positioning-p89.png">
+          <img src="thumbnails/sko-positioning.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-evangelist">Evangelist</span>
+            <h3 class="portfolio-title">SKO Positioning</h3>
+            <p class="portfolio-type">Sales kickoff GTM deck</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item fade-in" data-title="Sales Sheet" data-previews="previews_new/allyai-sales-teammate-p1.png">
+          <img src="thumbnails/allyai-sales-teammate.png" alt="" class="portfolio-thumb">
+          <div class="portfolio-info">
+            <span class="portfolio-tag tag-evangelist">Evangelist</span>
+            <h3 class="portfolio-title">Sales Sheet</h3>
+            <p class="portfolio-type">AllyAI one-pager for field</p>
           </div>
         </div>
 
@@ -1413,41 +1478,12 @@
           </div>
         </div>
 
-        <!-- Storyteller: Demo Script, Customer Spotlight -->
-        <div class="portfolio-item fade-in" data-title="Customer Spotlight" data-previews="previews_new/customer-spotlight-ritual-p1.png">
-          <img src="thumbnails/customer-spotlight-ritual.png" alt="" class="portfolio-thumb">
-          <div class="portfolio-info">
-            <span class="portfolio-tag tag-storyteller">Storyteller</span>
-            <h3 class="portfolio-title">Customer Spotlight</h3>
-            <p class="portfolio-type">Ritual case study</p>
-          </div>
-        </div>
-
         <div class="portfolio-item fade-in" data-title="Demo Script" data-previews="previews_new/occ-demo-script-p1.png,previews_new/occ-demo-script-p2.png,previews_new/occ-demo-script-p3.png,previews_new/occ-demo-script-p4.png,previews_new/occ-demo-script-p5.png">
           <img src="thumbnails/occ-demo-script.png" alt="" class="portfolio-thumb">
           <div class="portfolio-info">
             <span class="portfolio-tag tag-storyteller">Storyteller</span>
             <h3 class="portfolio-title">Demo Script</h3>
             <p class="portfolio-type">OCC product walkthrough</p>
-          </div>
-        </div>
-
-        <!-- Evangelist: SKO Positioning, Sales Sheet, Campaign Training -->
-        <div class="portfolio-item fade-in" data-title="SKO Positioning" data-previews="previews_new/sko-positioning-p1.png,previews_new/sko-positioning-p2.png,previews_new/sko-positioning-p3.png,previews_new/sko-positioning-p4.png,previews_new/sko-positioning-p5.png,previews_new/sko-positioning-p6.png,previews_new/sko-positioning-p7.png,previews_new/sko-positioning-p8.png,previews_new/sko-positioning-p9.png,previews_new/sko-positioning-p10.png,previews_new/sko-positioning-p11.png,previews_new/sko-positioning-p12.png,previews_new/sko-positioning-p13.png,previews_new/sko-positioning-p14.png,previews_new/sko-positioning-p15.png,previews_new/sko-positioning-p16.png,previews_new/sko-positioning-p17.png,previews_new/sko-positioning-p18.png,previews_new/sko-positioning-p19.png,previews_new/sko-positioning-p20.png,previews_new/sko-positioning-p21.png,previews_new/sko-positioning-p22.png,previews_new/sko-positioning-p23.png,previews_new/sko-positioning-p24.png,previews_new/sko-positioning-p25.png,previews_new/sko-positioning-p26.png,previews_new/sko-positioning-p27.png,previews_new/sko-positioning-p28.png,previews_new/sko-positioning-p29.png,previews_new/sko-positioning-p30.png,previews_new/sko-positioning-p31.png,previews_new/sko-positioning-p32.png,previews_new/sko-positioning-p33.png,previews_new/sko-positioning-p34.png,previews_new/sko-positioning-p35.png,previews_new/sko-positioning-p36.png,previews_new/sko-positioning-p37.png,previews_new/sko-positioning-p38.png,previews_new/sko-positioning-p39.png,previews_new/sko-positioning-p40.png,previews_new/sko-positioning-p41.png,previews_new/sko-positioning-p42.png,previews_new/sko-positioning-p43.png,previews_new/sko-positioning-p44.png,previews_new/sko-positioning-p45.png,previews_new/sko-positioning-p46.png,previews_new/sko-positioning-p47.png,previews_new/sko-positioning-p48.png,previews_new/sko-positioning-p49.png,previews_new/sko-positioning-p50.png,previews_new/sko-positioning-p51.png,previews_new/sko-positioning-p52.png,previews_new/sko-positioning-p53.png,previews_new/sko-positioning-p54.png,previews_new/sko-positioning-p55.png,previews_new/sko-positioning-p56.png,previews_new/sko-positioning-p57.png,previews_new/sko-positioning-p58.png,previews_new/sko-positioning-p59.png,previews_new/sko-positioning-p60.png,previews_new/sko-positioning-p61.png,previews_new/sko-positioning-p62.png,previews_new/sko-positioning-p63.png,previews_new/sko-positioning-p64.png,previews_new/sko-positioning-p65.png,previews_new/sko-positioning-p66.png,previews_new/sko-positioning-p67.png,previews_new/sko-positioning-p68.png,previews_new/sko-positioning-p69.png,previews_new/sko-positioning-p70.png,previews_new/sko-positioning-p71.png,previews_new/sko-positioning-p72.png,previews_new/sko-positioning-p73.png,previews_new/sko-positioning-p74.png,previews_new/sko-positioning-p75.png,previews_new/sko-positioning-p76.png,previews_new/sko-positioning-p77.png,previews_new/sko-positioning-p78.png,previews_new/sko-positioning-p79.png,previews_new/sko-positioning-p80.png,previews_new/sko-positioning-p81.png,previews_new/sko-positioning-p82.png,previews_new/sko-positioning-p83.png,previews_new/sko-positioning-p84.png,previews_new/sko-positioning-p85.png,previews_new/sko-positioning-p86.png,previews_new/sko-positioning-p87.png,previews_new/sko-positioning-p88.png,previews_new/sko-positioning-p89.png">
-          <img src="thumbnails/sko-positioning.png" alt="" class="portfolio-thumb">
-          <div class="portfolio-info">
-            <span class="portfolio-tag tag-evangelist">Evangelist</span>
-            <h3 class="portfolio-title">SKO Positioning</h3>
-            <p class="portfolio-type">Sales kickoff GTM deck</p>
-          </div>
-        </div>
-
-        <div class="portfolio-item fade-in" data-title="Sales Sheet" data-previews="previews_new/allyai-sales-teammate-p1.png">
-          <img src="thumbnails/allyai-sales-teammate.png" alt="" class="portfolio-thumb">
-          <div class="portfolio-info">
-            <span class="portfolio-tag tag-evangelist">Evangelist</span>
-            <h3 class="portfolio-title">Sales Sheet</h3>
-            <p class="portfolio-type">AllyAI one-pager for field</p>
           </div>
         </div>
 
@@ -1491,9 +1527,13 @@
 
 
       </div>
+      <button class="see-more-btn" onclick="toggleSeeMore('portfolioGrid', this)">
+        See more <span class="see-more-count">+10</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </button>
 
       <p class="subsection-label">Writing &amp; Press</p>
-      <div class="portfolio-grid">
+      <div class="portfolio-grid" id="writingGrid">
         <a href="https://www.modernretail.co/operations/marketplace-briefing-5-things-to-watch-out-for-this-prime-day/" target="_blank" class="portfolio-item fade-in">
           <img src="thumbnails/writing-modern-retail.png" alt="" class="portfolio-thumb">
           <div class="portfolio-info">
@@ -1559,6 +1599,12 @@
           </div>
         </a>
       </div>
+      <button class="see-more-btn" onclick="toggleSeeMore('writingGrid', this)">
+        See more <span class="see-more-count">+4</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </button>
+
+      
 
       <!-- Mid-page CTA -->
       <div class="mid-cta">
@@ -2146,7 +2192,24 @@
   </script>
 
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "69b7d3dcdb724e208ea180c1d81f535c"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "69b7d3dcdb724e208ea180c1d81f535c"}'>
+
+    // See More toggle
+    function toggleSeeMore(gridId, btn) {
+      const grid = document.getElementById(gridId);
+      const isExpanded = grid.classList.toggle('expanded');
+      const total = grid.querySelectorAll('.portfolio-item').length;
+      const hidden = total - 4;
+      if (isExpanded) {
+        btn.innerHTML = 'Show less <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
+        btn.classList.add('expanded');
+      } else {
+        btn.innerHTML = 'See more <span class="see-more-count">+' + hidden + '</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
+        btn.classList.remove('expanded');
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  </script>
   <!-- End Cloudflare Web Analytics -->
 
 </body>
