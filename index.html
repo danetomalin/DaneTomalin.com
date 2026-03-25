@@ -217,6 +217,36 @@
     .hero-cta-secondary:hover { gap: 12px; }
     .hero-cta-secondary svg { width: 16px; height: 16px; }
 
+    /* Metrics bar */
+    .metrics-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .metric {
+      text-align: center;
+      padding: 0 48px;
+      border-right: 1px solid var(--color-border);
+    }
+    .metric:last-child { border-right: none; }
+    .metric-value {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .metric-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+
     /* Mid-page CTA */
     .mid-cta {
       background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(219,39,119,0.04) 100%);
@@ -1128,6 +1158,9 @@
       .sticky-cta { justify-content: center; }
 
       .footer-actions { justify-content: center; }
+
+      .metrics-bar { flex-wrap: wrap; gap: 24px; padding: 32px 0; }
+      .metric { border-right: none; padding: 0 24px; }
     }
   </style>
 </head>
@@ -1156,14 +1189,16 @@
   <section class="hero">
     <div class="container">
       <div class="hero-content">
-        <p class="hero-label">Open to opportunities &middot; Seattle, WA</p>
-        <h1>I build the bridge between the product, market, and field teams.</h1>
+        <p class="hero-label">Exploring Director-level GTM roles &middot; Seattle, WA</p>
+        <h1>I turn product-market fit into repeatable revenue.</h1>
         <p>Product marketing leader with a track record of positioning AI products, building go-to-market engines, and enabling sales teams to win. MBA from Kellogg. Previously at CommerceIQ, Amazon, and Puget Sound Energy.</p>
         <div class="hero-problems">
-          <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Launching an AI product</a>
+          <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Launching an AI product line</a>
           <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Building a PMM function</a>
           <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Scaling a CS org</a>
-          <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Enabling a sales team</a>
+          <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Entering a new market</a>
+          <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Fixing net revenue retention</a>
+          <a href="#work" class="hero-problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Building a GTM engine from zero</a>
         </div>
         <div class="hero-ctas">
           <a href="https://calendly.com/dane-tomalin/30min" target="_blank" class="hero-cta-primary">
@@ -1179,11 +1214,33 @@
     </div>
   </section>
 
+  <!-- Metrics Bar -->
+  <div class="container">
+    <div class="metrics-bar fade-in">
+      <div class="metric">
+        <div class="metric-value">50x</div>
+        <div class="metric-label">Revenue growth</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">4&rarr;105</div>
+        <div class="metric-label">CS org built</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3x</div>
+        <div class="metric-label">Headcount scaled</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3</div>
+        <div class="metric-label">AI products launched</div>
+      </div>
+    </div>
+  </div>
+
   <!-- About -->
   <section id="about">
     <div class="container">
       <p class="section-label">About</p>
-      <h2 class="section-title">Building products people actually use, and teams that make it happen.</h2>
+      <h2 class="section-title">I build the GTM systems that turn early traction into scalable revenue.</h2>
       <div class="about-grid">
         <div class="about-text">
           <p>I've spent the last decade at the intersection of product, marketing, and sales in enterprise technology. Most recently, I led product marketing at CommerceIQ, where I positioned an AI-powered product suite for Fortune 500 brands, built the packaging and pricing framework, and created the sales enablement engine from the ground up.</p>
@@ -1528,7 +1585,7 @@
           <div>
             <p class="exp-title">Director, Product Marketing &amp; Customer Success</p>
             <p class="exp-location">Seattle, WA</p>
-            <p class="exp-company-desc">Series D startup ($1B+ valuation). Agentic AI platform for Fortune 500 e-commerce. ~300 employees.</p>
+            <p class="exp-company-desc">Joined post Series B. Helped grow revenues 50x and headcount 3x in pursuit of the $1B+ Series D. Agentic AI platform for Fortune 500 e-commerce.</p>
             <div class="exp-desc">
               <p>Owned product marketing and go-to-market strategy at CommerceIQ, an agentic AI company building machine learning into e-commerce before the category had a name. Founded in 2012 by an ex-Amazon engineer and valued at $1B+ by 2022, CommerceIQ deploys autonomous AI agents that execute pricing, advertising, and supply chain decisions for Fortune 500 brands like Nestl&eacute;, Colgate, and Whirlpool.</p>
               <p>Authored positioning for 4 products including AllyAI (a generative and predictive AI "teammate" platform), designed the Good/Better/Best packaging and pricing framework, and built the sales enablement engine (battle cards, demo scripts, competitive intelligence, SKO content) that brought agentic AI concepts to market. Led messaging strategy across persona, platform, and product levels.</p>
