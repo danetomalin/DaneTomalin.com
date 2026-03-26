@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building the PMM Function - Moloco Streaming Monetization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #0D0D12;
+            --surface: #16161E;
+            --text: #F0F0F4;
+            --text-secondary: #9B9BAF;
+            --accent: #A78BFA;
+            --accent-dark: #7C3AED;
+            --border: #2A2A3A;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-dark);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.25rem;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .hero-meta {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* Navigation / Table of Contents */
+        .toc {
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            z-index: 100;
+            display: none;
+        }
+
+        .toc.visible {
+            display: block;
+        }
+
+        .toc-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .toc-item {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toc-item:hover,
+        .toc-item.active {
+            color: var(--accent);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* Lists */
+        ul {
+            margin: 1.5rem 0 1.5rem 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+
+        li:before {
+            content: "▪";
+            color: var(--accent);
+            margin-right: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+        }
+
+        th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent);
+            border-bottom: 2px solid var(--border);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(167, 139, 250, 0.05);
+        }
+
+        /* Phase cards */
+        .phase {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--background);
+            font-family: 'Playfair Display', serif;
+            flex-shrink: 0;
+        }
+
+        .phase-title {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .phase-objective {
+            background-color: rgba(167, 139, 250, 0.05);
+            border-left: 3px solid var(--accent);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .phase-objective p {
+            margin: 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .phase-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Metrics list */
+        .metrics-list {
+            margin-left: 0;
+        }
+
+        .metrics-list li {
+            margin-bottom: 1rem;
+        }
+
+        .metrics-list li:before {
+            content: "✓";
+            color: var(--accent);
+            margin-right: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Closings section */
+        .closing-item {
+            margin-bottom: 1.5rem;
+            padding-left: 0;
+        }
+
+        .closing-item li {
+            margin-bottom: 1rem;
+        }
+
+        .closing-item li:before {
+            content: "◆";
+            color: var(--accent);
+            margin-right: 0.75rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .phase {
+                padding: 1.5rem;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .phase-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+
+            .toc-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky TOC -->
+    <nav class="toc" id="tocNav">
+        <div class="toc-content">
+            <div class="toc-item" data-section="executive-summary">Executive Summary</div>
+            <div class="toc-item" data-section="market-context">Market Context</div>
+            <div class="toc-item" data-section="narrative">Brand Voice</div>
+            <div class="toc-item" data-section="phased-plan">Phased Plan</div>
+            <div class="toc-item" data-section="stakeholders">Stakeholders</div>
+            <div class="toc-item" data-section="metrics">Metrics</div>
+            <div class="toc-item" data-section="automation">Automation</div>
+            <div class="toc-item" data-section="closing">Closing</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-label">Strategic Plan</div>
+        <h1>Building the PMM Function</h1>
+        <div class="hero-subtitle">Moloco Streaming Monetization</div>
+        <div class="hero-tagline">Positioning the AI-Native Operating System for the Great Streaming Reset</div>
+        <div class="hero-meta">Prepared by Dane Tomalin · March 2026</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <section id="executive-summary" class="container">
+        <h2>Executive Summary</h2>
+        <p>Moloco's Streaming Monetization business sits at the intersection of two massive tailwinds: the structural shift from linear TV to ad-supported streaming, and the maturation of machine learning as the engine of advertising decisioning. The U.S. CTV advertising market is projected to reach $38 billion in 2026 and surpass traditional TV by 2028. Moloco's AI-native ad stack—already powering Tubi, LG Channels, and TVING—is well-positioned to capture meaningful share of this transition.</p>
+
+        <p>However, the product marketing function for this business line does not yet exist. The founding PMM will need to build the strategic narrative, competitive positioning, sales enablement infrastructure, and demand generation engine from scratch—all while operating inside a company whose brand identity and muscle memory are rooted in mobile performance advertising.</p>
+
+        <p>This document lays out a phased plan for standing up that function: the work to be done, the milestones that prove it's working, the stakeholders who need to be aligned, and the deliverables that create leverage. It is organized around a central narrative—the "Great Streaming Reset"—which frames the market shift that makes Moloco's offering urgent. It also includes a section on automation tooling—agent-based workflows that can multiply the output of a small team from day one.</p>
+    </section>
+
+    <!-- Market Context -->
+    <section id="market-context" class="container">
+        <h2>Market Context: Why This Role, Why Now</h2>
+
+        <h3>The CTV Opportunity</h3>
+        <p>Streaming captured 47.5% of all U.S. TV viewing in December 2025 (Nielsen). Ad-supported subscriptions now account for 57% of new subscriber additions. Netflix's ad tier exceeded $1.5B in revenue in 2025 and is expected to double. Amazon Prime Video's ad tier reaches the vast majority of its subscriber base. The market is no longer "emerging"—it's consolidating around a small number of scaled players, with a long tail of regional streamers, FAST channels, and niche OTT providers who need ad infrastructure but can't build it themselves.</p>
+
+        <h3>Moloco's Position</h3>
+        <p>Moloco Streaming Monetization is an AI-native ad stack for large streaming providers. It enables these platforms to build outcomes-based advertising businesses on top of their first-party data—without ceding control to walled gardens. Key differentiators include separate data pipelines per customer (data sovereignty), ML-optimized yield management, and a full-funnel programmatic stack that moves beyond CPM toward measurable business outcomes (installs, purchases, ROAS).</p>
+
+        <p>Current customers include Tubi (Fox-owned FAST leader), LG Channels (10M+ Indian households), and TVING (leading Korean streaming platform). The product launched in February 2023 and is still early in its go-to-market maturity.</p>
+
+        <h3>Competitive Landscape</h3>
+        <p>The CTV ad infrastructure market is crowded but fragmented across different layers of the stack. Understanding where Moloco fits—and where it doesn't—is the first strategic task for PMM.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Competitor</th>
+                    <th>Type</th>
+                    <th>Positioning</th>
+                    <th>Moloco Differentiation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>The Trade Desk</strong></td>
+                    <td>Demand-side platform</td>
+                    <td>Omnichannel DSP; Ventura OS for CTV transparency</td>
+                    <td>Moloco is a full-stack solution, not just demand—owns the decisioning layer for the publisher</td>
+                </tr>
+                <tr>
+                    <td><strong>Magnite</strong></td>
+                    <td>Supply-side platform</td>
+                    <td>Premium video SSP; SpringServe CTV platform</td>
+                    <td>Moloco provides ML-optimized decisioning, not just inventory management and auctions</td>
+                </tr>
+                <tr>
+                    <td><strong>MNTN</strong></td>
+                    <td>Performance CTV</td>
+                    <td>Self-serve CTV for SMBs/DTC; conversion-focused</td>
+                    <td>Moloco serves the publisher side, enabling their ad business—not competing for advertiser dollars directly</td>
+                </tr>
+                <tr>
+                    <td><strong>Amazon AMS</strong></td>
+                    <td>Walled garden</td>
+                    <td>End-to-end commerce + streaming ad stack</td>
+                    <td>Moloco gives publishers Amazon-grade ML without ceding data or control to a competitor</td>
+                </tr>
+                <tr>
+                    <td><strong>FreeWheel (Comcast)</strong></td>
+                    <td>Ad server / SSP</td>
+                    <td>Legacy TV ad serving transitioning to streaming</td>
+                    <td>Moloco is ML-first, not a legacy migration; purpose-built for streaming-native outcomes</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Brand Voice & Narrative -->
+    <section id="narrative" class="container">
+        <h2>Brand Voice & Strategic Narrative: The "Great Streaming Reset"</h2>
+
+        <p>Moloco's brand voice is technical-aspirational: confident about the power of machine learning, missionary about democratizing access to it, and grounded in measurable outcomes. The tagline "Grow, scale, and monetize with AI Advertising" captures this well. The tone is professional without being stuffy—it speaks to both engineers and business leaders.</p>
+
+        <p>For Streaming Monetization, the PMM function should organize its narrative around a single, memorable thesis: the Great Streaming Reset. The core argument is that the streaming industry is undergoing a structural transition—from subscriber-growth economics to advertising-revenue economics—and that the platforms that build their own ML-optimized ad stacks will own the economics of this transition, while those that outsource to walled gardens will not. Moloco is the company that makes option one possible.</p>
+
+        <p>This narrative should be the through-line in every piece of content, every sales conversation, and every analyst briefing. It gives the market a name for the shift and positions Moloco as the company that understood it first. Three specific adjustments to brand voice support this:</p>
+
+        <ul>
+            <li><strong>Elevate the narrative from performance to transformation.</strong> Mobile PMM can talk about ROAS and CPIs. Streaming PMM needs to tell a bigger story: helping media companies build entirely new advertising businesses that compete with walled gardens. The "Reset" framing makes this tangible.</li>
+
+            <li><strong>Speak the language of media and entertainment, not just adtech.</strong> Streaming executives think in terms of content investment, subscriber lifetime value, ad load management, and brand safety—not just CPMs and fill rates. The messaging needs to meet them where they are.</li>
+
+            <li><strong>Lead with data sovereignty.</strong> In a market where Amazon, Google, and Netflix are all building competing ad stacks, the fact that Moloco keeps customer data siloed and under the publisher's control is a genuinely differentiated story. This should be a pillar, not a footnote.</li>
+        </ul>
+    </section>
+
+    <!-- Phased Plan -->
+    <section id="phased-plan" class="container">
+        <h2>The Phased Plan: Building PMM from Zero</h2>
+
+        <p>The plan below is organized into four phases across the first 12 months. Each phase builds on the last. The assumption is that the founding PMM will be operating largely solo for the first two quarters, with potential to hire or embed resources in Q3–Q4.</p>
+
+        <!-- Phase 1 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <h3 class="phase-title">Foundation</h3>
+            </div>
+            <div class="phase-subtitle" style="color: var(--text-secondary); margin: 0 0 1.5rem 0; font-size: 1rem;">Days 0–90</div>
+
+            <div class="phase-objective">
+                <p><strong>Objective:</strong> Build the knowledge base and strategic foundation. Establish credibility internally. Produce the first artifacts that the sales and BD teams can actually use.</p>
+            </div>
+
+            <div class="phase-section-title">Key Activities</div>
+            <ul>
+                <li><strong>Customer and prospect deep-dives.</strong> Sit in on every active deal and renewal. Interview current customers (Tubi, LG, TVING) about why they chose Moloco, what's working, what language resonates. Document the buyer journey for streaming monetization—who's involved, what they care about, what makes them say no.</li>
+
+                <li><strong>Competitive intelligence baseline.</strong> Build a living competitive matrix covering The Trade Desk, Magnite, MNTN, FreeWheel, Amazon, and emerging players. Map each competitor's positioning, pricing model, known customers, and recent moves. Identify the three to four objections sales hears most often.</li>
+
+                <li><strong>Messaging framework v1.</strong> Draft the core positioning document: who Moloco Streaming Monetization is for, what it does differently, why it matters now, and the proof points that back it up. This is the single most important artifact of Phase 1.</li>
+
+                <li><strong>Sales enablement starter kit.</strong> A battle card for each top competitor, a one-page product overview, a qualification cheat sheet, and a first-call deck template. Nothing fancy—useful.</li>
+
+                <li><strong>Pricing and packaging audit.</strong> Partner with Product and Finance in week three—not month six—to audit the revenue-share model against CTV buyer expectations. Benchmark against how The Trade Desk, Magnite, and Amazon price comparable offerings. Identify whether the current model creates friction in enterprise sales cycles and recommend adjustments before the pipeline builds.</li>
+
+                <li><strong>Internal roadshow.</strong> Present the "Great Streaming Reset" narrative and market landscape to Product, Engineering, Sales, BD, and the executive team. The goal is alignment around a shared story, not perfection.</li>
+            </ul>
+
+            <div class="phase-section-title">Deliverables</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Description</th>
+                        <th>Primary Audience</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Messaging Framework</strong></td>
+                        <td>Core positioning, value pillars, proof points, ICP definitions</td>
+                        <td>Exec team, Sales, BD, Marketing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Competitive Battle Cards (x4–5)</strong></td>
+                        <td>Per-competitor positioning, objection handling, win/loss patterns</td>
+                        <td>Sales, BD</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Product One-Pager</strong></td>
+                        <td>External-facing overview for prospects and partners</td>
+                        <td>Prospects, Partners</td>
+                    </tr>
+                    <tr>
+                        <td><strong>First-Call Deck</strong></td>
+                        <td>10–15 slide presentation for initial prospect meetings</td>
+                        <td>Sales, BD</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Buyer Journey Map</strong></td>
+                        <td>Documented decision-making process, personas, and touchpoints</td>
+                        <td>Sales, Marketing, Product</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pricing & Packaging Audit</strong></td>
+                        <td>Competitive pricing benchmark, revenue-share model assessment, friction analysis</td>
+                        <td>Product, Finance, Sales</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="phase-section-title">Milestone Metrics</div>
+            <ul class="metrics-list">
+                <li>Messaging framework reviewed and approved by Head of Enterprise and VP Marketing.</li>
+                <li>Battle cards adopted by 100% of AEs handling streaming deals.</li>
+                <li>3+ customer interviews completed with documented insights shared cross-functionally.</li>
+                <li>Sales confidence score baseline established via internal survey on ability to pitch and differentiate Streaming Monetization.</li>
+            </ul>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <h3 class="phase-title">GTM Engine & Product Influence</h3>
+            </div>
+            <div class="phase-subtitle" style="color: var(--text-secondary); margin: 0 0 1.5rem 0; font-size: 1rem;">Days 90–180</div>
+
+            <div class="phase-objective">
+                <p><strong>Objective:</strong> Shift from foundation to activation. Build the content and campaign infrastructure that drives pipeline. Launch the first externally visible thought leadership. And critically, begin acting as the "First Customer" of the product.</p>
+            </div>
+
+            <div class="phase-section-title">Key Activities</div>
+            <ul>
+                <li><strong>Act as the "First Customer."</strong> The founding PMM should be running Streaming Monetization's own demo environments, sitting in on implementation calls, and experiencing the product the way a prospect would. This isn't just product knowledge—it's a feedback loop. Identify friction points in onboarding, gaps in the dashboard, and missing reporting capabilities. Feed these directly to Product with market context for why they matter. PMM earns roadmap influence by being the most informed internal voice about what the buyer actually experiences.</li>
+
+                <li><strong>Case study development.</strong> Turn the Tubi, LG Channels, KRAFTON, and Nexon stories into polished, quantitative case studies. The CTV market runs on social proof—streaming execs want to see that peers have deployed this and it worked. Prioritize cases that demonstrate revenue lift, operational efficiency, and advertiser satisfaction.</li>
+
+                <li><strong>Thought leadership program.</strong> Develop a quarterly cadence of blog posts, contributed articles, and speaking opportunities. Topics should position Moloco at the center of key industry debates: outcomes-based vs. impression-based buying, the role of first-party data in a post-cookie CTV world, and why streaming platforms should own their ad stack rather than outsource it.</li>
+
+                <li><strong>Event and conference strategy.</strong> Identify the 4–6 events that matter for this buyer (CES, NAB Show, Advertising Week, StreamTV, Cannes Lions, IAB events). Plan presence at 2–3 with speaking slots, hosted meetings, or co-marketing with customers.</li>
+
+                <li><strong>Product launch playbook.</strong> Create a repeatable framework for launching new features and capabilities within Streaming Monetization. As the product matures, there will be a steady cadence of launches—the playbook ensures each one gets consistent treatment and maximum impact.</li>
+
+                <li><strong>Analyst and influencer engagement.</strong> Brief key industry analysts (Forrester, IDC, MoffettNathanson) on Moloco's streaming strategy. Build relationships with CTV-focused journalists at AdExchanger, The Drum, Digiday, and Broadcasting & Cable.</li>
+            </ul>
+
+            <div class="phase-section-title">Deliverables</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Description</th>
+                        <th>Primary Audience</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Customer Case Studies (x3–4)</strong></td>
+                        <td>Quantitative success stories with customer logos and quotes</td>
+                        <td>Prospects, Analysts, Press</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thought Leadership Calendar</strong></td>
+                        <td>12-month editorial plan aligned to product roadmap and industry events</td>
+                        <td>Marketing, Comms, Exec team</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Product Launch Playbook</strong></td>
+                        <td>Repeatable template for feature launches: messaging, enablement, content, channels</td>
+                        <td>Product, Marketing, Sales</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Event Strategy Brief</strong></td>
+                        <td>Prioritized event calendar with ROI expectations and activation plans</td>
+                        <td>Marketing, Exec team</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analyst Briefing Kit</strong></td>
+                        <td>Deck + data pack for analyst and press briefings</td>
+                        <td>Analysts, Press</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="phase-section-title">Milestone Metrics</div>
+            <ul class="metrics-list">
+                <li>3+ published case studies with customer approval and quantitative results.</li>
+                <li>Pipeline influenced by PMM content—track first-touch and multi-touch attribution for streaming deals.</li>
+                <li>2+ speaking slots secured at tier-1 industry events.</li>
+                <li>Sales confidence score improvement of 20%+ from Phase 1 baseline.</li>
+                <li>First analyst briefing completed with documented feedback and follow-up plan.</li>
+            </ul>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <h3 class="phase-title">Scale and Specialization</h3>
+            </div>
+            <div class="phase-subtitle" style="color: var(--text-secondary); margin: 0 0 1.5rem 0; font-size: 1rem;">Days 180–270</div>
+
+            <div class="phase-objective">
+                <p><strong>Objective:</strong> Move from "doing the work" to "building the system." Introduce automation, refine based on data, and begin segmenting the approach by customer tier and vertical.</p>
+            </div>
+
+            <div class="phase-section-title">Key Activities</div>
+            <ul>
+                <li><strong>Segment-specific messaging.</strong> Develop tailored positioning for key verticals: FAST channels, premium SVOD with ad tiers, regional/international streamers, and smart TV OEMs (like LG). Each segment has different pain points, buying processes, and competitive alternatives.</li>
+
+                <li><strong>Win/loss analysis program.</strong> Formalize a process for debriefing every closed-won and closed-lost streaming deal. Identify patterns in why Moloco wins (and doesn't), and feed those insights back into messaging, enablement, and product priorities.</li>
+
+                <li><strong>Sales enablement 2.0.</strong> Move beyond static documents. Build an interactive objection-handling guide, a competitive intelligence portal that stays current, and role-specific training modules for new AEs joining the streaming team.</li>
+
+                <li><strong>Demand generation partnership.</strong> Work with the demand gen team (or build the motion if it doesn't exist) to create streaming-specific campaigns: targeted ABM for key prospects, webinar series featuring customer voices, and gated content that captures high-intent leads.</li>
+
+                <li><strong>Pricing and packaging input.</strong> Partner with Product and Finance to refine the revenue-share model. Benchmark against competitor pricing. Develop packaging recommendations for different customer tiers (e.g., managed service vs. self-serve, base platform vs. premium analytics).</li>
+            </ul>
+
+            <div class="phase-section-title">Milestone Metrics</div>
+            <ul class="metrics-list">
+                <li>Win rate improvement in streaming deals vs. Phase 1 baseline.</li>
+                <li>Content engagement metrics—downloads, time-on-page, and conversion rates for streaming-specific content.</li>
+                <li>Win/loss insights documented for 80%+ of closed deals, with quarterly trend reports.</li>
+                <li>Segment-specific materials adopted by sales with measurable usage data.</li>
+                <li>ABM campaign launched targeting top 20 streaming prospects with personalized content.</li>
+            </ul>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">4</div>
+                <h3 class="phase-title">Strategic Leadership</h3>
+            </div>
+            <div class="phase-subtitle" style="color: var(--text-secondary); margin: 0 0 1.5rem 0; font-size: 1rem;">Days 270–365</div>
+
+            <div class="phase-objective">
+                <p><strong>Objective:</strong> Transition from operator to strategic leader. Influence product roadmap, shape company narrative around CTV, and build the case for expanding the PMM team.</p>
+            </div>
+
+            <div class="phase-section-title">Key Activities</div>
+            <ul>
+                <li><strong>Product roadmap influence.</strong> By this point, PMM should have enough market and competitive intelligence to meaningfully shape what gets built. Present a quarterly market landscape review to the Product team. Advocate for features that close competitive gaps or unlock new segments.</li>
+
+                <li><strong>Narrative ownership for IPO readiness.</strong> Moloco has signaled intent to list on Nasdaq. Streaming Monetization is a growth story that investors will want to understand. PMM should develop the external narrative for this business line: TAM framing, competitive moat, customer proof points, and the flywheel between Moloco's three product lines.</li>
+
+                <li><strong>Cross-product positioning.</strong> Connect the Streaming Monetization story to Moloco Ads (CTV as a mobile-to-TV bridge for app marketers) and Commerce Media (shared ML infrastructure, unified advertiser experience). The company's value is greater than the sum of its product lines—PMM should articulate why.</li>
+
+                <li><strong>Team-building business case.</strong> Document what the PMM function has delivered, what it could deliver with additional headcount, and the specific roles needed (e.g., content strategist, competitive intelligence analyst, field marketer).</li>
+
+                <li><strong>Customer advisory board.</strong> Launch a formal CAB for Streaming Monetization with 6–10 customers. This becomes a feedback loop for product, a source of references and case studies, and a community-building vehicle.</li>
+            </ul>
+
+            <div class="phase-section-title">Milestone Metrics</div>
+            <ul class="metrics-list">
+                <li>Revenue influenced by PMM—track total ACV of deals where PMM content or enablement was involved.</li>
+                <li>Product features shipped based on PMM input—at least 2 roadmap items influenced by market intelligence.</li>
+                <li>Headcount business case approved or in final review.</li>
+                <li>Customer advisory board launched with 6+ participating customers.</li>
+                <li>Investor-ready narrative developed and incorporated into corporate positioning materials.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Stakeholder Map -->
+    <section id="stakeholders" class="container">
+        <h2>Stakeholder Map</h2>
+
+        <p>The founding PMM role is inherently cross-functional. Success depends on building strong working relationships with the following groups, each of whom has different needs and expectations.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Stakeholder</th>
+                    <th>What They Need from PMM</th>
+                    <th>What PMM Needs from Them</th>
+                    <th>Engagement Cadence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Head of Enterprise (Herman Yang)</strong></td>
+                    <td>Strategic narrative, market credibility, pipeline acceleration</td>
+                    <td>Air cover, budget, organizational alignment</td>
+                    <td>Weekly 1:1, quarterly strategy review</td>
+                </tr>
+                <tr>
+                    <td><strong>Sales / BD Team</strong></td>
+                    <td>Battle cards, decks, objection handling, competitive intel</td>
+                    <td>Deal feedback, win/loss data, prospect objections</td>
+                    <td>Bi-weekly enablement sync, deal ride-alongs</td>
+                </tr>
+                <tr>
+                    <td><strong>Product Team</strong></td>
+                    <td>Market context for roadmap decisions, launch execution</td>
+                    <td>Product roadmap visibility, technical depth, beta access</td>
+                    <td>Bi-weekly sync, launch planning sessions</td>
+                </tr>
+                <tr>
+                    <td><strong>Marketing / Comms</strong></td>
+                    <td>Content briefs, thought leadership drafts, event strategy</td>
+                    <td>Design, content production, demand gen infrastructure, PR</td>
+                    <td>Weekly content sync, monthly campaign planning</td>
+                </tr>
+                <tr>
+                    <td><strong>Customer Success</strong></td>
+                    <td>Adoption content, expansion messaging, customer stories</td>
+                    <td>Customer health data, renewal insights, reference willingness</td>
+                    <td>Monthly sync, joint QBR planning</td>
+                </tr>
+                <tr>
+                    <td><strong>CEO / Exec Team</strong></td>
+                    <td>Market landscape, competitive moat narrative, IPO-ready story</td>
+                    <td>Strategic direction, cross-product vision, executive sponsorship</td>
+                    <td>Monthly exec update, quarterly board input</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Metrics Framework -->
+    <section id="metrics" class="container">
+        <h2>Metrics Framework</h2>
+
+        <p>Product marketing is notoriously hard to measure. The framework below focuses on leading indicators (are we doing the right work?) and lagging outcomes (is it working?), organized by the three core PMM mandates: enabling sales, driving demand, and shaping perception.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Leading Indicators</th>
+                    <th>Lagging Outcomes</th>
+                    <th>Measurement Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Sales Enablement</strong></td>
+                    <td>Asset adoption rate, sales confidence score, enablement session attendance</td>
+                    <td>Win rate, deal velocity, average deal size for streaming deals</td>
+                    <td>CRM tracking, quarterly sales surveys, asset analytics</td>
+                </tr>
+                <tr>
+                    <td><strong>Demand Generation</strong></td>
+                    <td>Content downloads, webinar registrations, ABM engagement</td>
+                    <td>Pipeline influenced, pipeline sourced, MQL-to-SQL conversion</td>
+                    <td>Marketing automation, attribution modeling, CRM pipeline reports</td>
+                </tr>
+                <tr>
+                    <td><strong>Market Perception</strong></td>
+                    <td>Share of voice, analyst sentiment, press coverage volume</td>
+                    <td>Brand consideration in RFPs, inbound qualified leads, category recognition</td>
+                    <td>Media monitoring, analyst feedback, prospect surveys</td>
+                </tr>
+                <tr>
+                    <td><strong>Product Influence</strong></td>
+                    <td>Roadmap inputs submitted, competitive gap analyses delivered</td>
+                    <td>Features shipped from PMM input, competitive win rate on specific features</td>
+                    <td>Product team feedback, feature release tracking</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Automation & Agent Tooling -->
+    <section id="automation" class="container">
+        <h2>Automation & Agent Tooling: Multiplying a Team of One</h2>
+
+        <p>A founding PMM doesn't have the luxury of a large team. But in 2026, AI-native tooling can close much of that gap. Below is a practical framework for the agent-based workflows and automation infrastructure that would let a solo PMM operate with the throughput of a small team.</p>
+
+        <h3>Baseline Tooling Stack</h3>
+
+        <p>Before any agents can be built, the right infrastructure needs to be in place. Here's what the minimum viable stack looks like:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Tools</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>CRM / Pipeline</strong></td>
+                    <td>Salesforce or HubSpot (likely already in place)</td>
+                    <td>Deal tracking, win/loss data, attribution</td>
+                </tr>
+                <tr>
+                    <td><strong>Content & Assets</strong></td>
+                    <td>Notion or Confluence (internal wiki), Google Workspace or MS 365</td>
+                    <td>Messaging docs, battle cards, playbooks, editorial calendar</td>
+                </tr>
+                <tr>
+                    <td><strong>Competitive Intel</strong></td>
+                    <td>Klue, Crayon, or a custom-built scraping + summarization pipeline</td>
+                    <td>Automated monitoring of competitor moves, pricing changes, product launches</td>
+                </tr>
+                <tr>
+                    <td><strong>Marketing Automation</strong></td>
+                    <td>Marketo, HubSpot, or Pardot</td>
+                    <td>Email campaigns, lead scoring, content distribution, ABM orchestration</td>
+                </tr>
+                <tr>
+                    <td><strong>Analytics</strong></td>
+                    <td>Looker, Mixpanel, or Amplitude + GA4</td>
+                    <td>Content performance, funnel analytics, attribution</td>
+                </tr>
+                <tr>
+                    <td><strong>AI / Agent Platform</strong></td>
+                    <td>Claude API, OpenAI API, LangChain/LangGraph, or n8n/Make for orchestration</td>
+                    <td>Foundation for all agent-based automation described below</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Agent Workflows to Build</h3>
+
+        <p>Each of these represents a discrete, buildable agent that automates a high-frequency PMM task. They range from straightforward (a few days to implement) to more complex (a few weeks with iteration).</p>
+
+        <h4>1. Competitive Intelligence Monitor</h4>
+        <ul>
+            <li><strong>What it does:</strong> Monitors competitor websites, press releases, job postings, G2/Gartner reviews, and social media for changes. Summarizes weekly into a digest and flags high-priority moves (new product launches, pricing changes, key hires).</li>
+
+            <li><strong>Implementation:</strong> Web scraping layer (Apify, Firecrawl, or custom) feeding into an LLM summarization pipeline. Output to Slack channel and Notion page. 2–3 weeks to build v1.</li>
+
+            <li><strong>Impact:</strong> Turns a 4–6 hour/week manual task into a 30-minute review.</li>
+        </ul>
+
+        <h4>2. Battle Card Auto-Updater</h4>
+        <ul>
+            <li><strong>What it does:</strong> Pulls from the competitive intel monitor and CRM win/loss data to suggest updates to battle cards. Drafts new objection-handling responses when new competitive claims emerge. Flags when a battle card is stale.</li>
+
+            <li><strong>Implementation:</strong> LLM agent with access to the competitive intel database and CRM. Runs weekly, outputs draft updates for human review. 1–2 weeks on top of the CI monitor.</li>
+
+            <li><strong>Impact:</strong> Battle cards stay current without manual maintenance cycles.</li>
+        </ul>
+
+        <h4>3. Win/Loss Interview Synthesizer</h4>
+        <ul>
+            <li><strong>What it does:</strong> Takes recorded win/loss interviews (Gong, Chorus, or manual recordings), transcribes them, extracts key themes (decision drivers, competitive mentions, objections, feature requests), and aggregates findings across deals into trend reports.</li>
+
+            <li><strong>Implementation:</strong> Transcription API (Whisper/Deepgram) + LLM extraction pipeline. Structured output to a database for trend analysis. 2–3 weeks for v1.</li>
+
+            <li><strong>Impact:</strong> Makes win/loss analysis scalable even without a dedicated analyst.</li>
+        </ul>
+
+        <h4>4. Content Brief Generator</h4>
+        <ul>
+            <li><strong>What it does:</strong> Given a topic and target persona, generates a structured content brief: key messages, competitive angle, SEO recommendations, suggested structure, and relevant proof points pulled from the case study library.</li>
+
+            <li><strong>Implementation:</strong> RAG (retrieval-augmented generation) agent with access to the messaging framework, case studies, and competitive database. 1–2 weeks.</li>
+
+            <li><strong>Impact:</strong> Cuts content planning time by 60–70%, ensures consistency with messaging framework.</li>
+        </ul>
+
+        <h4>5. RFP / RFI Response Drafter</h4>
+        <ul>
+            <li><strong>What it does:</strong> Ingests an RFP document, maps questions to existing content (product specs, case studies, security docs, compliance info), and drafts responses. Flags gaps where new content is needed.</li>
+
+            <li><strong>Implementation:</strong> Document parsing + RAG pipeline with a curated knowledge base of approved responses. 3–4 weeks for a production-quality v1.</li>
+
+            <li><strong>Impact:</strong> Reduces RFP response time from days to hours. Critical for a business line where enterprise deals involve lengthy procurement.</li>
+        </ul>
+
+        <h4>6. Market Signal Dashboard</h4>
+        <ul>
+            <li><strong>What it does:</strong> Aggregates CTV industry data—ad spend trends, new FAST channel launches, streaming subscriber growth, regulatory moves—into a live dashboard with AI-generated commentary on what matters for Moloco.</li>
+
+            <li><strong>Implementation:</strong> Data pipeline (APIs from eMarketer, Statista, press RSS feeds) + LLM analysis layer + dashboard frontend (Streamlit or Retool). 3–4 weeks.</li>
+
+            <li><strong>Impact:</strong> Replaces manual market research with an always-on intelligence layer. Feeds content strategy and executive briefings.</li>
+        </ul>
+
+        <h3>Implementation Roadmap for Agents</h3>
+
+        <p>Not all of these need to exist on day one. Here's a sequencing recommendation based on effort vs. impact:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Agent</th>
+                    <th>Build Time</th>
+                    <th>When</th>
+                    <th>Dependencies</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1</strong></td>
+                    <td>Competitive Intelligence Monitor</td>
+                    <td>2–3 weeks</td>
+                    <td>Month 1–2</td>
+                    <td>Web access, Slack</td>
+                </tr>
+                <tr>
+                    <td><strong>2</strong></td>
+                    <td>Content Brief Generator</td>
+                    <td>1–2 weeks</td>
+                    <td>Month 2–3</td>
+                    <td>Messaging framework</td>
+                </tr>
+                <tr>
+                    <td><strong>3</strong></td>
+                    <td>Battle Card Auto-Updater</td>
+                    <td>1–2 weeks</td>
+                    <td>Month 3–4</td>
+                    <td>CI Monitor, CRM</td>
+                </tr>
+                <tr>
+                    <td><strong>4</strong></td>
+                    <td>Win/Loss Interview Synthesizer</td>
+                    <td>2–3 weeks</td>
+                    <td>Month 4–6</td>
+                    <td>Recording access</td>
+                </tr>
+                <tr>
+                    <td><strong>5</strong></td>
+                    <td>RFP Response Drafter</td>
+                    <td>3–4 weeks</td>
+                    <td>Month 6–8</td>
+                    <td>Knowledge base</td>
+                </tr>
+                <tr>
+                    <td><strong>6</strong></td>
+                    <td>Market Signal Dashboard</td>
+                    <td>3–4 weeks</td>
+                    <td>Month 6–9</td>
+                    <td>Data APIs, dashboard infra</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Total investment to build all six agents: roughly 13–18 weeks of engineering effort, spread across the first 9 months. This could be a dedicated contractor, a PMM with strong technical chops, or a shared resource from the platform engineering team—Moloco's ML-native culture makes internal talent a realistic option.</p>
+    </section>
+
+    <!-- Closing -->
+    <section id="closing" class="container">
+        <h2>Closing: What Good Looks Like at Month 12</h2>
+
+        <p>Twelve months in, a well-executed PMM function for Moloco Streaming Monetization should have delivered the following:</p>
+
+        <div class="closing-item">
+            <ul>
+                <li>A clear, differentiated positioning that the entire organization can articulate—from the CEO to the newest AE.</li>
+
+                <li>A library of sales enablement assets that are actively used and measurably correlated with deal outcomes.</li>
+
+                <li>A pipeline of externally visible thought leadership that positions Moloco as a credible voice in CTV advertising.</li>
+
+                <li>A measurable impact on pipeline creation, deal velocity, and win rates for streaming deals.</li>
+
+                <li>A set of automated workflows that handle the operational burden of competitive monitoring, content planning, and deal support.</li>
+
+                <li>A documented business case for expanding the team, grounded in the revenue impact of the first year's work.</li>
+            </ul>
+        </div>
+
+        <p>The CTV ad market is at an inflection point. Moloco's technology is ready. The missing piece is the go-to-market engine that turns a strong product into a market-defining story. That's what this role builds.</p>
+    </section>
+
+    <script>
+        // Table of Contents functionality
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '-100px 0px -66%'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            let visibleSection = null;
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    visibleSection = entry.target.id;
+                }
+            });
+
+            if (visibleSection) {
+                document.querySelectorAll('.toc-item').forEach((item) => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-section') === visibleSection) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+
+            // Show TOC after scrolling past hero
+            const hero = document.querySelector('.hero');
+            if (window.scrollY > hero.offsetHeight) {
+                document.getElementById('tocNav').classList.add('visible');
+            } else {
+                document.getElementById('tocNav').classList.remove('visible');
+            }
+        });
+
+        // Observe all sections
+        document.querySelectorAll('section[id]').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // TOC click handler
+        document.querySelectorAll('.toc-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Show/hide TOC on scroll
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            if (window.scrollY > hero.offsetHeight) {
+                document.getElementById('tocNav').classList.add('visible');
+            } else {
+                document.getElementById('tocNav').classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>
