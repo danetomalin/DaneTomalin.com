@@ -8,9 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <style>
-@keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-:root {
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
             --background: #0D0D12;
             --surface: #16161E;
             --text: #F0F0F4;
@@ -20,21 +21,64 @@
             --border: #2A2A3A;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
+
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
             line-height: 1.2;
         }
 
-        /* ── HERO (enhanced) ── */
+        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+        section {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+        }
+
+        .section-intro {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 720px;
+            margin-bottom: 2rem;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: var(--accent-dark); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+
+        /* ── Section 1 styles ── */
+/* ── HERO (enhanced) ── */
         .hero {
             position: relative;
             padding: 6rem 2rem 5rem;
@@ -91,24 +135,16 @@
             font-style: italic;
             position: relative;
         }
-        .hero-meta {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            position: relative;
-        }
+        .hero-met
 
         /* ── EXECUTIVE SUMMARY (redesigned) ── */
         .exec-summary {
             padding: 4rem 2rem;
             border-bottom: 1px solid var(--border);
         }
-        .container { max-width: 960px; margin: 0 auto; }
+        
 
-        .exec-summary h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-        }
+        .exec-summary 
 
         /* Stat callout row */
         .stat-row {
@@ -207,16 +243,7 @@
         }
 
         /* ── PREVIEW BANNER ── */
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
+        
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
@@ -224,45 +251,10 @@
             .pillar-row { grid-template-columns: 1fr; }
             .stat-number { font-size: 2.2rem; }
         }
-    
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
 
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-
-        section {
-            padding: 4rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            color: var(--text);
-        }
-
-        /* ── CTV OPPORTUNITY: stat strip ── */
+        /* ── Section 2 styles ── */
+/* ── CTV OPPORTUNITY: stat strip ── */
         .section-label {
             display: inline-block;
             font-size: 0.75rem;
@@ -386,12 +378,7 @@
             color: var(--text);
             letter-spacing: 0.02em;
         }
-        .customer-meta {
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            margin-left: auto;
-            white-space: nowrap;
-        }
+        .customer-met
 
         /* ── COMPETITIVE LANDSCAPE ── */
         .comp-intro {
@@ -463,55 +450,12 @@
             .ctv-grid { grid-template-columns: repeat(2, 1fr); }
             .comp-grid { grid-template-columns: 1fr; }
             .customer-row { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
-            .customer-meta { margin-left: 0; }
-        }
-    
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 600;
-            letter-spacing: 0.05em;
+            .customer-met
         }
 
-        section {
-            padding: 4rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
 
-        h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-
-        .section-intro {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 720px;
-            margin-bottom: 2rem;
-        }
-
-        /* ── THESIS CARD ── */
+        /* ── Section 3 styles ── */
+/* ── THESIS CARD ── */
         .thesis-card {
             position: relative;
             background: var(--surface);
@@ -551,12 +495,7 @@
             margin-bottom: 1rem;
             line-height: 1.2;
         }
-        .thesis-body {
-            font-size: 1rem;
-            color: var(--text);
-            line-height: 1.8;
-            max-width: 680px;
-        }
+        .thesis-
         .thesis-body strong {
             color: var(--accent);
         }
@@ -667,42 +606,10 @@
             .throughline-items { flex-direction: column; align-items: flex-start; }
             .throughline-arrow { display: none; }
         }
-    
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-        section { padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
-        h2 { font-size: 2.2rem; margin-bottom: 0.6rem; color: var(--text); }
-        .section-intro {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 720px;
-            margin-bottom: 2.5rem;
-        }
 
-        /* ── TIMELINE TAB BAR ── */
+        /* ── Section 4 styles ── */
+/* ── TIMELINE TAB BAR ── */
         .timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -788,8 +695,6 @@
             display: block;
         }
         
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         .phase-top {
             display: flex;
@@ -956,23 +861,10 @@
             .activities-grid { grid-template-columns: 1fr; }
             .phase-top { flex-direction: column; align-items: flex-start; }
         }
-    
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem; text-align: center;
-            font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em;
-        }
-        section { padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
-        h2 { font-size: 2.2rem; margin-bottom: 0.6rem; color: var(--text); }
-        .section-intro { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; max-width: 720px; margin-bottom: 2rem; }
 
-        /* ── TAB BAR (reusable) ── */
+        /* ── Section 5 styles ── */
+/* ── TAB BAR (reusable) ── */
         .tab-bar {
             display: flex;
             gap: 0;
@@ -1004,8 +896,6 @@
         }
         .tab-panel.active { display: block; }
         
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         /* ── STAKEHOLDER PANEL CONTENT ── */
         .stake-panel {
@@ -1210,26 +1100,10 @@
             .mf-arrow { padding: 0.5rem 0; transform: rotate(90deg); }
             .tab-item { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
         }
-    
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem; text-align: center;
-            font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em;
-        }
-        section { padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
-        h2 { font-size: 2.2rem; margin-bottom: 0.6rem; }
-        .section-intro { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; max-width: 720px; margin-bottom: 2.5rem; }
-        
-            to { opacity: 1; transform: translateY(0); }
-        }
 
-        /* ── TOOLING STACK CHIPS ── */
+        /* ── Section 6 styles ── */
+/* ── TOOLING STACK CHIPS ── */
         .stack-label {
             font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
             text-transform: uppercase; color: var(--text-secondary); margin-bottom: 1rem;
@@ -1289,9 +1163,7 @@
             margin-bottom: 1.5rem; max-width: 700px;
         }
 
-        .agent-meta {
-            display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
-        }
+        .agent-met
         .agent-meta-item {
             background: var(--background); border: 1px solid var(--border); border-radius: 8px;
             padding: 0.8rem 1.2rem; flex: 1; min-width: 140px;
@@ -1369,27 +1241,14 @@
         .roadmap-total strong { color: var(--accent); font-weight: 700; }
 
         @media (max-width: 768px) {
-            .agent-meta { flex-direction: column; }
+            .agent-met
             .roadmap-months, .roadmap-row { grid-template-columns: 100px repeat(9, 1fr); }
             .agent-tab { padding: 0.6rem 0.7rem; font-size: 0.72rem; }
         }
-    
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .preview-banner {
-            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem; text-align: center;
-            font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em;
-        }
-        section { padding: 4rem 2rem; }
-        h2 { font-size: 2.2rem; margin-bottom: 0.6rem; }
-        .section-intro { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; max-width: 720px; margin-bottom: 2.5rem; }
 
-        /* ── ACHIEVEMENT GRID ── */
+        /* ── Section 7 styles ── */
+/* ── ACHIEVEMENT GRID ── */
         .achieve-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1472,75 +1331,72 @@
             .achieve-grid { grid-template-columns: 1fr; }
             .cta-text { font-size: 1.2rem; }
         }
-    
 
-        /* ── STICKY TOC NAVIGATION ── */
-        .toc-nav {
-            position: fixed;
+        /* ── Sticky TOC ── */
+        .toc {
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            background: var(--background);
+            background-color: var(--background);
             border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            animation: slideDown 0.3s ease-out;
+            padding: 1rem 2rem;
+            z-index: 100;
+            display: none;
         }
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-        .toc-container {
+        .toc.visible { display: block; }
+        .toc-content {
             max-width: 960px;
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-        .toc-items {
             display: flex;
+            gap: 1.5rem;
             overflow-x: auto;
-            gap: 0;
-            padding: 0;
+            padding-bottom: 0.5rem;
         }
         .toc-item {
-            flex: 0 0 auto;
-            padding: 1rem 1.2rem;
-            font-size: 0.78rem;
-            font-weight: 600;
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            text-decoration: none;
-            cursor: pointer;
             white-space: nowrap;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-weight: 500;
         }
-        .toc-item:hover {
-            color: var(--text);
-            border-bottom-color: var(--border);
-        }
-        .toc-item.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
+        .toc-item:hover,
+        .toc-item.active { color: var(--accent); }
+
+        /* ── Global responsive ── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero { padding: 3rem 1rem; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Sticky TOC Navigation Bar -->
-    <nav class="toc-nav" id="tocNav" style="display: none;">
-        <div class="toc-container">
-            <div class="toc-items">
-                <a href="#executive-summary" class="toc-item" data-section="executive-summary">Executive Summary</a>
-                <a href="#market-context" class="toc-item" data-section="market-context">Market Context</a>
-                <a href="#narrative" class="toc-item" data-section="narrative">Brand Voice</a>
-                <a href="#phased-plan" class="toc-item" data-section="phased-plan">Phased Plan</a>
-                <a href="#stakeholders" class="toc-item" data-section="stakeholders">Stakeholders</a>
-                <a href="#metrics" class="toc-item" data-section="metrics">Metrics</a>
-                <a href="#automation" class="toc-item" data-section="automation">Automation</a>
-                <a href="#closing" class="toc-item" data-section="closing">Closing</a>
-            </div>
+    <!-- Sticky TOC -->
+    <nav class="toc" id="tocNav">
+        <div class="toc-content">
+            <div class="toc-item" data-section="executive-summary">Executive Summary</div>
+            <div class="toc-item" data-section="market-context">Market Context</div>
+            <div class="toc-item" data-section="narrative">Brand Voice</div>
+            <div class="toc-item" data-section="phased-plan">Phased Plan</div>
+            <div class="toc-item" data-section="stakeholders">Stakeholders</div>
+            <div class="toc-item" data-section="metrics">Metrics</div>
+            <div class="toc-item" data-section="automation">Automation</div>
+            <div class="toc-item" data-section="closing">Closing</div>
         </div>
     </nav>
-<section id="executive-summary" class="exec-summary">
+
+<!-- Hero (enhanced with subtle animated gradient) -->
+    <div class="hero">
+        <div class="hero-label">Strategic Plan</div>
+        <h1>Building the PMM Function</h1>
+        <div class="hero-subtitle">Moloco Streaming Monetization</div>
+        <div class="hero-tagline">Positioning the AI-Native Operating System for the Great Streaming Reset</div>
+        <div class="hero-meta">Prepared by Dane Tomalin &middot; March 2026</div>
+    </div>
+
+    <!-- Executive Summary (redesigned) -->
+    <section id="executive-summary" class="exec-summary">
         <div class="container">
             <h2>Executive Summary</h2>
 
@@ -1590,17 +1446,9 @@
                 </div>
             </div>
         </div>
-    </section><!-- Hero (enhanced with subtle animated gradient) -->
-    <div class="hero">
-        <div class="hero-label">Strategic Plan</div>
-        <h1>Building the PMM Function</h1>
-        <div class="hero-subtitle">Moloco Streaming Monetization</div>
-        <div class="hero-tagline">Positioning the AI-Native Operating System for the Great Streaming Reset</div>
-        <div class="hero-meta">Prepared by Dane Tomalin &middot; March 2026</div>
-    </div>
+    </section>
 
-    <!-- Executive Summary (redesigned) -->
-    <section id="market-context">
+<section id="market-context">
         <div class="container">
             <h2>Market Context: Why This Role, Why Now</h2>
 
@@ -1717,7 +1565,9 @@
                 </div>
             </div>
         </div>
-    </section><section id="narrative">
+    </section>
+
+<section id="narrative">
         <div class="container">
             <h2>Brand Voice & Strategic Narrative</h2>
             <p class="section-intro">Moloco's voice is technical-aspirational: confident about ML, missionary about democratizing access, grounded in measurable outcomes. For Streaming Monetization, the PMM function organizes everything around a single thesis:</p>
@@ -1792,7 +1642,9 @@
                 </div>
             </div>
         </div>
-    </section><section id="phased-plan">
+    </section>
+
+<section id="phased-plan">
         <div class="container">
             <h2>The Phased Plan: Building PMM from Zero</h2>
             <p class="section-intro">Four phases across 12 months. Each builds on the last. The founding PMM operates solo for the first two quarters, with headcount expansion in Q3-Q4.</p>
@@ -1996,7 +1848,9 @@
                 showPhase(next);
             }
         }
-    </script><!-- STAKEHOLDER MAP -->
+    </script>
+
+<!-- STAKEHOLDER MAP -->
     <section id="stakeholders">
         <div class="container">
             <h2>Stakeholder Map</h2>
@@ -2389,7 +2243,9 @@
             var next = currentMetric + dir;
             if (next >= 0 && next < totalMetrics) showMetric(next);
         }
-    </script><section id="automation">
+    </script>
+
+<section id="automation">
         <div class="container">
             <h2>Automation & Agent Tooling</h2>
             <p class="section-intro">A founding PMM doesn't have the luxury of a large team. AI-native tooling closes much of that gap. Six buildable agent workflows let a solo PMM operate with the throughput of a small team.</p>
@@ -2699,7 +2555,9 @@
             var next = currentAgent + dir;
             if (next >= 0 && next < totalAgents) showAgent(next);
         }
-    </script><section id="closing" style="border-bottom: none;">
+    </script>
+
+<section id="closing">
         <div class="container">
             <h2>What Good Looks Like at Month 12</h2>
             <p class="section-intro">Twelve months in, a well-executed PMM function for Moloco Streaming Monetization should have delivered:</p>
@@ -2765,77 +2623,6 @@
             </div>
         </div>
     </section>
-    
-    <script>
-        // TOC Navigation
-        const tocNav = document.getElementById('tocNav');
-        const tocItems = document.querySelectorAll('.toc-item');
-        let heroElement = null;
-
-        // Find hero element (first element before first section)
-        for (let elem of document.body.children) {
-            if (elem.tagName === 'SECTION' || elem.id === 'executive-summary') {
-                break;
-            }
-            if (elem.classList && elem.classList.contains('hero')) {
-                heroElement = elem;
-            }
-        }
-
-        // Show TOC when scrolling past hero
-        window.addEventListener('scroll', function() {
-            let showToc = false;
-            if (heroElement) {
-                const heroRect = heroElement.getBoundingClientRect();
-                showToc = heroRect.bottom <= 0;
-            } else {
-                showToc = window.scrollY > 400;
-            }
-
-            if (showToc && tocNav.style.display === 'none') {
-                tocNav.style.display = 'block';
-            } else if (!showToc && tocNav.style.display === 'block') {
-                tocNav.style.display = 'none';
-            }
-
-            // Update active section
-            updateActiveToc();
-        });
-
-        function updateActiveToc() {
-            tocItems.forEach(item => item.classList.remove('active'));
-
-            let currentSection = null;
-            for (let item of tocItems) {
-                const sectionId = item.getAttribute('data-section');
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top <= 120) {
-                        currentSection = item;
-                    }
-                }
-            }
-
-            if (currentSection) {
-                currentSection.classList.add('active');
-            }
-        }
-
-        // Click to scroll
-        tocItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const sectionId = this.getAttribute('data-section');
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                    // Update TOC after scroll
-                    setTimeout(updateActiveToc, 100);
-                }
-            });
-        });
-    </script>
 
     <script>
 
@@ -2874,9 +2661,6 @@
             }
         }
     
-    </script>
-
-    <script>
 
         /* ── Stakeholder tabs ── */
         var currentStake = 0;
@@ -2924,9 +2708,6 @@
             if (next >= 0 && next < totalMetrics) showMetric(next);
         }
     
-    </script>
-
-    <script>
 
         var currentAgent = 0;
         var totalAgents = 6;
@@ -2950,6 +2731,47 @@
             if (next >= 0 && next < totalAgents) showAgent(next);
         }
     
+
+        // TOC: show/hide on scroll
+        window.addEventListener('scroll', function() {
+            var hero = document.querySelector('.hero');
+            var toc = document.getElementById('tocNav');
+            if (window.scrollY > hero.offsetHeight) {
+                toc.classList.add('visible');
+            } else {
+                toc.classList.remove('visible');
+            }
+        });
+
+        // TOC: click to scroll
+        document.querySelectorAll('.toc-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                var sectionId = this.getAttribute('data-section');
+                var section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // TOC: highlight active section
+        var tocObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.toc-item').forEach(function(item) {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-section') === entry.target.id) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-100px 0px -50%' });
+
+        document.querySelectorAll('section[id]').forEach(function(section) {
+            tocObserver.observe(section);
+        });
+
     </script>
 
     <script defer src='https://static.cloudflare.com/beacon.min.js' data-cf-beacon='{"token": "69b7d3dcdb724e208ea180c1d81f535c"}'></script>
