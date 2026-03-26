@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Closing Redesign</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --background: #0D0D12;
+            --surface: #16161E;
+            --text: #F0F0F4;
+            --text-secondary: #9B9BAF;
+            --accent: #A78BFA;
+            --accent-dark: #7C3AED;
+            --border: #2A2A3A;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+        .preview-banner {
+            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem; text-align: center;
+            font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em;
+        }
+        section { padding: 4rem 2rem; }
+        h2 { font-size: 2.2rem; margin-bottom: 0.6rem; }
+        .section-intro { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; max-width: 720px; margin-bottom: 2.5rem; }
+
+        /* ── ACHIEVEMENT GRID ── */
+        .achieve-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .achieve-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .achieve-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .achieve-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(167,139,250,0.08));
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .achieve-icon svg {
+            width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5;
+        }
+        .achieve-title {
+            font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem;
+        }
+        .achieve-desc {
+            font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;
+        }
+
+        /* ── CTA CARD ── */
+        .cta-card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.5rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-dark));
+        }
+        .cta-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.5;
+            max-width: 620px;
+            margin: 0 auto 1rem;
+        }
+        .cta-subtext {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ── AUTHOR FOOTER ── */
+        .author-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .author-footer strong {
+            color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            .achieve-grid { grid-template-columns: 1fr; }
+            .cta-text { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-banner">PREVIEW: Closing Section Redesign</div>
+
+    <section>
+        <div class="container">
+            <h2>What Good Looks Like at Month 12</h2>
+            <p class="section-intro">Twelve months in, a well-executed PMM function for Moloco Streaming Monetization should have delivered:</p>
+
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
+                    </div>
+                    <div class="achieve-title">Unified Positioning</div>
+                    <div class="achieve-desc">A clear, differentiated story the entire org can articulate, from the CEO to the newest AE.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div class="achieve-title">Sales Arsenal</div>
+                    <div class="achieve-desc">A library of enablement assets actively used and measurably correlated with deal outcomes.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+                    </div>
+                    <div class="achieve-title">Thought Leadership</div>
+                    <div class="achieve-desc">A pipeline of externally visible content positioning Moloco as a credible voice in CTV advertising.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                    </div>
+                    <div class="achieve-title">Pipeline Impact</div>
+                    <div class="achieve-desc">Measurable impact on pipeline creation, deal velocity, and win rates for streaming deals.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+                    </div>
+                    <div class="achieve-title">Automated Workflows</div>
+                    <div class="achieve-desc">Agent-based systems handling competitive monitoring, content planning, and deal support at scale.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                    </div>
+                    <div class="achieve-title">Team Expansion Case</div>
+                    <div class="achieve-desc">A documented business case for growing the team, grounded in the revenue impact of year one's work.</div>
+                </div>
+            </div>
+
+            <!-- CTA Card -->
+            <div class="cta-card">
+                <p class="cta-text">Moloco has the ML. It has the product. It has the customers proving it works. What it doesn't have is the story that makes the market care.</p>
+                <p class="cta-subtext" style="font-size: 1.1rem; margin-top: 0.5rem;">I build that story. Let's talk.</p>
+            </div>
+
+            <div class="author-footer">
+                <strong>Dane Tomalin</strong> &middot; March 2026
+            </div>
+        </div>
+    </section>
+</body>
+</html>
