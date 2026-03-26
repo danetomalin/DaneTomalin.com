@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Stakeholders + Metrics Redesign</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --background: #0D0D12;
+            --surface: #16161E;
+            --text: #F0F0F4;
+            --text-secondary: #9B9BAF;
+            --accent: #A78BFA;
+            --accent-dark: #7C3AED;
+            --border: #2A2A3A;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+        .preview-banner {
+            background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(167,139,250,0.1) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem; text-align: center;
+            font-size: 0.85rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em;
+        }
+        section { padding: 4rem 2rem; border-bottom: 1px solid var(--border); }
+        h2 { font-size: 2.2rem; margin-bottom: 0.6rem; color: var(--text); }
+        .section-intro { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; max-width: 720px; margin-bottom: 2rem; }
+
+        /* ── TAB BAR (reusable) ── */
+        .tab-bar {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+        .tab-item {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab-item:hover { color: var(--text); }
+        .tab-item.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ── PANEL (reusable) ── */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── STAKEHOLDER PANEL CONTENT ── */
+        .stake-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .stake-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .stake-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .stake-cadence {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            background: rgba(124,58,237,0.08);
+            border: 1px solid rgba(167,139,250,0.2);
+            border-radius: 20px;
+            padding: 0.3rem 1rem;
+        }
+        .stake-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .stake-col {
+            padding: 1.2rem;
+            border-radius: 8px;
+        }
+        .stake-delivers {
+            background: rgba(124,58,237,0.04);
+            border-left: 3px solid var(--accent);
+        }
+        .stake-requires {
+            background: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--border);
+        }
+        .stake-col-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .stake-delivers .stake-col-label { color: var(--accent); }
+        .stake-requires .stake-col-label { color: var(--text-secondary); }
+        .stake-col-items {
+            list-style: none;
+        }
+        .stake-col-items li {
+            font-size: 0.88rem;
+            color: var(--text);
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stake-col-items li::before { content: none; }
+        .stake-col-items svg {
+            width: 14px; height: 14px;
+            stroke: var(--accent); fill: none; stroke-width: 2;
+            flex-shrink: 0;
+        }
+        .stake-requires .stake-col-items svg { stroke: var(--text-secondary); }
+
+        /* ── NAV HINT ── */
+        .nav-hint {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .nav-hint button {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            padding: 0.35rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .nav-hint button:hover { border-color: var(--accent); color: var(--accent); }
+        .nav-hint button:disabled { opacity: 0.3; cursor: default; }
+        .nav-hint button svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* ── METRICS PANEL CONTENT ── */
+        .metric-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .metric-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .metric-icon-lg {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(167,139,250,0.08));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .metric-icon-lg svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+        .metric-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .metric-flow-large {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+            margin-bottom: 1.5rem;
+        }
+        .mf-col {
+            padding: 1.2rem;
+            border-radius: 8px;
+        }
+        .mf-leading {
+            background: rgba(124,58,237,0.04);
+            border-left: 3px solid var(--accent);
+        }
+        .mf-lagging {
+            background: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--border);
+        }
+        .mf-col-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .mf-leading .mf-col-label { color: var(--accent); }
+        .mf-lagging .mf-col-label { color: var(--text-secondary); }
+        .mf-col-items {
+            list-style: none;
+        }
+        .mf-col-items li {
+            font-size: 0.88rem;
+            color: var(--text);
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mf-col-items li::before { content: none; }
+        .mf-col-items svg {
+            width: 14px; height: 14px;
+            fill: none; stroke-width: 2; flex-shrink: 0;
+        }
+        .mf-leading .mf-col-items svg { stroke: var(--accent); }
+        .mf-lagging .mf-col-items svg { stroke: var(--text-secondary); }
+        .mf-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.5rem;
+        }
+        .mf-arrow svg {
+            width: 24px; height: 24px;
+            stroke: var(--border); fill: none; stroke-width: 2;
+        }
+        .mf-method {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            padding: 1rem 1.2rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mf-method-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .stake-columns { grid-template-columns: 1fr; }
+            .metric-flow-large { grid-template-columns: 1fr; }
+            .mf-arrow { padding: 0.5rem 0; transform: rotate(90deg); }
+            .tab-item { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-banner">PREVIEW: Stakeholder Map + Metrics Framework (Tabbed)</div>
+
+    <!-- STAKEHOLDER MAP -->
+    <section>
+        <div class="container">
+            <h2>Stakeholder Map</h2>
+            <p class="section-intro">The founding PMM role is inherently cross-functional. Success depends on building strong working relationships with each of these groups.</p>
+
+            <div class="tab-bar" id="stakeTabBar">
+                <div class="tab-item active" onclick="showStake(0)">Head of Enterprise</div>
+                <div class="tab-item" onclick="showStake(1)">Sales / BD</div>
+                <div class="tab-item" onclick="showStake(2)">Product</div>
+                <div class="tab-item" onclick="showStake(3)">Marketing</div>
+                <div class="tab-item" onclick="showStake(4)">Customer Success</div>
+                <div class="tab-item" onclick="showStake(5)">CEO / Exec</div>
+            </div>
+
+            <!-- Panel 0 -->
+            <div class="tab-panel active" id="stake-0">
+                <div class="stake-panel">
+                    <div class="stake-header">
+                        <div class="stake-name">Head of Enterprise (Herman Yang)</div>
+                        <div class="stake-cadence">Weekly 1:1, quarterly strategy review</div>
+                    </div>
+                    <div class="stake-columns">
+                        <div class="stake-col stake-delivers">
+                            <div class="stake-col-label">What PMM Delivers</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Strategic narrative</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Market credibility</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pipeline acceleration</li>
+                            </ul>
+                        </div>
+                        <div class="stake-col stake-requires">
+                            <div class="stake-col-label">What PMM Needs</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Air cover</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Budget</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Organizational alignment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 1 -->
+            <div class="tab-panel" id="stake-1">
+                <div class="stake-panel">
+                    <div class="stake-header">
+                        <div class="stake-name">Sales / BD Team</div>
+                        <div class="stake-cadence">Bi-weekly enablement sync, deal ride-alongs</div>
+                    </div>
+                    <div class="stake-columns">
+                        <div class="stake-col stake-delivers">
+                            <div class="stake-col-label">What PMM Delivers</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Battle cards &amp; decks</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Objection handling</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive intel</li>
+                            </ul>
+                        </div>
+                        <div class="stake-col stake-requires">
+                            <div class="stake-col-label">What PMM Needs</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Deal feedback</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Win/loss data</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Prospect objections</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2 -->
+            <div class="tab-panel" id="stake-2">
+                <div class="stake-panel">
+                    <div class="stake-header">
+                        <div class="stake-name">Product Team</div>
+                        <div class="stake-cadence">Bi-weekly sync, launch planning sessions</div>
+                    </div>
+                    <div class="stake-columns">
+                        <div class="stake-col stake-delivers">
+                            <div class="stake-col-label">What PMM Delivers</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Market context for roadmap</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Launch execution</li>
+                            </ul>
+                        </div>
+                        <div class="stake-col stake-requires">
+                            <div class="stake-col-label">What PMM Needs</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Roadmap visibility</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Technical depth</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Beta access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3 -->
+            <div class="tab-panel" id="stake-3">
+                <div class="stake-panel">
+                    <div class="stake-header">
+                        <div class="stake-name">Marketing / Comms</div>
+                        <div class="stake-cadence">Weekly content sync, monthly campaign planning</div>
+                    </div>
+                    <div class="stake-columns">
+                        <div class="stake-col stake-delivers">
+                            <div class="stake-col-label">What PMM Delivers</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Content briefs</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Thought leadership drafts</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Event strategy</li>
+                            </ul>
+                        </div>
+                        <div class="stake-col stake-requires">
+                            <div class="stake-col-label">What PMM Needs</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Design &amp; production</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Demand gen infrastructure</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>PR</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 4 -->
+            <div class="tab-panel" id="stake-4">
+                <div class="stake-panel">
+                    <div class="stake-header">
+                        <div class="stake-name">Customer Success</div>
+                        <div class="stake-cadence">Monthly sync, joint QBR planning</div>
+                    </div>
+                    <div class="stake-columns">
+                        <div class="stake-col stake-delivers">
+                            <div class="stake-col-label">What PMM Delivers</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Adoption content</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Expansion messaging</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Customer stories</li>
+                            </ul>
+                        </div>
+                        <div class="stake-col stake-requires">
+                            <div class="stake-col-label">What PMM Needs</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Customer health data</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Renewal insights</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Reference willingness</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 5 -->
+            <div class="tab-panel" id="stake-5">
+                <div class="stake-panel">
+                    <div class="stake-header">
+                        <div class="stake-name">CEO / Exec Team</div>
+                        <div class="stake-cadence">Monthly update, quarterly board input</div>
+                    </div>
+                    <div class="stake-columns">
+                        <div class="stake-col stake-delivers">
+                            <div class="stake-col-label">What PMM Delivers</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Market landscape</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive moat narrative</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>IPO-ready story</li>
+                            </ul>
+                        </div>
+                        <div class="stake-col stake-requires">
+                            <div class="stake-col-label">What PMM Needs</div>
+                            <ul class="stake-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Strategic direction</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Cross-product vision</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Executive sponsorship</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-hint">
+                <button id="stakePrev" onclick="navStake(-1)" disabled>
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>Previous
+                </button>
+                <button id="stakeNext" onclick="navStake(1)">
+                    Next<svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- METRICS FRAMEWORK -->
+    <section>
+        <div class="container">
+            <h2>Metrics Framework</h2>
+            <p class="section-intro">Each category tracks leading indicators (are we doing the right work?) flowing into lagging outcomes (is it working?).</p>
+
+            <div class="tab-bar" id="metricTabBar">
+                <div class="tab-item active" onclick="showMetric(0)">Sales Enablement</div>
+                <div class="tab-item" onclick="showMetric(1)">Demand Gen</div>
+                <div class="tab-item" onclick="showMetric(2)">Market Perception</div>
+                <div class="tab-item" onclick="showMetric(3)">Product Influence</div>
+            </div>
+
+            <!-- Metric 0 -->
+            <div class="tab-panel active" id="metric-0">
+                <div class="metric-panel">
+                    <div class="metric-header">
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                        <div class="metric-title">Sales Enablement</div>
+                    </div>
+                    <div class="metric-flow-large">
+                        <div class="mf-col mf-leading">
+                            <div class="mf-col-label">Leading Indicators</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Asset adoption rate</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Sales confidence score</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Enablement session attendance</li>
+                            </ul>
+                        </div>
+                        <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
+                        <div class="mf-col mf-lagging">
+                            <div class="mf-col-label">Lagging Outcomes</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Win rate</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Deal velocity</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Average deal size</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mf-method">
+                        <div class="mf-method-label">Measured via</div>
+                        CRM tracking, quarterly sales surveys, asset analytics
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metric 1 -->
+            <div class="tab-panel" id="metric-1">
+                <div class="metric-panel">
+                    <div class="metric-header">
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></div>
+                        <div class="metric-title">Demand Generation</div>
+                    </div>
+                    <div class="metric-flow-large">
+                        <div class="mf-col mf-leading">
+                            <div class="mf-col-label">Leading Indicators</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Content downloads</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Webinar registrations</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>ABM engagement</li>
+                            </ul>
+                        </div>
+                        <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
+                        <div class="mf-col mf-lagging">
+                            <div class="mf-col-label">Lagging Outcomes</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pipeline influenced</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pipeline sourced</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>MQL-to-SQL conversion</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mf-method">
+                        <div class="mf-method-label">Measured via</div>
+                        Marketing automation, attribution modeling, CRM pipeline reports
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="tab-panel" id="metric-2">
+                <div class="metric-panel">
+                    <div class="metric-header">
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg></div>
+                        <div class="metric-title">Market Perception</div>
+                    </div>
+                    <div class="metric-flow-large">
+                        <div class="mf-col mf-leading">
+                            <div class="mf-col-label">Leading Indicators</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Share of voice</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Analyst sentiment</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Press coverage volume</li>
+                            </ul>
+                        </div>
+                        <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
+                        <div class="mf-col mf-lagging">
+                            <div class="mf-col-label">Lagging Outcomes</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Brand consideration in RFPs</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Inbound qualified leads</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Category recognition</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mf-method">
+                        <div class="mf-method-label">Measured via</div>
+                        Media monitoring, analyst feedback, prospect surveys
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="tab-panel" id="metric-3">
+                <div class="metric-panel">
+                    <div class="metric-header">
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg></div>
+                        <div class="metric-title">Product Influence</div>
+                    </div>
+                    <div class="metric-flow-large">
+                        <div class="mf-col mf-leading">
+                            <div class="mf-col-label">Leading Indicators</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Roadmap inputs submitted</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive gap analyses</li>
+                            </ul>
+                        </div>
+                        <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
+                        <div class="mf-col mf-lagging">
+                            <div class="mf-col-label">Lagging Outcomes</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Features shipped from PMM input</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive win rate on features</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mf-method">
+                        <div class="mf-method-label">Measured via</div>
+                        Product team feedback, feature release tracking
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-hint">
+                <button id="metricPrev" onclick="navMetric(-1)" disabled>
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>Previous
+                </button>
+                <button id="metricNext" onclick="navMetric(1)">
+                    Next<svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        /* ── Stakeholder tabs ── */
+        var currentStake = 0;
+        var totalStakes = 6;
+
+        function showStake(n) {
+            currentStake = n;
+            var tabs = document.querySelectorAll('#stakeTabBar .tab-item');
+            tabs.forEach(function(t, i) { t.classList.toggle('active', i === n); });
+            for (var i = 0; i < totalStakes; i++) {
+                var panel = document.getElementById('stake-' + i);
+                var isActive = i === n;
+                panel.classList.toggle('active', isActive);
+                if (isActive) { panel.style.animation = 'none'; panel.offsetHeight; panel.style.animation = ''; }
+            }
+            document.getElementById('stakePrev').disabled = (n === 0);
+            document.getElementById('stakeNext').disabled = (n === totalStakes - 1);
+        }
+
+        function navStake(dir) {
+            var next = currentStake + dir;
+            if (next >= 0 && next < totalStakes) showStake(next);
+        }
+
+        /* ── Metric tabs ── */
+        var currentMetric = 0;
+        var totalMetrics = 4;
+
+        function showMetric(n) {
+            currentMetric = n;
+            var tabs = document.querySelectorAll('#metricTabBar .tab-item');
+            tabs.forEach(function(t, i) { t.classList.toggle('active', i === n); });
+            for (var i = 0; i < totalMetrics; i++) {
+                var panel = document.getElementById('metric-' + i);
+                var isActive = i === n;
+                panel.classList.toggle('active', isActive);
+                if (isActive) { panel.style.animation = 'none'; panel.offsetHeight; panel.style.animation = ''; }
+            }
+            document.getElementById('metricPrev').disabled = (n === 0);
+            document.getElementById('metricNext').disabled = (n === totalMetrics - 1);
+        }
+
+        function navMetric(dir) {
+            var next = currentMetric + dir;
+            if (next >= 0 && next < totalMetrics) showMetric(next);
+        }
+    </script>
+</body>
+</html>
