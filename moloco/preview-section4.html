@@ -50,12 +50,12 @@
             margin-bottom: 2.5rem;
         }
 
-        /* ── TIMELINE BAR ── */
+        /* ── TIMELINE TAB BAR ── */
         .timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 0;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             position: relative;
         }
         .timeline::before {
@@ -77,6 +77,10 @@
             z-index: 1;
             cursor: pointer;
             padding: 0 0.5rem;
+            transition: opacity 0.2s;
+        }
+        .timeline-node:hover {
+            opacity: 1;
         }
         .timeline-dot {
             width: 40px;
@@ -94,34 +98,46 @@
             margin-bottom: 0.8rem;
             transition: all 0.3s;
         }
-        .timeline-node.active .timeline-dot,
-        .timeline-node:hover .timeline-dot {
+        .timeline-node.active .timeline-dot {
             background: linear-gradient(135deg, var(--accent-dark), var(--accent));
             border-color: var(--accent);
             color: var(--background);
+            box-shadow: 0 0 20px rgba(124,58,237,0.3);
+        }
+        .timeline-node:not(.active) .timeline-dot:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
         .timeline-title {
             font-size: 0.82rem;
             font-weight: 600;
-            color: var(--text);
+            color: var(--text-secondary);
             margin-bottom: 0.2rem;
+            transition: color 0.3s;
+        }
+        .timeline-node.active .timeline-title {
+            color: var(--text);
         }
         .timeline-range {
             font-size: 0.72rem;
             color: var(--text-secondary);
         }
 
-        /* ── PHASE CARDS ── */
+        /* ── PHASE PANELS (show/hide) ── */
         .phase-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: border-color 0.3s;
+            display: none;
+            animation: fadeIn 0.35s ease-out;
         }
-        .phase-card:hover {
-            border-color: rgba(167,139,250,0.25);
+        .phase-card.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .phase-top {
@@ -166,15 +182,16 @@
             line-height: 1.5;
         }
 
-        /* Activities as compact grid */
-        .activities-label {
+        .activities-label, .deliverables-label, .metrics-label {
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--accent);
             margin-bottom: 0.8rem;
         }
+        .activities-label { color: var(--accent); }
+        .deliverables-label, .metrics-label { color: var(--text-secondary); }
+
         .activities-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -200,15 +217,6 @@
             margin-top: 1px;
         }
 
-        /* Deliverables as chips */
-        .deliverables-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 0.6rem;
-        }
         .deliverable-chips {
             display: flex;
             flex-wrap: wrap;
@@ -225,15 +233,6 @@
             font-weight: 500;
         }
 
-        /* Metrics as inline row */
-        .metrics-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 0.6rem;
-        }
         .metrics-row {
             display: flex;
             flex-wrap: wrap;
@@ -259,6 +258,47 @@
             flex-shrink: 0;
         }
 
+        /* ── NAV HINT ── */
+        .nav-hint {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+        .nav-hint button {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            padding: 0.35rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-hint button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .nav-hint button:disabled {
+            opacity: 0.3;
+            cursor: default;
+            border-color: var(--border);
+            color: var(--text-secondary);
+        }
+        .nav-hint button svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
         @media (max-width: 768px) {
             .timeline { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
             .timeline::before { display: none; }
@@ -268,31 +308,31 @@
     </style>
 </head>
 <body>
-    <div class="preview-banner">PREVIEW: Phased Plan Redesign</div>
+    <div class="preview-banner">PREVIEW: Phased Plan Redesign (Tabbed)</div>
 
     <section>
         <div class="container">
             <h2>The Phased Plan: Building PMM from Zero</h2>
             <p class="section-intro">Four phases across 12 months. Each builds on the last. The founding PMM operates solo for the first two quarters, with headcount expansion in Q3-Q4.</p>
 
-            <!-- Timeline bar -->
-            <div class="timeline">
-                <div class="timeline-node active">
+            <!-- Timeline tab bar -->
+            <div class="timeline" id="timeline">
+                <div class="timeline-node active" data-phase="1" onclick="showPhase(1)">
                     <div class="timeline-dot">1</div>
                     <div class="timeline-title">Foundation</div>
                     <div class="timeline-range">Days 0-90</div>
                 </div>
-                <div class="timeline-node">
+                <div class="timeline-node" data-phase="2" onclick="showPhase(2)">
                     <div class="timeline-dot">2</div>
                     <div class="timeline-title">GTM Engine</div>
                     <div class="timeline-range">Days 90-180</div>
                 </div>
-                <div class="timeline-node">
+                <div class="timeline-node" data-phase="3" onclick="showPhase(3)">
                     <div class="timeline-dot">3</div>
                     <div class="timeline-title">Scale</div>
                     <div class="timeline-range">Days 180-270</div>
                 </div>
-                <div class="timeline-node">
+                <div class="timeline-node" data-phase="4" onclick="showPhase(4)">
                     <div class="timeline-dot">4</div>
                     <div class="timeline-title">Strategic Lead</div>
                     <div class="timeline-range">Days 270-365</div>
@@ -300,7 +340,7 @@
             </div>
 
             <!-- Phase 1 -->
-            <div class="phase-card">
+            <div class="phase-card active" id="phase-1">
                 <div class="phase-top">
                     <div class="phase-num">1</div>
                     <div class="phase-top-text">
@@ -308,37 +348,16 @@
                         <div class="phase-timeframe">Days 0-90</div>
                     </div>
                 </div>
-
                 <div class="phase-objective">Build the knowledge base and strategic foundation. Establish credibility internally. Produce the first artifacts sales and BD can use.</div>
-
                 <div class="activities-label">Key Activities</div>
                 <div class="activities-grid">
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Customer &amp; prospect deep-dives (Tubi, LG, TVING)
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Competitive intelligence baseline
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Messaging framework v1
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Sales enablement starter kit
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Pricing &amp; packaging audit
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Internal roadshow: "Great Streaming Reset"
-                    </div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Customer &amp; prospect deep-dives (Tubi, LG, TVING)</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive intelligence baseline</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Messaging framework v1</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Sales enablement starter kit</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pricing &amp; packaging audit</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Internal roadshow: "Great Streaming Reset"</div>
                 </div>
-
                 <div class="deliverables-label">Deliverables</div>
                 <div class="deliverable-chips">
                     <div class="deliverable-chip">Messaging Framework</div>
@@ -348,30 +367,17 @@
                     <div class="deliverable-chip">Buyer Journey Map</div>
                     <div class="deliverable-chip">Pricing Audit</div>
                 </div>
-
                 <div class="metrics-label">Milestone Metrics</div>
                 <div class="metrics-row">
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Messaging approved by leadership
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        100% AE battle card adoption
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        3+ customer interviews completed
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Sales confidence baseline set
-                    </div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Messaging approved by leadership</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>100% AE battle card adoption</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3+ customer interviews completed</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Sales confidence baseline set</div>
                 </div>
             </div>
 
             <!-- Phase 2 -->
-            <div class="phase-card">
+            <div class="phase-card" id="phase-2">
                 <div class="phase-top">
                     <div class="phase-num">2</div>
                     <div class="phase-top-text">
@@ -379,37 +385,16 @@
                         <div class="phase-timeframe">Days 90-180</div>
                     </div>
                 </div>
-
                 <div class="phase-objective">Shift from foundation to activation. Build content and campaign infrastructure that drives pipeline. Launch externally visible thought leadership. Begin acting as the "First Customer" of the product.</div>
-
                 <div class="activities-label">Key Activities</div>
                 <div class="activities-grid">
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Act as "First Customer" for product feedback loop
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Develop quantitative case studies (Tubi, LG, KRAFTON)
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Launch thought leadership program
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Event &amp; conference strategy (CES, NAB, StreamTV)
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Create product launch playbook
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Analyst &amp; influencer engagement (Forrester, IDC)
-                    </div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Act as "First Customer" for product feedback loop</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Develop quantitative case studies (Tubi, LG, KRAFTON)</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Launch thought leadership program</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Event &amp; conference strategy (CES, NAB, StreamTV)</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Create product launch playbook</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Analyst &amp; influencer engagement (Forrester, IDC)</div>
                 </div>
-
                 <div class="deliverables-label">Deliverables</div>
                 <div class="deliverable-chips">
                     <div class="deliverable-chip">Case Studies (x3-4)</div>
@@ -418,30 +403,17 @@
                     <div class="deliverable-chip">Event Strategy Brief</div>
                     <div class="deliverable-chip">Analyst Briefing Kit</div>
                 </div>
-
                 <div class="metrics-label">Milestone Metrics</div>
                 <div class="metrics-row">
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        3+ published case studies
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Pipeline influenced by PMM content
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        2+ tier-1 speaking slots
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        20%+ sales confidence lift
-                    </div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3+ published case studies</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Pipeline influenced by PMM content</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>2+ tier-1 speaking slots</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>20%+ sales confidence lift</div>
                 </div>
             </div>
 
             <!-- Phase 3 -->
-            <div class="phase-card">
+            <div class="phase-card" id="phase-3">
                 <div class="phase-top">
                     <div class="phase-num">3</div>
                     <div class="phase-top-text">
@@ -449,52 +421,25 @@
                         <div class="phase-timeframe">Days 180-270</div>
                     </div>
                 </div>
-
                 <div class="phase-objective">Move from "doing the work" to "building the system." Introduce automation, refine based on data, and segment the approach by customer tier and vertical.</div>
-
                 <div class="activities-label">Key Activities</div>
                 <div class="activities-grid">
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Segment-specific messaging (FAST, SVOD, OEMs)
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Win/loss analysis program
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Sales enablement 2.0 (interactive, always-current)
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        ABM campaigns targeting top 20 prospects
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Pricing &amp; packaging refinement
-                    </div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Segment-specific messaging (FAST, SVOD, OEMs)</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Win/loss analysis program</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Sales enablement 2.0 (interactive, always-current)</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>ABM campaigns targeting top 20 prospects</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pricing &amp; packaging refinement</div>
                 </div>
-
                 <div class="metrics-label">Milestone Metrics</div>
                 <div class="metrics-row">
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Win rate improvement vs. baseline
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        80%+ deal win/loss documented
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        ABM campaign live for top 20
-                    </div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Win rate improvement vs. baseline</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>80%+ deal win/loss documented</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>ABM campaign live for top 20</div>
                 </div>
             </div>
 
             <!-- Phase 4 -->
-            <div class="phase-card">
+            <div class="phase-card" id="phase-4">
                 <div class="phase-top">
                     <div class="phase-num">4</div>
                     <div class="phase-top-text">
@@ -502,55 +447,73 @@
                         <div class="phase-timeframe">Days 270-365</div>
                     </div>
                 </div>
-
                 <div class="phase-objective">Transition from operator to strategic leader. Influence product roadmap, shape the company CTV narrative, and build the case for expanding the PMM team.</div>
-
                 <div class="activities-label">Key Activities</div>
                 <div class="activities-grid">
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Product roadmap influence via market intelligence
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        IPO-ready narrative for Streaming Monetization
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Cross-product positioning (Ads + Commerce Media)
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Team-building business case
-                    </div>
-                    <div class="activity-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Launch Customer Advisory Board (6-10 members)
-                    </div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Product roadmap influence via market intelligence</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>IPO-ready narrative for Streaming Monetization</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Cross-product positioning (Ads + Commerce Media)</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Team-building business case</div>
+                    <div class="activity-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Launch Customer Advisory Board (6-10 members)</div>
                 </div>
-
                 <div class="metrics-label">Milestone Metrics</div>
                 <div class="metrics-row">
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Revenue influenced by PMM tracked
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        2+ roadmap items from PMM input
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Headcount case approved
-                    </div>
-                    <div class="metric-item">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        CAB launched with 6+ customers
-                    </div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Revenue influenced by PMM tracked</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>2+ roadmap items from PMM input</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Headcount case approved</div>
+                    <div class="metric-item"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>CAB launched with 6+ customers</div>
                 </div>
             </div>
 
+            <!-- Prev / Next navigation -->
+            <div class="nav-hint">
+                <button id="prevBtn" onclick="navPhase(-1)" disabled>
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                    Previous
+                </button>
+                <button id="nextBtn" onclick="navPhase(1)">
+                    Next
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                </button>
+            </div>
         </div>
     </section>
+
+    <script>
+        let currentPhase = 1;
+        const totalPhases = 4;
+
+        function showPhase(n) {
+            currentPhase = n;
+
+            // Update timeline nodes
+            document.querySelectorAll('.timeline-node').forEach(function(node) {
+                node.classList.toggle('active', parseInt(node.getAttribute('data-phase')) === n);
+            });
+
+            // Show/hide phase cards with animation
+            document.querySelectorAll('.phase-card').forEach(function(card) {
+                var isActive = card.id === 'phase-' + n;
+                card.classList.toggle('active', isActive);
+                if (isActive) {
+                    // Re-trigger animation
+                    card.style.animation = 'none';
+                    card.offsetHeight; // force reflow
+                    card.style.animation = '';
+                }
+            });
+
+            // Update nav buttons
+            document.getElementById('prevBtn').disabled = (n === 1);
+            document.getElementById('nextBtn').disabled = (n === totalPhases);
+        }
+
+        function navPhase(direction) {
+            var next = currentPhase + direction;
+            if (next >= 1 && next <= totalPhases) {
+                showPhase(next);
+            }
+        }
+    </script>
 </body>
 </html>
