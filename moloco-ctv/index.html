@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moloco CTV Signal Engine</title>
+<title>Moloco CTV Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-primary: #0D0D12;
@@ -41,70 +42,57 @@
 
   .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
 
-  /* Header */
+  /* Header — matches CI Dossier */
   .engine-header {
-    text-align: center;
-    padding: 48px 20px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
     border-bottom: 1px solid var(--border);
     margin-bottom: 32px;
   }
-  .engine-header .logo-mark {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-  .engine-header .logo-mark .pulse {
-    width: 8px; height: 8px;
-    background: var(--bullish);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
-    50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(16,185,129,0); }
-  }
   .engine-header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
     color: var(--text-primary);
-    display: inline-block;
+    margin-bottom: 8px;
   }
   .beta-badge {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
     letter-spacing: 1px;
-    text-transform: uppercase;
     color: var(--accent);
-    border: 1px solid var(--accent);
-    border-radius: 4px;
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
     padding: 2px 8px;
-    margin-left: 12px;
-    vertical-align: middle;
-    position: relative;
-    top: -2px;
+    margin-left: 8px;
   }
   .engine-header .subtitle {
     color: var(--text-secondary);
-    font-size: 15px;
-    max-width: 600px;
-    margin: 0 auto 16px;
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
   }
   .engine-header .meta {
     display: flex;
-    justify-content: center;
     gap: 24px;
     font-size: 13px;
     color: var(--text-muted);
     font-family: var(--mono);
+    margin-top: 8px;
   }
   .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
 
@@ -392,7 +380,7 @@
 
   /* Responsive */
   @media (max-width: 768px) {
-    .engine-header h1 { font-size: 24px; }
+    .engine-header h1 { font-size: 1.6em; }
     .scorecard { grid-template-columns: 1fr 1fr; }
     .filter-bar { flex-direction: column; }
     .search-input { min-width: unset; width: 100%; }
@@ -401,17 +389,17 @@
   @media (max-width: 480px) {
     .scorecard { grid-template-columns: 1fr; }
     .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
   }
 </style>
 </head>
 <body>
 
 <header class="engine-header">
-  <div class="logo-mark"><div class="pulse"></div> CTV SIGNAL ENGINE</div>
-  <h1>Moloco CTV Intelligence <span class="beta-badge">BETA</span></h1>
-  <p class="subtitle">Autonomous intelligence monitoring the Connected TV landscape through Moloco's performance-driven ML lens</p>
+  <h1>Moloco CTV Intelligence <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Generated: <span id="dossier-date">March 27, 2026</span></p>
+  <span class="classification">Internal Only</span>
   <div class="meta">
-    <span id="dossier-date">Updated: March 27, 2026</span>
     <span>8 signals</span>
     <span>3 high-impact</span>
   </div>
