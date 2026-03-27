@@ -13,7 +13,8 @@
   "signals": [
     {
       "id": "ad_spend-20260327-001",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-24",
       "pillar": "ad_spend_velocity",
       "headline": "eMarketer raises 2026 CTV programmatic forecast to $32.4B, up 28% YoY",
       "summary": "eMarketer revised its 2026 CTV programmatic ad spend forecast upward by $3.1B, now projecting $32.4B in total US CTV programmatic spend. The revision cites faster-than-expected migration from linear scatter budgets and upfront commitments shifting to programmatic guarantees.",
@@ -39,7 +40,8 @@
     },
     {
       "id": "ad_spend-20260327-002",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-22",
       "pillar": "ad_spend_velocity",
       "headline": "GroupM reports 62% of CTV buys now programmatic, up from 48% in 2025",
       "summary": "GroupM's This Year Next Year mid-cycle update shows programmatic CTV purchasing crossed the majority threshold, reaching 62% of all CTV ad transactions in Q1 2026 compared to 48% for the same period in 2025.",
@@ -64,7 +66,8 @@
     },
     {
       "id": "inventory-20260327-001",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-25",
       "pillar": "inventory_expansion",
       "headline": "Samsung TV Plus launches 47 new FAST channels with full programmatic access",
       "summary": "Samsung TV Plus announced 47 new FAST channels spanning sports, lifestyle, and news verticals, all available through programmatic demand partners. The expansion brings Samsung's total FAST lineup to 340+ channels across 25 markets.",
@@ -90,7 +93,8 @@
     },
     {
       "id": "inventory-20260327-002",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-26",
       "pillar": "inventory_expansion",
       "headline": "Tubi reaches 97M monthly active users, launches self-serve programmatic tier",
       "summary": "Fox-owned Tubi reported 97M MAUs in its Q1 earnings update and simultaneously launched a self-serve programmatic buying tier aimed at mid-market advertisers and agencies, removing the previous $50K minimum spend requirement.",
@@ -116,7 +120,8 @@
     },
     {
       "id": "regulatory-20260327-001",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-23",
       "pillar": "regulatory_watch",
       "headline": "FTC proposes new ACR disclosure rules for smart TV manufacturers",
       "summary": "The FTC issued a notice of proposed rulemaking that would require smart TV manufacturers to provide clear, prominent disclosure of Automatic Content Recognition (ACR) data collection and give consumers a simple opt-out mechanism at device setup, not buried in settings menus.",
@@ -143,7 +148,8 @@
     },
     {
       "id": "regulatory-20260327-002",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-21",
       "pillar": "regulatory_watch",
       "headline": "California CPRA enforcement action targets CTV data broker for children's viewing data",
       "summary": "The California Privacy Protection Agency filed its first enforcement action against a CTV data broker for selling children's streaming viewing data without proper COPPA compliance, setting a precedent for CTV-specific privacy enforcement.",
@@ -170,7 +176,8 @@
     },
     {
       "id": "competitive-20260327-001",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-26",
       "pillar": "competitive_positioning",
       "headline": "The Trade Desk launches 'Outcome Engine' — ML-driven CTV performance product",
       "summary": "The Trade Desk announced Outcome Engine, a new ML-powered product that automatically optimizes CTV campaigns toward conversion outcomes rather than reach metrics. CEO Jeff Green called it 'the end of the CPM era in CTV' during the launch event.",
@@ -203,7 +210,8 @@
     },
     {
       "id": "competitive-20260327-002",
-      "date": "2026-03-27",
+      "captured_date": "2026-03-27",
+      "published_date": "2026-03-20",
       "pillar": "competitive_positioning",
       "headline": "MNTN pivots messaging from 'CTV for performance marketers' to 'full-funnel CTV platform'",
       "summary": "MNTN updated its homepage hero text from 'Performance TV for the Modern Marketer' to 'The Full-Funnel CTV Platform' and launched brand awareness campaign measurement tools, signaling a strategic shift away from pure performance positioning.",
