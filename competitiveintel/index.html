@@ -83,10 +83,13 @@
         .tile-expand-hint { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; margin-top: 0.75rem; opacity: 0.5; transition: opacity 0.2s; }
         .tile:hover .tile-expand-hint { opacity: 1; }
 
-        /* Dossier Panel */
-        .dossier-panel { display: none; padding: 2rem 0; border-bottom: 1px solid var(--border); animation: fadeIn 0.3s ease; }
-        .dossier-panel.visible { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        /* Modal Overlay */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: flex-start; padding: 3rem 1rem; overflow-y: auto; }
+        .modal-overlay.visible { display: flex; }
+        .modal-content { background: var(--background); border: 1px solid var(--border); border-radius: 16px; max-width: 720px; width: 100%; padding: 2.5rem; position: relative; animation: modalIn 0.25s ease; }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        /* Dossier Panel (inside modal) */
         .dossier-panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
         .dossier-panel-header h2 { font-size: 1.5rem; color: var(--text); }
         .close-panel { background: none; border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
@@ -172,8 +175,10 @@
             <!-- Tiles are rendered by JS below -->
         </div>
 
-        <!-- DOSSIER PANELS (one per competitor, toggled by tile click) -->
-        <div id="dossier-panels"></div>
+        <!-- MODAL OVERLAY -->
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal-content" id="modal-content"></div>
+        </div>
 
         <!-- FOOTER -->
         <div class="dossier-footer">
@@ -412,13 +417,12 @@
 
     // Render tiles
     const tilesGrid = document.getElementById('tiles-grid');
-    const panelsContainer = document.getElementById('dossier-panels');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalContent = document.getElementById('modal-content');
 
     competitors.forEach((c, i) => {
         const status = getTileStatus(DOSSIER_DATE);
-        const riskCls = c.risk === 'HIGH' ? 'high' : c.risk === 'MEDIUM' ? 'med' : 'low';
 
-        // Tile
         const tile = document.createElement('div');
         tile.className = 'tile';
         tile.id = 'tile-' + c.slug;
@@ -429,17 +433,17 @@
             '<div class="tile-tags">' + c.tags.map(function(t) { return '<span class="tile-tag">' + t + '</span>'; }).join('') + '</div>' +
             '<div class="tile-expand-hint">\u25BC Click to view dossier</div>';
         tilesGrid.appendChild(tile);
+    });
 
-        // Panel
-        const panel = document.createElement('div');
-        panel.className = 'dossier-panel';
-        panel.id = 'panel-' + c.slug;
-
-        let sourcesHtml = c.sources.map(function(s) {
+    function openModal(idx) {
+        const c = competitors[idx];
+        const riskCls = c.risk === 'HIGH' ? 'high' : c.risk === 'MEDIUM' ? 'med' : 'low';
+        const sourcesHtml = c.sources.map(function(s) {
             return '<div><a href="' + s.url + '" target="_blank" rel="noopener">' + s.title + '</a> — ' + s.note + '</div>';
         }).join('');
 
-        panel.innerHTML = '<div class="dossier-panel-header"><h2>' + c.name + '</h2><button class="close-panel" data-index="' + i + '">\u2715 Close</button></div>' +
+        modalContent.innerHTML =
+            '<div class="dossier-panel-header"><h2>' + c.name + '</h2><button class="close-panel" onclick="closeModal()">\u2715 Close</button></div>' +
             '<span class="risk-badge ' + riskCls + '">' + c.risk + ' RISK</span>' +
             '<div class="intel-block"><h3>Strategic Move of the Month</h3><p>' + c.strategic + '</p></div>' +
             '<div class="intel-block"><h3>Messaging Drift</h3><p>' + c.messaging + '</p></div>' +
@@ -447,49 +451,42 @@
             '<div class="intel-block"><h3>Product Signals</h3><p>' + c.product + '</p></div>' +
             '<div class="intel-block"><h3>Talent Signals</h3><p>' + c.talent + '</p></div>' +
             '<div class="landmines"><h3>Competitive Landmines</h3><p class="hint">Questions to ask prospects that expose this competitor\'s weaknesses:</p><ol>' + c.landmines.map(function(l) { return '<li>' + l + '</li>'; }).join('') + '</ol></div>' +
-            '<div><span class="sources-toggle" data-slug="' + c.slug + '">\u25B6 Sources (' + c.sources.length + ')</span><div class="sources-list" id="sources-' + c.slug + '">' + sourcesHtml + '</div></div>';
+            '<div><span class="sources-toggle" id="src-toggle-modal">\u25B6 Sources (' + c.sources.length + ')</span><div class="sources-list" id="src-list-modal">' + sourcesHtml + '</div></div>';
 
-        panelsContainer.appendChild(panel);
-    });
+        document.querySelectorAll('.tile').forEach(function(t) { t.classList.remove('active'); });
+        document.getElementById('tile-' + c.slug).classList.add('active');
+        modalOverlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+        modalOverlay.scrollTop = 0;
 
-    // Click handlers
+        document.getElementById('src-toggle-modal').addEventListener('click', function() {
+            const list = document.getElementById('src-list-modal');
+            list.classList.toggle('open');
+            this.textContent = list.classList.contains('open') ? '\u25BC Sources (' + c.sources.length + ')' : '\u25B6 Sources (' + c.sources.length + ')';
+        });
+    }
+
+    function closeModal() {
+        modalOverlay.classList.remove('visible');
+        document.body.style.overflow = '';
+        document.querySelectorAll('.tile').forEach(function(t) { t.classList.remove('active'); });
+    }
+
+    // Tile click → open modal
     document.querySelectorAll('.tile').forEach(function(tile) {
         tile.addEventListener('click', function() {
-            const idx = this.getAttribute('data-index');
-            const c = competitors[idx];
-            const panel = document.getElementById('panel-' + c.slug);
-
-            // Close all panels and deactivate tiles
-            document.querySelectorAll('.dossier-panel').forEach(function(p) { p.classList.remove('visible'); });
-            document.querySelectorAll('.tile').forEach(function(t) { t.classList.remove('active'); });
-
-            // Toggle this panel
-            if (!panel.classList.contains('visible')) {
-                panel.classList.add('visible');
-                this.classList.add('active');
-                setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
-            }
+            openModal(parseInt(this.getAttribute('data-index')));
         });
     });
 
-    document.querySelectorAll('.close-panel').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const idx = this.getAttribute('data-index');
-            const c = competitors[idx];
-            document.getElementById('panel-' + c.slug).classList.remove('visible');
-            document.getElementById('tile-' + c.slug).classList.remove('active');
-        });
+    // Click outside modal content → close
+    modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) closeModal();
     });
 
-    document.querySelectorAll('.sources-toggle').forEach(function(toggle) {
-        toggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const slug = this.getAttribute('data-slug');
-            const list = document.getElementById('sources-' + slug);
-            list.classList.toggle('open');
-            this.textContent = list.classList.contains('open') ? '\u25BC Sources (' + competitors.find(function(c){return c.slug===slug}).sources.length + ')' : '\u25B6 Sources (' + competitors.find(function(c){return c.slug===slug}).sources.length + ')';
-        });
+    // Escape key → close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
     });
     </script>
 </body>
