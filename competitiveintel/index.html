@@ -10,251 +10,279 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --background: #0D0D12; --surface: #16161E; --text: #F0F0F4; --text-secondary: #9B9BAF; --accent: #A78BFA; --accent-dark: #7C3AED; --border: #2A2A3A; --risk-low-bg: rgba(46,125,50,0.15); --risk-low-text: #66BB6A; --risk-med-bg: rgba(230,81,0,0.15); --risk-med-text: #FFA726; --risk-high-bg: rgba(198,40,40,0.15); --risk-high-text: #EF5350; }
+
+        :root {
+            --background: #0D0D12;
+            --surface: #16161E;
+            --text: #F0F0F4;
+            --text-secondary: #9B9BAF;
+            --accent: #A78BFA;
+            --accent-dark: #7C3AED;
+            --border: #2A2A3A;
+            --risk-low-bg: rgba(46, 125, 50, 0.15);
+            --risk-low-text: #66BB6A;
+            --risk-med-bg: rgba(230, 81, 0, 0.15);
+            --risk-med-text: #FFA726;
+            --risk-high-bg: rgba(198, 40, 40, 0.15);
+            --risk-high-text: #EF5350;
+        }
+
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
         .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .dossier-header { padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); }
-        .dossier-header h1 { font-size: 2.2rem; color: var(--text); margin-bottom: 0.5rem; }
-        .dossier-header .subtitle { font-size: 0.85rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; }
-        .dossier-header .classification { display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.75rem; border: 1px solid var(--accent-dark); border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); font-family: 'Inter', sans-serif; }
-        .toc { padding: 1.5rem 2rem; margin: 2rem 0; background: var(--surface); border-left: 3px solid var(--accent-dark); border-radius: 0 8px 8px 0; }
-        .toc-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
-        .toc a { display: block; color: var(--text); text-decoration: none; padding: 0.3rem 0; font-size: 0.95rem; font-family: 'Inter', sans-serif; transition: color 0.2s; }
+
+        /* Header */
+        .dossier-header {
+            padding: 3rem 2rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .dossier-header h1 {
+            font-size: 2.2rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .dossier-header .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+        .dossier-header .classification {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--accent-dark);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* TOC */
+        .toc {
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            background: var(--surface);
+            border-left: 3px solid var(--accent-dark);
+            border-radius: 0 8px 8px 0;
+        }
+        .toc-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .toc a {
+            display: block;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.3rem 0;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: color 0.2s;
+        }
         .toc a:hover { color: var(--accent); }
-        .competitor-section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
-        .competitor-section:last-of-type { border-bottom: none; }
-        .competitor-name { font-size: 1.6rem; color: var(--text); margin-bottom: 0.25rem; }
-        .competitor-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; font-family: 'Inter', sans-serif; }
-        .risk-badge { display: inline-block; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; margin-bottom: 1.5rem; }
-        .risk-badge.low { background: var(--risk-low-bg); color: var(--risk-low-text); }
-        .risk-badge.med { background: var(--risk-med-bg); color: var(--risk-med-text); }
-        .risk-badge.high { background: var(--risk-high-bg); color: var(--risk-high-text); }
-        .intel-block { margin-bottom: 1.5rem; }
-        .intel-block h3 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
-        .intel-block p, .intel-block li { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
-        .intel-block a { color: var(--accent); text-decoration: none; }
-        .landmines { background: var(--surface); border-left: 3px solid var(--risk-med-text); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; }
-        .landmines h3 { color: var(--risk-med-text); margin-bottom: 0.5rem; }
-        .landmines .landmine-hint { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
-        .landmines ol { padding-left: 1.25rem; }
-        .landmines li { margin-bottom: 0.4rem; color: var(--text-secondary); font-size: 0.95rem; }
-        .sources-toggle { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; font-family: 'Inter', sans-serif; }
-        .sources-content { padding: 0.75rem 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
-        .sources-content a { color: var(--accent); text-decoration: none; }
-        .dossier-footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
-        .dossier-footer p { font-size: 0.75rem; color: #555; font-family: 'Inter', sans-serif; }
-        .tiles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 2rem 0; }
-        @media (max-width: 640px) { .tiles-grid { grid-template-columns: 1fr; } }
-        .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s, transform 0.15s; cursor: default; position: relative; overflow: hidden; }
-        .tile:hover { border-color: var(--accent-dark); transform: translateY(-2px); }
-        .tile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-        .tile-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--text); }
-        .tile-status { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 10px; font-family: 'Inter', sans-serif; }
-        .tile-status.pending { background: rgba(167,139,250,0.15); color: var(--accent); }
-        .tile-status.live { background: var(--risk-low-bg); color: var(--risk-low-text); }
-        .tile-domain { font-size: 0.75rem; color: var(--accent); font-family: 'Inter', sans-serif; margin-bottom: 0.75rem; opacity: 0.8; }
-        .tile-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; font-family: 'Inter', sans-serif; }
-        .tile-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
-        .tile-tag { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.3px; padding: 0.15rem 0.5rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--text-secondary); font-family: 'Inter', sans-serif; }
-        .section-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-family: 'Inter', sans-serif; padding-top: 2rem; }
-        .section-count { font-size: 0.7rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; margin-left: 0.5rem; }
-        .unverified { display: inline; font-size: 0.65rem; font-weight: 600; color: var(--risk-med-text); background: var(--risk-med-bg); padding: 0.1rem 0.4rem; border-radius: 3px; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; vertical-align: middle; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="dossier-header">
-            <h1>Competitive Intelligence Dossier <sup style="font-family:'Inter',sans-serif;font-size:0.35em;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:rgba(167,139,250,0.15);padding:0.2em 0.5em;border-radius:4px;vertical-align:super;">Beta</sup></h1>
-            <p class="subtitle">Generated: <span id="dossier-date">Not yet generated</span></p>
-            <span class="classification">Internal Only</span>
-        </div>
-        <p class="section-label">Tracking<span class="section-count">8 competitors</span></p>
-        <div class="tiles-grid">
-            <div class="tile" id="tile-the-trade-desk"><div class="tile-header"><span class="tile-name">The Trade Desk</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">thetradedesk.com</div><div class="tile-desc">Dominant independent DSP with access to nearly every major streaming service and publisher. Known for UID 2.0 data tools.</div><div class="tile-tags"><span class="tile-tag">DSP</span><span class="tile-tag">UID 2.0</span><span class="tile-tag">Programmatic</span></div></div>
-            <div class="tile" id="tile-amazon-dsp"><div class="tile-header"><span class="tile-name">Amazon DSP</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">advertising.amazon.com</div><div class="tile-desc">Leverages Amazon&#39;s first-party shopper data for ads on Prime Video, Freevee, Twitch, and third-party apps via Fire TV.</div><div class="tile-tags"><span class="tile-tag">1P Data</span><span class="tile-tag">Prime Video</span><span class="tile-tag">Fire TV</span></div></div>
-            <div class="tile" id="tile-roku-oneview"><div class="tile-header"><span class="tile-name">Roku (OneView)</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">roku.com</div><div class="tile-desc">Direct access to its large U.S. device footprint. OneView DSP enables household-level targeting and measurement.</div><div class="tile-tags"><span class="tile-tag">OTT</span><span class="tile-tag">Device Graph</span><span class="tile-tag">Household</span></div></div>
-            <div class="tile" id="tile-mntn"><div class="tile-header"><span class="tile-name">MNTN</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">mountain.com</div><div class="tile-desc">Performance-driven platform specialized in automating CTV campaigns for direct-to-consumer and B2C marketers.</div><div class="tile-tags"><span class="tile-tag">Performance TV</span><span class="tile-tag">DTC</span><span class="tile-tag">Automation</span></div></div>
-            <div class="tile" id="tile-stackadapt"><div class="tile-header"><span class="tile-name">StackAdapt</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">stackadapt.com</div><div class="tile-desc">Top-ranked self-serve programmatic platform known for easy UI and cross-channel capabilities (CTV + native/video/display).</div><div class="tile-tags"><span class="tile-tag">Self-Serve</span><span class="tile-tag">Cross-Channel</span><span class="tile-tag">Native</span></div></div>
-            <div class="tile" id="tile-google-dv360"><div class="tile-header"><span class="tile-name">Google DV360</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">marketingplatform.google.com</div><div class="tile-desc">Integrates CTV with Google&#39;s broader digital ecosystem. Provides robust targeting and AI-driven optimization.</div><div class="tile-tags"><span class="tile-tag">Google Ecosystem</span><span class="tile-tag">AI Optimization</span><span class="tile-tag">YouTube</span></div></div>
-            <div class="tile" id="tile-tatari"><div class="tile-header"><span class="tile-name">Tatari</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">tatari.tv</div><div class="tile-desc">Bridges linear TV and CTV with focus on measurement, attribution, and treating TV as a performance channel.</div><div class="tile-tags"><span class="tile-tag">Linear + CTV</span><span class="tile-tag">Attribution</span><span class="tile-tag">Measurement</span></div></div>
-            <div class="tile" id="tile-viant"><div class="tile-header"><span class="tile-name">Viant</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">viantinc.com</div><div class="tile-desc">People-based DSP offering cookie-free solutions, linking CTV ad exposure to website actions.</div><div class="tile-tags"><span class="tile-tag">Cookieless</span><span class="tile-tag">People-Based</span><span class="tile-tag">Attribution</span></div></div>
-        </div>
-        <div id="dossier-content"></div>
-        <div class="dossier-footer">
-            <p>This dossier is generated automatically. All claims are sourced and dated. Items marked UNVERIFIED are based on single sources and should be independently confirmed.</p>
-        </div>
-    </div>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Competitive Intelligence Dossier</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --background: #0D0D12; --surface: #16161E; --text: #F0F0F4; --text-secondary: #9B9BAF; --accent: #A78BFA; --accent-dark: #7C3AED; --border: #2A2A3A; --risk-low-bg: rgba(46,125,50,0.15); --risk-low-text: #66BB6A; --risk-med-bg: rgba(230,81,0,0.15); --risk-med-text: #FFA726; --risk-high-bg: rgba(198,40,40,0.15); --risk-high-text: #EF5350; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .dossier-header { padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); }
-        .dossier-header h1 { font-size: 2.2rem; color: var(--text); margin-bottom: 0.5rem; }
-        .dossier-header .subtitle { font-size: 0.85rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; }
-        .dossier-header .classification { display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.75rem; border: 1px solid var(--accent-dark); border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); font-family: 'Inter', sans-serif; }
-        .toc { padding: 1.5rem 2rem; margin: 2rem 0; background: var(--surface); border-left: 3px solid var(--accent-dark); border-radius: 0 8px 8px 0; }
-        .toc-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
-        .toc a { display: block; color: var(--text); text-decoration: none; padding: 0.3rem 0; font-size: 0.95rem; font-family: 'Inter', sans-serif; transition: color 0.2s; }
-        .toc a:hover { color: var(--accent); }
-        .toc .risk-tag { font-size: 0.7rem; margin-left: 0.5rem; font-weight: 600; letter-spacing: 0.5px; }
+        .toc .risk-tag {
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
         .toc .risk-tag.low { color: var(--risk-low-text); }
         .toc .risk-tag.med { color: var(--risk-med-text); }
         .toc .risk-tag.high { color: var(--risk-high-text); }
-        .competitor-section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+
+        /* Competitor Section */
+        .competitor-section {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
         .competitor-section:last-of-type { border-bottom: none; }
-        .competitor-name { font-size: 1.6rem; color: var(--text); margin-bottom: 0.25rem; }
-        .competitor-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; font-family: 'Inter', sans-serif; }
-        .risk-badge { display: inline-block; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; margin-bottom: 1.5rem; }
+
+        .competitor-name {
+            font-size: 1.6rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        .competitor-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Risk Badge */
+        .risk-badge {
+            display: inline-block;
+            padding: 0.2rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 1.5rem;
+        }
         .risk-badge.low { background: var(--risk-low-bg); color: var(--risk-low-text); }
         .risk-badge.med { background: var(--risk-med-bg); color: var(--risk-med-text); }
         .risk-badge.high { background: var(--risk-high-bg); color: var(--risk-high-text); }
-        .intel-block { margin-bottom: 1.5rem; }
-        .intel-block h3 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
-        .intel-block p, .intel-block li { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
-        .intel-block a { color: var(--accent); text-decoration: none; }
+
+        /* Intel Sections */
+        .intel-block {
+            margin-bottom: 1.5rem;
+        }
+        .intel-block h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .intel-block p, .intel-block li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .intel-block a {
+            color: var(--accent);
+            text-decoration: none;
+        }
         .intel-block a:hover { text-decoration: underline; }
-        .landmines { background: var(--surface); border-left: 3px solid var(--risk-med-text); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; }
-        .landmines h3 { color: var(--risk-med-text); margin-bottom: 0.5rem; }
-        .landmines .landmine-hint { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
-        .landmines ol { padding-left: 1.25rem; }
-        .landmines li { margin-bottom: 0.4rem; color: var(--text-secondary); font-size: 0.95rem; }
-        .sources-toggle { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; font-family: 'Inter', sans-serif; }
+
+        /* Landmines */
+        .landmines {
+            background: var(--surface);
+            border-left: 3px solid var(--risk-med-text);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        .landmines h3 {
+            color: var(--risk-med-text);
+            margin-bottom: 0.5rem;
+        }
+        .landmines .landmine-hint {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .landmines ol {
+            padding-left: 1.25rem;
+        }
+        .landmines li {
+            margin-bottom: 0.4rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Sources */
+        .sources-toggle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
         .sources-toggle:hover { color: var(--accent); }
-        .sources-content { padding: 0.75rem 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+        .sources-content {
+            padding: 0.75rem 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
         .sources-content a { color: var(--accent); text-decoration: none; }
         .sources-content a:hover { text-decoration: underline; }
-        .dossier-footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
-        .dossier-footer p { font-size: 0.75rem; color: #555; font-family: 'Inter', sans-serif; }
-        .tiles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 2rem 0; }
-        @media (max-width: 640px) { .tiles-grid { grid-template-columns: 1fr; } }
-        .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s, transform 0.15s; cursor: default; position: relative; overflow: hidden; }
-        .tile:hover { border-color: var(--accent-dark); transform: translateY(-2px); }
-        .tile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-        .tile-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--text); }
-        .tile-status { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 10px; font-family: 'Inter', sans-serif; }
-        .tile-status.pending { background: rgba(167,139,250,0.15); color: var(--accent); }
-        .tile-status.live { background: var(--risk-low-bg); color: var(--risk-low-text); }
-        .tile-domain { font-size: 0.75rem; color: var(--accent); font-family: 'Inter', sans-serif; margin-bottom: 0.75rem; opacity: 0.8; }
-        .tile-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; font-family: 'Inter', sans-serif; }
-        .tile-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
-        .tile-tag { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.3px; padding: 0.15rem 0.5rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--text-secondary); font-family: 'Inter', sans-serif; }
-        .section-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-family: 'Inter', sans-serif; padding-top: 2rem; }
-        .section-count { font-size: 0.7rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; margin-left: 0.5rem; }
-        .empty-state { text-align: center; padding: 6rem 2rem; }
-        .empty-state h2 { color: var(--text-secondary); font-size: 1.4rem; margin-bottom: 1rem; }
-        .empty-state p { color: var(--text-secondary); font-size: 0.9rem; opacity: 0.6; }
-        .unverified { display: inline; font-size: 0.65rem; font-weight: 600; color: var(--risk-med-text); background: var(--risk-med-bg); padding: 0.1rem 0.4rem; border-radius: 3px; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; vertical-align: middle; }
+
+        /* Footer */
+        .dossier-footer {
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+        .dossier-footer p {
+            font-size: 0.75rem;
+            color: #555;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        .empty-state h2 {
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .empty-state p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Unverified tag */
+        .unverified {
+            display: inline;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--risk-med-text);
+            background: var(--risk-med-bg);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+
+        <!-- HEADER -->
         <div class="dossier-header">
             <h1>Competitive Intelligence Dossier</h1>
             <p class="subtitle">Generated: <span id="dossier-date">Not yet generated</span></p>
             <span class="classification">Internal Only</span>
         </div>
-        <p class="section-label">Tracking<span class="section-count">8 competitors</span></p>
-        <div class="tiles-grid">
-            <div class="tile" id="tile-the-trade-desk"><div class="tile-header"><span class="tile-name">The Trade Desk</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">thetradedesk.com</div><div class="tile-desc">Dominant independent DSP with access to nearly every major streaming service and publisher. Known for UID 2.0 data tools.</div><div class="tile-tags"><span class="tile-tag">DSP</span><span class="tile-tag">UID 2.0</span><span class="tile-tag">Programmatic</span></div></div>
-            <div class="tile" id="tile-amazon-dsp"><div class="tile-header"><span class="tile-name">Amazon DSP</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">advertising.amazon.com</div><div class="tile-desc">Leverages Amazon&#39;s first-party shopper data for ads on Prime Video, Freevee, Twitch, and third-party apps via Fire TV.</div><div class="tile-tags"><span class="tile-tag">1P Data</span><span class="tile-tag">Prime Video</span><span class="tile-tag">Fire TV</span></div></div>
-            <div class="tile" id="tile-roku-oneview"><div class="tile-header"><span class="tile-name">Roku (OneView)</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">roku.com</div><div class="tile-desc">Direct access to its large U.S. device footprint. OneView DSP enables household-level targeting and measurement.</div><div class="tile-tags"><span class="tile-tag">OTT</span><span class="tile-tag">Device Graph</span><span class="tile-tag">Household</span></div></div>
-            <div class="tile" id="tile-mntn"><div class="tile-header"><span class="tile-name">MNTN</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">mountain.com</div><div class="tile-desc">Performance-driven platform specialized in automating CTV campaigns for direct-to-consumer and B2C marketers.</div><div class="tile-tags"><span class="tile-tag">Performance TV</span><span class="tile-tag">DTC</span><span class="tile-tag">Automation</span></div></div>
-            <div class="tile" id="tile-stackadapt"><div class="tile-header"><span class="tile-name">StackAdapt</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">stackadapt.com</div><div class="tile-desc">Top-ranked self-serve programmatic platform known for easy UI and cross-channel capabilities (CTV + native/video/display).</div><div class="tile-tags"><span class="tile-tag">Self-Serve</span><span class="tile-tag">Cross-Channel</span><span class="tile-tag">Native</span></div></div>
-            <div class="tile" id="tile-google-dv360"><div class="tile-header"><span class="tile-name">Google DV360</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">marketingplatform.google.com</div><div class="tile-desc">Integrates CTV with Google&#39;s broader digital ecosystem. Provides robust targeting and AI-driven optimization.</div><div class="tile-tags"><span class="tile-tag">Google Ecosystem</span><span class="tile-tag">AI Optimization</span><span class="tile-tag">YouTube</span></div></div>
-            <div class="tile" id="tile-tatari"><div class="tile-header"><span class="tile-name">Tatari</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">tatari.tv</div><div class="tile-desc">Bridges linear TV and CTV with focus on measurement, attribution, and treating TV as a performance channel.</div><div class="tile-tags"><span class="tile-tag">Linear + CTV</span><span class="tile-tag">Attribution</span><span class="tile-tag">Measurement</span></div></div>
-            <div class="tile" id="tile-viant"><div class="tile-header"><span class="tile-name">Viant</span><span class="tile-status pending">Awaiting Intel</span></div><div class="tile-domain">viantinc.com</div><div class="tile-desc">People-based DSP offering cookie-free solutions, linking CTV ad exposure to website actions.</div><div class="tile-tags"><span class="tile-tag">Cookieless</span><span class="tile-tag">People-Based</span><span class="tile-tag">Attribution</span></div></div>
-        </div>
-        <div id="dossier-content"></div>
-        <div class="dossier-footer">
-            <p>This dossier is generated automatically. All claims are sourced and dated. Items marked UNVERIFIED are based on single sources and should be independently confirmed.</p>
-        </div>
-    </div>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Competitive Intelligence Dossier</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --background: #0D0D12; --surface: #16161E; --text: #F0F0F4; --text-secondary: #9B9BAF; --accent: #A78BFA; --accent-dark: #7C3AED; --border: #2A2A3A; --risk-low-bg: rgba(46,125,50,0.15); --risk-low-text: #66BB6A; --risk-med-bg: rgba(230,81,0,0.15); --risk-med-text: #FFA726; --risk-high-bg: rgba(198,40,40,0.15); --risk-high-text: #EF5350; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-        .dossier-header { padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); }
-        .dossier-header h1 { font-size: 2.2rem; color: var(--text); margin-bottom: 0.5rem; }
-        .dossier-header .subtitle { font-size: 0.85rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; }
-        .dossier-header .classification { display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.75rem; border: 1px solid var(--accent-dark); border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); font-family: 'Inter', sans-serif; }
-        .toc { padding: 1.5rem 2rem; margin: 2rem 0; background: var(--surface); border-left: 3px solid var(--accent-dark); border-radius: 0 8px 8px 0; }
-        .toc-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
-        .toc a { display: block; color: var(--text); text-decoration: none; padding: 0.3rem 0; font-size: 0.95rem; font-family: 'Inter', sans-serif; transition: color 0.2s; }
-        .toc a:hover { color: var(--accent); }
-        .competitor-section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
-        .competitor-section:last-of-type { border-bottom: none; }
-        .competitor-name { font-size: 1.6rem; color: var(--text); margin-bottom: 0.25rem; }
-        .competitor-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; font-family: 'Inter', sans-serif; }
-        .risk-badge { display: inline-block; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; margin-bottom: 1.5rem; }
-        .risk-badge.low { background: var(--risk-low-bg); color: var(--risk-low-text); }
-        .risk-badge.med { background: var(--risk-med-bg); color: var(--risk-med-text); }
-        .risk-badge.high { background: var(--risk-high-bg); color: var(--risk-high-text); }
-        .intel-block { margin-bottom: 1.5rem; }
-        .intel-block h3 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
-        .intel-block p, .intel-block li { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
-        .intel-block a { color: var(--accent); text-decoration: none; }
-        .landmines { background: var(--surface); border-left: 3px solid var(--risk-med-text); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; }
-        .landmines h3 { color: var(--risk-med-text); margin-bottom: 0.5rem; }
-        .landmines .landmine-hint { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
-        .landmines ol { padding-left: 1.25rem; }
-        .landmines li { margin-bottom: 0.4rem; color: var(--text-secondary); font-size: 0.95rem; }
-        .sources-toggle { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; font-family: 'Inter', sans-serif; }
-        .sources-content { padding: 0.75rem 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
-        .sources-content a { color: var(--accent); text-decoration: none; }
-        .dossier-footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
-        .dossier-footer p { font-size: 0.75rem; color: #555; font-family: 'Inter', sans-serif; }
-        .empty-state { text-align: center; padding: 6rem 2rem; }
-        .empty-state h2 { color: var(--text-secondary); font-size: 1.4rem; margin-bottom: 1rem; }
-        .empty-state p { color: var(--text-secondary); font-size: 0.9rem; opacity: 0.6; }
-        .unverified { display: inline; font-size: 0.65rem; font-weight: 600; color: var(--risk-med-text); background: var(--risk-med-bg); padding: 0.1rem 0.4rem; border-radius: 3px; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; vertical-align: middle; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="dossier-header">
-            <h1>Competitive Intelligence Dossier</h1>
-            <p class="subtitle">Generated: <span id="dossier-date">Not yet generated</span></p>
-            <span class="classification">Internal Only</span>
-        </div>
+
+        <!-- CONTENT: This section is replaced by the generate_dossier.py script -->
         <div id="dossier-content">
+
             <div class="empty-state">
                 <h2>No Dossier Generated Yet</h2>
-                <p>Run the daily dossier task to populate this page.</p>
+                <p>Run "Daily dossier" or "Research [Company]" to populate this page.</p>
             </div>
+
         </div>
+        <!-- END CONTENT -->
+
+        <!-- FOOTER -->
         <div class="dossier-footer">
             <p>This dossier is generated automatically. All claims are sourced and dated. Items marked UNVERIFIED are based on single sources and should be independently confirmed.</p>
         </div>
+
     </div>
 </body>
 </html>
