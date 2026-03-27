@@ -37,224 +37,90 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.2; }
         .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
 
         /* Header */
-        .dossier-header {
-            padding: 3rem 2rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .dossier-header h1 {
-            font-size: 2.2rem;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-        .dossier-header .subtitle {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-        }
-        .dossier-header .classification {
-            display: inline-block;
-            margin-top: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border: 1px solid var(--accent-dark);
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--accent);
-            font-family: 'Inter', sans-serif;
-        }
+        .dossier-header { padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); }
+        .dossier-header h1 { font-size: 2.2rem; color: var(--text); margin-bottom: 0.5rem; }
+        .dossier-header .subtitle { font-size: 0.85rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; }
+        .dossier-header .classification { display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.75rem; border: 1px solid var(--accent-dark); border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); font-family: 'Inter', sans-serif; }
+        .beta-badge { font-family: 'Inter', sans-serif; font-size: 0.35em; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); background: rgba(167,139,250,0.15); padding: 0.2em 0.5em; border-radius: 4px; vertical-align: super; }
 
-        /* TOC */
-        .toc {
-            padding: 1.5rem 2rem;
-            margin: 2rem 0;
-            background: var(--surface);
-            border-left: 3px solid var(--accent-dark);
-            border-radius: 0 8px 8px 0;
-        }
-        .toc-label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-            font-family: 'Inter', sans-serif;
-        }
-        .toc a {
-            display: block;
-            color: var(--text);
-            text-decoration: none;
-            padding: 0.3rem 0;
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-            transition: color 0.2s;
-        }
-        .toc a:hover { color: var(--accent); }
-        .toc .risk-tag {
-            font-size: 0.7rem;
-            margin-left: 0.5rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        .toc .risk-tag.low { color: var(--risk-low-text); }
-        .toc .risk-tag.med { color: var(--risk-med-text); }
-        .toc .risk-tag.high { color: var(--risk-high-text); }
+        /* Summary Snapshot */
+        .summary-section { padding: 2rem 0; border-bottom: 1px solid var(--border); }
+        .summary-section .section-label { margin-bottom: 1rem; }
+        .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        @media (max-width: 640px) { .summary-grid { grid-template-columns: 1fr; } }
+        .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+        .summary-card h3 { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+        .summary-card .highlight { color: var(--text); font-weight: 500; }
+        .risk-overview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .risk-chip { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 12px; font-family: 'Inter', sans-serif; }
+        .risk-chip.high { background: var(--risk-high-bg); color: var(--risk-high-text); }
+        .risk-chip.med { background: var(--risk-med-bg); color: var(--risk-med-text); }
+        .risk-chip.low { background: var(--risk-low-bg); color: var(--risk-low-text); }
 
-        /* Competitor Section */
-        .competitor-section {
-            padding: 2.5rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .competitor-section:last-of-type { border-bottom: none; }
+        /* Tiles */
+        .section-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-family: 'Inter', sans-serif; padding-top: 2rem; }
+        .section-count { font-size: 0.7rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 400; margin-left: 0.5rem; }
+        .tiles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 1.5rem 0 2rem; }
+        @media (max-width: 640px) { .tiles-grid { grid-template-columns: 1fr; } }
+        .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s, transform 0.15s; cursor: pointer; position: relative; overflow: hidden; }
+        .tile:hover { border-color: var(--accent-dark); transform: translateY(-2px); }
+        .tile.active { border-color: var(--accent); }
+        .tile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+        .tile-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--text); }
+        .tile-status { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 10px; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .tile-status.pending { background: rgba(167, 139, 250, 0.15); color: var(--accent); }
+        .tile-status.fresh { background: var(--risk-low-bg); color: var(--risk-low-text); }
+        .tile-status.stale { background: var(--risk-med-bg); color: var(--risk-med-text); }
+        .tile-domain { font-size: 0.75rem; color: var(--accent); font-family: 'Inter', sans-serif; margin-bottom: 0.75rem; opacity: 0.8; }
+        .tile-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; font-family: 'Inter', sans-serif; }
+        .tile-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+        .tile-tag { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.3px; padding: 0.15rem 0.5rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--text-secondary); font-family: 'Inter', sans-serif; }
+        .tile-expand-hint { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Inter', sans-serif; margin-top: 0.75rem; opacity: 0.5; transition: opacity 0.2s; }
+        .tile:hover .tile-expand-hint { opacity: 1; }
 
-        .competitor-name {
-            font-size: 1.6rem;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-        }
-        .competitor-meta {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Risk Badge */
-        .risk-badge {
-            display: inline-block;
-            padding: 0.2rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 1.5rem;
-        }
+        /* Dossier Panel */
+        .dossier-panel { display: none; padding: 2rem 0; border-bottom: 1px solid var(--border); animation: fadeIn 0.3s ease; }
+        .dossier-panel.visible { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        .dossier-panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .dossier-panel-header h2 { font-size: 1.5rem; color: var(--text); }
+        .close-panel { background: none; border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+        .close-panel:hover { border-color: var(--accent); color: var(--accent); }
+        .risk-badge { display: inline-block; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; margin-bottom: 1.5rem; }
         .risk-badge.low { background: var(--risk-low-bg); color: var(--risk-low-text); }
         .risk-badge.med { background: var(--risk-med-bg); color: var(--risk-med-text); }
         .risk-badge.high { background: var(--risk-high-bg); color: var(--risk-high-text); }
 
-        /* Intel Sections */
-        .intel-block {
-            margin-bottom: 1.5rem;
-        }
-        .intel-block h3 {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-            font-family: 'Inter', sans-serif;
-        }
-        .intel-block p, .intel-block li {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        .intel-block a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+        /* Intel Blocks */
+        .intel-block { margin-bottom: 1.5rem; }
+        .intel-block h3 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
+        .intel-block p, .intel-block li { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; }
+        .intel-block a { color: var(--accent); text-decoration: none; }
         .intel-block a:hover { text-decoration: underline; }
 
         /* Landmines */
-        .landmines {
-            background: var(--surface);
-            border-left: 3px solid var(--risk-med-text);
-            padding: 1.25rem 1.5rem;
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 1.5rem;
-        }
-        .landmines h3 {
-            color: var(--risk-med-text);
-            margin-bottom: 0.5rem;
-        }
-        .landmines .landmine-hint {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            font-family: 'Inter', sans-serif;
-        }
-        .landmines ol {
-            padding-left: 1.25rem;
-        }
-        .landmines li {
-            margin-bottom: 0.4rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
+        .landmines { background: var(--surface); border-left: 3px solid var(--risk-med-text); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; }
+        .landmines h3 { color: var(--risk-med-text); margin-bottom: 0.5rem; }
+        .landmines .hint { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
+        .landmines ol { padding-left: 1.25rem; }
+        .landmines li { margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
 
         /* Sources */
-        .sources-toggle {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-        }
+        .sources-toggle { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; font-family: 'Inter', sans-serif; user-select: none; }
         .sources-toggle:hover { color: var(--accent); }
-        .sources-content {
-            padding: 0.75rem 0;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-        .sources-content a { color: var(--accent); text-decoration: none; }
-        .sources-content a:hover { text-decoration: underline; }
+        .sources-list { display: none; padding: 0.75rem 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
+        .sources-list.open { display: block; }
+        .sources-list a { color: var(--accent); text-decoration: none; }
+        .sources-list a:hover { text-decoration: underline; }
 
         /* Footer */
-        .dossier-footer {
-            padding: 2rem;
-            border-top: 1px solid var(--border);
-            margin-top: 2rem;
-        }
-        .dossier-footer p {
-            font-size: 0.75rem;
-            color: #555;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 6rem 2rem;
-        }
-        .empty-state h2 {
-            color: var(--text-secondary);
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-        .empty-state p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-
-        /* Unverified tag */
-        .unverified {
-            display: inline;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--risk-med-text);
-            background: var(--risk-med-bg);
-            padding: 0.1rem 0.4rem;
-            border-radius: 3px;
-            letter-spacing: 0.5px;
-            font-family: 'Inter', sans-serif;
-            vertical-align: middle;
-        }
+        .dossier-footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+        .dossier-footer p { font-size: 0.75rem; color: #555; font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body>
@@ -262,21 +128,52 @@
 
         <!-- HEADER -->
         <div class="dossier-header">
-            <h1>Competitive Intelligence Dossier</h1>
-            <p class="subtitle">Generated: <span id="dossier-date">Not yet generated</span></p>
+            <h1>Competitive Intelligence Dossier <sup class="beta-badge">Beta</sup></h1>
+            <p class="subtitle">Generated: <span id="dossier-date">March 27, 2026</span></p>
             <span class="classification">Internal Only</span>
         </div>
 
-        <!-- CONTENT: This section is replaced by the generate_dossier.py script -->
-        <div id="dossier-content">
-
-            <div class="empty-state">
-                <h2>No Dossier Generated Yet</h2>
-                <p>Run "Daily dossier" or "Research [Company]" to populate this page.</p>
+        <!-- SUMMARY SNAPSHOT -->
+        <div class="summary-section">
+            <p class="section-label" style="padding-top:0">Executive Summary</p>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Top Threats This Week</h3>
+                    <p><span class="highlight">Google embedded Gemini AI into DV360</span> as an agentic media buyer (March 23). <span class="highlight">The Trade Desk launched the Ventura Ecosystem</span> to consolidate CTV supply. <span class="highlight">Amazon DSP is integrating Netflix</span> for Q2 2026 — first-party shopping signals on premium streaming.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Risk Assessment</h3>
+                    <div class="risk-overview">
+                        <span class="risk-chip high">The Trade Desk — HIGH</span>
+                        <span class="risk-chip high">Amazon DSP — HIGH</span>
+                        <span class="risk-chip high">Roku — HIGH</span>
+                        <span class="risk-chip high">MNTN — HIGH</span>
+                        <span class="risk-chip high">StackAdapt — HIGH</span>
+                        <span class="risk-chip high">Google DV360 — HIGH</span>
+                        <span class="risk-chip med">Tatari — MEDIUM</span>
+                        <span class="risk-chip high">Viant — HIGH</span>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <h3>Pricing Moves</h3>
+                    <p><span class="highlight">TTD is loosening fees</span> under Amazon DSP pressure (hybrid CPM/POM). <span class="highlight">Amazon cut managed-service minimums</span> from $50K to $15K/mo. <span class="highlight">Viant's subscription model</span> ($3K/login) undercuts percentage-of-spend DSPs by 80%.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Key Hires & Moves</h3>
+                    <p><span class="highlight">MNTN hired CRO from TikTok</span> (scaled $1B+ mid-market) and Global Head of Premium Content from NBCU. <span class="highlight">Roku hired ex-Snap President</span> Patrick Harris as SVP Global Media Revenue. <span class="highlight">TTD named interim CFO</span> and added Drew Vollero to board.</p>
+                </div>
             </div>
-
         </div>
-        <!-- END CONTENT -->
+
+        <!-- COMPETITOR TILES -->
+        <p class="section-label">Tracking<span class="section-count">8 competitors</span></p>
+
+        <div class="tiles-grid" id="tiles-grid">
+            <!-- Tiles are rendered by JS below -->
+        </div>
+
+        <!-- DOSSIER PANELS (one per competitor, toggled by tile click) -->
+        <div id="dossier-panels"></div>
 
         <!-- FOOTER -->
         <div class="dossier-footer">
@@ -284,5 +181,316 @@
         </div>
 
     </div>
+
+    <script>
+    // Dossier data — generated 2026-03-27
+    const DOSSIER_DATE = '2026-03-27';
+    const competitors = [
+        {
+            name: 'The Trade Desk',
+            slug: 'the-trade-desk',
+            domain: 'thetradedesk.com',
+            desc: 'Dominant independent DSP with access to nearly every major streaming service and publisher. Known for UID 2.0 data tools.',
+            tags: ['DSP', 'UID 2.0', 'Programmatic'],
+            risk: 'HIGH',
+            strategic: 'Launched the Ventura Ecosystem on February 24, 2026, uniting global TV operating systems and streaming platforms (V and Nexxen as first collaborators) to create a more transparent, revenue-optimized connected TV marketplace. Positions TTD as the orchestrator of CTV supply consolidation.',
+            messaging: 'Shifted from pure DSP independence toward "open internet champion" positioning. Now emphasizes AI-powered transparency (Kokai, Audience Unlimited), developer ecosystem enablement (OpenTTD), and publisher-direct pathways (OpenPath, OpenAds). Frames itself as defending the open internet while building proprietary ecosystem lock-in through Ventura.',
+            pricing: 'Moderating historically rigid 15-20% fee structure under Amazon DSP pressure. Introduced hybrid CPM/POM pricing model. Audience Unlimited bundled at no extra cost in Performance Mode of Koa Adaptive Trading. Signaling shift toward bundled, volume-based pricing.',
+            product: 'Q1 2026 launches: (1) Audience Unlimited — AI data segment scoring; (2) Koa Adaptive Trading Modes — Performance Mode at 3.3% or Control Mode at 4.4%; (3) OpenAds — transparent auction with 9 publisher partners. OpenTTD developer portal launched March 4. Kokai processes 10M ad requests/second.',
+            talent: 'Drew Vollero (ex-Reddit CFO) appointed to Board of Directors March 25. Tahnil Davis named Interim CFO January 24. Hiring VP Head of Strategic Initiatives and VP Procurement — suggests organizational restructuring around ecosystem partnerships.',
+            landmines: [
+                'How transparent are your impression prices compared to OpenAds, and can you prove you\'re not extracting hidden fees like Dentsu and WPP alleged?',
+                'Does your platform require proprietary TV OS partnerships to scale CTV reach, or do you work with all device manufacturers equally?',
+                'What\'s your AI bidding capability compared to Kokai\'s 10M requests/second, and how do you prevent algorithmic bid shading?'
+            ],
+            sources: [
+                {title: 'TTD Q4/FY2025 Results', url: 'https://investors.thetradedesk.com/news-and-events/news/news-details/2026/The-Trade-Desk-Reports-Fourth-Quarter-and-Fiscal-Year-2025-Financial-Results/', note: 'Q4 $847M (+14% YoY), FY $2.9B (+18%)'},
+                {title: 'Ventura Ecosystem Launch', url: 'https://investors.thetradedesk.com/news-and-events/news/news-details/2026/The-Trade-Desk-Introduces-the-Ventura-Ecosystem-to-advance-the-future-of-ctv-advertising-v-and-nexxen-join-as-the-first-collaborators/', note: 'Feb 24, 2026'},
+                {title: 'Audience Unlimited', url: 'https://www.mmm-online.com/news/the-trade-desk-launches-new-ai-tool-to-overhaul-costly-third-party-data-buying/', note: 'AI data curation'},
+                {title: 'Publicis Audit Concerns', url: 'https://adage.com/agencies/aa-publicis-stops-recommending-the-trade-desk-after-audit/', note: 'Feb 2026'},
+                {title: 'Fee Pressure', url: 'https://www.emarketer.com/content/trade-desk-loosens-fees-amazon-dsp-pressure-intensifies', note: 'Competitive pricing shifts'}
+            ]
+        },
+        {
+            name: 'Amazon DSP',
+            slug: 'amazon-dsp',
+            domain: 'advertising.amazon.com',
+            desc: 'Leverages Amazon\'s first-party shopper data for ads on Prime Video, Freevee, Twitch, and third-party apps via Fire TV.',
+            tags: ['1P Data', 'Prime Video', 'Fire TV'],
+            risk: 'HIGH',
+            strategic: 'Unified DSP and Sponsored Ads into a single dashboard while expanding Netflix integration for Q2 2026 — advertisers can apply Amazon shopping and streaming signals to Netflix campaigns. Accelerates shift from self-contained shopping ecosystem to full-stack programmatic platform.',
+            messaging: 'Shifted from "Amazon shopping data for Amazon audiences" to "Amazon\'s authenticated first-party signals for programmatic efficiency everywhere." Emphasizing AI-powered automation, live event optimization, and positioning as the "primary DSP" rather than a vertical solution.',
+            pricing: 'Reduced managed-service minimum from $50,000 to $15,000/month. Self-service: no management fees, 7-25% platform fee. Aggressive minimum reduction signals mid-market volume growth pivot.',
+            product: 'Enhanced AI targeting (Product + In-market categories), frequency cap controls, Live Event Optimizer, Fire TV redesign with expanded programmatic placements, pause ads + shoppable ads + "send to phone," unified dashboard, Ads Data Manager, 25-month AMC lookback window.',
+            talent: 'Recruiting Global Head of Amazon DSP Trading Specialists (NYC). Focus on "global organization of product experts" suggests enterprise sales investment to compete with TTD on service quality.',
+            landmines: [
+                'How will you manage frequency caps across Fire TV, Prime Video, Spotify, and Netflix when Netflix integration is brand-new and unproven at scale?',
+                'What happens to cross-domain attribution when buying Spotify audio and Samsung TV Plus that don\'t feed shopping signals back to Amazon?',
+                'If Amazon owns the inventory and reduces minimums to $15K, won\'t they prioritize their own media over open web in auction dynamics?'
+            ],
+            sources: [
+                {title: 'Amazon Audiences on Netflix', url: 'https://www.adexchanger.com/marketers/amazon-audiences-are-coming-to-netflix/', note: 'Q2 2026 integration'},
+                {title: 'Enhanced Targeting', url: 'https://advertising.amazon.com/resources/whats-new/amazon-ads-introduced-enhanced-targeting-capabilities', note: 'Feb 2026'},
+                {title: 'Fire TV Redesign', url: 'https://www.emarketer.com/content/amazon-redesigns-fire-tv-expand-ctv-ad-ambitions', note: 'CTV expansion'},
+                {title: 'AMC 25-Month Lookback', url: 'https://ppc.land/amazon-extends-marketing-cloud-lookback-window-from-13-to-25-months/', note: 'Measurement expansion'},
+                {title: 'Revenue Projection', url: 'https://www.warc.com/content/feed/amazon-retail-media-ad-revenue-to-hit-60bn-this-year/en-GB/10620', note: '$60B+ retail media'}
+            ]
+        },
+        {
+            name: 'Roku (OneView)',
+            slug: 'roku-oneview',
+            domain: 'roku.com',
+            desc: 'Direct access to its large U.S. device footprint. OneView DSP enables household-level targeting and measurement.',
+            tags: ['OTT', 'Device Graph', 'Household'],
+            risk: 'HIGH',
+            strategic: 'Hired former Snap President Patrick Harris as SVP of Global Media Revenue (March 9, 2026). Harris brings 12 years of Meta experience and Snap\'s Americas ad business oversight — signals aggressive expansion into premium brand and performance CTV campaigns.',
+            messaging: 'Shifted from pure DSP positioning to "CTV becomes a commerce engine." Emphasizing interactive shoppable ads and outcome-based measurement (conversions, lead gen). Positioning as performance channel competing with search and social.',
+            pricing: 'CPM pricing $20-60. Self-serve starts at $500 minimum, OneView managed service requires $25,000+. Expanding hyperlocal ZIP code targeting to capture $2.8B local ad market.',
+            product: 'OneView updates: dynamic ad exposure distribution, Cost Per Unique Reach (CPUR) metric. Google Confidential Publisher Match integration. iSpot outcome-based optimization. DSP integrations with Yahoo, TTD, Wurl, Amazon DSP. Shopify shoppable TV ads. Roku City interactive placements.',
+            talent: 'Patrick Harris (SVP Global Media Revenue) is the marquee hire. Active recruiting across advertising sales for headcount expansion.',
+            landmines: [
+                'Does your platform offer outcome-based measurement tied to actual conversions, or only view-through attribution?',
+                'Can you target streaming audiences at ZIP code level for local advertisers?',
+                'How does your platform handle the shift toward 100% ad-supported viewing — are you positioned for universal inventory monetization?'
+            ],
+            sources: [
+                {title: 'Patrick Harris Hire', url: 'https://thedesk.net/2026/02/roku-hires-executive-from-snap-to-lead-global-media-revenue-unit/', note: 'SVP appointment'},
+                {title: 'Q4 Earnings', url: 'https://variety.com/2026/tv/news/roku-q4-2025-earnings-2026-revenue-forecast-1236660031/', note: 'Profit, 16% growth forecast'},
+                {title: 'Google Publisher Match', url: 'https://thedesk.net/2026/03/roku-google-confidential-publisher-match/', note: 'Privacy-safe identity'},
+                {title: 'CTV Commerce Engine', url: 'https://www.advanced-television.com/2025/12/11/roku-ctv-becomes-a-commerce-engine-in-2026/', note: '2026 positioning'},
+                {title: '32% CTV Share', url: 'https://www.mediapost.com/publications/article/412954/', note: 'Market leadership'}
+            ]
+        },
+        {
+            name: 'MNTN',
+            slug: 'mntn',
+            domain: 'mountain.com',
+            desc: 'Performance-driven platform specialized in automating CTV campaigns for direct-to-consumer and B2C marketers.',
+            tags: ['Performance TV', 'DTC', 'Automation'],
+            risk: 'HIGH',
+            strategic: 'Expanded executive leadership in March 2026: Garland Hill as CRO (ex-TikTok, scaled $1B+ mid-market) and Peter Blacker as Global Head of Premium Content (ex-NBCUniversal). Signals aggressive revenue expansion and push beyond core SMB customer base.',
+            messaging: 'Shifted from "performance TV for growth brands" to "performance TV for all brands." Magnite partnership (Jan 2026) brings premium live sports and breaking news. Now emphasizes AI-driven creative (QuickFrame) and MNTN Matched targeting over simplicity messaging.',
+            pricing: 'Dynamic CPM (dCPM) model with no disclosed tier-based pricing. Advertisers set budgets, platform optimizes delivery. No 2026 price changes detected.',
+            product: 'QuickFrame AI upgrades: improved asset reuse, director-level controls, orchestration layers. Magnite integration opens live sports and breaking news inventory. MNTN Matched claims 6x more visits and 2x more revenue vs. traditional TV.',
+            talent: 'Garland Hill (CRO) from TikTok and Peter Blacker from NBCU indicate upmarket transition. Q4 2025 revenue: $87.1M (+36% YoY), full year $284.7M.',
+            landmines: [
+                'Does your platform provide access to premium live sports and breaking news inventory, or only long-tail CTV supply?',
+                'Can you offer AI-powered creative production integrated into media buying, or do creative and media remain siloed?',
+                'How does your pricing compare — are you forcing customers into contract negotiations instead of self-serve budgeting?'
+            ],
+            sources: [
+                {title: 'Executive Expansion', url: 'https://www.nasdaq.com/press-release/mntn-expands-executive-team-support-growth-performance-tv-2026-03-10', note: 'CRO + Content head'},
+                {title: 'Magnite Partnership', url: 'https://www.magnite.com/press/mntn-and-magnite-turn-live-streamings-biggest-moments-into-performance-tv-for-growth-brands/', note: 'Live sports access'},
+                {title: 'QuickFrame AI', url: 'https://adtechradar.com/2026/01/28/mntn-quickframe-ai-upgrades-performance-ctv/', note: 'Creative upgrades'},
+                {title: 'Q4 Earnings', url: 'https://finance.yahoo.com/news/mntn-announce-fourth-quarter-full-213000517.html', note: '36% YoY growth'}
+            ]
+        },
+        {
+            name: 'StackAdapt',
+            slug: 'stackadapt',
+            domain: 'stackadapt.com',
+            desc: 'Top-ranked self-serve programmatic platform known for easy UI and cross-channel capabilities (CTV + native/video/display).',
+            tags: ['Self-Serve', 'Cross-Channel', 'Native'],
+            risk: 'HIGH',
+            strategic: 'Secured $235M Series C (Feb 2025) at $2.5B valuation with $500M annual revenue. Capital fuels aggressive expansion into AI-powered martech, consolidating email, programmatic, and first-party data into a unified platform.',
+            messaging: 'Shifted from pure DSP to AI-powered martech consolidation story. Emphasizing "unifying channels," "consolidating tech stacks," and "pragmatic AI adoption." Framing competitors as legacy point solutions losing to integrated players.',
+            pricing: 'Custom pricing scaling by user count: ~$500/mo (1 user) to ~$250K/mo (1,000 users). No minimum spend, no lock-in contracts. Cited as significantly cheaper than The Trade Desk.',
+            product: 'Martech Suite GA (Oct 2025): unified email + programmatic + first-party data. NPI Targeting for Pharma (Jan 2026). Experian ID resolution partnership (Feb 2026). Tubi CTV integration. Ivy AI assistant for natural-language campaign planning. G2 #1 Cross-Channel Advertising (Spring 2026).',
+            talent: 'Ryan Nelsen appointed CMO (May 2024) from Qualtrics (contributed to $1B revenue milestone). Leadership stable and well-resourced post-$235M raise.',
+            landmines: [
+                'What reporting customization do you offer — StackAdapt customers cite "limited reporting" as a pain point. Is custom dashboarding a whitespace advantage?',
+                'Can you offer transparent pricing without contract minimums, matching StackAdapt\'s no-minimum model?',
+                'How will you compete if StackAdapt\'s unified martech suite collapses email + programmatic + data into a single workflow?'
+            ],
+            sources: [
+                {title: '2026 Programmatic Report', url: 'https://www.businesswire.com/news/home/20260107667755/en/', note: 'Top marketers 4X more likely to consolidate'},
+                {title: 'Martech Suite', url: 'https://www.businesswire.com/news/home/20251015105389/en/', note: 'Unified platform launch'},
+                {title: 'Experian Partnership', url: 'https://www.businesswire.com/news/home/20260217808527/en/', note: 'ID resolution'},
+                {title: '$235M Series C', url: 'https://www.businesswire.com/news/home/20250203806442/en/', note: '$2.5B valuation'}
+            ]
+        },
+        {
+            name: 'Google DV360',
+            slug: 'google-dv360',
+            domain: 'marketingplatform.google.com',
+            desc: 'Integrates CTV with Google\'s broader digital ecosystem. Provides robust targeting and AI-driven optimization.',
+            tags: ['Google Ecosystem', 'AI Optimization', 'YouTube'],
+            risk: 'HIGH',
+            strategic: 'At Google NewFront 2026 (March 23), embedded Gemini AI across DV360 as the operating layer for automated media planning and buying. Ads Advisor automates campaign setup, optimization, and reporting — shifting from manual DSP to agentic buyer.',
+            messaging: 'Reframed from "DSP for complex media buyers" to "unified gold standard for programmatic video, CTV, and YouTube." 2026 narrative centers on effortless omnichannel buying powered by Gemini rather than advertiser expertise.',
+            pricing: 'Platform fees remain at 15% of media cost. No 2026 pricing changes, but Gemini-driven automation may compress margin requirements for managed service providers.',
+            product: 'Live sports bidding (Olympics/NFL/MLB/UFC), VRC Non-Skip Ads globally, YouTube Pause Ads, Creator Takeovers, Shorts (200B daily views), Confidential Publisher Match with Roku, Kroger SKU-level reporting, 30+ retail data partnerships. Google Audiences reach 96% of ad-supported CTV households.',
+            talent: 'No specific leadership changes in 2026. Heavy investment in AI/ML teams for Gemini integration and Ads Advisor capabilities.',
+            landmines: [
+                'What happens to your team\'s value when DV360\'s Gemini Ads Advisor automates planning, setup, and optimization?',
+                'How do you justify managed service fees when Gemini reduces media ops overhead to near zero?',
+                'Can your independent DSP compete with DV360\'s exclusive YouTube, NFL Sunday Ticket, and SKU-level Kroger data?'
+            ],
+            sources: [
+                {title: 'Gemini NewFront', url: 'https://blog.google/products/marketingplatform/360/gemini-models-advantage-google-marketing-platform/', note: 'March 23, 2026'},
+                {title: 'Gemini in DV360', url: 'https://www.adweek.com/programmatic/google-folds-gemini-deeper-into-dv360-to-automate-media-planning-and-buying/', note: 'Agentic media buying'},
+                {title: 'Live Sports Bidding', url: 'https://www.adwaitx.com/google-display-video-360-live-sports-nbcuniversal-olympics/', note: 'Olympics integration'},
+                {title: 'CTV Audiences', url: 'https://blog.google/products/marketingplatform/360/dv360-google-audience-ctv/', note: '96% CTV reach'},
+                {title: 'Ad Revenue', url: 'https://www.storyboard18.com/advertising/google-posts-82-3-billion-of-ad-revenue-youtubes-advertising-business-hit-11-4-billion-in-q4-2025-88901.htm', note: '$82.3B ad revenue'}
+            ]
+        },
+        {
+            name: 'Tatari',
+            slug: 'tatari',
+            domain: 'tatari.tv',
+            desc: 'Bridges linear TV and CTV with focus on measurement, attribution, and treating TV as a performance channel.',
+            tags: ['Linear + CTV', 'Attribution', 'Measurement'],
+            risk: 'MEDIUM',
+            strategic: 'Secured four clients (Ro, Manscaped, Tecovas, Life360) for Super Bowl LX in February 2026. Validates ability to help performance-focused DTC brands access premium TV moments at scale.',
+            messaging: 'Evolved from "TV advertising automation" to "Convergent TV" — unifying linear, CTV, and OTT under one platform. Emphasizing data-driven incrementality and closed-loop attribution. Clearco partnership signals lower-barrier-to-entry positioning for mid-market DTC.',
+            pricing: 'No public platform fees. Reports 32% average savings via direct publisher relationships. CPMs $3-$65. Clearco "buy now, pay later" media financing up to $10M per advertiser.',
+            product: 'Streaming Incrementality Beta, Retail Modelled Conversions Beta (Amazon/retail attribution), Vault Data Clean Room integration, Upstream direct publisher automation. All updates reduce friction and deepen attribution.',
+            talent: 'Amit Sharan (SVP Marketing, ex-Facebook/LiveRail) leads positioning. New SVP of Finance appointed, signaling investment scale-up.',
+            landmines: [
+                'How does Tatari\'s measurement compare to platforms offering real-time spend reallocation based on live performance?',
+                'Does their direct publisher model limit inventory access compared to programmatic DSPs aggregating supply at scale?',
+                'What onboarding timeline and CAC should you expect versus self-serve platforms claiming faster setup?'
+            ],
+            sources: [
+                {title: 'Super Bowl LX Clients', url: 'https://www.globenewswire.com/news-release/2026/02/04/3232508/0/en/', note: '4 DTC brands'},
+                {title: 'Platform Update', url: 'https://finance.yahoo.com/news/tatari-redesigns-tv-advertising-major-150900626.html', note: 'Convergent TV features'},
+                {title: 'Measurement Updates', url: 'https://www.tatari.tv/insights/tatari-makes-significant-updates-and-improvements-to-its-tv-ad-measurement', note: 'Enhanced measurement'},
+                {title: 'Clearco Partnership', url: 'https://www.tatari.tv/insights/tatari-partners-with-clearco-to-help-growing-brands-finance-media-budgets', note: 'Media financing'}
+            ]
+        },
+        {
+            name: 'Viant',
+            slug: 'viant',
+            domain: 'viantinc.com',
+            desc: 'People-based DSP offering cookie-free solutions, linking CTV ad exposure to website actions.',
+            tags: ['Cookieless', 'People-Based', 'Attribution'],
+            risk: 'HIGH',
+            strategic: 'Launched "Outcomes," the first fully autonomous advertising product (January 2026), powered by AI Lattice Brain that executes optimization decisions without manual intervention. Delivered 2.3x improvement in cost-per-action in beta.',
+            messaging: 'Shifted from traditional DSP to autonomous decisioning and people-based identity. Frames value as an intelligence layer that removes operational burden rather than a feature-rich self-service platform.',
+            pricing: 'Adelphic subscription: $3,000/login with 12-month commitment — an 80% cost reduction versus traditional percentage-of-spend DSPs. Enterprise gets custom pricing.',
+            product: 'Outcomes (autonomous product), IRIS.TV and Locker acquisitions, TransUnion partnership for 95% U.S. adult Household ID coverage. WHOOP signed as CTV customer (March 2026). 125M homes covered, 80%+ bid opportunity presence. Omnichannel: CTV, Linear, mobile, desktop, audio, gaming, DOOH.',
+            talent: 'Jon Schulz (CMO, 25+ years, ex-Ford Digital Marketing) leads marketing. Co-founders Chris and Tim Vanderhook stable at helm. Actively recruiting marketing leaders.',
+            landmines: [
+                'How is Outcomes\' autonomous AI validated for compliance and transparency — what audit trails exist for black-box concerns?',
+                'If TransUnion partnership is critical for Household ID match rates, what contingency exists if that relationship deteriorates?',
+                'What happens to pricing leverage if TTD, StackAdapt, or Amazon launch competing autonomous capabilities?'
+            ],
+            sources: [
+                {title: 'Outcomes Launch', url: 'https://www.viantinc.com/company/news/press-releases/viant-launches-outcomes-the-first-fully-autonomous-open-internet-ad-product/', note: 'Jan 2026'},
+                {title: 'WHOOP Deal', url: 'https://ppc.land/whoop-picks-viant-as-its-ctv-ad-platform-in-a-multi-year-deal/', note: 'March 2026'},
+                {title: 'Subscription Pricing', url: 'https://www.viantinc.com/company/news/press-releases/viants-adelphic-launches-innovative-subscription-pricing/', note: '80% cost reduction'},
+                {title: 'TransUnion Partnership', url: 'https://www.businesswire.com/news/home/20250128575269/en/', note: '95% U.S. Household ID'}
+            ]
+        }
+    ];
+
+    // Calculate business days between two dates
+    function businessDaysBetween(d1, d2) {
+        let count = 0;
+        let cur = new Date(d1);
+        while (cur < d2) {
+            cur.setDate(cur.getDate() + 1);
+            const dow = cur.getDay();
+            if (dow !== 0 && dow !== 6) count++;
+        }
+        return count;
+    }
+
+    // Determine tile status
+    function getTileStatus(dateStr) {
+        if (!dateStr) return { cls: 'pending', label: 'Awaiting Intel' };
+        const dossierDate = new Date(dateStr + 'T12:00:00');
+        const now = new Date();
+        const bdays = businessDaysBetween(dossierDate, now);
+        if (bdays > 5) {
+            const d = dossierDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return { cls: 'stale', label: d + ' \u2022 Stale' };
+        }
+        const d = dossierDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return { cls: 'fresh', label: d + ' \u2022 Current' };
+    }
+
+    // Render tiles
+    const tilesGrid = document.getElementById('tiles-grid');
+    const panelsContainer = document.getElementById('dossier-panels');
+
+    competitors.forEach((c, i) => {
+        const status = getTileStatus(DOSSIER_DATE);
+        const riskCls = c.risk === 'HIGH' ? 'high' : c.risk === 'MEDIUM' ? 'med' : 'low';
+
+        // Tile
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.id = 'tile-' + c.slug;
+        tile.setAttribute('data-index', i);
+        tile.innerHTML = '<div class="tile-header"><span class="tile-name">' + c.name + '</span><span class="tile-status ' + status.cls + '">' + status.label + '</span></div>' +
+            '<div class="tile-domain">' + c.domain + '</div>' +
+            '<div class="tile-desc">' + c.desc + '</div>' +
+            '<div class="tile-tags">' + c.tags.map(function(t) { return '<span class="tile-tag">' + t + '</span>'; }).join('') + '</div>' +
+            '<div class="tile-expand-hint">\u25BC Click to view dossier</div>';
+        tilesGrid.appendChild(tile);
+
+        // Panel
+        const panel = document.createElement('div');
+        panel.className = 'dossier-panel';
+        panel.id = 'panel-' + c.slug;
+
+        let sourcesHtml = c.sources.map(function(s) {
+            return '<div><a href="' + s.url + '" target="_blank" rel="noopener">' + s.title + '</a> — ' + s.note + '</div>';
+        }).join('');
+
+        panel.innerHTML = '<div class="dossier-panel-header"><h2>' + c.name + '</h2><button class="close-panel" data-index="' + i + '">\u2715 Close</button></div>' +
+            '<span class="risk-badge ' + riskCls + '">' + c.risk + ' RISK</span>' +
+            '<div class="intel-block"><h3>Strategic Move of the Month</h3><p>' + c.strategic + '</p></div>' +
+            '<div class="intel-block"><h3>Messaging Drift</h3><p>' + c.messaging + '</p></div>' +
+            '<div class="intel-block"><h3>Pricing Intelligence</h3><p>' + c.pricing + '</p></div>' +
+            '<div class="intel-block"><h3>Product Signals</h3><p>' + c.product + '</p></div>' +
+            '<div class="intel-block"><h3>Talent Signals</h3><p>' + c.talent + '</p></div>' +
+            '<div class="landmines"><h3>Competitive Landmines</h3><p class="hint">Questions to ask prospects that expose this competitor\'s weaknesses:</p><ol>' + c.landmines.map(function(l) { return '<li>' + l + '</li>'; }).join('') + '</ol></div>' +
+            '<div><span class="sources-toggle" data-slug="' + c.slug + '">\u25B6 Sources (' + c.sources.length + ')</span><div class="sources-list" id="sources-' + c.slug + '">' + sourcesHtml + '</div></div>';
+
+        panelsContainer.appendChild(panel);
+    });
+
+    // Click handlers
+    document.querySelectorAll('.tile').forEach(function(tile) {
+        tile.addEventListener('click', function() {
+            const idx = this.getAttribute('data-index');
+            const c = competitors[idx];
+            const panel = document.getElementById('panel-' + c.slug);
+
+            // Close all panels and deactivate tiles
+            document.querySelectorAll('.dossier-panel').forEach(function(p) { p.classList.remove('visible'); });
+            document.querySelectorAll('.tile').forEach(function(t) { t.classList.remove('active'); });
+
+            // Toggle this panel
+            if (!panel.classList.contains('visible')) {
+                panel.classList.add('visible');
+                this.classList.add('active');
+                setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+            }
+        });
+    });
+
+    document.querySelectorAll('.close-panel').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const idx = this.getAttribute('data-index');
+            const c = competitors[idx];
+            document.getElementById('panel-' + c.slug).classList.remove('visible');
+            document.getElementById('tile-' + c.slug).classList.remove('active');
+        });
+    });
+
+    document.querySelectorAll('.sources-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const slug = this.getAttribute('data-slug');
+            const list = document.getElementById('sources-' + slug);
+            list.classList.toggle('open');
+            this.textContent = list.classList.contains('open') ? '\u25BC Sources (' + competitors.find(function(c){return c.slug===slug}).sources.length + ')' : '\u25B6 Sources (' + competitors.find(function(c){return c.slug===slug}).sources.length + ')';
+        });
+    });
+    </script>
 </body>
 </html>
