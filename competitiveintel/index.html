@@ -113,13 +113,14 @@
         .landmines ol { padding-left: 1.25rem; }
         .landmines li { margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
 
-        /* Sources */
-        .sources-toggle { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; font-family: 'Inter', sans-serif; user-select: none; }
-        .sources-toggle:hover { color: var(--accent); }
-        .sources-list { display: none; padding: 0.75rem 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.8; }
-        .sources-list.open { display: block; }
-        .sources-list a { color: var(--accent); text-decoration: none; }
-        .sources-list a:hover { text-decoration: underline; }
+        /* Inline Citations */
+        .citations { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+        .citations h3 { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.75rem; }
+        .citation-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .citation-pill { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-family: 'Inter', sans-serif; color: var(--text-secondary); background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.15); border-radius: 6px; padding: 0.3rem 0.6rem; text-decoration: none; transition: all 0.2s; line-height: 1.3; }
+        .citation-pill:hover { background: rgba(167,139,250,0.18); border-color: var(--accent); color: var(--text); }
+        .citation-num { color: var(--accent); font-weight: 600; font-size: 0.65rem; }
+        .citation-note { opacity: 0.7; font-size: 0.65rem; }
 
         /* Footer */
         .dossier-footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
@@ -438,8 +439,11 @@
     function openModal(idx) {
         const c = competitors[idx];
         const riskCls = c.risk === 'HIGH' ? 'high' : c.risk === 'MEDIUM' ? 'med' : 'low';
-        const sourcesHtml = c.sources.map(function(s) {
-            return '<div><a href="' + s.url + '" target="_blank" rel="noopener">' + s.title + '</a> — ' + s.note + '</div>';
+        var citationsHtml = c.sources.map(function(s, idx) {
+            return '<a class="citation-pill" href="' + s.url + '" target="_blank" rel="noopener">' +
+                '<span class="citation-num">[' + (idx + 1) + ']</span> ' + s.title +
+                (s.note ? ' <span class="citation-note">\u2014 ' + s.note + '</span>' : '') +
+                '</a>';
         }).join('');
 
         modalContent.innerHTML =
@@ -451,19 +455,13 @@
             '<div class="intel-block"><h3>Product Signals</h3><p>' + c.product + '</p></div>' +
             '<div class="intel-block"><h3>Talent Signals</h3><p>' + c.talent + '</p></div>' +
             '<div class="landmines"><h3>Competitive Landmines</h3><p class="hint">Questions to ask prospects that expose this competitor\'s weaknesses:</p><ol>' + c.landmines.map(function(l) { return '<li>' + l + '</li>'; }).join('') + '</ol></div>' +
-            '<div><span class="sources-toggle" id="src-toggle-modal">\u25B6 Sources (' + c.sources.length + ')</span><div class="sources-list" id="src-list-modal">' + sourcesHtml + '</div></div>';
+            '<div class="citations"><h3>Sources</h3><div class="citation-list">' + citationsHtml + '</div></div>';
 
         document.querySelectorAll('.tile').forEach(function(t) { t.classList.remove('active'); });
         document.getElementById('tile-' + c.slug).classList.add('active');
         modalOverlay.classList.add('visible');
         document.body.style.overflow = 'hidden';
         modalOverlay.scrollTop = 0;
-
-        document.getElementById('src-toggle-modal').addEventListener('click', function() {
-            const list = document.getElementById('src-list-modal');
-            list.classList.toggle('open');
-            this.textContent = list.classList.contains('open') ? '\u25BC Sources (' + c.sources.length + ')' : '\u25B6 Sources (' + c.sources.length + ')';
-        });
     }
 
     function closeModal() {
