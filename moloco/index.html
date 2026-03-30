@@ -1131,10 +1131,14 @@
             padding: 0.7rem 1rem; font-size: 0.78rem; font-weight: 600;
             color: var(--text-secondary); cursor: pointer; white-space: nowrap;
             border-bottom: 2px solid transparent; margin-bottom: -2px;
-            transition: all 0.2s;
+            transition: all 0.2s; border-radius: 8px 8px 0 0;
         }
-        .agent-tab:hover { color: var(--text); }
-        .agent-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .agent-tab:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+        .agent-tab.active {
+            color: #fff; border-bottom-color: var(--accent);
+            background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3);
+            border-bottom: 2px solid var(--accent);
+        }
 
         /* ── AGENT PANEL ── */
         .agent-panel { display: none; animation: fadeIn 0.3s ease-out; }
