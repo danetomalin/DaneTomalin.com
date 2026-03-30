@@ -2258,15 +2258,15 @@
 
             <!-- Agent Workflows as tabs -->
             <div class="agent-tab-bar" id="agentTabBar">
-                <div class="agent-tab active" onclick="showAgent(0)">CI Monitor</div>
-                <div class="agent-tab" onclick="showAgent(1)">Battle Cards</div>
-                <div class="agent-tab" onclick="showAgent(2)">Win/Loss</div>
-                <div class="agent-tab" onclick="showAgent(3)">Content Brief</div>
-                <div class="agent-tab" onclick="showAgent(4)">RFP Drafter</div>
-                <div class="agent-tab" onclick="showAgent(5)">Market Signals</div>
+                <div class="agent-tab active" onclick="showAgent(0)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>CI Monitor</div>
+                <div class="agent-tab" onclick="showAgent(1)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Market Signals</div>
+                <div class="agent-tab" onclick="showAgent(2)" style="opacity:0.5;"><span style="color:var(--text-secondary);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">Coming Soon</span>Battle Cards</div>
+                <div class="agent-tab" onclick="showAgent(3)" style="opacity:0.5;"><span style="color:var(--text-secondary);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">Coming Soon</span>Win/Loss</div>
+                <div class="agent-tab" onclick="showAgent(4)" style="opacity:0.5;"><span style="color:var(--text-secondary);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">Coming Soon</span>Content Brief</div>
+                <div class="agent-tab" onclick="showAgent(5)" style="opacity:0.5;"><span style="color:var(--text-secondary);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">Coming Soon</span>RFP Drafter</div>
             </div>
 
-            <!-- Agent 0 -->
+            <!-- Agent 0: CI Monitor (In Beta) -->
             <div class="agent-panel active" id="agent-0">
                 <div class="agent-card">
                     <div class="agent-header">
@@ -2295,124 +2295,8 @@
                 </div>
             </div>
 
-            <!-- Agent 1 -->
+            <!-- Agent 1: Market Signals (In Beta) -->
             <div class="agent-panel" id="agent-1">
-                <div class="agent-card">
-                    <div class="agent-header">
-                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg></div>
-                        <div class="agent-name">Battle Card Auto-Updater</div>
-                    </div>
-                    <p class="agent-desc">Pulls from the CI monitor and CRM win/loss data to suggest updates to battle cards. Drafts new objection-handling responses when new competitive claims emerge. Flags when a battle card is stale.</p>
-                    <div class="agent-meta">
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Build Time</div>
-                            <div class="agent-meta-value">1-2 weeks</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Deploy Window</div>
-                            <div class="agent-meta-value">Month 3-4</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Impact</div>
-                            <div class="agent-meta-value accent">Always-current battle cards</div>
-                        </div>
-                    </div>
-                    <div class="agent-impl">
-                        <div class="agent-impl-label">Implementation</div>
-                        LLM agent with access to CI database and CRM. Runs weekly, outputs draft updates for human review. Builds on top of CI Monitor.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Agent 2 -->
-            <div class="agent-panel" id="agent-2">
-                <div class="agent-card">
-                    <div class="agent-header">
-                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg></div>
-                        <div class="agent-name">Win/Loss Interview Synthesizer</div>
-                    </div>
-                    <p class="agent-desc">Transcribes recorded win/loss interviews, extracts key themes (decision drivers, competitive mentions, objections, feature requests), and aggregates findings across deals into trend reports.</p>
-                    <div class="agent-meta">
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Build Time</div>
-                            <div class="agent-meta-value">2-3 weeks</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Deploy Window</div>
-                            <div class="agent-meta-value">Month 4-6</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Impact</div>
-                            <div class="agent-meta-value accent">Scalable win/loss analysis</div>
-                        </div>
-                    </div>
-                    <div class="agent-impl">
-                        <div class="agent-impl-label">Implementation</div>
-                        Transcription API (Whisper/Deepgram) + LLM extraction pipeline. Structured output to database for trend analysis.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Agent 3 -->
-            <div class="agent-panel" id="agent-3">
-                <div class="agent-card">
-                    <div class="agent-header">
-                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg></div>
-                        <div class="agent-name">Content Brief Generator</div>
-                    </div>
-                    <p class="agent-desc">Given a topic and target persona, generates a structured content brief: key messages, competitive angle, SEO recommendations, suggested structure, and relevant proof points from the case study library.</p>
-                    <div class="agent-meta">
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Build Time</div>
-                            <div class="agent-meta-value">1-2 weeks</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Deploy Window</div>
-                            <div class="agent-meta-value">Month 2-3</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Impact</div>
-                            <div class="agent-meta-value accent">60-70% faster content planning</div>
-                        </div>
-                    </div>
-                    <div class="agent-impl">
-                        <div class="agent-impl-label">Implementation</div>
-                        RAG agent with access to messaging framework, case studies, and competitive database. Ensures consistency with brand voice.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Agent 4 -->
-            <div class="agent-panel" id="agent-4">
-                <div class="agent-card">
-                    <div class="agent-header">
-                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3"/></svg></div>
-                        <div class="agent-name">RFP / RFI Response Drafter</div>
-                    </div>
-                    <p class="agent-desc">Ingests RFP documents, maps questions to existing content (product specs, case studies, security docs), and drafts responses. Flags gaps where new content is needed.</p>
-                    <div class="agent-meta">
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Build Time</div>
-                            <div class="agent-meta-value">3-4 weeks</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Deploy Window</div>
-                            <div class="agent-meta-value">Month 6-8</div>
-                        </div>
-                        <div class="agent-meta-item">
-                            <div class="agent-meta-label">Impact</div>
-                            <div class="agent-meta-value accent">Days to hours on RFPs</div>
-                        </div>
-                    </div>
-                    <div class="agent-impl">
-                        <div class="agent-impl-label">Implementation</div>
-                        Document parsing + RAG pipeline with curated knowledge base of approved responses. Critical for enterprise procurement cycles.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Agent 5 -->
-            <div class="agent-panel" id="agent-5">
                 <div class="agent-card">
                     <div class="agent-header">
                         <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg></div>
@@ -2436,6 +2320,122 @@
                     <div class="agent-impl">
                         <div class="agent-impl-label">Implementation</div>
                         Claude Cowork crawling, LLM summarization pipeline, GitHub publishing.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 2: Battle Cards (Coming Soon) -->
+            <div class="agent-panel" id="agent-2">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg></div>
+                        <div class="agent-name">Battle Card Auto-Updater</div>
+                    </div>
+                    <p class="agent-desc">Pulls from the CI monitor and CRM win/loss data to suggest updates to battle cards. Drafts new objection-handling responses when new competitive claims emerge. Flags when a battle card is stale.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Build Time</div>
+                            <div class="agent-meta-value">1-2 weeks</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Deploy Window</div>
+                            <div class="agent-meta-value">Coming Soon</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Always-current battle cards</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        LLM agent with access to CI database and CRM. Runs weekly, outputs draft updates for human review. Builds on top of CI Monitor.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 3: Win/Loss (Coming Soon) -->
+            <div class="agent-panel" id="agent-3">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg></div>
+                        <div class="agent-name">Win/Loss Interview Synthesizer</div>
+                    </div>
+                    <p class="agent-desc">Transcribes recorded win/loss interviews, extracts key themes (decision drivers, competitive mentions, objections, feature requests), and aggregates findings across deals into trend reports.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Build Time</div>
+                            <div class="agent-meta-value">2-3 weeks</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Deploy Window</div>
+                            <div class="agent-meta-value">Coming Soon</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Scalable win/loss analysis</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Transcription API (Whisper/Deepgram) + LLM extraction pipeline. Structured output to database for trend analysis.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 4: Content Brief (Coming Soon) -->
+            <div class="agent-panel" id="agent-4">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg></div>
+                        <div class="agent-name">Content Brief Generator</div>
+                    </div>
+                    <p class="agent-desc">Given a topic and target persona, generates a structured content brief: key messages, competitive angle, SEO recommendations, suggested structure, and relevant proof points from the case study library.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Build Time</div>
+                            <div class="agent-meta-value">1-2 weeks</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Deploy Window</div>
+                            <div class="agent-meta-value">Coming Soon</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">60-70% faster content planning</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        RAG agent with access to messaging framework, case studies, and competitive database. Ensures consistency with brand voice.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 5: RFP Drafter (Coming Soon) -->
+            <div class="agent-panel" id="agent-5">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3"/></svg></div>
+                        <div class="agent-name">RFP / RFI Response Drafter</div>
+                    </div>
+                    <p class="agent-desc">Ingests RFP documents, maps questions to existing content (product specs, case studies, security docs), and drafts responses. Flags gaps where new content is needed.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Build Time</div>
+                            <div class="agent-meta-value">3-4 weeks</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Deploy Window</div>
+                            <div class="agent-meta-value">Coming Soon</div>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Days to hours on RFPs</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Document parsing + RAG pipeline with curated knowledge base of approved responses. Critical for enterprise procurement cycles.
                     </div>
                 </div>
             </div>
