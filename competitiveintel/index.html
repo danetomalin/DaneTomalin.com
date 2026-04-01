@@ -125,9 +125,36 @@
         /* Footer */
         .dossier-footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
         .dossier-footer p { font-size: 0.75rem; color: #555; font-family: 'Inter', sans-serif; }
+        .site-header {
+            position: sticky; top: 0;
+            background: rgba(13,13,18,0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem; height: 48px;
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 200;
+        }
+        .site-header-name {
+            font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+            color: #fff; text-decoration: none; transition: color 0.2s;
+        }
+        .site-header-name:hover { color: var(--accent); }
+        .site-header-back {
+            font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+        }
+        .site-header-back:hover { color: var(--accent); }
+        .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
     </style>
 </head>
 <body>
+    <header class="site-header">
+        <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+        <a href="https://danetomalin.com" class="site-header-back">
+            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+            Back to Home
+        </a>
+    </header>
     <div class="container">
 
         <!-- HEADER -->
