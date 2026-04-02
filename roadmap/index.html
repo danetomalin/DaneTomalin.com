@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Roadmap Steering Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #A78BFA;
+    --accent-strong: #7C3AED;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --build: #66BB6A;
+    --build-bg: rgba(102, 187, 106, 0.12);
+    --investigate: #FFA726;
+    --investigate-bg: rgba(255, 167, 38, 0.12);
+    --defer: #EF5350;
+    --defer-bg: rgba(239, 83, 80, 0.12);
+    --kill: #78909C;
+    --kill-bg: rgba(120, 144, 156, 0.12);
+    --critical: #FFA726;
+    --critical-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Header — matches CI Dossier & CTV Dashboard */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+  .nav-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: var(--mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 12px;
+  }
+  .nav-link:hover { text-decoration: underline; }
+
+  /* Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-strong { border-left: 3px solid var(--build); }
+  .scorecard-card.overall-moderate { border-left: 3px solid var(--investigate); }
+  .scorecard-card.overall-weak { border-left: 3px solid var(--defer); }
+
+  /* UVFV Framework Legend */
+  .framework-legend {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .framework-legend h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .framework-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .framework-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+  .framework-item .fw-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .framework-item .fw-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Recommendation Badge */
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .rec-badge.build { background: var(--build-bg); color: var(--build); }
+  .rec-badge.investigate { background: var(--investigate-bg); color: var(--investigate); }
+  .rec-badge.defer { background: var(--defer-bg); color: var(--defer); }
+  .rec-badge.kill { background: var(--kill-bg); color: var(--kill); }
+  .rec-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Priority Badge */
+  .priority-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .priority-badge.critical { background: var(--critical-bg); color: var(--critical); }
+  .priority-badge.high { background: var(--accent-bg); color: var(--accent); }
+  .priority-badge.medium { background: var(--investigate-bg); color: var(--investigate); }
+  .priority-badge.low { background: var(--kill-bg); color: var(--kill); }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Category Sections */
+  .category-section { margin-bottom: 32px; }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .category-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .category-icon.measurement { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .category-icon.creative { background: rgba(124,58,237,0.15); color: var(--accent-strong); }
+  .category-icon.inventory { background: rgba(255,167,38,0.15); color: var(--investigate); }
+  .category-icon.platform { background: rgba(102,187,106,0.15); color: var(--build); }
+  .category-icon.ml { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .category-icon.cross-screen { background: rgba(239,83,80,0.15); color: var(--defer); }
+  .category-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .category-header .count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Roadmap Cards */
+  .roadmap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .roadmap-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .roadmap-card.critical-priority {
+    border-left: 3px solid var(--critical);
+    background: var(--critical-bg);
+  }
+  .roadmap-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .roadmap-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+  }
+  .impact-badge .bar-track {
+    width: 40px; height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .impact-badge .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .roadmap-card .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .roadmap-card .evidence {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .roadmap-card .evidence .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .roadmap-card .evidence p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* UVFV Assessment Grid */
+  .assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .assess-cell {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .assess-cell.pass { border-color: var(--build); }
+  .assess-cell.fail { border-color: var(--defer); }
+  .assess-cell .a-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .assess-cell .a-score {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .assess-cell.pass .a-score { color: var(--build); }
+  .assess-cell.fail .a-score { color: var(--defer); }
+  .assess-cell .a-verdict {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .assess-cell.pass .a-verdict { color: var(--build); }
+  .assess-cell.fail .a-verdict { color: var(--defer); }
+  .assess-rationale {
+    display: none;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .assess-rationale.visible { display: block; }
+  .assess-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: var(--font);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .assess-toggle:hover { border-color: var(--accent); color: var(--text-primary); }
+
+  .roadmap-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state p { font-size: 15px; }
+
+  /* Footer */
+  .engine-footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .engine-footer a { color: var(--accent); text-decoration: none; }
+  .engine-footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .engine-header h1 { font-size: 1.6em; }
+    .scorecard { grid-template-columns: 1fr 1fr; }
+    .assessment-grid { grid-template-columns: repeat(2, 1fr); }
+    .filter-bar { flex-direction: column; }
+    .search-input { min-width: unset; width: 100%; }
+    .roadmap-card .card-top { flex-direction: column; }
+    .framework-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .assessment-grid { grid-template-columns: 1fr 1fr; }
+    .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
+    .framework-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="engine-header">
+  <h1>Product Roadmap Steering Engine <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Generated: <span id="report-date">April 01, 2026</span></p>
+  <span class="classification">Internal Only</span>
+  <div class="meta">
+    <span>12 roadmap items</span>
+    <span>5 critical/high priority</span>
+    <span>6 recommended to build</span>
+  </div>
+  <a href="https://danetomalin.com/moloco-ctv" class="nav-link">&#x2190; Moloco CTV Dashboard</a>
+</header>
+
+<div class="container">
+
+  <!-- Framework Legend -->
+  <div class="framework-legend">
+    <h3>Assessment Framework: Should We Build It?</h3>
+    <div class="framework-grid">
+      <div class="framework-item">
+        <div class="framework-icon">U</div>
+        <div>
+          <div class="fw-label">Usable</div>
+          <div class="fw-desc">Can users learn and operate it?</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">V</div>
+        <div>
+          <div class="fw-label">Valuable</div>
+          <div class="fw-desc">Does it solve a real problem?</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">F</div>
+        <div>
+          <div class="fw-label">Feasible</div>
+          <div class="fw-desc">Can we build it with current tech?</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">V</div>
+        <div>
+          <div class="fw-label">Viable</div>
+          <div class="fw-desc">Does the business case hold up?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scorecard -->
+  <div class="scorecard" id="scorecard">
+    
+    <div class="scorecard-card overall-strong">
+      <div class="label">Roadmap Health</div>
+      <div class="value" style="color:var(--build)">STRONG</div>
+      <div class="detail">Moloco&#x27;s CTV product has clear momentum but faces critical gaps in measurement, creative formats, and self-serve UX that...</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Total Items</div>
+      <div class="value" style="color:var(--accent)">12</div>
+      <div class="detail">5 critical or high priority</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Build</div>
+      <div class="value" style="color:var(--build)">5</div>
+      <div class="detail">All four criteria pass</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Investigate</div>
+      <div class="value" style="color:var(--investigate)">4</div>
+      <div class="detail">Three of four pass — needs validation</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Defer</div>
+      <div class="value" style="color:var(--defer)">2</div>
+      <div class="detail">Gaps prevent near-term build</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Category</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterItems('all', this)">All</button>
+    <button class="filter-btn" data-filter="measurement_attribution" onclick="filterItems('measurement_attribution', this)">Measurement</button>
+    <button class="filter-btn" data-filter="creative_formats" onclick="filterItems('creative_formats', this)">Creative</button>
+    <button class="filter-btn" data-filter="inventory_supply" onclick="filterItems('inventory_supply', this)">Inventory</button>
+    <button class="filter-btn" data-filter="platform_ux" onclick="filterItems('platform_ux', this)">Platform UX</button>
+    <button class="filter-btn" data-filter="ml_optimization" onclick="filterItems('ml_optimization', this)">ML & Optimization</button>
+    <button class="filter-btn" data-filter="cross_screen" onclick="filterItems('cross_screen', this)">Cross-Screen</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Verdict</span>
+    <button class="filter-btn" data-rec="build" onclick="filterRec('build', this)">Build</button>
+    <button class="filter-btn" data-rec="investigate" onclick="filterRec('investigate', this)">Investigate</button>
+    <button class="filter-btn" data-rec="defer" onclick="filterRec('defer', this)">Defer</button>
+    <div class="filter-separator"></div>
+    <input type="text" class="search-input" placeholder="Search roadmap items..." oninput="searchItems(this.value)" id="search-box">
+  </div>
+
+  <!-- Content -->
+  <div id="roadmap-content">
+    
+    <div class="category-section" data-category-section="measurement_attribution">
+      <div class="category-header">
+        <div class="category-icon measurement">⌖</div>
+        <h2>Measurement &amp; Attribution</h2>
+        <span class="count">2 items</span>
+      </div>
+      
+    <div class="roadmap-card critical-priority" data-category="measurement_attribution" data-rec="build" data-score="8.5">
+      <div class="card-top">
+        <h3>Unified Cross-Screen Attribution Dashboard <span class="priority-badge critical">Critical</span></h3>
+        <div class="impact-badge">
+          <span>8.5/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:85.0%;background:var(--critical)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">Advertisers lack a single view connecting CTV ad exposure to mobile app installs, in-app events, and web conversions. Current measurement requires stitching together MMP data (AppsFlyer, Adjust, Branch) with CTV delivery reports manually, creating friction that slows CTV budget allocation.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>53% of marketing decision-makers say they&#x27;d increase CTV investment with better ROI measurement (eMarketer 2026). Only 32% measure media holistically across TV and digital. G2 reviews cite Moloco&#x27;s tracking features as rated lower than competitors. Moloco currently supports CTV measurement through AppsFlyer, Adjust, Branch, and Singular integrations but lacks a unified view.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">10</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-measurement_attribution-20260401-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-measurement_attribution-20260401-001">
+        <strong>Usable (8/10 — PASS):</strong> A unified dashboard simplifies what advertisers already do manually. The mental model is straightforward: see CTV spend on the left, downstream conversions on the right. Existing MMP integrations provide the data plumbing — the UX is the missing layer.<br><strong>Valuable (10/10 — PASS):</strong> This is the #1 barrier to CTV budget growth. Every prospect objection starts with &#x27;how do I prove CTV works?&#x27; Solving this directly unlocks larger budgets from existing advertisers and removes the top objection for new ones.<br><strong>Feasible (7/10 — PASS):</strong> The data already flows through MMP postbacks. The engineering lift is aggregation, visualization, and attribution windowing — not new data collection. Estimated 2-3 quarter effort for an MVP with AppsFlyer and Adjust integration.<br><strong>Viable (9/10 — PASS):</strong> Directly tied to revenue growth — better measurement = higher CTV spend. Competitors like The Trade Desk already offer unified reporting. This is table stakes for enterprise CTV deals and critical for pre-IPO narrative.
+      </div>
+      <div class="card-footer">
+        <span class="tag">attribution</span><span class="tag">measurement</span><span class="tag">dashboard</span><span class="tag">MMP</span><span class="tag">cross-device</span>
+        <span style="flex:1"></span>
+        <a href="https://www.emarketer.com/content/faq-on-ctv-advertising--trends--formats--platforms-watch-2026" class="source-link" target="_blank" rel="noopener">emarketer.com <span style="color:var(--text-muted);font-size:11px;">(2026-01)</span> &#x2197;</a><a href="https://help.moloco.com/hc/en-us/articles/17341427705495" class="source-link" target="_blank" rel="noopener">help.moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://www.digitalelement.com/blog/ctv-advertising-in-2024-navigating-an-era-of-abundant-data-and-trust-scarcity/" class="source-link" target="_blank" rel="noopener">digitalelement.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.g2.com/products/moloco/reviews" class="source-link" target="_blank" rel="noopener">g2.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card" data-category="measurement_attribution" data-rec="build" data-score="7.0">
+      <div class="card-top">
+        <h3>CTV Incrementality Testing Framework <span class="priority-badge high">High</span></h3>
+        <div class="impact-badge">
+          <span>7.0/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70.0%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">No native incrementality testing for CTV campaigns. Advertisers cannot isolate the true lift of CTV exposure vs. organic conversions. This is critical for justifying CTV budgets to CFOs and proving Moloco&#x27;s outcome-based value proposition over reach-based competitors.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>IAB Tech Lab 2025 roadmap prioritizes incrementality and attribution standards for converged TV. 47% of US marketers cite attribution/measurement as their leading investment priority. Competitors like The Trade Desk and StackAdapt offer geo-based lift studies and holdout group testing.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-measurement_attribution-20260401-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-measurement_attribution-20260401-002">
+        <strong>Usable (6/10 — PASS):</strong> Incrementality testing requires advertiser understanding of test/control methodology. A guided wizard approach could lower the bar, but this will always be a power-user feature. Acceptable for the enterprise segment Moloco targets.<br><strong>Valuable (9/10 — PASS):</strong> Directly addresses the &#x27;prove CTV works&#x27; objection at the CFO level. Incrementality data is the gold standard for budget justification and is increasingly demanded in enterprise RFPs.<br><strong>Feasible (5/10 — PASS):</strong> Requires geo-based or user-level holdout group infrastructure, statistical modeling, and careful sample size management. Technically complex but well-understood in the industry. Estimated 3-4 quarter engineering effort.<br><strong>Viable (8/10 — PASS):</strong> High strategic value for enterprise deals and pre-IPO positioning. Directly supports Moloco&#x27;s &#x27;performance over reach&#x27; narrative. However, ROI is indirect (enables larger deals rather than generating direct revenue).
+      </div>
+      <div class="card-footer">
+        <span class="tag">incrementality</span><span class="tag">lift-testing</span><span class="tag">measurement</span><span class="tag">enterprise</span><span class="tag">CFO</span>
+        <span style="flex:1"></span>
+        <a href="https://iab.com" class="source-link" target="_blank" rel="noopener">iab.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://adtelligent.com/blog/ctv-ad-measurement-and-attribution-full-guide/" class="source-link" target="_blank" rel="noopener">adtelligent.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.stackadapt.com/resources/blog/connected-tv-attribution" class="source-link" target="_blank" rel="noopener">stackadapt.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="category-section" data-category-section="creative_formats">
+      <div class="category-header">
+        <div class="category-icon creative">■</div>
+        <h2>Creative &amp; Ad Formats</h2>
+        <span class="count">2 items</span>
+      </div>
+      
+    <div class="roadmap-card" data-category="creative_formats" data-rec="build" data-score="7.5">
+      <div class="card-top">
+        <h3>Interactive &amp; Shoppable CTV Ad Formats <span class="priority-badge high">High</span></h3>
+        <div class="impact-badge">
+          <span>7.5/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:75.0%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">Moloco CTV currently supports standard video pre-roll. The market is rapidly moving toward interactive formats — QR codes, click-to-install overlays, shoppable product carousels — that bridge the gap between CTV exposure and immediate action. Tubi (a Moloco partner) just launched interactive formats independently.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Tubi announced new interactive ad formats and expanded tech partnerships at IAB NewFronts 2025. Interactive and transactional formats are transforming CTV from a branding tool into a performance channel. Moloco&#x27;s current CTV creative is limited to video upload — no interactive layer. Competitors already offer shoppable, QR, and interactive CTV formats.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-creative_formats-20260401-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-creative_formats-20260401-001">
+        <strong>Usable (7/10 — PASS):</strong> Interactive formats add complexity to creative production but the advertiser-facing workflow can be simplified with templates. QR overlays are the lowest-friction entry point — advertisers provide a URL, the system generates the overlay.<br><strong>Valuable (9/10 — PASS):</strong> This directly supports Moloco&#x27;s performance-first CTV positioning. Interactive formats create a measurable action layer on top of video — turning impressions into attributable clicks, scans, and installs. Without this, Moloco risks being perceived as &#x27;just another video DSP.&#x27;<br><strong>Feasible (6/10 — PASS):</strong> QR overlays are simple (1-2 quarters). Full interactive formats require VAST/VPAID extensions and publisher-side support. Tubi partnership provides a testbed. Phased rollout recommended: QR first, then interactive carousels.<br><strong>Viable (8/10 — PASS):</strong> Differentiator for sales against reach-based competitors. Interactive CTV ads command 15-30% higher CPMs, directly benefiting Moloco&#x27;s take rate. Aligns with Tubi partnership and streaming monetization strategy.
+      </div>
+      <div class="card-footer">
+        <span class="tag">interactive</span><span class="tag">shoppable</span><span class="tag">QR-code</span><span class="tag">creative</span><span class="tag">Tubi</span><span class="tag">performance</span>
+        <span style="flex:1"></span>
+        <a href="https://corporate.tubitv.com/press/tubi-announces-new-interactive-ad-formats-expanded-tech-partnerships-and-self-serve-ads-platform-at-iab-newfronts/" class="source-link" target="_blank" rel="noopener">corporate.tubitv.com <span style="color:var(--text-muted);font-size:11px;">(2025-05)</span> &#x2197;</a><a href="https://www.aidigital.com/blog/ctv-advertising-trends" class="source-link" target="_blank" rel="noopener">aidigital.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.moloco.com/case-studies/nexons-global-campaign-success-with-molocos-ctv-solution" class="source-link" target="_blank" rel="noopener">moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card" data-category="creative_formats" data-rec="defer" data-score="4.75">
+      <div class="card-top">
+        <h3>Dynamic Creative Optimization (DCO) for CTV <span class="priority-badge low">Low</span></h3>
+        <div class="impact-badge">
+          <span>4.75/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:47.5%;background:var(--text-muted)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge defer">
+          <span class="dot"></span>
+          Defer
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">No CTV-specific dynamic creative optimization. Advertisers upload static video assets. The ability to dynamically assemble CTV creatives based on audience signals, time of day, geography, or product catalog would transform CTV from a branding medium to a true performance channel.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>G2 reviews note limited creative management. CTV advertising guides highlight DCO as an emerging capability. Competitors like Innovid and Flashtalking offer CTV DCO. Moloco&#x27;s ML engine could power creative-level optimization but the creative management layer doesn&#x27;t exist yet.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">3</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-creative_formats-20260401-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-creative_formats-20260401-002">
+        <strong>Usable (5/10 — PASS):</strong> DCO adds significant creative production complexity. Requires advertisers to provide component assets (product images, price feeds, headlines) rather than finished videos. Learning curve is real but manageable with good templates.<br><strong>Valuable (6/10 — PASS):</strong> Valuable for e-commerce and DTC advertisers with large product catalogs. Less relevant for gaming/app install use cases which dominate Moloco CTV today. Value depends heavily on audience mix evolution.<br><strong>Feasible (3/10 — FAIL):</strong> Real-time video assembly is technically complex and resource-intensive. Requires a creative management platform, asset library, rendering pipeline, and ML-driven component selection. Would likely require acquisition or partnership (SceneCraft acquisition may be relevant).<br><strong>Viable (5/10 — PASS):</strong> Niche value for current advertiser base (gaming-heavy). Becomes more viable as Moloco expands into DTC/retail CTV advertisers. Better suited as a 2027+ initiative after core measurement and UX gaps are closed.
+      </div>
+      <div class="card-footer">
+        <span class="tag">DCO</span><span class="tag">dynamic-creative</span><span class="tag">personalization</span><span class="tag">e-commerce</span><span class="tag">DTC</span>
+        <span style="flex:1"></span>
+        <a href="https://www.aidigital.com/blog/ctv-advertising-trends" class="source-link" target="_blank" rel="noopener">aidigital.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.g2.com/products/moloco/reviews" class="source-link" target="_blank" rel="noopener">g2.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://tracxn.com/d/companies/moloco/__M1nPynPtg3BaL6CBRI36dMxROlan8YGwYMiAqLdqttY" class="source-link" target="_blank" rel="noopener">tracxn.com <span style="color:var(--text-muted);font-size:11px;">(2025-01)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="category-section" data-category-section="inventory_supply">
+      <div class="category-header">
+        <div class="category-icon inventory">↑</div>
+        <h2>Inventory &amp; Supply</h2>
+        <span class="count">2 items</span>
+      </div>
+      
+    <div class="roadmap-card" data-category="inventory_supply" data-rec="investigate" data-score="7.75">
+      <div class="card-top">
+        <h3>Premium FAST Channel Supply Integration <span class="priority-badge high">High</span></h3>
+        <div class="impact-badge">
+          <span>7.75/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:77.5%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">FAST (Free Ad-Supported Streaming TV) channels are the fastest-growing CTV inventory segment. Moloco has the Tubi partnership but needs broader FAST supply — Pluto TV, Roku Channel, Freevee, Samsung TV Plus — to give advertisers sufficient reach for ML optimization to work.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Tubi partnership announced. FAST viewership growing 30%+ YoY. Moloco&#x27;s ML engine needs volume for prediction accuracy — more diverse inventory = better optimization. Current Tubi-only FAST supply limits campaign scale. Paramount, Samsung, and Roku are all expanding FAST programmatic access.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-inventory_supply-20260401-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-inventory_supply-20260401-001">
+        <strong>Usable (8/10 — PASS):</strong> Supply integration is invisible to advertisers — they just see more available inventory. Existing campaign setup flows work unchanged. Optional supply-source targeting adds control without adding complexity.<br><strong>Valuable (8/10 — PASS):</strong> More inventory = better ML optimization = better performance for advertisers. Also expands addressable audience for CTV campaigns, making Moloco viable for larger budgets. Directly requested by advertisers seeking scale.<br><strong>Feasible (7/10 — PASS):</strong> Standard SSP/exchange integrations via OpenRTB. Each new supply source is 4-8 weeks of integration work. Can be parallelized across multiple publishers. The Tubi integration provides the template.<br><strong>Viable (8/10 — PASS):</strong> More supply = more ad requests = more revenue. Each FAST partnership expands TAM. Critical for competing with The Trade Desk and DV360 on inventory breadth. Low risk, high reward.
+      </div>
+      <div class="card-footer">
+        <span class="tag">FAST</span><span class="tag">inventory</span><span class="tag">supply</span><span class="tag">Tubi</span><span class="tag">Pluto</span><span class="tag">Roku</span><span class="tag">scale</span>
+        <span style="flex:1"></span>
+        <a href="https://corporate.tubitv.com/press/tubi-announces-new-interactive-ad-formats-expanded-tech-partnerships-and-self-serve-ads-platform-at-iab-newfronts/" class="source-link" target="_blank" rel="noopener">corporate.tubitv.com <span style="color:var(--text-muted);font-size:11px;">(2025-05)</span> &#x2197;</a><a href="https://adsmanager.paramount.com/insights/ctv-advertising-news-trends" class="source-link" target="_blank" rel="noopener">adsmanager.paramount.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.koreaherald.com/article/10508103" class="source-link" target="_blank" rel="noopener">koreaherald.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card" data-category="inventory_supply" data-rec="investigate" data-score="6.5">
+      <div class="card-top">
+        <h3>CTV Supply-Side Fraud Detection &amp; Transparency <span class="priority-badge medium">Medium</span></h3>
+        <div class="impact-badge">
+          <span>6.5/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:65.0%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">CTV ad fraud remains a significant industry concern — bot traffic, spoofed devices, and misrepresented inventory. Moloco needs transparent supply quality scoring so advertisers trust the inventory their ML models are bidding on.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>CTV ad fraud rates estimated at 10-15% of spend. Industry reports cite &#x27;impression legitimacy and cross-platform comparability&#x27; as key blind spots. Currency fragmentation and data transparency are major pain points for CTV buyers. Moloco&#x27;s ML optimization is only as good as the signal quality from supply sources.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-inventory_supply-20260401-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-inventory_supply-20260401-002">
+        <strong>Usable (7/10 — PASS):</strong> Supply quality scoring can be surfaced as a simple quality badge per publisher or campaign, with drill-down for power users. Transparent and intuitive presentation is achievable.<br><strong>Valuable (7/10 — PASS):</strong> Important for trust and budget confidence. Advertisers who suspect fraud reduce spend. Transparency is a competitive differentiator against opaque CTV exchanges.<br><strong>Feasible (6/10 — PASS):</strong> Moloco&#x27;s ML engine already processes bid requests — adding fraud scoring signals (device fingerprinting, traffic pattern analysis) is incremental. Can leverage third-party fraud detection (IAS, DoubleVerify, MOAT) for initial coverage.<br><strong>Viable (6/10 — PASS):</strong> Moderate direct revenue impact but important for trust-building and reducing advertiser churn. Not a major differentiator on its own but table stakes for enterprise CTV deals.
+      </div>
+      <div class="card-footer">
+        <span class="tag">fraud</span><span class="tag">transparency</span><span class="tag">supply-quality</span><span class="tag">trust</span><span class="tag">verification</span>
+        <span style="flex:1"></span>
+        <a href="https://www.digitalelement.com/blog/ctv-advertising-in-2024-navigating-an-era-of-abundant-data-and-trust-scarcity/" class="source-link" target="_blank" rel="noopener">digitalelement.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://adtelligent.com/blog/ctv-ad-measurement-and-attribution-full-guide/" class="source-link" target="_blank" rel="noopener">adtelligent.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="category-section" data-category-section="platform_ux">
+      <div class="category-header">
+        <div class="category-icon platform">☰</div>
+        <h2>Platform UX &amp; Self-Serve</h2>
+        <span class="count">2 items</span>
+      </div>
+      
+    <div class="roadmap-card critical-priority" data-category="platform_ux" data-rec="build" data-score="8.0">
+      <div class="card-top">
+        <h3>Self-Serve CTV Campaign Builder with Guided Setup <span class="priority-badge critical">Critical</span></h3>
+        <div class="impact-badge">
+          <span>8.0/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80.0%;background:var(--critical)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">Moloco&#x27;s CTV campaign setup requires agency partnerships or managed service support. G2 reviews consistently cite a steep learning curve and overwhelming interface for beginners. Mid-market advertisers wanting to test CTV cannot easily self-serve, limiting TAM expansion.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>G2 reviews: &#x27;can be overwhelming for beginners&#x27; and &#x27;steep learning curve.&#x27; Moloco does not allow individual advertisers to open accounts directly — access is typically via authorized agency partners. Minimum budget thresholds of $1,000-$5,000 create friction. Competitors like The Trade Desk and Google DV360 offer more intuitive self-serve CTV experiences.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-platform_ux-20260401-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-platform_ux-20260401-001">
+        <strong>Usable (9/10 — PASS):</strong> A guided wizard that walks advertisers through targeting, budget, creative upload, and MMP connection would directly address the #1 UX complaint. Step-by-step flows with smart defaults are a proven pattern across ad platforms.<br><strong>Valuable (8/10 — PASS):</strong> Opens the mid-market segment that&#x27;s currently locked out by agency gatekeeping. Self-serve reduces CAC and enables a long-tail revenue model. Every major ad platform&#x27;s growth phase was powered by self-serve expansion.<br><strong>Feasible (7/10 — PASS):</strong> The campaign management backend exists. The engineering lift is a new frontend wizard, sensible defaults for CTV (geo, device, frequency), and automated MMP connection flows. Estimated 2-3 quarter effort.<br><strong>Viable (8/10 — PASS):</strong> Critical for TAM expansion and pre-IPO growth narrative. Self-serve advertisers have higher LTV than managed accounts at scale. Reduces reliance on agency partnerships that compress margins.
+      </div>
+      <div class="card-footer">
+        <span class="tag">self-serve</span><span class="tag">UX</span><span class="tag">onboarding</span><span class="tag">mid-market</span><span class="tag">campaign-builder</span>
+        <span style="flex:1"></span>
+        <a href="https://www.g2.com/products/moloco/reviews?qs=pros-and-cons" class="source-link" target="_blank" rel="noopener">g2.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.novabeyond.com/info-265.html" class="source-link" target="_blank" rel="noopener">novabeyond.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://adkeys.digital/en/moloco-for-performance-marketing-is-it-worth-launching/" class="source-link" target="_blank" rel="noopener">adkeys.digital <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card" data-category="platform_ux" data-rec="build" data-score="7.25">
+      <div class="card-top">
+        <h3>Customizable CTV Performance Dashboard &amp; Reporting <span class="priority-badge high">High</span></h3>
+        <div class="impact-badge">
+          <span>7.25/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:72.5%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">The current analytics dashboard provides campaign metrics but lacks customization. Users report difficulty verifying efficiency by creative or platform, and the dashboard is not robust enough for enterprise reporting needs. New grid-based KPI charts (Aug 2025) were a step forward but don&#x27;t address custom view and export needs.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>G2: &#x27;customer-facing dashboard or UI could be more robust and customizable.&#x27; &#x27;Difficult to verify efficiency by material or platform.&#x27; MCM August 2025 changelog improved ad account home with grid charts, indicating awareness of the problem. Competitors offer drag-and-drop custom dashboards and scheduled report exports.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-platform_ux-20260401-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-platform_ux-20260401-002">
+        <strong>Usable (8/10 — PASS):</strong> Customizable dashboards are a familiar pattern for advertisers. Widget-based layouts with save/share functionality follow industry conventions. The key is providing good defaults that work out of the box.<br><strong>Valuable (7/10 — PASS):</strong> Important for retention and upsell — advertisers who can see CTV performance clearly spend more. Addresses a documented complaint in G2 reviews. Not the #1 deal-maker for new sales, but important for reducing churn.<br><strong>Feasible (7/10 — PASS):</strong> Moloco already has reporting APIs and data infrastructure. The lift is a configurable frontend layer and saved-state persistence. The Aug 2025 grid-chart update shows this area is actively developed.<br><strong>Viable (7/10 — PASS):</strong> Moderate revenue impact — improves retention metrics and reduces support burden. Indirectly enables larger budgets by making CTV performance more visible to stakeholders. Not a major differentiator but competitive parity.
+      </div>
+      <div class="card-footer">
+        <span class="tag">dashboard</span><span class="tag">reporting</span><span class="tag">customization</span><span class="tag">analytics</span><span class="tag">retention</span>
+        <span style="flex:1"></span>
+        <a href="https://www.g2.com/products/moloco/reviews" class="source-link" target="_blank" rel="noopener">g2.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://mcm-docs.moloco.com/changelog/august-2025" class="source-link" target="_blank" rel="noopener">mcm-docs.moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025-08)</span> &#x2197;</a><a href="https://help.moloco.com/hc/en-us/articles/360053433154-Analytics-overview" class="source-link" target="_blank" rel="noopener">help.moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="category-section" data-category-section="ml_optimization">
+      <div class="category-header">
+        <div class="category-icon ml">⚙</div>
+        <h2>ML &amp; Optimization</h2>
+        <span class="count">2 items</span>
+      </div>
+      
+    <div class="roadmap-card critical-priority" data-category="ml_optimization" data-rec="build" data-score="8.75">
+      <div class="card-top">
+        <h3>CTV ROAS &amp; Purchase Optimization Models <span class="priority-badge critical">Critical</span></h3>
+        <div class="impact-badge">
+          <span>8.75/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:87.5%;background:var(--critical)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">Moloco currently offers CTV app-install optimization and is &#x27;expanding to optimization for purchases and ROAS in the near future.&#x27; This is Moloco&#x27;s core differentiator — extending ML-based outcome optimization beyond installs to deeper funnel events on CTV.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Airbridge interview confirms Moloco currently offers &#x27;app install optimization model with the ability to optimize funnel KPIs&#x27; and is &#x27;expanding to optimization for purchases and ROAS in the near future.&#x27; This directly validates that Moloco themselves see this as a product gap. Nexon case study shows ROAS focus is already a key advertiser demand.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">10</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">10</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-ml_optimization-20260401-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-ml_optimization-20260401-001">
+        <strong>Usable (8/10 — PASS):</strong> Advertisers already set ROAS targets in the mobile DSP. Extending the same UX pattern to CTV campaigns is natural. The optimization objective selector is a single dropdown change from the advertiser&#x27;s perspective.<br><strong>Valuable (10/10 — PASS):</strong> This IS Moloco&#x27;s CTV product story. Without ROAS optimization, CTV campaigns are just expensive awareness plays. This converts CTV from a cost center to a profit center for advertisers and is the #1 reason Moloco wins vs. reach-based DSPs.<br><strong>Feasible (7/10 — PASS):</strong> Moloco has confirmed this is in development. The ML infrastructure exists for mobile — extending to CTV requires training on CTV-specific signal data (larger screens, household-level signals, longer conversion windows). Technically achievable but requires significant model iteration.<br><strong>Viable (10/10 — PASS):</strong> This is existential for Moloco&#x27;s CTV strategy. ROAS optimization justifies higher CPMs and larger budgets. It&#x27;s the entire value proposition that separates Moloco from every other CTV DSP. Must ship.
+      </div>
+      <div class="card-footer">
+        <span class="tag">ML</span><span class="tag">ROAS</span><span class="tag">optimization</span><span class="tag">deep-funnel</span><span class="tag">core-differentiator</span>
+        <span style="flex:1"></span>
+        <a href="https://www.airbridge.io/blog/airbridge-ctv-interview-moloco-ad-efficiency-and-mobile-app-performance" class="source-link" target="_blank" rel="noopener">airbridge.io <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://www.moloco.com/case-studies/nexons-global-campaign-success-with-molocos-ctv-solution" class="source-link" target="_blank" rel="noopener">moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://www.moloco.com/case-studies/krafton-ctv" class="source-link" target="_blank" rel="noopener">moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card" data-category="ml_optimization" data-rec="investigate" data-score="6.75">
+      <div class="card-top">
+        <h3>Contextual Targeting for Cookieless CTV Environments <span class="priority-badge medium">Medium</span></h3>
+        <div class="impact-badge">
+          <span>6.75/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:67.5%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">CTV lacks traditional user-level identifiers. As privacy regulations tighten, Moloco needs contextual targeting capabilities that use content signals (genre, mood, time-of-day, content metadata) to match ads to viewers without requiring device IDs or cookies.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>IAB Tech Lab 2025 roadmap focuses on identity and privacy-safe measurement for converged TV. FCC/FTC regulatory actions are limiting targeting data. Moloco&#x27;s value prop includes &#x27;first-party data activation without cookies&#x27; but CTV-specific contextual signals are underutilized. Competitors are investing heavily in content-graph targeting.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-ml_optimization-20260401-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-ml_optimization-20260401-002">
+        <strong>Usable (7/10 — PASS):</strong> Contextual targeting abstracts away complexity — advertisers select content categories, genres, or viewer contexts rather than building audience segments. Intuitive for TV-native buyers transitioning from linear.<br><strong>Valuable (8/10 — PASS):</strong> Critical for future-proofing against privacy regulation. As device-level targeting erodes, contextual becomes the primary signal layer. Also addresses COPPA concerns for family-friendly content targeting.<br><strong>Feasible (5/10 — PASS):</strong> Requires content metadata ingestion from publishers, NLP/ML models for content classification, and a new signal layer in the bidding engine. Significant lift but builds on Moloco&#x27;s ML core. Estimated 3-4 quarter effort.<br><strong>Viable (7/10 — PASS):</strong> Strategic hedge against privacy regulation risk. Moderate near-term revenue impact but essential for long-term CTV viability. Also opens brand-safety-conscious advertiser segments that currently avoid programmatic CTV.
+      </div>
+      <div class="card-footer">
+        <span class="tag">contextual</span><span class="tag">privacy</span><span class="tag">targeting</span><span class="tag">cookieless</span><span class="tag">COPPA</span><span class="tag">regulation</span>
+        <span style="flex:1"></span>
+        <a href="https://www.digitalelement.com/blog/ctv-advertising-in-2024-navigating-an-era-of-abundant-data-and-trust-scarcity/" class="source-link" target="_blank" rel="noopener">digitalelement.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://iab.com" class="source-link" target="_blank" rel="noopener">iab.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://www.koreaherald.com/article/10508103" class="source-link" target="_blank" rel="noopener">koreaherald.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="category-section" data-category-section="cross_screen">
+      <div class="category-header">
+        <div class="category-icon cross-screen">↔</div>
+        <h2>Cross-Screen Strategy</h2>
+        <span class="count">2 items</span>
+      </div>
+      
+    <div class="roadmap-card" data-category="cross_screen" data-rec="investigate" data-score="7.0">
+      <div class="card-top">
+        <h3>Unified CTV + Mobile + Web Campaign Management <span class="priority-badge high">High</span></h3>
+        <div class="impact-badge">
+          <span>7.0/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70.0%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">Moloco has announced plans to &#x27;build a unified platform that can optimize campaigns across web, app, and CTV channels&#x27; but this is not yet shipped. Advertisers currently manage CTV and mobile as separate campaigns with separate budgets, losing cross-screen optimization potential.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Korea Herald: Moloco &#x27;aims to build a unified platform that can optimize campaigns across web, app, and CTV channels.&#x27; SceneCraft acquisition (Jan 2025) may signal creative/content investment. Competitors like The Trade Desk offer unified campaign management across screens. Cross-screen campaigns reduce CPAs by 20-40% in industry benchmarks.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">4</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-cross_screen-20260401-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-cross_screen-20260401-001">
+        <strong>Usable (6/10 — PASS):</strong> Unified campaign management is more complex — advertisers must understand cross-screen budget allocation and attribution. However, the alternative (managing 3 separate campaigns) is worse. A &#x27;unified mode&#x27; with smart defaults alongside standalone modes is the path.<br><strong>Valuable (9/10 — PASS):</strong> This is the future of CTV advertising. Every major DSP is moving toward cross-screen. Advertisers want to see CTV as part of the acquisition funnel, not a standalone channel. Without this, Moloco CTV remains a point solution.<br><strong>Feasible (4/10 — FAIL):</strong> Significant engineering lift: unified bidding across different inventory types, cross-device identity graph, combined frequency management, and unified reporting. Estimated 4-6 quarter effort for full implementation. Moloco has acknowledged this is a strategic goal, not an imminent ship.<br><strong>Viable (9/10 — PASS):</strong> Essential for Moloco&#x27;s long-term platform narrative and pre-IPO positioning. The Trade Desk&#x27;s dominance comes from unified buying. This is where Moloco needs to be in 18-24 months.
+      </div>
+      <div class="card-footer">
+        <span class="tag">cross-screen</span><span class="tag">unified</span><span class="tag">mobile</span><span class="tag">web</span><span class="tag">CTV</span><span class="tag">platform</span>
+        <span style="flex:1"></span>
+        <a href="https://www.koreaherald.com/article/10508103" class="source-link" target="_blank" rel="noopener">koreaherald.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://tracxn.com/d/companies/moloco/__M1nPynPtg3BaL6CBRI36dMxROlan8YGwYMiAqLdqttY" class="source-link" target="_blank" rel="noopener">tracxn.com <span style="color:var(--text-muted);font-size:11px;">(2025-01)</span> &#x2197;</a><a href="https://www.teads.com/blog/connected-tv-advertising-2026-trends/9706/" class="source-link" target="_blank" rel="noopener">teads.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card" data-category="cross_screen" data-rec="defer" data-score="5.75">
+      <div class="card-top">
+        <h3>Cross-Device Frequency Capping &amp; Sequential Messaging <span class="priority-badge medium">Medium</span></h3>
+        <div class="impact-badge">
+          <span>5.75/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:57.5%;background:var(--text-muted)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge defer">
+          <span class="dot"></span>
+          Defer
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-01</span>
+      </div>
+      <p class="summary">No cross-device frequency management between CTV and mobile campaigns. Advertisers risk over-exposing users on CTV and mobile simultaneously, wasting budget and degrading experience. Sequential messaging (CTV awareness → mobile retarget) is a proven pattern with no Moloco support.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Industry data shows 47% of marketers cite holistic measurement as top priority. Only 32% measure across TV and digital. Moloco streams monetization solution mentions &#x27;frequency control&#x27; for streaming but this doesn&#x27;t extend cross-device. The Trade Desk and DV360 offer household-level frequency management.</p>
+      </div>
+      <div class="assessment-grid">
+        
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">3</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+      <button class="assess-toggle" onclick="toggleRationale('rationale-cross_screen-20260401-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-cross_screen-20260401-002">
+        <strong>Usable (6/10 — PASS):</strong> Frequency capping is a familiar concept. The complexity is in the cross-device identity layer, which should be abstracted from the advertiser. Set a household frequency cap, the system handles the rest.<br><strong>Valuable (7/10 — PASS):</strong> Reduces waste and improves user experience. Sequential messaging is a powerful use case that agencies specifically request. Not a deal-breaker but increasingly expected in enterprise CTV RFPs.<br><strong>Feasible (3/10 — FAIL):</strong> Requires a cross-device identity graph or household-level matching — technically the hardest problem in CTV. Deterministic matching (via MMP login data) is limited in scale. Probabilistic matching raises privacy concerns. Major infrastructure investment.<br><strong>Viable (7/10 — PASS):</strong> Important for enterprise sales but the ROI on engineering investment is uncertain given the identity resolution complexity. Better to wait for industry standards to mature before building proprietary solutions.
+      </div>
+      <div class="card-footer">
+        <span class="tag">frequency</span><span class="tag">sequential</span><span class="tag">cross-device</span><span class="tag">identity</span><span class="tag">household</span>
+        <span style="flex:1"></span>
+        <a href="https://www.teads.com/blog/connected-tv-advertising-2026-trends/9706/" class="source-link" target="_blank" rel="noopener">teads.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a><a href="https://www.moloco.com/solutions/moloco-streaming-monetization" class="source-link" target="_blank" rel="noopener">moloco.com <span style="color:var(--text-muted);font-size:11px;">(2025)</span> &#x2197;</a><a href="https://www.emarketer.com/content/faq-on-ctv-advertising--trends--formats--platforms-watch-2026" class="source-link" target="_blank" rel="noopener">emarketer.com <span style="color:var(--text-muted);font-size:11px;">(2026)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">&#x1F50D;</div>
+    <p>No items match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+<footer class="engine-footer">
+  <p>Product Roadmap Steering Engine v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Moloco CTV Product Intelligence &mdash; <a href="https://danetomalin.com/moloco-ctv">CTV Signal Dashboard</a> | <a href="https://danetomalin.com/competitiveintel">Competitive Intel</a></p>
+</footer>
+
+<script>
+// --- State ---
+var activeFilter = 'all';
+var activeRec = null;
+var searchQuery = '';
+
+// --- Category Filter ---
+function filterItems(category, btn) {
+  activeFilter = category;
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Recommendation Filter (toggle) ---
+function filterRec(rec, btn) {
+  if (activeRec === rec) {
+    activeRec = null;
+    btn.classList.remove('active');
+  } else {
+    activeRec = rec;
+    var btns = document.querySelectorAll('.filter-btn[data-rec]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchItems(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.roadmap-card');
+  var sections = document.querySelectorAll('.category-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var category = card.getAttribute('data-category');
+    var rec = card.getAttribute('data-rec');
+    var text = card.textContent.toLowerCase();
+
+    var catMatch = (activeFilter === 'all' || category === activeFilter);
+    var recMatch = (!activeRec || rec === activeRec);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (catMatch && recMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.roadmap-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Toggle Assessment Rationale ---
+function toggleRationale(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('visible');
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,741 @@
+{
+  "date": "2026-04-01",
+  "engine_version": "1.0.0",
+  "item_count": 12,
+  "high_priority_count": 5,
+  "summary_scorecard": {
+    "build": 5,
+    "investigate": 4,
+    "defer": 2,
+    "kill": 1,
+    "overall_health": "strong",
+    "summary": "Moloco's CTV product has clear momentum but faces critical gaps in measurement, creative formats, and self-serve UX that competitors are actively closing. Five items meet all four criteria and should be prioritized immediately."
+  },
+  "items": [
+    {
+      "id": "measurement_attribution-20260401-001",
+      "date": "2026-04-01",
+      "title": "Unified Cross-Screen Attribution Dashboard",
+      "category": "measurement_attribution",
+      "summary": "Advertisers lack a single view connecting CTV ad exposure to mobile app installs, in-app events, and web conversions. Current measurement requires stitching together MMP data (AppsFlyer, Adjust, Branch) with CTV delivery reports manually, creating friction that slows CTV budget allocation.",
+      "evidence": "53% of marketing decision-makers say they'd increase CTV investment with better ROI measurement (eMarketer 2026). Only 32% measure media holistically across TV and digital. G2 reviews cite Moloco's tracking features as rated lower than competitors. Moloco currently supports CTV measurement through AppsFlyer, Adjust, Branch, and Singular integrations but lacks a unified view.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "A unified dashboard simplifies what advertisers already do manually. The mental model is straightforward: see CTV spend on the left, downstream conversions on the right. Existing MMP integrations provide the data plumbing — the UX is the missing layer."
+        },
+        "valuable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "This is the #1 barrier to CTV budget growth. Every prospect objection starts with 'how do I prove CTV works?' Solving this directly unlocks larger budgets from existing advertisers and removes the top objection for new ones."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "The data already flows through MMP postbacks. The engineering lift is aggregation, visualization, and attribution windowing — not new data collection. Estimated 2-3 quarter effort for an MVP with AppsFlyer and Adjust integration."
+        },
+        "viable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Directly tied to revenue growth — better measurement = higher CTV spend. Competitors like The Trade Desk already offer unified reporting. This is table stakes for enterprise CTV deals and critical for pre-IPO narrative."
+        }
+      },
+      "overall_score": 8.5,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "attribution",
+        "measurement",
+        "dashboard",
+        "MMP",
+        "cross-device"
+      ],
+      "sources": [
+        {
+          "title": "eMarketer CTV Advertising FAQ 2026",
+          "url": "https://www.emarketer.com/content/faq-on-ctv-advertising--trends--formats--platforms-watch-2026",
+          "domain": "emarketer.com",
+          "date": "2026-01"
+        },
+        {
+          "title": "Moloco CTV + AppsFlyer Setup Guide",
+          "url": "https://help.moloco.com/hc/en-us/articles/17341427705495",
+          "domain": "help.moloco.com",
+          "date": "2025"
+        },
+        {
+          "title": "CTV Measurement & Trust Gaps",
+          "url": "https://www.digitalelement.com/blog/ctv-advertising-in-2024-navigating-an-era-of-abundant-data-and-trust-scarcity/",
+          "domain": "digitalelement.com",
+          "date": "2026"
+        },
+        {
+          "title": "G2 Moloco Reviews",
+          "url": "https://www.g2.com/products/moloco/reviews",
+          "domain": "g2.com",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "measurement_attribution-20260401-002",
+      "date": "2026-04-01",
+      "title": "CTV Incrementality Testing Framework",
+      "category": "measurement_attribution",
+      "summary": "No native incrementality testing for CTV campaigns. Advertisers cannot isolate the true lift of CTV exposure vs. organic conversions. This is critical for justifying CTV budgets to CFOs and proving Moloco's outcome-based value proposition over reach-based competitors.",
+      "evidence": "IAB Tech Lab 2025 roadmap prioritizes incrementality and attribution standards for converged TV. 47% of US marketers cite attribution/measurement as their leading investment priority. Competitors like The Trade Desk and StackAdapt offer geo-based lift studies and holdout group testing.",
+      "assessment": {
+        "usable": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Incrementality testing requires advertiser understanding of test/control methodology. A guided wizard approach could lower the bar, but this will always be a power-user feature. Acceptable for the enterprise segment Moloco targets."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Directly addresses the 'prove CTV works' objection at the CFO level. Incrementality data is the gold standard for budget justification and is increasingly demanded in enterprise RFPs."
+        },
+        "feasible": {
+          "score": 5,
+          "pass": true,
+          "rationale": "Requires geo-based or user-level holdout group infrastructure, statistical modeling, and careful sample size management. Technically complex but well-understood in the industry. Estimated 3-4 quarter engineering effort."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "High strategic value for enterprise deals and pre-IPO positioning. Directly supports Moloco's 'performance over reach' narrative. However, ROI is indirect (enables larger deals rather than generating direct revenue)."
+        }
+      },
+      "overall_score": 7.0,
+      "recommendation": "build",
+      "priority": "high",
+      "tags": [
+        "incrementality",
+        "lift-testing",
+        "measurement",
+        "enterprise",
+        "CFO"
+      ],
+      "sources": [
+        {
+          "title": "IAB Tech Lab 2025 Attribution Standards",
+          "url": "https://iab.com",
+          "domain": "iab.com",
+          "date": "2025"
+        },
+        {
+          "title": "CTV Measurement Full Guide",
+          "url": "https://adtelligent.com/blog/ctv-ad-measurement-and-attribution-full-guide/",
+          "domain": "adtelligent.com",
+          "date": "2026"
+        },
+        {
+          "title": "StackAdapt CTV Attribution",
+          "url": "https://www.stackadapt.com/resources/blog/connected-tv-attribution",
+          "domain": "stackadapt.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "creative_formats-20260401-001",
+      "date": "2026-04-01",
+      "title": "Interactive & Shoppable CTV Ad Formats",
+      "category": "creative_formats",
+      "summary": "Moloco CTV currently supports standard video pre-roll. The market is rapidly moving toward interactive formats — QR codes, click-to-install overlays, shoppable product carousels — that bridge the gap between CTV exposure and immediate action. Tubi (a Moloco partner) just launched interactive formats independently.",
+      "evidence": "Tubi announced new interactive ad formats and expanded tech partnerships at IAB NewFronts 2025. Interactive and transactional formats are transforming CTV from a branding tool into a performance channel. Moloco's current CTV creative is limited to video upload — no interactive layer. Competitors already offer shoppable, QR, and interactive CTV formats.",
+      "assessment": {
+        "usable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Interactive formats add complexity to creative production but the advertiser-facing workflow can be simplified with templates. QR overlays are the lowest-friction entry point — advertisers provide a URL, the system generates the overlay."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "This directly supports Moloco's performance-first CTV positioning. Interactive formats create a measurable action layer on top of video — turning impressions into attributable clicks, scans, and installs. Without this, Moloco risks being perceived as 'just another video DSP.'"
+        },
+        "feasible": {
+          "score": 6,
+          "pass": true,
+          "rationale": "QR overlays are simple (1-2 quarters). Full interactive formats require VAST/VPAID extensions and publisher-side support. Tubi partnership provides a testbed. Phased rollout recommended: QR first, then interactive carousels."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Differentiator for sales against reach-based competitors. Interactive CTV ads command 15-30% higher CPMs, directly benefiting Moloco's take rate. Aligns with Tubi partnership and streaming monetization strategy."
+        }
+      },
+      "overall_score": 7.5,
+      "recommendation": "build",
+      "priority": "high",
+      "tags": [
+        "interactive",
+        "shoppable",
+        "QR-code",
+        "creative",
+        "Tubi",
+        "performance"
+      ],
+      "sources": [
+        {
+          "title": "Tubi NewFronts Interactive Formats",
+          "url": "https://corporate.tubitv.com/press/tubi-announces-new-interactive-ad-formats-expanded-tech-partnerships-and-self-serve-ads-platform-at-iab-newfronts/",
+          "domain": "corporate.tubitv.com",
+          "date": "2025-05"
+        },
+        {
+          "title": "CTV Advertising Trends 2026",
+          "url": "https://www.aidigital.com/blog/ctv-advertising-trends",
+          "domain": "aidigital.com",
+          "date": "2026"
+        },
+        {
+          "title": "Moloco CTV Case Study - Nexon",
+          "url": "https://www.moloco.com/case-studies/nexons-global-campaign-success-with-molocos-ctv-solution",
+          "domain": "moloco.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "platform_ux-20260401-001",
+      "date": "2026-04-01",
+      "title": "Self-Serve CTV Campaign Builder with Guided Setup",
+      "category": "platform_ux",
+      "summary": "Moloco's CTV campaign setup requires agency partnerships or managed service support. G2 reviews consistently cite a steep learning curve and overwhelming interface for beginners. Mid-market advertisers wanting to test CTV cannot easily self-serve, limiting TAM expansion.",
+      "evidence": "G2 reviews: 'can be overwhelming for beginners' and 'steep learning curve.' Moloco does not allow individual advertisers to open accounts directly — access is typically via authorized agency partners. Minimum budget thresholds of $1,000-$5,000 create friction. Competitors like The Trade Desk and Google DV360 offer more intuitive self-serve CTV experiences.",
+      "assessment": {
+        "usable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "A guided wizard that walks advertisers through targeting, budget, creative upload, and MMP connection would directly address the #1 UX complaint. Step-by-step flows with smart defaults are a proven pattern across ad platforms."
+        },
+        "valuable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Opens the mid-market segment that's currently locked out by agency gatekeeping. Self-serve reduces CAC and enables a long-tail revenue model. Every major ad platform's growth phase was powered by self-serve expansion."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "The campaign management backend exists. The engineering lift is a new frontend wizard, sensible defaults for CTV (geo, device, frequency), and automated MMP connection flows. Estimated 2-3 quarter effort."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Critical for TAM expansion and pre-IPO growth narrative. Self-serve advertisers have higher LTV than managed accounts at scale. Reduces reliance on agency partnerships that compress margins."
+        }
+      },
+      "overall_score": 8.0,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "self-serve",
+        "UX",
+        "onboarding",
+        "mid-market",
+        "campaign-builder"
+      ],
+      "sources": [
+        {
+          "title": "G2 Moloco Pros & Cons",
+          "url": "https://www.g2.com/products/moloco/reviews?qs=pros-and-cons",
+          "domain": "g2.com",
+          "date": "2026"
+        },
+        {
+          "title": "Moloco Account Setup via Novabeyond",
+          "url": "https://www.novabeyond.com/info-265.html",
+          "domain": "novabeyond.com",
+          "date": "2025"
+        },
+        {
+          "title": "Moloco Ads Performance Review",
+          "url": "https://adkeys.digital/en/moloco-for-performance-marketing-is-it-worth-launching/",
+          "domain": "adkeys.digital",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "platform_ux-20260401-002",
+      "date": "2026-04-01",
+      "title": "Customizable CTV Performance Dashboard & Reporting",
+      "category": "platform_ux",
+      "summary": "The current analytics dashboard provides campaign metrics but lacks customization. Users report difficulty verifying efficiency by creative or platform, and the dashboard is not robust enough for enterprise reporting needs. New grid-based KPI charts (Aug 2025) were a step forward but don't address custom view and export needs.",
+      "evidence": "G2: 'customer-facing dashboard or UI could be more robust and customizable.' 'Difficult to verify efficiency by material or platform.' MCM August 2025 changelog improved ad account home with grid charts, indicating awareness of the problem. Competitors offer drag-and-drop custom dashboards and scheduled report exports.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Customizable dashboards are a familiar pattern for advertisers. Widget-based layouts with save/share functionality follow industry conventions. The key is providing good defaults that work out of the box."
+        },
+        "valuable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Important for retention and upsell — advertisers who can see CTV performance clearly spend more. Addresses a documented complaint in G2 reviews. Not the #1 deal-maker for new sales, but important for reducing churn."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Moloco already has reporting APIs and data infrastructure. The lift is a configurable frontend layer and saved-state persistence. The Aug 2025 grid-chart update shows this area is actively developed."
+        },
+        "viable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Moderate revenue impact — improves retention metrics and reduces support burden. Indirectly enables larger budgets by making CTV performance more visible to stakeholders. Not a major differentiator but competitive parity."
+        }
+      },
+      "overall_score": 7.25,
+      "recommendation": "build",
+      "priority": "high",
+      "tags": [
+        "dashboard",
+        "reporting",
+        "customization",
+        "analytics",
+        "retention"
+      ],
+      "sources": [
+        {
+          "title": "G2 Moloco Reviews",
+          "url": "https://www.g2.com/products/moloco/reviews",
+          "domain": "g2.com",
+          "date": "2026"
+        },
+        {
+          "title": "MCM August 2025 Changelog",
+          "url": "https://mcm-docs.moloco.com/changelog/august-2025",
+          "domain": "mcm-docs.moloco.com",
+          "date": "2025-08"
+        },
+        {
+          "title": "Moloco Analytics Overview",
+          "url": "https://help.moloco.com/hc/en-us/articles/360053433154-Analytics-overview",
+          "domain": "help.moloco.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "ml_optimization-20260401-001",
+      "date": "2026-04-01",
+      "title": "CTV ROAS & Purchase Optimization Models",
+      "category": "ml_optimization",
+      "summary": "Moloco currently offers CTV app-install optimization and is 'expanding to optimization for purchases and ROAS in the near future.' This is Moloco's core differentiator — extending ML-based outcome optimization beyond installs to deeper funnel events on CTV.",
+      "evidence": "Airbridge interview confirms Moloco currently offers 'app install optimization model with the ability to optimize funnel KPIs' and is 'expanding to optimization for purchases and ROAS in the near future.' This directly validates that Moloco themselves see this as a product gap. Nexon case study shows ROAS focus is already a key advertiser demand.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Advertisers already set ROAS targets in the mobile DSP. Extending the same UX pattern to CTV campaigns is natural. The optimization objective selector is a single dropdown change from the advertiser's perspective."
+        },
+        "valuable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "This IS Moloco's CTV product story. Without ROAS optimization, CTV campaigns are just expensive awareness plays. This converts CTV from a cost center to a profit center for advertisers and is the #1 reason Moloco wins vs. reach-based DSPs."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Moloco has confirmed this is in development. The ML infrastructure exists for mobile — extending to CTV requires training on CTV-specific signal data (larger screens, household-level signals, longer conversion windows). Technically achievable but requires significant model iteration."
+        },
+        "viable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "This is existential for Moloco's CTV strategy. ROAS optimization justifies higher CPMs and larger budgets. It's the entire value proposition that separates Moloco from every other CTV DSP. Must ship."
+        }
+      },
+      "overall_score": 8.75,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "ML",
+        "ROAS",
+        "optimization",
+        "deep-funnel",
+        "core-differentiator"
+      ],
+      "sources": [
+        {
+          "title": "Moloco CTV Performance in 2025 - Airbridge Interview",
+          "url": "https://www.airbridge.io/blog/airbridge-ctv-interview-moloco-ad-efficiency-and-mobile-app-performance",
+          "domain": "airbridge.io",
+          "date": "2025"
+        },
+        {
+          "title": "Nexon CTV Campaign Success",
+          "url": "https://www.moloco.com/case-studies/nexons-global-campaign-success-with-molocos-ctv-solution",
+          "domain": "moloco.com",
+          "date": "2025"
+        },
+        {
+          "title": "KRAFTON CTV Case Study",
+          "url": "https://www.moloco.com/case-studies/krafton-ctv",
+          "domain": "moloco.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "ml_optimization-20260401-002",
+      "date": "2026-04-01",
+      "title": "Contextual Targeting for Cookieless CTV Environments",
+      "category": "ml_optimization",
+      "summary": "CTV lacks traditional user-level identifiers. As privacy regulations tighten, Moloco needs contextual targeting capabilities that use content signals (genre, mood, time-of-day, content metadata) to match ads to viewers without requiring device IDs or cookies.",
+      "evidence": "IAB Tech Lab 2025 roadmap focuses on identity and privacy-safe measurement for converged TV. FCC/FTC regulatory actions are limiting targeting data. Moloco's value prop includes 'first-party data activation without cookies' but CTV-specific contextual signals are underutilized. Competitors are investing heavily in content-graph targeting.",
+      "assessment": {
+        "usable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Contextual targeting abstracts away complexity — advertisers select content categories, genres, or viewer contexts rather than building audience segments. Intuitive for TV-native buyers transitioning from linear."
+        },
+        "valuable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Critical for future-proofing against privacy regulation. As device-level targeting erodes, contextual becomes the primary signal layer. Also addresses COPPA concerns for family-friendly content targeting."
+        },
+        "feasible": {
+          "score": 5,
+          "pass": true,
+          "rationale": "Requires content metadata ingestion from publishers, NLP/ML models for content classification, and a new signal layer in the bidding engine. Significant lift but builds on Moloco's ML core. Estimated 3-4 quarter effort."
+        },
+        "viable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Strategic hedge against privacy regulation risk. Moderate near-term revenue impact but essential for long-term CTV viability. Also opens brand-safety-conscious advertiser segments that currently avoid programmatic CTV."
+        }
+      },
+      "overall_score": 6.75,
+      "recommendation": "investigate",
+      "priority": "medium",
+      "tags": [
+        "contextual",
+        "privacy",
+        "targeting",
+        "cookieless",
+        "COPPA",
+        "regulation"
+      ],
+      "sources": [
+        {
+          "title": "CTV Advertising Measurement & Trust",
+          "url": "https://www.digitalelement.com/blog/ctv-advertising-in-2024-navigating-an-era-of-abundant-data-and-trust-scarcity/",
+          "domain": "digitalelement.com",
+          "date": "2026"
+        },
+        {
+          "title": "IAB Tech Lab Identity Standards",
+          "url": "https://iab.com",
+          "domain": "iab.com",
+          "date": "2025"
+        },
+        {
+          "title": "Korea Herald - Moloco CTV Expansion",
+          "url": "https://www.koreaherald.com/article/10508103",
+          "domain": "koreaherald.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "inventory_supply-20260401-001",
+      "date": "2026-04-01",
+      "title": "Premium FAST Channel Supply Integration",
+      "category": "inventory_supply",
+      "summary": "FAST (Free Ad-Supported Streaming TV) channels are the fastest-growing CTV inventory segment. Moloco has the Tubi partnership but needs broader FAST supply — Pluto TV, Roku Channel, Freevee, Samsung TV Plus — to give advertisers sufficient reach for ML optimization to work.",
+      "evidence": "Tubi partnership announced. FAST viewership growing 30%+ YoY. Moloco's ML engine needs volume for prediction accuracy — more diverse inventory = better optimization. Current Tubi-only FAST supply limits campaign scale. Paramount, Samsung, and Roku are all expanding FAST programmatic access.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Supply integration is invisible to advertisers — they just see more available inventory. Existing campaign setup flows work unchanged. Optional supply-source targeting adds control without adding complexity."
+        },
+        "valuable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "More inventory = better ML optimization = better performance for advertisers. Also expands addressable audience for CTV campaigns, making Moloco viable for larger budgets. Directly requested by advertisers seeking scale."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Standard SSP/exchange integrations via OpenRTB. Each new supply source is 4-8 weeks of integration work. Can be parallelized across multiple publishers. The Tubi integration provides the template."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "More supply = more ad requests = more revenue. Each FAST partnership expands TAM. Critical for competing with The Trade Desk and DV360 on inventory breadth. Low risk, high reward."
+        }
+      },
+      "overall_score": 7.75,
+      "recommendation": "investigate",
+      "priority": "high",
+      "tags": [
+        "FAST",
+        "inventory",
+        "supply",
+        "Tubi",
+        "Pluto",
+        "Roku",
+        "scale"
+      ],
+      "sources": [
+        {
+          "title": "Tubi Tech Partnerships - NewFronts",
+          "url": "https://corporate.tubitv.com/press/tubi-announces-new-interactive-ad-formats-expanded-tech-partnerships-and-self-serve-ads-platform-at-iab-newfronts/",
+          "domain": "corporate.tubitv.com",
+          "date": "2025-05"
+        },
+        {
+          "title": "Paramount CTV Advertising Trends",
+          "url": "https://adsmanager.paramount.com/insights/ctv-advertising-news-trends",
+          "domain": "adsmanager.paramount.com",
+          "date": "2026"
+        },
+        {
+          "title": "Moloco CTV Expansion Plans",
+          "url": "https://www.koreaherald.com/article/10508103",
+          "domain": "koreaherald.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "cross_screen-20260401-001",
+      "date": "2026-04-01",
+      "title": "Unified CTV + Mobile + Web Campaign Management",
+      "category": "cross_screen",
+      "summary": "Moloco has announced plans to 'build a unified platform that can optimize campaigns across web, app, and CTV channels' but this is not yet shipped. Advertisers currently manage CTV and mobile as separate campaigns with separate budgets, losing cross-screen optimization potential.",
+      "evidence": "Korea Herald: Moloco 'aims to build a unified platform that can optimize campaigns across web, app, and CTV channels.' SceneCraft acquisition (Jan 2025) may signal creative/content investment. Competitors like The Trade Desk offer unified campaign management across screens. Cross-screen campaigns reduce CPAs by 20-40% in industry benchmarks.",
+      "assessment": {
+        "usable": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Unified campaign management is more complex — advertisers must understand cross-screen budget allocation and attribution. However, the alternative (managing 3 separate campaigns) is worse. A 'unified mode' with smart defaults alongside standalone modes is the path."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "This is the future of CTV advertising. Every major DSP is moving toward cross-screen. Advertisers want to see CTV as part of the acquisition funnel, not a standalone channel. Without this, Moloco CTV remains a point solution."
+        },
+        "feasible": {
+          "score": 4,
+          "pass": false,
+          "rationale": "Significant engineering lift: unified bidding across different inventory types, cross-device identity graph, combined frequency management, and unified reporting. Estimated 4-6 quarter effort for full implementation. Moloco has acknowledged this is a strategic goal, not an imminent ship."
+        },
+        "viable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Essential for Moloco's long-term platform narrative and pre-IPO positioning. The Trade Desk's dominance comes from unified buying. This is where Moloco needs to be in 18-24 months."
+        }
+      },
+      "overall_score": 7.0,
+      "recommendation": "investigate",
+      "priority": "high",
+      "tags": [
+        "cross-screen",
+        "unified",
+        "mobile",
+        "web",
+        "CTV",
+        "platform"
+      ],
+      "sources": [
+        {
+          "title": "Moloco Web + CTV Expansion",
+          "url": "https://www.koreaherald.com/article/10508103",
+          "domain": "koreaherald.com",
+          "date": "2025"
+        },
+        {
+          "title": "Moloco SceneCraft Acquisition",
+          "url": "https://tracxn.com/d/companies/moloco/__M1nPynPtg3BaL6CBRI36dMxROlan8YGwYMiAqLdqttY",
+          "domain": "tracxn.com",
+          "date": "2025-01"
+        },
+        {
+          "title": "Cross-Screen CTV Strategy 2026",
+          "url": "https://www.teads.com/blog/connected-tv-advertising-2026-trends/9706/",
+          "domain": "teads.com",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "cross_screen-20260401-002",
+      "date": "2026-04-01",
+      "title": "Cross-Device Frequency Capping & Sequential Messaging",
+      "category": "cross_screen",
+      "summary": "No cross-device frequency management between CTV and mobile campaigns. Advertisers risk over-exposing users on CTV and mobile simultaneously, wasting budget and degrading experience. Sequential messaging (CTV awareness → mobile retarget) is a proven pattern with no Moloco support.",
+      "evidence": "Industry data shows 47% of marketers cite holistic measurement as top priority. Only 32% measure across TV and digital. Moloco streams monetization solution mentions 'frequency control' for streaming but this doesn't extend cross-device. The Trade Desk and DV360 offer household-level frequency management.",
+      "assessment": {
+        "usable": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Frequency capping is a familiar concept. The complexity is in the cross-device identity layer, which should be abstracted from the advertiser. Set a household frequency cap, the system handles the rest."
+        },
+        "valuable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Reduces waste and improves user experience. Sequential messaging is a powerful use case that agencies specifically request. Not a deal-breaker but increasingly expected in enterprise CTV RFPs."
+        },
+        "feasible": {
+          "score": 3,
+          "pass": false,
+          "rationale": "Requires a cross-device identity graph or household-level matching — technically the hardest problem in CTV. Deterministic matching (via MMP login data) is limited in scale. Probabilistic matching raises privacy concerns. Major infrastructure investment."
+        },
+        "viable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Important for enterprise sales but the ROI on engineering investment is uncertain given the identity resolution complexity. Better to wait for industry standards to mature before building proprietary solutions."
+        }
+      },
+      "overall_score": 5.75,
+      "recommendation": "defer",
+      "priority": "medium",
+      "tags": [
+        "frequency",
+        "sequential",
+        "cross-device",
+        "identity",
+        "household"
+      ],
+      "sources": [
+        {
+          "title": "CTV Cross-Screen Impact 2026",
+          "url": "https://www.teads.com/blog/connected-tv-advertising-2026-trends/9706/",
+          "domain": "teads.com",
+          "date": "2026"
+        },
+        {
+          "title": "Moloco Streaming Monetization",
+          "url": "https://www.moloco.com/solutions/moloco-streaming-monetization",
+          "domain": "moloco.com",
+          "date": "2025"
+        },
+        {
+          "title": "eMarketer CTV FAQ",
+          "url": "https://www.emarketer.com/content/faq-on-ctv-advertising--trends--formats--platforms-watch-2026",
+          "domain": "emarketer.com",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "inventory_supply-20260401-002",
+      "date": "2026-04-01",
+      "title": "CTV Supply-Side Fraud Detection & Transparency",
+      "category": "inventory_supply",
+      "summary": "CTV ad fraud remains a significant industry concern — bot traffic, spoofed devices, and misrepresented inventory. Moloco needs transparent supply quality scoring so advertisers trust the inventory their ML models are bidding on.",
+      "evidence": "CTV ad fraud rates estimated at 10-15% of spend. Industry reports cite 'impression legitimacy and cross-platform comparability' as key blind spots. Currency fragmentation and data transparency are major pain points for CTV buyers. Moloco's ML optimization is only as good as the signal quality from supply sources.",
+      "assessment": {
+        "usable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Supply quality scoring can be surfaced as a simple quality badge per publisher or campaign, with drill-down for power users. Transparent and intuitive presentation is achievable."
+        },
+        "valuable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Important for trust and budget confidence. Advertisers who suspect fraud reduce spend. Transparency is a competitive differentiator against opaque CTV exchanges."
+        },
+        "feasible": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Moloco's ML engine already processes bid requests — adding fraud scoring signals (device fingerprinting, traffic pattern analysis) is incremental. Can leverage third-party fraud detection (IAS, DoubleVerify, MOAT) for initial coverage."
+        },
+        "viable": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Moderate direct revenue impact but important for trust-building and reducing advertiser churn. Not a major differentiator on its own but table stakes for enterprise CTV deals."
+        }
+      },
+      "overall_score": 6.5,
+      "recommendation": "investigate",
+      "priority": "medium",
+      "tags": [
+        "fraud",
+        "transparency",
+        "supply-quality",
+        "trust",
+        "verification"
+      ],
+      "sources": [
+        {
+          "title": "CTV Advertising Trust Gaps",
+          "url": "https://www.digitalelement.com/blog/ctv-advertising-in-2024-navigating-an-era-of-abundant-data-and-trust-scarcity/",
+          "domain": "digitalelement.com",
+          "date": "2026"
+        },
+        {
+          "title": "CTV Ad Measurement Guide",
+          "url": "https://adtelligent.com/blog/ctv-ad-measurement-and-attribution-full-guide/",
+          "domain": "adtelligent.com",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "creative_formats-20260401-002",
+      "date": "2026-04-01",
+      "title": "Dynamic Creative Optimization (DCO) for CTV",
+      "category": "creative_formats",
+      "summary": "No CTV-specific dynamic creative optimization. Advertisers upload static video assets. The ability to dynamically assemble CTV creatives based on audience signals, time of day, geography, or product catalog would transform CTV from a branding medium to a true performance channel.",
+      "evidence": "G2 reviews note limited creative management. CTV advertising guides highlight DCO as an emerging capability. Competitors like Innovid and Flashtalking offer CTV DCO. Moloco's ML engine could power creative-level optimization but the creative management layer doesn't exist yet.",
+      "assessment": {
+        "usable": {
+          "score": 5,
+          "pass": true,
+          "rationale": "DCO adds significant creative production complexity. Requires advertisers to provide component assets (product images, price feeds, headlines) rather than finished videos. Learning curve is real but manageable with good templates."
+        },
+        "valuable": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Valuable for e-commerce and DTC advertisers with large product catalogs. Less relevant for gaming/app install use cases which dominate Moloco CTV today. Value depends heavily on audience mix evolution."
+        },
+        "feasible": {
+          "score": 3,
+          "pass": false,
+          "rationale": "Real-time video assembly is technically complex and resource-intensive. Requires a creative management platform, asset library, rendering pipeline, and ML-driven component selection. Would likely require acquisition or partnership (SceneCraft acquisition may be relevant)."
+        },
+        "viable": {
+          "score": 5,
+          "pass": true,
+          "rationale": "Niche value for current advertiser base (gaming-heavy). Becomes more viable as Moloco expands into DTC/retail CTV advertisers. Better suited as a 2027+ initiative after core measurement and UX gaps are closed."
+        }
+      },
+      "overall_score": 4.75,
+      "recommendation": "defer",
+      "priority": "low",
+      "tags": [
+        "DCO",
+        "dynamic-creative",
+        "personalization",
+        "e-commerce",
+        "DTC"
+      ],
+      "sources": [
+        {
+          "title": "CTV Creative Optimization Trends",
+          "url": "https://www.aidigital.com/blog/ctv-advertising-trends",
+          "domain": "aidigital.com",
+          "date": "2026"
+        },
+        {
+          "title": "G2 Moloco Reviews",
+          "url": "https://www.g2.com/products/moloco/reviews",
+          "domain": "g2.com",
+          "date": "2026"
+        },
+        {
+          "title": "Moloco SceneCraft Acquisition",
+          "url": "https://tracxn.com/d/companies/moloco/__M1nPynPtg3BaL6CBRI36dMxROlan8YGwYMiAqLdqttY",
+          "domain": "tracxn.com",
+          "date": "2025-01"
+        }
+      ]
+    }
+  ]
+}
