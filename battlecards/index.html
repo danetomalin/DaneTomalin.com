@@ -31,6 +31,27 @@
     --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .site-header {
+      position: sticky; top: 0;
+      background: rgba(13,13,18,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 200;
+  }
+  .site-header-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
   body {
     font-family: var(--font);
     background: var(--bg-primary);
@@ -289,22 +310,29 @@
 </head>
 <body>
 
+<header class="site-header">
+    <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+    <a href="https://danetomalin.com/moloco/" class="site-header-back">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        Back to Moloco Plan
+    </a>
+</header>
+
 <div class="engine-header">
-  <h1>Battlecards<span class="beta-badge">BOT 4</span></h1>
+  <h1>Battlecards<span class="beta-badge">Beta</span></h1>
   <div class="subtitle">Sales-ready competitive cheat sheets for Moloco CTV — built from the same intel stream feeding the CI Dossier, CTV Signal Engine, and Roadmap Engine.</div>
   <div class="meta">Last updated: April 06, 2026 · 2 cards · Moloco-First positioning</div>
 </div>
 
 <div class="container">
   <div class="tabs" id="tabs">
-    <button class="tab" id="tab-the-trade-desk-20260406" onclick="showCard('the-trade-desk-20260406')">The Trade Desk<span class="risk">· HIGH</span></button><button class="tab" id="tab-mntn-20260406" onclick="showCard('mntn-20260406')">MNTN<span class="risk">· HIGH</span></button>
+    <button class="tab" id="tab-the-trade-desk-20260406" onclick="showCard('the-trade-desk-20260406')">The Trade Desk</button><button class="tab" id="tab-mntn-20260406" onclick="showCard('mntn-20260406')">MNTN</button>
   </div>
   
     <div class="battlecard" id="card-the-trade-desk-20260406">
       <div class="bc-head">
         <div class="row">
           <h2>The Trade Desk</h2>
-          <span class="risk-badge risk-HIGH">RISK: HIGH</span>
           <span class="domain">thetradedesk.com</span>
         </div>
         <div class="tagline">"The independent DSP for the open internet"</div>
@@ -380,7 +408,6 @@
       <div class="bc-head">
         <div class="row">
           <h2>MNTN</h2>
-          <span class="risk-badge risk-HIGH">RISK: HIGH</span>
           <span class="domain">mountain.com</span>
         </div>
         <div class="tagline">"Performance TV for DTC brands"</div>
