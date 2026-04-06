@@ -14,8 +14,8 @@
         "profile": "The Trade Desk is the largest independent DSP and a dominant force in programmatic CTV. In 2026 TTD is layering an AI-native narrative on top of its Ventura CTV OS and Kokai platform, including reported talks with OpenAI to power ChatGPT ads. Strong agency footprint via the Premier Partner Program, but increasingly perceived as an ecosystem-orchestrator rather than a performance-outcome platform."
       },
       "core_message": {
-        "elevator_pitch": "Moloco CTV turns Connected TV into a measurable performance channel. Our operational ML bids on every impression based on the probability it will drive your actual business outcome — installs, signups, revenue — not panel-based reach. For growth marketers who already buy performance on mobile, Moloco is the fastest path to making CTV behave the same way.",
-        "value_prop": "Moloco is the only CTV platform that optimizes to downstream outcomes using first-party ML at the impression level. The Trade Desk optimizes to media KPIs and relies on a partner ecosystem (Identity Alliance, measurement vendors) to reconstruct outcomes after the fact.",
+        "elevator_pitch": "For growth marketers tired of defending CTV spend with reach curves, Moloco turns every impression into a measurable business outcome — so you can finally walk into the QBR with ROAS, not impressions.",
+        "value_prop": "Functional: per-impression operational ML that bids against your actual outcome, not media KPIs. Monetary: materially lower CPA at matched budget vs. TTD's reach-optimized buying, with no Identity Alliance data fees layered on top. Psychological: the confidence of owning your own model trained on your first-party signals — not renting a shared graph every TTD advertiser also has access to.",
         "features_benefits": [
           {
             "feature": "Outcome-based bidding powered by operational ML",
@@ -55,7 +55,8 @@
           "How much of your TTD CTV budget is flowing through Identity Alliance data segments, and how did the recent incrementality payout shift affect your costs?",
           "If OpenAI brings its ad stack in-house, what is your contingency for the AI-native inventory TTD is positioning around today?",
           "Are you managing TTD directly or through a Premier Partner agency — and how quickly can you test a new optimization hypothesis?"
-        ]
+        ],
+        "profile": "Meet the Head of Growth at a scaling consumer brand. She came up running mobile performance, is fluent in ROAS and CAC, and hates that her agency-run TTD campaigns force her to defend CTV to her CFO with reach curves instead of revenue. She's the economic buyer and the blocker-remover — if she believes the outcome model, her team moves this week."
       },
       "competitive": {
         "strengths": [
@@ -140,8 +141,8 @@
         "profile": "MNTN popularized the 'Performance TV' category and built a self-serve CTV platform historically aimed at SMB and DTC brands. In 2026 MNTN is pivoting toward enterprise: a Magnite partnership unlocks live streaming supply, a new CRO from TikTok and a Head of Premium Content from NBCUniversal signal an upmarket move. Q4 2025 revenue grew 36% YoY to $87.1M with 2026 guidance of $345M-$355M."
       },
       "core_message": {
-        "elevator_pitch": "Moloco CTV is performance TV built on operational ML. Where MNTN sells CTV as a self-serve brand channel for DTC advertisers, Moloco runs impression-level bidding against your actual business outcome — so CTV performs like the rest of your performance stack, at the scale your growth team needs.",
-        "value_prop": "MNTN owns the 'easy CTV for first-time TV advertisers' category. Moloco owns the 'ML-optimized CTV for advertisers who already know performance marketing.' Growth teams that have outgrown template-driven campaigns and AI-generated creative should be on Moloco.",
+        "elevator_pitch": "For performance marketers who've outgrown template-driven 'Performance TV,' Moloco gives you a CTV model that gets smarter with every dollar you spend — the difference between campaigns that plateau and campaigns that compound.",
+        "value_prop": "Functional: per-advertiser operational ML trained on your signals vs. MNTN's shared template optimization. Monetary: compounding performance gains as spend scales, with no ceiling on sophistication and no reliance on free AI creative to paper over the gap. Psychological: the pride of buying a platform built for performance marketers at scale, not for the 97% of MNTN's base that are first-time TV advertisers.",
         "features_benefits": [
           {
             "feature": "Operational ML per-advertiser model",
@@ -181,7 +182,8 @@
           "MNTN just hired a CRO from TikTok and a Premium Content head from NBCUniversal. Has your account team told you how the product roadmap will continue to serve your specific scale?",
           "How are you measuring incremental revenue from your MNTN spend — is it platform-reported attribution or a third-party incrementality study?",
           "If you needed to test a new bidding strategy tomorrow, how much of that decision is in your hands vs. MNTN's platform defaults?"
-        ]
+        ],
+        "profile": "Meet the VP of Paid Media at a fast-growing DTC brand. He runs a sophisticated performance stack across Meta, Google, and mobile, and is allergic to template-driven optimization and AI-generated creative that doesn't clear his brand bar. He's the decision-maker on channel expansion and feels personal ownership over every dollar of ROAS — he'll champion the switch the moment the outcome delta is real."
       },
       "competitive": {
         "strengths": [
@@ -269,8 +271,8 @@
         "profile": "StackAdapt is a Toronto-based self-serve DSP that has moved upmarket from multichannel programmatic into a unified adtech + martech story. Recently named a Forrester Wave Strong Performer (Q1 2026), ranked #1 in G2 Cross-Channel Advertising (Spring 2026), and backed by $500M+ in growth capital. 2026 push is squarely on B2B/ABM via Bombora, Lead Forensics, and Leadspace integrations — positioning StackAdapt as a B2B programmatic consolidator rather than a CTV performance platform."
       },
       "core_message": {
-        "elevator_pitch": "Moloco CTV is the performance engine for brands that have outgrown generalist DSPs. Where StackAdapt sells breadth — display, native, audio, CTV, email, ABM — Moloco goes deep on a single job: turning CTV into a measurable, ML-optimized performance channel tied to your actual business outcomes.",
-        "value_prop": "StackAdapt wins on breadth and consolidation. Moloco wins on per-advertiser operational ML applied specifically to CTV outcomes — a depth play that StackAdapt's multichannel positioning cannot match.",
+        "elevator_pitch": "For growth teams who need CTV to behave like performance — not line four of a multichannel report — Moloco is the specialist CTV engine that beats generalist DSPs on the only KPI that matters: your business outcome.",
+        "value_prop": "Functional: CTV-native per-advertiser ML vs. StackAdapt's generalist multichannel optimizer averaged across display, native, audio, and CTV. Monetary: better cost-per-outcome on CTV alone, more than offsetting the 'consolidation savings' story StackAdapt sells to finance. Psychological: stop settling for well-rounded — own best-in-class on the channel that's growing fastest in your mix, and stop worrying about a VC-funded roadmap drifting toward B2B.",
         "features_benefits": [
           {
             "feature": "CTV-specialized operational ML",
@@ -310,7 +312,8 @@
           "StackAdapt's 2026 roadmap is heavily B2B/ABM. If you're a consumer brand, how confident are you that CTV performance will stay a priority for them?",
           "What is your actual CPA trend on CTV over the last two quarters — and can you attribute that to StackAdapt's optimization or to your own targeting logic?",
           "If StackAdapt raised CPMs tomorrow to meet investor margin expectations, what's your contingency?"
-        ]
+        ],
+        "profile": "Meet the Director of Paid Media at a growth-stage consumer brand. She consolidated display, native, and CTV onto StackAdapt last year for the operational wins, but her CTV CPA has plateaued and her CMO is asking harder questions every QBR. She's the one building the 2026 channel plan and is quietly shopping for a specialist to layer in — influence the plan and you win the budget."
       },
       "competitive": {
         "strengths": [
@@ -398,8 +401,8 @@
         "profile": "Amazon DSP is the most aggressive CTV player of 2026. NewFronts 2026 headline: a Samsung partnership that makes Samsung TV Plus shoppable via the TV remote (launch July 2026) — the first device-level ad-to-purchase bridge in CTV. Paired with Prime Video, Tubi Priority Access (85% audience match), Comcast local supply, iHeartMedia/Spotify audio, and an authenticated graph claiming 42% more unique reach and 3x ROAS. Managed-service minimums ~$35K-50K. Amazon is positioning DSP as the default buying path for a growing share of CTV supply."
       },
       "core_message": {
-        "elevator_pitch": "Moloco CTV gives growth marketers an independent, ML-driven performance platform across the open biddable CTV ecosystem. Where Amazon DSP locks performance to Amazon's walled garden and purchase data, Moloco optimizes to your outcome across the whole market — without handing your campaign signals to your largest retail competitor.",
-        "value_prop": "Amazon DSP wins when your buyer is an Amazon shopper and your KPI is an Amazon purchase. Moloco wins when you need CTV to perform against your full business, on inventory you don't want concentrated inside a single retailer's data pipeline.",
+        "elevator_pitch": "For brands who refuse to hand their CTV campaign signals to their biggest retail competitor, Moloco is the independent performance layer that optimizes to your revenue — not Amazon's basket.",
+        "value_prop": "Functional: independent operational ML across the open biddable CTV market (FAST, AVOD, live) with no walled-garden dependency. Monetary: self-serve activation in hours with no $35-50K managed-service minimums, and no signal leakage that subsidizes a competitor's shopper graph. Psychological: the peace of mind of knowing your first-party data is training your model — not a retailer-competitor's closed-loop purchase graph that you can never audit.",
         "features_benefits": [
           {
             "feature": "Independent DSP, no retailer competition",
@@ -439,7 +442,8 @@
           "The Samsung shoppable integration drives purchases to Amazon storefronts. If you're not optimizing for Amazon revenue, does that feature create value or just give Amazon more data?",
           "What is your contingency if Amazon reprices or restricts access to any of the supply in its walled garden — Prime Video, Tubi, Samsung, Freevee?",
           "Are you comfortable with the level of campaign signal Amazon DSP ingests, given that Amazon is also your largest retail competitor?"
-        ]
+        ],
+        "profile": "Meet the CMO at a DTC or non-Amazon-native consumer brand. She sees Amazon as both a channel and a threat, loses sleep over how much first-party signal she's feeding a retailer-competitor every time a campaign runs, and wants a CTV partner she can genuinely trust with the keys. She sets channel strategy and has the authority to mandate a multi-DSP approach — she just needs the independent alternative that actually performs."
       },
       "competitive": {
         "strengths": [
