@@ -117,6 +117,21 @@
     color: var(--accent);
   }
   .tab .risk { font-size: 10px; opacity: 0.8; margin-left: 6px; letter-spacing: 1px; }
+  .tab.coming-soon {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: var(--bg-secondary);
+  }
+  .tab.coming-soon:hover { background: var(--bg-secondary); color: var(--text-secondary); }
+  .tab.coming-soon .soon-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
 
   /* Battlecard */
   .battlecard { display: none; }
@@ -326,7 +341,7 @@
 
 <div class="container">
   <div class="tabs" id="tabs">
-    <button class="tab" id="tab-the-trade-desk-20260406" onclick="showCard('the-trade-desk-20260406')">The Trade Desk</button><button class="tab" id="tab-mntn-20260406" onclick="showCard('mntn-20260406')">MNTN</button><button class="tab" id="tab-stackadapt-20260406" onclick="showCard('stackadapt-20260406')">StackAdapt</button><button class="tab" id="tab-amazon-dsp-20260406" onclick="showCard('amazon-dsp-20260406')">Amazon DSP</button>
+    <button class="tab" id="tab-the-trade-desk-20260406" onclick="showCard('the-trade-desk-20260406')">The Trade Desk</button><button class="tab" id="tab-mntn-20260406" onclick="showCard('mntn-20260406')">MNTN</button><button class="tab" id="tab-stackadapt-20260406" onclick="showCard('stackadapt-20260406')">StackAdapt</button><button class="tab" id="tab-amazon-dsp-20260406" onclick="showCard('amazon-dsp-20260406')">Amazon DSP</button><button class="tab coming-soon" disabled title="Battlecard coming soon"><span class="soon-label">Coming Soon</span>Roku (OneView)</button><button class="tab coming-soon" disabled title="Battlecard coming soon"><span class="soon-label">Coming Soon</span>Google DV360</button><button class="tab coming-soon" disabled title="Battlecard coming soon"><span class="soon-label">Coming Soon</span>Tatari</button><button class="tab coming-soon" disabled title="Battlecard coming soon"><span class="soon-label">Coming Soon</span>Viant</button>
   </div>
   
     <div class="battlecard" id="card-the-trade-desk-20260406">
