@@ -1,237 +1,438 @@
 {
-  "date": "2026-03-27",
+  "date": "2026-04-06",
   "engine_version": "1.0.0",
-  "signal_count": 8,
-  "high_impact_count": 3,
+  "signal_count": 14,
+  "high_impact_count": 4,
   "trend_scorecard": {
-    "bullish": 5,
-    "bearish": 2,
-    "neutral": 1,
+    "bullish": 8,
+    "bearish": 4,
+    "neutral": 2,
     "overall": "bullish",
-    "summary": "CTV programmatic spend acceleration and FAST inventory growth strongly favor Moloco's ML-driven outcome-based bidding this cycle"
+    "summary": "CTV programmatic spend crossing $38B with 90%+ transacted programmatically validates Moloco's ML-driven bidding infrastructure, though Amazon's first-party data moat and state privacy enforcement on ACR data create emerging headwinds for independent DSPs."
   },
   "signals": [
     {
-      "id": "ad_spend-20260327-001",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-24",
+      "id": "ad_spend-20260406-001",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-02-20",
       "pillar": "ad_spend_velocity",
-      "headline": "eMarketer raises 2026 CTV programmatic forecast to $32.4B, up 28% YoY",
-      "summary": "eMarketer revised its 2026 CTV programmatic ad spend forecast upward by $3.1B, now projecting $32.4B in total US CTV programmatic spend. The revision cites faster-than-expected migration from linear scatter budgets and upfront commitments shifting to programmatic guarantees.",
-      "moloco_commentary": "This revision validates the core thesis behind Moloco's CTV DSP investment. A $3.1B upward revision in programmatic specifically — not total CTV — means more dollars flowing into biddable inventory where ML optimization creates measurable alpha. Sales teams should lead with this data point: the programmatic CTV TAM is growing faster than anyone predicted, and Moloco's outcome-based bidding is purpose-built for this exact environment.",
-      "impact_score": 9,
-      "sentiment": "bullish",
-      "sentiment_reason": "Programmatic CTV TAM expanding faster than forecast directly increases addressable market for Moloco's ML-optimized bidding",
-      "tags": [
-        "programmatic",
-        "forecast",
-        "TAM",
-        "eMarketer",
-        "upfront-shift"
-      ],
-      "sources": [
-        {
-          "title": "US CTV Ad Spending Forecast, Q1 2026 Update",
-          "url": "https://www.emarketer.com/content/ctv-ad-spending-2026",
-          "domain": "emarketer.com",
-          "date": "2026-03-24"
-        }
-      ]
-    },
-    {
-      "id": "ad_spend-20260327-002",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-22",
-      "pillar": "ad_spend_velocity",
-      "headline": "GroupM reports 62% of CTV buys now programmatic, up from 48% in 2025",
-      "summary": "GroupM's This Year Next Year mid-cycle update shows programmatic CTV purchasing crossed the majority threshold, reaching 62% of all CTV ad transactions in Q1 2026 compared to 48% for the same period in 2025.",
-      "moloco_commentary": "The tipping point has arrived. With programmatic now the dominant buying method for CTV, the conversation shifts from 'should we buy CTV programmatically?' to 'which DSP delivers the best outcomes?' This is exactly the competitive framing where Moloco's ML-driven optimization and attribution capabilities win. Position every pitch as a DSP performance shootout — the market is ready for it.",
+      "headline": "IAB forecasts 13.8% US CTV ad spend growth to $38B in 2026",
+      "summary": "The IAB projects US CTV advertising will reach approximately $38 billion in 2026, growing 13.8% year-over-year from $33.35B in 2025. CTV growth trails only social media (14.6%) among digital channels. Major cyclical events including FIFA World Cup and US midterm elections will drive incremental spend.",
+      "moloco_commentary": "The $38B CTV market growing at nearly 14% means the total addressable market for ML-optimized CTV bidding expands by ~$4.6B this year alone. With 90%+ of CTV now transacted programmatically, Moloco's pitch that outcome-based bidding beats manual IO buying becomes self-evident. Sales teams should lead with this IAB data to establish market inevitability in every pitch.",
       "impact_score": 8,
       "sentiment": "bullish",
-      "sentiment_reason": "Programmatic becoming majority CTV buying method shifts competition to DSP performance — Moloco's core strength",
+      "sentiment_reason": "Programmatic CTV growth at scale directly expands the market for Moloco's ML-driven bidding technology",
       "tags": [
+        "IAB",
+        "market-size",
         "programmatic",
-        "GroupM",
-        "market-share",
-        "tipping-point"
+        "growth-forecast"
       ],
       "sources": [
         {
-          "title": "This Year Next Year: Mid-Cycle Update",
-          "url": "https://www.groupm.com/this-year-next-year-2026",
-          "domain": "groupm.com",
-          "date": "2026-03-22"
+          "title": "IAB forecasts 13.8% US CTV ad spend growth in 2026",
+          "url": "https://www.streamtvinsider.com/advertising/iab-forecasts-138-us-ctv-ad-spend-growth-2026",
+          "domain": "streamtvinsider.com",
+          "date": "2026-02-20"
         }
       ]
     },
     {
-      "id": "inventory-20260327-001",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-25",
-      "pillar": "inventory_expansion",
-      "headline": "Samsung TV Plus launches 47 new FAST channels with full programmatic access",
-      "summary": "Samsung TV Plus announced 47 new FAST channels spanning sports, lifestyle, and news verticals, all available through programmatic demand partners. The expansion brings Samsung's total FAST lineup to 340+ channels across 25 markets.",
-      "moloco_commentary": "Samsung TV Plus's expansion with full programmatic access is a direct inventory opportunity for Moloco's DSP. Each new FAST channel represents untapped, biddable impressions where ML-optimized bidding can find underpriced performance inventory before competitors saturate it. The sports and lifestyle verticals are particularly valuable for app marketers and DTC brands in Moloco's target buyer set.",
+      "id": "ad_spend-20260406-002",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-01-15",
+      "pillar": "ad_spend_velocity",
+      "headline": "70% of CTV advertisers plan 17% average spend increase in 2026",
+      "summary": "A survey of CTV advertisers found that nearly 70% expect to increase spending by an average of 17% in 2026. The majority of new CTV budgets are being reallocated from linear TV, with 45% of marketers moving budgets directly from linear to CTV. Digital display, paid search, and social media are secondary funding sources.",
+      "moloco_commentary": "The 45% linear-to-CTV reallocation rate means a wave of advertisers accustomed to broad demo buys are entering a precision-targeting environment for the first time. These advertisers need hand-holding on outcome measurement — exactly where Moloco's attribution and ML optimization stack creates differentiation. Sales should target linear-transitioning brands as a priority segment this quarter.",
       "impact_score": 7,
       "sentiment": "bullish",
-      "sentiment_reason": "New programmatic FAST inventory expands the pool of biddable CTV impressions where Moloco's ML optimization adds value",
+      "sentiment_reason": "Linear-to-CTV migration creates demand for the performance measurement capabilities Moloco provides",
       "tags": [
-        "FAST",
-        "Samsung",
-        "inventory",
-        "programmatic-access",
-        "sports"
+        "budget-shift",
+        "linear-decline",
+        "advertiser-survey",
+        "linear-migration"
       ],
       "sources": [
         {
-          "title": "Samsung TV Plus Expands FAST Lineup",
-          "url": "https://news.samsung.com/global/samsung-tv-plus-fast-expansion-2026",
-          "domain": "news.samsung.com",
-          "date": "2026-03-25"
+          "title": "Survey: 70% Of CTV Advertisers To Increase Spending In 2026",
+          "url": "https://tvnewscheck.com/business/article/survey-70-of-ctv-advertisers-to-increase-spending-in-2026/",
+          "domain": "tvnewscheck.com",
+          "date": "2026-01-15"
+        },
+        {
+          "title": "Comscore 2026 State of Programmatic Report",
+          "url": "https://www.comscore.com/Insights/Press-Releases/2026/1/Comscore-2026-State-of-Programmatic-Report",
+          "domain": "comscore.com",
+          "date": "2026-01-22"
         }
       ]
     },
     {
-      "id": "inventory-20260327-002",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-26",
-      "pillar": "inventory_expansion",
-      "headline": "Tubi reaches 97M monthly active users, launches self-serve programmatic tier",
-      "summary": "Fox-owned Tubi reported 97M MAUs in its Q1 earnings update and simultaneously launched a self-serve programmatic buying tier aimed at mid-market advertisers and agencies, removing the previous $50K minimum spend requirement.",
-      "moloco_commentary": "Tubi opening self-serve programmatic access removes a major friction point. Previously, Tubi's premium inventory required direct IO relationships. Now Moloco's DSP can bid into Tubi inventory at scale, and the removal of spend minimums opens it up to the app marketer and DTC segments Moloco serves. This should be on the roadmap for SSP integration if not already connected.",
-      "impact_score": 7,
+      "id": "ad_spend-20260406-003",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-01-21",
+      "pillar": "ad_spend_velocity",
+      "headline": "Netflix ad revenue targets $3B in 2026 with 80% programmatic CTV buys",
+      "summary": "Netflix expects ad revenue to nearly double to $3B in 2026 from $1.5B in 2025, contributing 25% of the streamer's $6B incremental revenue guidance. 80% of Netflix CTV ad buys now run programmatically. Netflix expanded DSP partnerships with Amazon, Google DV360, The Trade Desk, and Yahoo DSP, with expanded targeting via Amazon Audiences launching in Q2.",
+      "moloco_commentary": "Netflix opening 80% of its inventory to programmatic buying through multiple DSPs is a massive inventory unlock for ML-optimized bidders. The Amazon Audiences integration on Netflix means first-party commerce data now flows into premium CTV inventory — this is the exact use case Moloco's app marketer and commerce media clients need. If Moloco can access Netflix inventory through DSP partnerships, this is a greenfield opportunity for outcome-based campaigns on the world's largest streaming platform.",
+      "impact_score": 9,
       "sentiment": "bullish",
-      "sentiment_reason": "Tubi's self-serve programmatic tier opens premium FAST inventory to DSP bidding at scale",
+      "sentiment_reason": "Netflix's programmatic expansion creates premium biddable inventory at scale, ideal for ML-optimized outcome bidding",
       "tags": [
-        "Tubi",
-        "FAST",
-        "self-serve",
-        "Fox",
-        "mid-market"
+        "Netflix",
+        "programmatic",
+        "DSP-partnerships",
+        "premium-inventory",
+        "Amazon-Audiences"
       ],
       "sources": [
         {
-          "title": "Tubi Hits 97M MAUs, Opens Self-Serve Programmatic",
-          "url": "https://variety.com/2026/digital/news/tubi-97m-mau-self-serve-programmatic",
+          "title": "Netflix Doubled Its Ad Revenue Last Year – And Expects To Do The Same In 2026",
+          "url": "https://www.adexchanger.com/streaming/netflix-doubled-its-ad-revenue-last-year-and-expects-to-do-the-same-in-2026/",
+          "domain": "adexchanger.com",
+          "date": "2026-01-21"
+        },
+        {
+          "title": "Netflix expands ad targeting, outcomes capabilities",
+          "url": "https://www.streamtvinsider.com/advertising/netflix-expands-ad-targeting-outcomes-capabilities",
+          "domain": "streamtvinsider.com",
+          "date": "2026-03-15"
+        }
+      ]
+    },
+    {
+      "id": "inventory-20260406-001",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-03-24",
+      "pillar": "inventory_expansion",
+      "headline": "Sports FAST channels accelerate: Scripps Sports Network launches across major platforms",
+      "summary": "E.W. Scripps launched Scripps Sports Network on March 24 as a free ad-supported streaming channel featuring 100+ live events annually including women's sports and emerging leagues. Separately, MotoAmerica secured an exclusive Samsung TV Plus FAST deal for live racing through 2027. Complex TV launched April 1 across Amazon Prime, Roku, Samsung TV Plus, and six other platforms.",
+      "moloco_commentary": "Live sports on FAST channels is significant because sports inventory commands premium CPMs and delivers highly engaged, lean-forward audiences — ideal for performance measurement. Scripps Sports across multiple FAST platforms means this inventory is biddable through programmatic pipes. Moloco should monitor whether these sports FAST channels open programmatic guaranteed paths, as app marketers running CTV campaigns during live sports see higher conversion rates.",
+      "impact_score": 6,
+      "sentiment": "bullish",
+      "sentiment_reason": "New biddable sports inventory on FAST platforms expands the programmatic supply pool for ML-optimized campaigns",
+      "tags": [
+        "FAST",
+        "sports",
+        "Scripps",
+        "Samsung-TV-Plus",
+        "live-sports",
+        "inventory"
+      ],
+      "sources": [
+        {
+          "title": "Scripps to launch free streaming network for Scripps Sports",
+          "url": "https://thedesk.net/2026/03/scripps-sports-network-streaming-channel-launch/",
+          "domain": "thedesk.net",
+          "date": "2026-03-24"
+        },
+        {
+          "title": "MotoAmerica Races to Air on Samsung TV Plus in New Deal",
+          "url": "https://variety.com/2026/tv/news/motoamerica-races-samsung-tv-plus-fast-channel-1236673443/",
           "domain": "variety.com",
-          "date": "2026-03-26"
+          "date": "2026-03-18"
         }
       ]
     },
     {
-      "id": "regulatory-20260327-001",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-23",
+      "id": "inventory-20260406-002",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-02-20",
+      "pillar": "inventory_expansion",
+      "headline": "Roku holds 32% share of open CTV ad platform market, $6.8B segment growing",
+      "summary": "Roku maintains dominant 32% share of the open programmatic CTV market, which is estimated to reach $6.8B in 2026 (up from $6B in 2025). However, the supply side is shifting from open auctions to controlled deals — PMP deals grew from 41% in 2023 to 59% in 2024. Up to 50% of streaming advertisers expect to fund CTV increases by pulling from search and social budgets.",
+      "moloco_commentary": "The PMP deal shift from 41% to 59% is a structural change that favors DSPs with strong publisher relationships and ML-driven deal optimization — both Moloco strengths. Open auction shrinkage means performance-based bidders who can win in curated environments will outperform spray-and-pray approaches. Moloco's outcome-based bidding is well-suited for PMPs where CPMs are higher but conversion intent is stronger. The search/social budget migration is also notable — advertisers bringing lower-funnel expectations to CTV will demand the ROAS accountability Moloco delivers.",
+      "impact_score": 7,
+      "sentiment": "bullish",
+      "sentiment_reason": "PMP growth and search/social migration both favor performance-oriented CTV platforms like Moloco",
+      "tags": [
+        "Roku",
+        "open-programmatic",
+        "PMP",
+        "market-share",
+        "budget-migration"
+      ],
+      "sources": [
+        {
+          "title": "Roku Remains Top CTV Open Ad Platform With 32% Share",
+          "url": "https://www.mediapost.com/publications/article/412954/roku-remains-top-ctv-open-ad-platform-with-32-sha.html",
+          "domain": "mediapost.com",
+          "date": "2026-02-20"
+        }
+      ]
+    },
+    {
+      "id": "inventory-20260406-003",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-03-01",
+      "pillar": "inventory_expansion",
+      "headline": "Cadent sets 100% direct supply path standard for CTV SSP inventory",
+      "summary": "Cadent announced that 100% of its SSP CTV supply paths are now direct, far exceeding the industry benchmark of 75%. This sets a new standard for supply path transparency in programmatic CTV, addressing advertiser concerns about resold or opaque inventory chains.",
+      "moloco_commentary": "Supply path quality is a prerequisite for ML optimization — garbage in, garbage out. Cadent's 100% direct standard means every impression Moloco bids on through Cadent has verified provenance, which improves model training data quality and campaign outcomes. This is a proof point Moloco can reference when advertisers raise CTV fraud concerns: 'We prioritize SSPs with direct supply paths like Cadent's standard.' It also differentiates from competitors running on murkier supply chains.",
+      "impact_score": 5,
+      "sentiment": "bullish",
+      "sentiment_reason": "Cleaner supply paths improve ML model performance and validate programmatic CTV quality narrative",
+      "tags": [
+        "Cadent",
+        "supply-path",
+        "SSP",
+        "transparency",
+        "fraud-prevention"
+      ],
+      "sources": [
+        {
+          "title": "Cadent's Inventory Manager Sets New Standard with Commitment to 100% Premium, Direct CTV Inventory",
+          "url": "https://www.prnewswire.com/news-releases/cadents-inventory-manager-sets-new-standard-with-commitment-to-100-premium-direct-ctv-inventory-302673338.html",
+          "domain": "prnewswire.com",
+          "date": "2026-03-01"
+        }
+      ]
+    },
+    {
+      "id": "regulatory-20260406-001",
+      "captured_date": "2026-04-06",
+      "published_date": "2025-12-15",
       "pillar": "regulatory_watch",
-      "headline": "FTC proposes new ACR disclosure rules for smart TV manufacturers",
-      "summary": "The FTC issued a notice of proposed rulemaking that would require smart TV manufacturers to provide clear, prominent disclosure of Automatic Content Recognition (ACR) data collection and give consumers a simple opt-out mechanism at device setup, not buried in settings menus.",
-      "moloco_commentary": "This is a medium-risk regulatory signal. ACR data powers much of the household-level targeting and attribution that makes CTV performance measurable. If opt-out rates increase due to prominent disclosure, the data pool shrinks — but it shrinks for everyone equally. Moloco's advantage: ML models trained on first-party conversion data are less dependent on ACR than competitors relying on third-party audience segments. Position this as a competitive moat: 'Our models optimize on your outcomes, not borrowed device data.'",
+      "headline": "Texas AG sues five TV manufacturers over ACR data collection, wins restraining orders",
+      "summary": "Texas AG Ken Paxton filed lawsuits against Sony, Samsung, LG, Hisense, and TCL for alleged privacy violations through automatic content recognition (ACR) technology. Courts granted temporary restraining orders against Hisense and Samsung, halting certain ACR data collection in Texas. This is the first major ACR enforcement since the FTC's 2017 Vizio case.",
+      "moloco_commentary": "ACR restrictions are a double-edged sword for Moloco. On the bearish side, ACR data powers household-level viewing graphs that some CTV platforms use for targeting — if collection is curtailed, those targeting signals degrade. On the bullish side, Moloco's ML approach using first-party advertiser data and contextual signals is less dependent on ACR than competitors relying on device-level viewing data. This regulatory trend advantages platforms with robust first-party data activation — a core Moloco differentiator. Sales teams should position this as 'our targeting doesn't depend on data practices under legal scrutiny.'",
+      "impact_score": 7,
+      "sentiment": "neutral",
+      "sentiment_reason": "ACR restrictions create targeting signal loss but advantage Moloco's first-party data approach over ACR-dependent competitors",
+      "tags": [
+        "ACR",
+        "Texas",
+        "privacy",
+        "enforcement",
+        "Samsung",
+        "LG",
+        "targeting"
+      ],
+      "sources": [
+        {
+          "title": "Automated content recognition technology takes privacy enforcement spotlight",
+          "url": "https://iapp.org/news/a/automated-content-recognition-technology-takes-privacy-enforcement-spotlight",
+          "domain": "iapp.org",
+          "date": "2025-12-15"
+        }
+      ]
+    },
+    {
+      "id": "regulatory-20260406-002",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-01-01",
+      "pillar": "regulatory_watch",
+      "headline": "Three new state privacy laws take effect; Kentucky adds ACR as sensitive data",
+      "summary": "Kentucky, Indiana, and Rhode Island privacy laws took effect January 1, 2026. Kentucky's HB 692 notably adds 'automatic content recognition' as a category of sensitive data, requiring explicit consent for ACR data collection on smart TVs. New laws impose stricter limits on targeted ads to minors, profiling, cross-site tracking, and geolocation-based marketing.",
+      "moloco_commentary": "Kentucky classifying ACR as 'sensitive data' is a bellwether — expect other states to follow. This fragments the CTV data landscape state-by-state, making consent management operationally complex for CTV platforms relying on device-level data. For Moloco, this accelerates the value proposition of ML models trained on advertiser first-party data rather than third-party device signals. Every new state ACR restriction is a sales talking point: Moloco's optimization doesn't rely on data regulators are cracking down on.",
+      "impact_score": 6,
+      "sentiment": "bullish",
+      "sentiment_reason": "State-level ACR restrictions advantage Moloco's first-party data ML approach over device-data-dependent competitors",
+      "tags": [
+        "state-privacy",
+        "Kentucky",
+        "ACR",
+        "sensitive-data",
+        "consent",
+        "COPPA"
+      ],
+      "sources": [
+        {
+          "title": "New U.S. State Privacy, Social Media and AI Laws Take Effect in January 2026",
+          "url": "https://www.hunton.com/privacy-and-information-security-law/new-u-s-state-privacy-social-media-and-ai-laws-take-effect-in-january-2026",
+          "domain": "hunton.com",
+          "date": "2026-01-01"
+        },
+        {
+          "title": "Data privacy laws: what to expect for 2026",
+          "url": "https://www.ketch.com/blog/posts/us-privacy-laws-2026",
+          "domain": "ketch.com",
+          "date": "2026-01-10"
+        }
+      ]
+    },
+    {
+      "id": "regulatory-20260406-003",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-02-15",
+      "pillar": "regulatory_watch",
+      "headline": "California CPPA hits record $2.75M settlement against streaming company for opt-out failures",
+      "summary": "The California Privacy Protection Agency imposed its largest-ever settlement — $2.75M against a streaming company for opt-out failures — following a $1.35M record against Tractor Supply Company. Enforcement is shifting from policy to penalties, with regulators now scrutinizing the actual mechanics of data flow, how pixels fire, how data is shared with adtech partners, and whether consent actually means consent.",
+      "moloco_commentary": "The CPPA's focus on adtech data flow mechanics means every programmatic CTV player's data pipeline is under the microscope. Platforms with opaque or convoluted data sharing practices face real financial exposure. Moloco should ensure its data processing documentation is audit-ready and position its privacy posture as a competitive advantage. For sales: 'Our ML optimization runs on consented first-party signals, not the kind of third-party data sharing that just cost a streamer $2.75M.'",
       "impact_score": 6,
       "sentiment": "neutral",
-      "sentiment_reason": "ACR restrictions affect all CTV players but Moloco's first-party optimization approach is relatively insulated",
+      "sentiment_reason": "Increased enforcement creates compliance costs industry-wide but Moloco's first-party approach is less exposed",
       "tags": [
-        "FTC",
-        "ACR",
-        "privacy",
-        "smart-TV",
-        "opt-out",
-        "disclosure"
-      ],
-      "sources": [
-        {
-          "title": "FTC Proposes ACR Disclosure Rules for Connected TVs",
-          "url": "https://www.ftc.gov/news-events/news/press-releases/2026/03/ftc-proposes-acr-disclosure-rules",
-          "domain": "ftc.gov",
-          "date": "2026-03-23"
-        }
-      ]
-    },
-    {
-      "id": "regulatory-20260327-002",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-21",
-      "pillar": "regulatory_watch",
-      "headline": "California CPRA enforcement action targets CTV data broker for children's viewing data",
-      "summary": "The California Privacy Protection Agency filed its first enforcement action against a CTV data broker for selling children's streaming viewing data without proper COPPA compliance, setting a precedent for CTV-specific privacy enforcement.",
-      "moloco_commentary": "This enforcement action signals regulators are now watching CTV data practices specifically, not just web/mobile. For Moloco, this reinforces the value of contextual and first-party performance signals over third-party audience data. Any sales materials referencing audience targeting on CTV should be reviewed for compliance positioning. The bearish element: increased scrutiny could slow CTV ad tech innovation broadly.",
-      "impact_score": 5,
-      "sentiment": "bearish",
-      "sentiment_reason": "CTV-specific enforcement precedent could increase compliance burden and slow innovation across the CTV ad tech ecosystem",
-      "tags": [
-        "CPRA",
-        "COPPA",
+        "CPPA",
+        "California",
         "enforcement",
-        "children",
-        "data-broker",
-        "California"
+        "streaming",
+        "opt-out",
+        "penalties"
       ],
       "sources": [
         {
-          "title": "CPPA Files First CTV Data Enforcement Action",
-          "url": "https://cppa.ca.gov/announcements/2026/ctv-enforcement",
-          "domain": "cppa.ca.gov",
-          "date": "2026-03-21"
+          "title": "Privacy Enforcement in 2026: The Shift From Policy to Penalties",
+          "url": "https://insights.audiencex.com/privacy-enforcement-in-2026-the-shift-from-policy-to-penalties/",
+          "domain": "audiencex.com",
+          "date": "2026-02-15"
         }
       ]
     },
     {
-      "id": "competitive-20260327-001",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-26",
+      "id": "competitive-20260406-001",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-02-10",
       "pillar": "competitive_positioning",
-      "headline": "The Trade Desk launches 'Outcome Engine' — ML-driven CTV performance product",
-      "summary": "The Trade Desk announced Outcome Engine, a new ML-powered product that automatically optimizes CTV campaigns toward conversion outcomes rather than reach metrics. CEO Jeff Green called it 'the end of the CPM era in CTV' during the launch event.",
-      "moloco_commentary": "This is the competitive threat we've been tracking. TTD is now explicitly positioning as a performance/outcomes DSP in CTV — directly encroaching on Moloco's differentiation. Key counter-moves: (1) Publish Moloco's CTV performance benchmarks immediately, (2) Emphasize Moloco's ML heritage and depth vs. TTD adding ML as a feature on top of a reach platform, (3) Challenge TTD's attribution methodology in head-to-head evaluations. The narrative must be: 'We were built for outcomes from day one. They're retrofitting.'",
+      "headline": "Amazon DSP outpaces Trade Desk in CTV with 23% vs 14% ad revenue growth",
+      "summary": "Amazon reported 23% YoY ad revenue growth in Q4 2025, outpacing CTV market growth by 10 points, while The Trade Desk reported 14% growth with Q1 2026 guidance projecting just 10%. Amazon's growth is credited to DSP improvements, deeper CTV partnerships with Roku and Disney, and first-party audiences across Prime Video, Fire TV, and live sports. Prime Video investment grew 127% YoY.",
+      "moloco_commentary": "Amazon's divergence from TTD exposes a critical market dynamic: walled gardens with first-party commerce data are winning the CTV performance war. This is DIRECTLY relevant to Moloco's competitive positioning. Amazon's closed-loop attribution (see ad → buy on Amazon) is the gold standard for outcome measurement. Moloco must differentiate by offering similar closed-loop attribution for non-Amazon commerce — app installs, DTC purchases, in-store visits. The 'open internet' narrative that TTD champions is losing to Amazon's data gravity. Moloco should avoid positioning alongside TTD's 'open web' framing and instead lead with measurable outcomes regardless of inventory source.",
       "impact_score": 9,
       "sentiment": "bearish",
-      "sentiment_reason": "TTD directly adopting 'outcomes over CPM' messaging narrows Moloco's performance differentiation gap in CTV",
+      "sentiment_reason": "Amazon's first-party data moat and closed-loop attribution narrow the differentiation gap for all independent CTV performance platforms including Moloco",
       "tags": [
-        "TTD",
-        "The-Trade-Desk",
-        "outcomes",
-        "ML",
-        "competitive-threat",
+        "Amazon-DSP",
+        "Trade-Desk",
+        "first-party-data",
+        "closed-loop",
+        "revenue-growth",
+        "walled-garden"
+      ],
+      "sources": [
+        {
+          "title": "Why Amazon Is Gaining Ground In CTV And The Trade Desk Is Losing Its Lead",
+          "url": "https://www.adexchanger.com/on-tv-and-video/why-amazon-is-gaining-ground-in-ctv-and-the-trade-desk-is-losing-its-lead/",
+          "domain": "adexchanger.com",
+          "date": "2026-02-10"
+        }
+      ]
+    },
+    {
+      "id": "competitive-20260406-002",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-01-10",
+      "pillar": "competitive_positioning",
+      "headline": "MNTN doubles down on 'Performance TV' positioning with 100+ KPIs and attribution suite",
+      "summary": "MNTN continues to position itself as the 'Performance TV' platform, emphasizing lower-funnel outcomes with 100+ KPIs, integrated creative services, and real-time attribution. MNTN's bidding system uses multiple algorithms to automate media buying with dynamic daily pacing and predictive bid optimization. The platform is popular with direct-response advertisers seeking CTV ROI accountability.",
+      "moloco_commentary": "MNTN is the most direct competitive threat to Moloco's CTV performance positioning. They own the 'Performance TV' brand identity and are executing on it with attribution infrastructure that speaks directly to the same buyers Moloco targets. The 100+ KPI messaging is a quantity play — Moloco should counter with quality: not just tracking outcomes, but optimizing toward them in real-time with ML. The key differentiation is that MNTN automates media buying while Moloco optimizes it — automation follows rules, ML finds patterns humans can't. Sales teams need a crisp MNTN battle card emphasizing ML-driven optimization vs. rule-based automation.",
+      "impact_score": 8,
+      "sentiment": "bearish",
+      "sentiment_reason": "MNTN's 'Performance TV' narrative directly competes with Moloco's outcome-based CTV positioning",
+      "tags": [
+        "MNTN",
+        "performance-TV",
+        "attribution",
+        "direct-response",
+        "battle-card"
+      ],
+      "sources": [
+        {
+          "title": "Connected TV Performance Marketing Platform - MNTN",
+          "url": "https://mountain.com/",
+          "domain": "mountain.com",
+          "date": "2026-01-10"
+        },
+        {
+          "title": "Inside MNTN's Bidding Architecture",
+          "url": "https://mountain.com/tech/part-two-inside-mntns-bidding-architecture/",
+          "domain": "mountain.com",
+          "date": "2026-01-10"
+        }
+      ]
+    },
+    {
+      "id": "competitive-20260406-003",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-01-15",
+      "pillar": "competitive_positioning",
+      "headline": "Roku pivots to 'commerce engine' narrative, treats CTV as performance channel",
+      "summary": "Roku is repositioning CTV as a 'commerce engine' for 2026, seeing growing demand from marketers to treat CTV as a true performance channel. Roku predicts up to 50% of streaming advertisers will subsidize CTV increases with budgets from search and social. Roku is expanding data integrations with Amazon and The Trade Desk for personalized TV advertising.",
+      "moloco_commentary": "Roku's 'commerce engine' pivot is a narrative land-grab that should concern Moloco. When the #1 CTV platform by market share starts talking 'performance' and 'commerce,' it normalizes outcome-based CTV but also means Roku becomes a competitor, not just a supply partner. Roku has the device graph, the viewer data, and now the commerce framing. Moloco's counter-argument must emphasize independence from walled gardens: 'Roku optimizes for Roku. Moloco optimizes for your business outcomes across ALL CTV inventory.' The search/social budget migration Roku predicts is good news — it means lower-funnel advertisers are arriving, which plays to Moloco's strengths.",
+      "impact_score": 7,
+      "sentiment": "bearish",
+      "sentiment_reason": "Roku adopting performance/commerce narrative closes differentiation gap between platform owners and independent performance DSPs",
+      "tags": [
+        "Roku",
+        "commerce-engine",
+        "performance-pivot",
+        "walled-garden",
         "narrative-shift"
       ],
       "sources": [
         {
-          "title": "The Trade Desk Launches Outcome Engine",
-          "url": "https://www.thetradedesk.com/us/news/outcome-engine-launch",
-          "domain": "thetradedesk.com",
-          "date": "2026-03-26"
+          "title": "Roku: CTV becomes a commerce engine in 2026",
+          "url": "https://www.advanced-television.com/2025/12/11/roku-ctv-becomes-a-commerce-engine-in-2026/",
+          "domain": "advanced-television.com",
+          "date": "2025-12-11"
         },
         {
-          "title": "Jeff Green: 'The End of the CPM Era'",
-          "url": "https://adexchanger.com/the-trade-desk-outcome-engine-ctv",
-          "domain": "adexchanger.com",
-          "date": "2026-03-26"
+          "title": "CTV Emerges as Performance Channel Amid Shift to Lower-Funnel Ad Buying: Roku",
+          "url": "https://www.beet.tv/2026/01/post-100405.html",
+          "domain": "beet.tv",
+          "date": "2026-01-15"
         }
       ]
     },
     {
-      "id": "competitive-20260327-002",
-      "captured_date": "2026-03-27",
-      "published_date": "2026-03-20",
-      "pillar": "competitive_positioning",
-      "headline": "MNTN pivots messaging from 'CTV for performance marketers' to 'full-funnel CTV platform'",
-      "summary": "MNTN updated its homepage hero text from 'Performance TV for the Modern Marketer' to 'The Full-Funnel CTV Platform' and launched brand awareness campaign measurement tools, signaling a strategic shift away from pure performance positioning.",
-      "moloco_commentary": "MNTN moving upfunnel is actually bullish for Moloco. As MNTN broadens its positioning to compete with TTD and DV360 on awareness, they vacate the 'pure CTV performance' lane. This creates an opportunity for Moloco to claim MNTN's former territory: 'If you want measurable CTV outcomes, Moloco is now the only platform purpose-built exclusively for performance.' Track MNTN's landing page monthly to confirm this drift continues.",
-      "impact_score": 6,
+      "id": "ad_spend-20260406-004",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-03-15",
+      "pillar": "ad_spend_velocity",
+      "headline": "$7.4B in CTV ad value wasted due to inaccurate data and fraud in 2026",
+      "summary": "Approximately 40% of every dollar spent in the open CTV programmatic market is wasted due to inaccurate data, translating to $7.4B in lost CTV value in 2026. Bot fraud accounts for 65% of all CTV fraud, and 20.8% of CTV impressions never reached a real screen. Among UK advertisers, only 28% feel confident their CTV ads appear in fraud-free placements.",
+      "moloco_commentary": "The $7.4B waste figure is simultaneously alarming and opportunistic for Moloco. ML-driven bid optimization that can identify and avoid fraudulent inventory in real-time is a concrete, quantifiable value proposition. If Moloco's models can reduce waste by even 10% compared to competitors, that's hundreds of millions in recovered ad value. This data point should be in every sales deck: 'The CTV market wastes $7.4B on bad data. Our ML models are trained to separate signal from noise.' The 65% bot fraud rate in CTV also argues for investing in pre-bid fraud detection as a product differentiator.",
+      "impact_score": 7,
       "sentiment": "bullish",
-      "sentiment_reason": "MNTN vacating the pure performance lane opens space for Moloco to claim the 'only true CTV performance DSP' position",
+      "sentiment_reason": "High fraud rates create demand for ML-driven bid optimization and fraud detection — core Moloco capabilities",
       "tags": [
-        "MNTN",
-        "messaging-drift",
-        "full-funnel",
-        "positioning",
-        "opportunity"
+        "fraud",
+        "data-quality",
+        "waste",
+        "bot-traffic",
+        "measurement",
+        "verification"
       ],
       "sources": [
         {
-          "title": "MNTN Repositions as Full-Funnel CTV Platform",
-          "url": "https://mountain.com/blog/full-funnel-ctv-platform",
-          "domain": "mountain.com",
-          "date": "2026-03-20"
+          "title": "Here's How Much Inaccurate Data Will Cost CTV Advertisers In 2026",
+          "url": "https://truthset.com/news/heres-how-much-inaccurate-data-will-cost-ctv-advertisers-in-2026/",
+          "domain": "truthset.com",
+          "date": "2026-03-15"
+        },
+        {
+          "title": "2026 CTV Playbook: Don't get F*ed by Fraud",
+          "url": "https://the.dtctimes.com/p/2026-ctv-playbook-don-t-get-f-ed-by-fraud",
+          "domain": "dtctimes.com",
+          "date": "2026-03-01"
+        }
+      ]
+    },
+    {
+      "id": "inventory-20260406-004",
+      "captured_date": "2026-04-06",
+      "published_date": "2026-03-27",
+      "pillar": "inventory_expansion",
+      "headline": "IAB NewFronts 2026 pitches dominated by performance, data, and Amazon DSP deals",
+      "summary": "The 2026 IAB NewFronts were defined by three themes: performance measurement, first-party data integration, and Amazon DSP distribution deals. Publishers are increasingly pitching advertisers on outcome-based metrics rather than reach, and Amazon DSP is becoming the common distribution layer for CTV inventory across multiple platforms.",
+      "moloco_commentary": "NewFronts shifting from 'reach and frequency' pitches to 'performance and data' pitches confirms the market narrative Moloco has been building. When publishers themselves lead with outcomes, it validates Moloco's buyer-side optimization story. However, Amazon DSP becoming the default distribution layer is a structural risk — if Amazon controls both supply (Prime Video) and demand (DSP), independent performance platforms face intermediation. Moloco should aggressively pursue direct publisher integrations to avoid Amazon toll-gating.",
+      "impact_score": 6,
+      "sentiment": "bullish",
+      "sentiment_reason": "Industry shift toward performance-based selling at NewFronts validates Moloco's outcome-driven positioning",
+      "tags": [
+        "NewFronts",
+        "IAB",
+        "performance",
+        "Amazon-DSP",
+        "publisher-shift"
+      ],
+      "sources": [
+        {
+          "title": "Performance, data and Amazon DSP define IAB NewFronts 2026 pitches",
+          "url": "https://www.newscaststudio.com/2026/03/27/performance-data-and-amazon-dsp-deals-define-iab-newfronts-2026-pitches/",
+          "domain": "newscaststudio.com",
+          "date": "2026-03-27"
         }
       ]
     }
