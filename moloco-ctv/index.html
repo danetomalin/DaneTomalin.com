@@ -111,6 +111,11 @@
     transition: border-color 0.2s;
   }
   .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card.clickable { cursor: pointer; user-select: none; }
+  .scorecard-card.clickable:hover { transform: translateY(-1px); }
+  .scorecard-card.active-filter { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+  .scorecard-card[data-scorecard="bullish"].active-filter { border-color: var(--bullish); box-shadow: 0 0 0 2px var(--bullish-bg); }
+  .scorecard-card[data-scorecard="bearish"].active-filter { border-color: var(--bearish); box-shadow: 0 0 0 2px var(--bearish-bg); }
   .scorecard-card .label {
     font-size: 12px;
     font-weight: 600;
@@ -410,22 +415,22 @@
   <!-- Trend Scorecard -->
   <div class="scorecard" id="scorecard">
     
-    <div class="scorecard-card overall-bullish">
+    <div class="scorecard-card overall-bullish clickable" onclick="filterFromScorecard('all')" title="Show all signals">
       <div class="label">Overall Sentiment</div>
       <div class="value" style="color:var(--bullish)">BULLISH</div>
       <div class="detail">CTV programmatic spend crossing $38B with 90%+ transacted programmatically validates Moloco&#x27;s ML-driven bidding infrastructure, though Amazon&#x27;s first-party data moat and state privacy enforcement on ACR data create emerging headwinds for independent DSPs.</div>
     </div>
-    <div class="scorecard-card">
+    <div class="scorecard-card clickable" onclick="filterFromScorecard('all')" title="Show all signals">
       <div class="label">Total Signals</div>
       <div class="value" style="color:var(--accent)">14</div>
       <div class="detail">4 high-impact (score 8+)</div>
     </div>
-    <div class="scorecard-card">
+    <div class="scorecard-card clickable" data-scorecard="bullish" onclick="filterFromScorecard('bullish')" title="Click to filter bullish signals">
       <div class="label">Bullish Signals</div>
       <div class="value" style="color:var(--bullish)">8</div>
       <div class="detail">Trends favoring Moloco's ML approach</div>
     </div>
-    <div class="scorecard-card">
+    <div class="scorecard-card clickable" data-scorecard="bearish" onclick="filterFromScorecard('bearish')" title="Click to filter bearish signals">
       <div class="label">Bearish Signals</div>
       <div class="value" style="color:var(--bearish)">4</div>
       <div class="detail">Threats to watch &amp; counter-position</div>
@@ -999,6 +1004,46 @@ function applyFilters() {
 
   // Empty state
   document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Scorecard click-to-filter ---
+function filterFromScorecard(sentiment) {
+  // Always reset pillar filter to 'all' when clicking a scorecard tile
+  activeFilter = 'all';
+  var pillarBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  pillarBtns.forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-filter') === 'all');
+  });
+
+  // Clear search
+  searchQuery = '';
+  var searchBox = document.getElementById('search-box');
+  if (searchBox) searchBox.value = '';
+
+  // Handle sentiment toggle
+  var sentimentBtns = document.querySelectorAll('.filter-btn[data-sentiment]');
+  sentimentBtns.forEach(function(b) { b.classList.remove('active'); });
+  var scorecardCards = document.querySelectorAll('.scorecard-card[data-scorecard]');
+  scorecardCards.forEach(function(c) { c.classList.remove('active-filter'); });
+
+  if (sentiment === 'all' || activeSentiment === sentiment) {
+    // Reset — show everything
+    activeSentiment = null;
+  } else {
+    activeSentiment = sentiment;
+    // Sync the corresponding filter button
+    var matchBtn = document.querySelector('.filter-btn[data-sentiment="' + sentiment + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    // Highlight the scorecard tile
+    var matchCard = document.querySelector('.scorecard-card[data-scorecard="' + sentiment + '"]');
+    if (matchCard) matchCard.classList.add('active-filter');
+  }
+
+  applyFilters();
+
+  // Scroll to signals
+  var content = document.getElementById('dossier-content');
+  if (content) content.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // --- Impact bar color ---
