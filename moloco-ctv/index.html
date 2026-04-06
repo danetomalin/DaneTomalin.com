@@ -42,6 +42,28 @@
 
   .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
 
+  /* Site header — sticky top bar matching CI Dossier */
+  .site-header {
+    position: sticky; top: 0;
+    background: rgba(13,13,18,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 200;
+  }
+  .site-header-name {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+    color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
   /* Header — matches CI Dossier */
   .engine-header {
     max-width: 1200px;
@@ -400,12 +422,15 @@
 </head>
 <body>
 
+<header class="site-header">
+  <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+  <a href="https://danetomalin.com/moloco/" class="site-header-back">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+    Back to Moloco Plan
+  </a>
+</header>
+
 <header class="engine-header">
-  <nav style="display:flex;gap:16px;justify-content:center;margin-bottom:18px;font-size:13px;letter-spacing:0.5px;text-transform:uppercase;">
-    <a href="https://danetomalin.com" style="color:var(--text-secondary);text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)';this.style.borderColor='transparent'">&larr; Dane Tomalin</a>
-    <span style="color:var(--text-muted);">/</span>
-    <a href="https://danetomalin.com/moloco" style="color:var(--text-secondary);text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)';this.style.borderColor='transparent'">Moloco Hub</a>
-  </nav>
   <h1>Moloco CTV Intelligence <sup class="beta-badge">Beta</sup></h1>
   <p class="subtitle">Generated: <span id="dossier-date">April 06, 2026</span></p>
   <span class="classification">Internal Only</span>
