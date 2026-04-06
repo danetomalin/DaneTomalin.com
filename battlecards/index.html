@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Battlecards — Moloco CTV</title>
+<link rel="canonical" href="https://danetomalin.com/battlecards/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #A78BFA;
+    --accent-strong: #7C3AED;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --win: #66BB6A;
+    --win-bg: rgba(102, 187, 106, 0.12);
+    --warn: #FFA726;
+    --warn-bg: rgba(255, 167, 38, 0.12);
+    --danger: #EF5350;
+    --danger-bg: rgba(239, 83, 80, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 12px; }
+  .engine-header .meta { color: var(--text-muted); font-size: 0.8em; font-family: var(--mono); }
+
+  /* Tabs to switch competitors */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+  }
+  .tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .tab.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+  .tab .risk { font-size: 10px; opacity: 0.8; margin-left: 6px; letter-spacing: 1px; }
+
+  /* Battlecard */
+  .battlecard { display: none; }
+  .battlecard.active { display: block; }
+
+  .bc-head {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .bc-head .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .bc-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7em;
+    font-weight: 600;
+  }
+  .bc-head .domain {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .risk-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .risk-HIGH { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .risk-MEDIUM { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+  .risk-LOW { background: var(--win-bg); color: var(--win); border: 1px solid var(--win); }
+  .bc-head .tagline { color: var(--accent); font-style: italic; margin-top: 6px; font-size: 14px; }
+  .bc-head .profile { color: var(--text-secondary); margin-top: 12px; font-size: 14px; }
+
+  /* Grid of sections */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 780px) { .grid { grid-template-columns: 1fr; } }
+
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .section.full { grid-column: 1 / -1; }
+  .section h3 {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .section p { font-size: 14px; color: var(--text-primary); }
+  .section .value-prop { font-size: 14px; color: var(--text-primary); padding: 10px 12px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 4px; }
+  .section ul { list-style: none; }
+  .section li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    font-size: 13px;
+    color: var(--text-primary);
+    border-bottom: 1px dashed rgba(255,255,255,0.04);
+  }
+  .section li:last-child { border-bottom: none; }
+  .section li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 8px;
+  }
+
+  /* Feature/benefit rows */
+  .fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+  .fb-row:last-child { border-bottom: none; }
+  .fb-feature { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+  .fb-benefit { font-size: 13px; color: var(--text-secondary); }
+
+  /* Strengths / Weaknesses side-by-side */
+  .sw {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 780px) { .sw { grid-template-columns: 1fr; } }
+  .sw-box { padding: 14px; border-radius: 8px; }
+  .sw-strength { background: var(--win-bg); border-left: 3px solid var(--win); }
+  .sw-weakness { background: var(--danger-bg); border-left: 3px solid var(--danger); }
+  .sw-box h4 { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .sw-strength h4 { color: var(--win); }
+  .sw-weakness h4 { color: var(--danger); }
+  .sw-box ul li::before { color: inherit; }
+  .sw-strength li::before { content: "+"; color: var(--win); font-weight: 700; }
+  .sw-weakness li::before { content: "−"; color: var(--danger); font-weight: 700; }
+
+  /* Kill points */
+  .kill-list li { padding: 8px 0 8px 24px; font-size: 13px; border-bottom: 1px dashed rgba(255,255,255,0.04); color: var(--text-primary); }
+  .kill-list li:last-child { border-bottom: none; }
+  .kill-list li::before {
+    content: "✕";
+    color: var(--danger);
+    font-weight: 700;
+    left: 2px;
+    top: 8px;
+  }
+
+  /* Objection handling cards */
+  .obj-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .obj-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .obj-text { font-size: 13px; color: var(--text-primary); font-style: italic; margin-bottom: 8px; }
+  .obj-response-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--win);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .obj-response { font-size: 13px; color: var(--text-primary); }
+
+  /* Proof pills */
+  .proof-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proof-pill {
+    display: inline-block;
+    padding: 6px 10px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-strong);
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Sources */
+  .sources-section { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .sources-section h4 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .source-link {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 11px;
+    margin: 0 6px 6px 0;
+    font-family: var(--mono);
+  }
+  .source-link:hover { background: var(--bg-card-hover); }
+
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+</style>
+</head>
+<body>
+
+<div class="engine-header">
+  <h1>Battlecards<span class="beta-badge">BOT 4</span></h1>
+  <div class="subtitle">Sales-ready competitive cheat sheets for Moloco CTV — built from the same intel stream feeding the CI Dossier, CTV Signal Engine, and Roadmap Engine.</div>
+  <div class="meta">Last updated: April 06, 2026 · 2 cards · Moloco-First positioning</div>
+</div>
+
+<div class="container">
+  <div class="tabs" id="tabs">
+    <button class="tab" id="tab-the-trade-desk-20260406" onclick="showCard('the-trade-desk-20260406')">The Trade Desk<span class="risk">· HIGH</span></button><button class="tab" id="tab-mntn-20260406" onclick="showCard('mntn-20260406')">MNTN<span class="risk">· HIGH</span></button>
+  </div>
+  
+    <div class="battlecard" id="card-the-trade-desk-20260406">
+      <div class="bc-head">
+        <div class="row">
+          <h2>The Trade Desk</h2>
+          <span class="risk-badge risk-HIGH">RISK: HIGH</span>
+          <span class="domain">thetradedesk.com</span>
+        </div>
+        <div class="tagline">"The independent DSP for the open internet"</div>
+        <div class="profile">The Trade Desk is the largest independent DSP and a dominant force in programmatic CTV. In 2026 TTD is layering an AI-native narrative on top of its Ventura CTV OS and Kokai platform, including reported talks with OpenAI to power ChatGPT ads. Strong agency footprint via the Premier Partner Program, but increasingly perceived as an ecosystem-orchestrator rather than a performance-outcome platform.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Moloco)</h3>
+          <p>Moloco CTV turns Connected TV into a measurable performance channel. Our operational ML bids on every impression based on the probability it will drive your actual business outcome — installs, signups, revenue — not panel-based reach. For growth marketers who already buy performance on mobile, Moloco is the fastest path to making CTV behave the same way.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. The Trade Desk</h3>
+          <div class="value-prop">Moloco is the only CTV platform that optimizes to downstream outcomes using first-party ML at the impression level. The Trade Desk optimizes to media KPIs and relies on a partner ecosystem (Identity Alliance, measurement vendors) to reconstruct outcomes after the fact.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features &rarr; Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Outcome-based bidding powered by operational ML</div><div class="fb-benefit">Advertisers see CTV treated like a performance channel — measurable ROAS, not just reach curves</div></div><div class="fb-row"><div class="fb-feature">Direct access to biddable CTV supply across FAST, AVOD, and live</div><div class="fb-benefit">Scale without being locked to a single DSP agency certification track or ecosystem fee</div></div><div class="fb-row"><div class="fb-feature">First-party signal ingestion + model training per advertiser</div><div class="fb-benefit">Campaigns get smarter the more you spend — no dependency on third-party identity alliances</div></div><div class="fb-row"><div class="fb-feature">Self-serve activation with performance-marketer UX</div><div class="fb-benefit">Growth teams launch CTV campaigns in hours, not after weeks of agency onboarding</div></div>
+        </div>
+
+        <div class="section">
+          <h3>Target Personas</h3>
+          <ul><li>Head of Growth / Performance Marketing</li><li>Director of Paid Media at a DTC or app-first brand</li><li>CTV / Video Lead inside a performance team</li><li>CMO at a scaling consumer brand evaluating CTV as a growth channel</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>CTV spend on TTD is measured against impressions and reach, not downstream ROAS</li><li>Identity Alliance payout restructures have created uncertainty around data quality and cost</li><li>Premier Partner Program creates a tiered support system — non-certified agencies feel deprioritized</li><li>TTD&#x27;s AI story (OpenAI talks) is directional, not in-product today — leaves a gap for a true ML-first platform</li><li>Agency-mediated buying slows iteration for performance marketers used to self-serve platforms</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>How are you currently measuring the incremental revenue your CTV spend on TTD is driving — not reach, but revenue?</li><li>When you launch a new CTV campaign on TTD, how long does it take from brief to first optimized impression?</li><li>How much of your TTD CTV budget is flowing through Identity Alliance data segments, and how did the recent incrementality payout shift affect your costs?</li><li>If OpenAI brings its ad stack in-house, what is your contingency for the AI-native inventory TTD is positioning around today?</li><li>Are you managing TTD directly or through a Premier Partner agency — and how quickly can you test a new optimization hypothesis?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Dominant DSP scale and the deepest agency relationships in programmatic</li><li>Ventura CTV OS and Kokai give a strong orchestration story across publishers</li><li>Premier Partner Program drives ecosystem lock-in through certified agency training</li><li>Brand-safe, credentialed, and the default &#x27;safe&#x27; choice for large holding-company buyers</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Optimizes to media KPIs (reach, frequency, viewability), not downstream business outcomes</li><li>Identity Alliance payout overhaul (volume → incrementality) has shaken data-partner confidence</li><li>AI-native narrative is dependent on a reported OpenAI deal — OpenAI has publicly said it will build its own ad stack long term</li><li>Agency-mediated model slows time-to-value for performance marketers</li><li>~39 roles cut in Dec 2025 suggests margin pressure as the ecosystem economics tighten</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Frame the conversation around downstream ROAS, not reach — TTD cannot answer &#x27;what did this campaign sell&#x27; without a third-party measurement vendor</li><li>Show an outcome curve: Moloco models improving impression-by-impression on a single advertiser&#x27;s first-party signal, vs. TTD&#x27;s reliance on Identity Alliance data</li><li>Highlight time-to-first-optimized-impression: Moloco self-serve vs. TTD&#x27;s agency-certified onboarding</li><li>Use the OpenAI contingency question to expose that TTD&#x27;s AI story is partnership-dependent, not product-native</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;We already spend on TTD and our agency manages it — switching is too much lift.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">You don&#x27;t have to switch — you can incremental-test Moloco on 10-15% of your CTV budget for 30 days and compare downstream ROAS head-to-head. Most performance teams see the outcome delta inside two weeks.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;TTD has better scale and premium inventory access.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Moloco bids into the same biddable CTV supply across FAST, AVOD, and live streaming. The question isn&#x27;t who can buy the impression — it&#x27;s who can decide whether that specific impression is worth buying for your outcome. That&#x27;s what operational ML does.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;TTD&#x27;s Identity Alliance gives us better audience data.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Identity Alliance is a shared pool that every TTD advertiser can access — which means no competitive advantage. Moloco trains a model on your first-party signals, so the advantage compounds for you specifically, not for the ecosystem.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;TTD is partnering with OpenAI — that&#x27;s the future of advertising.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">OpenAI has publicly stated it plans to build its own in-house ad stack. TTD is likely a bridge partner, not a permanent one. Meanwhile, Moloco&#x27;s ML is already in-product and delivering outcomes today — not dependent on a future deal.</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Leading mobile-first brands that scaled from app installs to full-funnel CTV with Moloco</span><span class="proof-pill">★ DTC advertisers who moved CTV budget from agency-managed DSPs into self-serve performance buying</span><span class="proof-pill">▲ Outcome-based bidding typically delivers materially lower CPA vs. reach-optimized DSP buying on matched budgets</span><span class="proof-pill">▲ Self-serve time-to-launch measured in hours vs. weeks of agency onboarding</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://www.emarketer.com/content/openai-could-tap-trade-desk-scale-chatgpt-ads" target="_blank" rel="noopener">emarketer.com ↗</a><a class="source-link" href="https://digiday.com/media-buying/the-trade-desk-shakes-up-identity-alliance-payouts-with-a-new-focus-on-incrementality/" target="_blank" rel="noopener">digiday.com ↗</a><a class="source-link" href="https://ppc.land/seven-independent-agencies-earn-the-trade-desks-second-premier-partner-class/" target="_blank" rel="noopener">ppc.land ↗</a><a class="source-link" href="https://digiday.com/media-buying/openai-is-b-building-the-ad-tech-stack-its-currently-borrowing/" target="_blank" rel="noopener">digiday.com ↗</a></div>
+    </div>
+    
+
+    <div class="battlecard" id="card-mntn-20260406">
+      <div class="bc-head">
+        <div class="row">
+          <h2>MNTN</h2>
+          <span class="risk-badge risk-HIGH">RISK: HIGH</span>
+          <span class="domain">mountain.com</span>
+        </div>
+        <div class="tagline">"Performance TV for DTC brands"</div>
+        <div class="profile">MNTN popularized the &#x27;Performance TV&#x27; category and built a self-serve CTV platform historically aimed at SMB and DTC brands. In 2026 MNTN is pivoting toward enterprise: a Magnite partnership unlocks live streaming supply, a new CRO from TikTok and a Head of Premium Content from NBCUniversal signal an upmarket move. Q4 2025 revenue grew 36% YoY to $87.1M with 2026 guidance of $345M-$355M.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Moloco)</h3>
+          <p>Moloco CTV is performance TV built on operational ML. Where MNTN sells CTV as a self-serve brand channel for DTC advertisers, Moloco runs impression-level bidding against your actual business outcome — so CTV performs like the rest of your performance stack, at the scale your growth team needs.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. MNTN</h3>
+          <div class="value-prop">MNTN owns the &#x27;easy CTV for first-time TV advertisers&#x27; category. Moloco owns the &#x27;ML-optimized CTV for advertisers who already know performance marketing.&#x27; Growth teams that have outgrown template-driven campaigns and AI-generated creative should be on Moloco.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features &rarr; Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Operational ML per-advertiser model</div><div class="fb-benefit">Outperforms template-based bidding as spend scales — no ceiling on sophistication</div></div><div class="fb-row"><div class="fb-feature">Biddable CTV supply including FAST, AVOD, and live</div><div class="fb-benefit">Access to the same premium inventory MNTN is now chasing via Magnite, without the platform lock-in</div></div><div class="fb-row"><div class="fb-feature">Bring-your-own creative plus full first-party signal integration</div><div class="fb-benefit">Creative is yours, data is yours, model is yours — no reliance on AI-generated video templates</div></div><div class="fb-row"><div class="fb-feature">Growth-marketer UX with enterprise-grade measurement</div><div class="fb-benefit">Solves for both SMB onboarding speed and enterprise reporting rigor</div></div>
+        </div>
+
+        <div class="section">
+          <h3>Target Personas</h3>
+          <ul><li>Head of Growth / Performance Marketing at a DTC brand</li><li>VP of Paid Media at a scaling consumer brand</li><li>Performance Marketing Lead who already runs mobile and social at scale</li><li>CMO evaluating CTV as a measurable growth channel, not an awareness line item</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Outgrowing MNTN&#x27;s DTC / SMB template-driven workflow as budgets scale into enterprise territory</li><li>QuickFrame AI-generated creative feels risky for premium live inventory</li><li>97% first-time-TV-advertiser stat signals a buyer base that isn&#x27;t performance-native</li><li>Uncertainty about whether MNTN&#x27;s roadmap now serves SMB customers or the new enterprise push</li><li>Limited transparency into bidding logic — hard to answer &#x27;why did my campaign spend where it spent?&#x27;</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>As your CTV budget scales, how confident are you that MNTN&#x27;s optimization logic is improving with your spend vs. running against a shared template?</li><li>Are you using QuickFrame AI for creative — and does AI-generated video meet your brand bar, especially for live sports placements via Magnite?</li><li>MNTN just hired a CRO from TikTok and a Premium Content head from NBCUniversal. Has your account team told you how the product roadmap will continue to serve your specific scale?</li><li>How are you measuring incremental revenue from your MNTN spend — is it platform-reported attribution or a third-party incrementality study?</li><li>If you needed to test a new bidding strategy tomorrow, how much of that decision is in your hands vs. MNTN&#x27;s platform defaults?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Owns the &#x27;Performance TV&#x27; category positioning and brand recognition</li><li>Strong self-serve UX that made CTV accessible to first-time TV advertisers</li><li>Magnite partnership unlocks live streaming, home screen placements, and pause ads</li><li>QuickFrame AI removes the creative cost barrier for SMB advertisers</li><li>Strong growth (Q4 36% YoY, $345-355M 2026 guidance) — momentum in the category</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Template-driven optimization — no per-advertiser ML model that compounds with spend</li><li>97% first-time TV advertiser base means a buyer mix skewed toward less sophisticated performance marketers</li><li>Enterprise pivot (CRO from TikTok, Premium Content hire) creates uncertainty for the SMB installed base</li><li>QuickFrame AI creative may not clear the brand bar for premium/live inventory</li><li>Performance claims are largely platform-reported, not incrementality-validated</li><li>Narrower supply footprint vs. an omnichannel ML-driven performance DSP</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Position Moloco as &#x27;what you move to when you outgrow MNTN&#x27; — no category fight, just a scale argument</li><li>Pit per-advertiser ML vs. template optimization: show how Moloco&#x27;s model improves with spend while MNTN&#x27;s optimization logic is shared across all advertisers</li><li>Use the enterprise-pivot question to expose SMB customers&#x27; uncertainty about their roadmap priority</li><li>Challenge platform-reported attribution with an incrementality-based measurement story</li><li>Frame QuickFrame AI as a creative cost-saver for SMB — then ask whether AI-generated video belongs on live sports or premium CTV inventory</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;MNTN is easier to use and we&#x27;re already live on it.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Easy on-ramp is exactly MNTN&#x27;s play — and it works well for first-time TV advertisers. The question is whether &#x27;easy&#x27; is still the right word when your budget is 5x what it was last year. Moloco&#x27;s UX is built for growth marketers at scale, and onboarding is days, not weeks.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;MNTN gives us free creative via QuickFrame AI.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Free AI-generated video is a great deal for an SMB kickstarting CTV. For a brand buying premium live sports inventory via Magnite, the question becomes whether AI creative is credible enough for the placements you&#x27;re paying for. Moloco keeps your creative workflow intact so you control the brand bar.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;MNTN is growing 36% YoY — they&#x27;re clearly doing something right.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Market-level growth says the CTV category is expanding, not that MNTN is the best platform for every advertiser in it. The real test is whether your spend on MNTN is generating incremental revenue vs. what the same budget would do on an ML-first platform like Moloco. We can run that test.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;MNTN just added live streaming via Magnite — that&#x27;s a big deal for us.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">It is — and Moloco already bids into biddable CTV supply including live streaming. The differentiator isn&#x27;t which platform can access the impression, it&#x27;s which platform can decide whether that impression is worth buying for your specific outcome.</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Growth-stage DTC brands that scaled from mobile-first performance into full-funnel CTV with Moloco</span><span class="proof-pill">★ Performance marketers who moved CTV budget from template-optimized platforms onto per-advertiser ML</span><span class="proof-pill">▲ Per-advertiser model training typically delivers compounding performance gains as spend increases</span><span class="proof-pill">▲ Outcome-based bidding validated via third-party incrementality, not platform-reported attribution</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://www.nasdaq.com/press-release/mntn-expands-executive-team-support-growth-performance-tv-2026-03-10" target="_blank" rel="noopener">nasdaq.com ↗</a><a class="source-link" href="https://mountain.com/press/live-streaming-ads-get-a-performance-upgrade-with-magnite-and-mntn-integration/" target="_blank" rel="noopener">mountain.com ↗</a><a class="source-link" href="https://www.stocktitan.net/sec-filings/MNTN/8-k-mntn-inc-reports-material-event-2b1f09352a3c.html" target="_blank" rel="noopener">stocktitan.net ↗</a><a class="source-link" href="https://www.businesswire.com/news/home/20251030951016/en/" target="_blank" rel="noopener">businesswire.com ↗</a></div>
+    </div>
+    
+
+  <div class="footer">
+    Battlecards auto-generated from research/battlecards/*.json — refreshed quarterly or when a competitor moves.
+  </div>
+</div>
+
+<script>
+  function showCard(id) {
+    document.querySelectorAll('.battlecard').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    var card = document.getElementById('card-' + id);
+    var tab = document.getElementById('tab-' + id);
+    if (card) card.classList.add('active');
+    if (tab) tab.classList.add('active');
+  }
+  // auto-select first
+  (function() {
+    var first = document.querySelector('.battlecard');
+    var firstTab = document.querySelector('.tab');
+    if (first) first.classList.add('active');
+    if (firstTab) firstTab.classList.add('active');
+  })();
+</script>
+</body>
+</html>

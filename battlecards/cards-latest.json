@@ -1,0 +1,262 @@
+{
+  "generated_at": "2026-04-06",
+  "product": "Moloco CTV",
+  "card_count": 2,
+  "cards": [
+    {
+      "id": "the-trade-desk-20260406",
+      "date": "2026-04-06",
+      "competitor": {
+        "name": "The Trade Desk",
+        "domain": "thetradedesk.com",
+        "risk_level": "HIGH",
+        "tagline": "The independent DSP for the open internet",
+        "profile": "The Trade Desk is the largest independent DSP and a dominant force in programmatic CTV. In 2026 TTD is layering an AI-native narrative on top of its Ventura CTV OS and Kokai platform, including reported talks with OpenAI to power ChatGPT ads. Strong agency footprint via the Premier Partner Program, but increasingly perceived as an ecosystem-orchestrator rather than a performance-outcome platform."
+      },
+      "core_message": {
+        "elevator_pitch": "Moloco CTV turns Connected TV into a measurable performance channel. Our operational ML bids on every impression based on the probability it will drive your actual business outcome — installs, signups, revenue — not panel-based reach. For growth marketers who already buy performance on mobile, Moloco is the fastest path to making CTV behave the same way.",
+        "value_prop": "Moloco is the only CTV platform that optimizes to downstream outcomes using first-party ML at the impression level. The Trade Desk optimizes to media KPIs and relies on a partner ecosystem (Identity Alliance, measurement vendors) to reconstruct outcomes after the fact.",
+        "features_benefits": [
+          {
+            "feature": "Outcome-based bidding powered by operational ML",
+            "benefit": "Advertisers see CTV treated like a performance channel — measurable ROAS, not just reach curves"
+          },
+          {
+            "feature": "Direct access to biddable CTV supply across FAST, AVOD, and live",
+            "benefit": "Scale without being locked to a single DSP agency certification track or ecosystem fee"
+          },
+          {
+            "feature": "First-party signal ingestion + model training per advertiser",
+            "benefit": "Campaigns get smarter the more you spend — no dependency on third-party identity alliances"
+          },
+          {
+            "feature": "Self-serve activation with performance-marketer UX",
+            "benefit": "Growth teams launch CTV campaigns in hours, not after weeks of agency onboarding"
+          }
+        ]
+      },
+      "buyer": {
+        "personas": [
+          "Head of Growth / Performance Marketing",
+          "Director of Paid Media at a DTC or app-first brand",
+          "CTV / Video Lead inside a performance team",
+          "CMO at a scaling consumer brand evaluating CTV as a growth channel"
+        ],
+        "pain_points": [
+          "CTV spend on TTD is measured against impressions and reach, not downstream ROAS",
+          "Identity Alliance payout restructures have created uncertainty around data quality and cost",
+          "Premier Partner Program creates a tiered support system — non-certified agencies feel deprioritized",
+          "TTD's AI story (OpenAI talks) is directional, not in-product today — leaves a gap for a true ML-first platform",
+          "Agency-mediated buying slows iteration for performance marketers used to self-serve platforms"
+        ],
+        "qualifying_questions": [
+          "How are you currently measuring the incremental revenue your CTV spend on TTD is driving — not reach, but revenue?",
+          "When you launch a new CTV campaign on TTD, how long does it take from brief to first optimized impression?",
+          "How much of your TTD CTV budget is flowing through Identity Alliance data segments, and how did the recent incrementality payout shift affect your costs?",
+          "If OpenAI brings its ad stack in-house, what is your contingency for the AI-native inventory TTD is positioning around today?",
+          "Are you managing TTD directly or through a Premier Partner agency — and how quickly can you test a new optimization hypothesis?"
+        ]
+      },
+      "competitive": {
+        "strengths": [
+          "Dominant DSP scale and the deepest agency relationships in programmatic",
+          "Ventura CTV OS and Kokai give a strong orchestration story across publishers",
+          "Premier Partner Program drives ecosystem lock-in through certified agency training",
+          "Brand-safe, credentialed, and the default 'safe' choice for large holding-company buyers"
+        ],
+        "weaknesses": [
+          "Optimizes to media KPIs (reach, frequency, viewability), not downstream business outcomes",
+          "Identity Alliance payout overhaul (volume → incrementality) has shaken data-partner confidence",
+          "AI-native narrative is dependent on a reported OpenAI deal — OpenAI has publicly said it will build its own ad stack long term",
+          "Agency-mediated model slows time-to-value for performance marketers",
+          "~39 roles cut in Dec 2025 suggests margin pressure as the ecosystem economics tighten"
+        ],
+        "kill_points": [
+          "Frame the conversation around downstream ROAS, not reach — TTD cannot answer 'what did this campaign sell' without a third-party measurement vendor",
+          "Show an outcome curve: Moloco models improving impression-by-impression on a single advertiser's first-party signal, vs. TTD's reliance on Identity Alliance data",
+          "Highlight time-to-first-optimized-impression: Moloco self-serve vs. TTD's agency-certified onboarding",
+          "Use the OpenAI contingency question to expose that TTD's AI story is partnership-dependent, not product-native"
+        ],
+        "objections": [
+          {
+            "objection": "We already spend on TTD and our agency manages it — switching is too much lift.",
+            "response": "You don't have to switch — you can incremental-test Moloco on 10-15% of your CTV budget for 30 days and compare downstream ROAS head-to-head. Most performance teams see the outcome delta inside two weeks."
+          },
+          {
+            "objection": "TTD has better scale and premium inventory access.",
+            "response": "Moloco bids into the same biddable CTV supply across FAST, AVOD, and live streaming. The question isn't who can buy the impression — it's who can decide whether that specific impression is worth buying for your outcome. That's what operational ML does."
+          },
+          {
+            "objection": "TTD's Identity Alliance gives us better audience data.",
+            "response": "Identity Alliance is a shared pool that every TTD advertiser can access — which means no competitive advantage. Moloco trains a model on your first-party signals, so the advantage compounds for you specifically, not for the ecosystem."
+          },
+          {
+            "objection": "TTD is partnering with OpenAI — that's the future of advertising.",
+            "response": "OpenAI has publicly stated it plans to build its own in-house ad stack. TTD is likely a bridge partner, not a permanent one. Meanwhile, Moloco's ML is already in-product and delivering outcomes today — not dependent on a future deal."
+          }
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "Leading mobile-first brands that scaled from app installs to full-funnel CTV with Moloco",
+          "DTC advertisers who moved CTV budget from agency-managed DSPs into self-serve performance buying"
+        ],
+        "metrics": [
+          "Outcome-based bidding typically delivers materially lower CPA vs. reach-optimized DSP buying on matched budgets",
+          "Self-serve time-to-launch measured in hours vs. weeks of agency onboarding"
+        ]
+      },
+      "sources": [
+        {
+          "title": "OpenAI-TTD partnership talks",
+          "url": "https://www.emarketer.com/content/openai-could-tap-trade-desk-scale-chatgpt-ads",
+          "domain": "emarketer.com"
+        },
+        {
+          "title": "Identity Alliance incrementality overhaul",
+          "url": "https://digiday.com/media-buying/the-trade-desk-shakes-up-identity-alliance-payouts-with-a-new-focus-on-incrementality/",
+          "domain": "digiday.com"
+        },
+        {
+          "title": "Premier Partner Program second cohort",
+          "url": "https://ppc.land/seven-independent-agencies-earn-the-trade-desks-second-premier-partner-class/",
+          "domain": "ppc.land"
+        },
+        {
+          "title": "OpenAI building in-house ad stack",
+          "url": "https://digiday.com/media-buying/openai-is-b-building-the-ad-tech-stack-its-currently-borrowing/",
+          "domain": "digiday.com"
+        }
+      ]
+    },
+    {
+      "id": "mntn-20260406",
+      "date": "2026-04-06",
+      "competitor": {
+        "name": "MNTN",
+        "domain": "mountain.com",
+        "risk_level": "HIGH",
+        "tagline": "Performance TV for DTC brands",
+        "profile": "MNTN popularized the 'Performance TV' category and built a self-serve CTV platform historically aimed at SMB and DTC brands. In 2026 MNTN is pivoting toward enterprise: a Magnite partnership unlocks live streaming supply, a new CRO from TikTok and a Head of Premium Content from NBCUniversal signal an upmarket move. Q4 2025 revenue grew 36% YoY to $87.1M with 2026 guidance of $345M-$355M."
+      },
+      "core_message": {
+        "elevator_pitch": "Moloco CTV is performance TV built on operational ML. Where MNTN sells CTV as a self-serve brand channel for DTC advertisers, Moloco runs impression-level bidding against your actual business outcome — so CTV performs like the rest of your performance stack, at the scale your growth team needs.",
+        "value_prop": "MNTN owns the 'easy CTV for first-time TV advertisers' category. Moloco owns the 'ML-optimized CTV for advertisers who already know performance marketing.' Growth teams that have outgrown template-driven campaigns and AI-generated creative should be on Moloco.",
+        "features_benefits": [
+          {
+            "feature": "Operational ML per-advertiser model",
+            "benefit": "Outperforms template-based bidding as spend scales — no ceiling on sophistication"
+          },
+          {
+            "feature": "Biddable CTV supply including FAST, AVOD, and live",
+            "benefit": "Access to the same premium inventory MNTN is now chasing via Magnite, without the platform lock-in"
+          },
+          {
+            "feature": "Bring-your-own creative plus full first-party signal integration",
+            "benefit": "Creative is yours, data is yours, model is yours — no reliance on AI-generated video templates"
+          },
+          {
+            "feature": "Growth-marketer UX with enterprise-grade measurement",
+            "benefit": "Solves for both SMB onboarding speed and enterprise reporting rigor"
+          }
+        ]
+      },
+      "buyer": {
+        "personas": [
+          "Head of Growth / Performance Marketing at a DTC brand",
+          "VP of Paid Media at a scaling consumer brand",
+          "Performance Marketing Lead who already runs mobile and social at scale",
+          "CMO evaluating CTV as a measurable growth channel, not an awareness line item"
+        ],
+        "pain_points": [
+          "Outgrowing MNTN's DTC / SMB template-driven workflow as budgets scale into enterprise territory",
+          "QuickFrame AI-generated creative feels risky for premium live inventory",
+          "97% first-time-TV-advertiser stat signals a buyer base that isn't performance-native",
+          "Uncertainty about whether MNTN's roadmap now serves SMB customers or the new enterprise push",
+          "Limited transparency into bidding logic — hard to answer 'why did my campaign spend where it spent?'"
+        ],
+        "qualifying_questions": [
+          "As your CTV budget scales, how confident are you that MNTN's optimization logic is improving with your spend vs. running against a shared template?",
+          "Are you using QuickFrame AI for creative — and does AI-generated video meet your brand bar, especially for live sports placements via Magnite?",
+          "MNTN just hired a CRO from TikTok and a Premium Content head from NBCUniversal. Has your account team told you how the product roadmap will continue to serve your specific scale?",
+          "How are you measuring incremental revenue from your MNTN spend — is it platform-reported attribution or a third-party incrementality study?",
+          "If you needed to test a new bidding strategy tomorrow, how much of that decision is in your hands vs. MNTN's platform defaults?"
+        ]
+      },
+      "competitive": {
+        "strengths": [
+          "Owns the 'Performance TV' category positioning and brand recognition",
+          "Strong self-serve UX that made CTV accessible to first-time TV advertisers",
+          "Magnite partnership unlocks live streaming, home screen placements, and pause ads",
+          "QuickFrame AI removes the creative cost barrier for SMB advertisers",
+          "Strong growth (Q4 36% YoY, $345-355M 2026 guidance) — momentum in the category"
+        ],
+        "weaknesses": [
+          "Template-driven optimization — no per-advertiser ML model that compounds with spend",
+          "97% first-time TV advertiser base means a buyer mix skewed toward less sophisticated performance marketers",
+          "Enterprise pivot (CRO from TikTok, Premium Content hire) creates uncertainty for the SMB installed base",
+          "QuickFrame AI creative may not clear the brand bar for premium/live inventory",
+          "Performance claims are largely platform-reported, not incrementality-validated",
+          "Narrower supply footprint vs. an omnichannel ML-driven performance DSP"
+        ],
+        "kill_points": [
+          "Position Moloco as 'what you move to when you outgrow MNTN' — no category fight, just a scale argument",
+          "Pit per-advertiser ML vs. template optimization: show how Moloco's model improves with spend while MNTN's optimization logic is shared across all advertisers",
+          "Use the enterprise-pivot question to expose SMB customers' uncertainty about their roadmap priority",
+          "Challenge platform-reported attribution with an incrementality-based measurement story",
+          "Frame QuickFrame AI as a creative cost-saver for SMB — then ask whether AI-generated video belongs on live sports or premium CTV inventory"
+        ],
+        "objections": [
+          {
+            "objection": "MNTN is easier to use and we're already live on it.",
+            "response": "Easy on-ramp is exactly MNTN's play — and it works well for first-time TV advertisers. The question is whether 'easy' is still the right word when your budget is 5x what it was last year. Moloco's UX is built for growth marketers at scale, and onboarding is days, not weeks."
+          },
+          {
+            "objection": "MNTN gives us free creative via QuickFrame AI.",
+            "response": "Free AI-generated video is a great deal for an SMB kickstarting CTV. For a brand buying premium live sports inventory via Magnite, the question becomes whether AI creative is credible enough for the placements you're paying for. Moloco keeps your creative workflow intact so you control the brand bar."
+          },
+          {
+            "objection": "MNTN is growing 36% YoY — they're clearly doing something right.",
+            "response": "Market-level growth says the CTV category is expanding, not that MNTN is the best platform for every advertiser in it. The real test is whether your spend on MNTN is generating incremental revenue vs. what the same budget would do on an ML-first platform like Moloco. We can run that test."
+          },
+          {
+            "objection": "MNTN just added live streaming via Magnite — that's a big deal for us.",
+            "response": "It is — and Moloco already bids into biddable CTV supply including live streaming. The differentiator isn't which platform can access the impression, it's which platform can decide whether that impression is worth buying for your specific outcome."
+          }
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "Growth-stage DTC brands that scaled from mobile-first performance into full-funnel CTV with Moloco",
+          "Performance marketers who moved CTV budget from template-optimized platforms onto per-advertiser ML"
+        ],
+        "metrics": [
+          "Per-advertiser model training typically delivers compounding performance gains as spend increases",
+          "Outcome-based bidding validated via third-party incrementality, not platform-reported attribution"
+        ]
+      },
+      "sources": [
+        {
+          "title": "MNTN executive hires (CRO + Premium Content)",
+          "url": "https://www.nasdaq.com/press-release/mntn-expands-executive-team-support-growth-performance-tv-2026-03-10",
+          "domain": "nasdaq.com"
+        },
+        {
+          "title": "MNTN-Magnite live streaming partnership",
+          "url": "https://mountain.com/press/live-streaming-ads-get-a-performance-upgrade-with-magnite-and-mntn-integration/",
+          "domain": "mountain.com"
+        },
+        {
+          "title": "MNTN Q4 2025 results and 2026 guidance",
+          "url": "https://www.stocktitan.net/sec-filings/MNTN/8-k-mntn-inc-reports-material-event-2b1f09352a3c.html",
+          "domain": "stocktitan.net"
+        },
+        {
+          "title": "QuickFrame AI creative platform",
+          "url": "https://www.businesswire.com/news/home/20251030951016/en/",
+          "domain": "businesswire.com"
+        }
+      ]
+    }
+  ]
+}
