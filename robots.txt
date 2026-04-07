@@ -2,3 +2,11 @@ User-agent: *
 Allow: /
 
 Sitemap: https://danetomalin.com/sitemap.xml
+
+# Zillow interview portfolio (noindex)
+Disallow: /zillow
+Disallow: /zillow/
+Disallow: /zillowcompetitiveintel/
+Disallow: /zillowmarketsignals/
+Disallow: /zillowroadmap/
+Disallow: /zillowbattlecards/

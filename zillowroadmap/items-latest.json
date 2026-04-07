@@ -1,0 +1,691 @@
+{
+  "date": "2026-04-07",
+  "engine_version": "1.0.0",
+  "item_count": 12,
+  "high_priority_count": 6,
+  "summary_scorecard": {
+    "build": 6,
+    "investigate": 4,
+    "defer": 1,
+    "kill": 1,
+    "overall_health": "strong",
+    "summary": "Zillow Agent Marketing product strategy is moving toward unified super app experiences, mortgage attach, and agent acquisition efficiency. Six items meet all four criteria and should be prioritized for 2026. Focus on measurement/attribution and agent acquisition pricing models as foundational infrastructure."
+  },
+  "items": [
+    {
+      "id": "showcase_expansion-20260407-001",
+      "date": "2026-04-07",
+      "title": "Showcase Adoption Acceleration to 10% of New Listings",
+      "category": "showcase_expansion",
+      "summary": "Zillow Showcase reached 3.7% of new U.S. listings by Q3 2025 with 79% more page views and 76% more saves. Mid-term goal: 10% adoption. Requires enhanced broker partnerships, tiered pricing models, and AI features (virtual staging, copywriting) to drive brokerage volume.",
+      "evidence": "Zillow reported 50+ broker partnerships (Sep 2025). Showcase listings command 2% price premiums and 91% more shares. Virtual staging added Q3 2025. Current adoption: 3.7%. Target: 5-10% next. Howard Hanna, Berkshire Hathaway HomeServices, The Agency all signed partnerships.",
+      "assessment": {
+        "usable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Brokers understand Showcase as a lead-gen tool with clear ROI. 2% listing premium + faster pending times are measurable wins. Partner enablement playbooks are low-friction."
+        },
+        "valuable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "This is direct revenue for listing services and agent marketplace GMV. 10% adoption with 30% higher listing wins per agent = massive TAM expansion."
+        },
+        "feasible": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Infrastructure exists. Lift is partner expansion, co-marketing, and additional AI features. Virtual staging + copywriting = 1-2 quarters. Pricing tiers for franchises = 1 quarter."
+        },
+        "viable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Directly tied to agent acquisition and marketplace GMV growth. Differentiation vs. Redfin's MLS-heavy approach. Supports Super App narrative."
+        }
+      },
+      "overall_score": 9.0,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "showcase",
+        "adoption",
+        "brokers",
+        "pricing",
+        "AI"
+      ],
+      "sources": [
+        {
+          "title": "More than 50 brokerages adopt Zillow Showcase (Sep 2025)",
+          "url": "https://zillow.mediaroom.com/2025-09-30-More-than-50-brokerages-adopt-Zillow-Showcase-as-go-to-tool-for-listing-marketing-innovation",
+          "domain": "zillow.mediaroom.com",
+          "date": "2025-09"
+        },
+        {
+          "title": "Zillow brings AI-powered Virtual Staging to Showcase",
+          "url": "https://investors.zillowgroup.com/investors/news-and-events/news/news-details/2025/Zillow-brings-AI-powered-Virtual-Staging-to-Showcase-listings/default.aspx",
+          "domain": "investors.zillowgroup.com",
+          "date": "2025-09"
+        },
+        {
+          "title": "Zillow Showcase and the AI Revolution in Real Estate (2025)",
+          "url": "https://www.ainvest.com/news/zillow-showcase-ai-revolution-real-estate-digital-tools-reshaping-agent-competitiveness-home-sales-performance-2508/",
+          "domain": "ainvest.com",
+          "date": "2025-09"
+        }
+      ]
+    },
+    {
+      "id": "premier_agent_quality-20260407-001",
+      "date": "2026-04-07",
+      "title": "Premier Agent Lead Quality & Conversion Benchmarking",
+      "category": "premier_agent_quality",
+      "summary": "Agent Marketing needs standardized metrics on lead quality, connection rates, and conversion by market/price segment. Current state: agents judge Premier Agent ROI by volume alone. Build internal benchmarking dashboard to surface underperforming markets, disconnect reasons, and agent experience gaps.",
+      "evidence": "Premier Agent pricing varies $20-100+/lead. Agent satisfaction hinges on conversion rates, not just lead count. No current real-time visibility into why agents drop leads. Benchmark data enables dynamic pricing and agent coaching.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Agents already understand conversion rate. Showing per-agent, per-market conversion vs. peer average creates healthy competition and transparency."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Directly impacts agent retention and upsell. Agents who see their conversion 10% above market renew faster. Enables coaching and reduces churn."
+        },
+        "feasible": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Data already flows through Premier Agent backend. Build aggregation layer, dashboard, and peer benchmarks. Estimated 1-2 quarters."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Improves agent lifetime value and reduces churn. Enables data-driven pricing and tier positioning. Supports agent coaching narrative."
+        }
+      },
+      "overall_score": 8.25,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "measurement",
+        "quality",
+        "conversion",
+        "benchmarking",
+        "agent-retention"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Premier Agent Review (2025): Features, Pricing, Pros & Cons",
+          "url": "https://unifyrealestate.com/leads/zillow/",
+          "domain": "unifyrealestate.com",
+          "date": "2025"
+        },
+        {
+          "title": "Is Zillow Premier Agent Worth the Cost?",
+          "url": "https://www.housingwire.com/articles/zillow-premier-agent-cost/",
+          "domain": "housingwire.com",
+          "date": "2026"
+        },
+        {
+          "title": "Understand the Cost of Zillow Premier Agent Advertising",
+          "url": "https://www.zillow.com/premier-agent/understand-zillow-premier-agent-costs/",
+          "domain": "zillow.com",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "follow_up_boss_integration-20260407-001",
+      "date": "2026-04-07",
+      "title": "Two-Way Zillow-FUB Integration for Agent Workflows",
+      "category": "follow_up_boss_integration",
+      "summary": "Existing one-way integration sends leads to FUB. Upgrade to true two-way: stage changes, assignments, notes, communication signals sync bidirectionally. Agents' deal status edits in FUB auto-sync to Zillow agent profile, informing future lead quality.",
+      "evidence": "Zillow acquired FUB (2023). Two-way integration already exists for Zillow Teams. FUB Help Center documents both one-way and two-way flows. Current gap: individual Premier Agent users see one-way only. Agent feedback requests real-time sync.",
+      "assessment": {
+        "usable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Agents already use FUB for follow-up. Two-way sync removes manual re-entry of deal status. Seamless from agent perspective."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Improves agent experience and data quality in both systems. FUB deal status informs Zillow lead routing and agent profile quality. Reduces churn."
+        },
+        "feasible": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Zillow owns FUB post-acquisition. Two-way flows proven for Teams. Extending to Premier Agent requires API updates and webhook infrastructure. 1-2 quarters."
+        },
+        "viable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Increases agent stickiness and data integrity. Supports Super App narrative of unified workflows. Competitive moat vs. other lead gen platforms."
+        }
+      },
+      "overall_score": 9.0,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "integration",
+        "CRM",
+        "FUB",
+        "workflows",
+        "data-sync"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Two Way Integration Overview - Follow Up Boss",
+          "url": "https://help.followupboss.com/hc/en-us/articles/8895957403927-Zillow-Two-Way-Integration-Overview",
+          "domain": "help.followupboss.com",
+          "date": "2025"
+        },
+        {
+          "title": "Zillow - Follow Up Boss Integrations",
+          "url": "https://www.followupboss.com/integrations/zillow",
+          "domain": "followupboss.com",
+          "date": "2025"
+        },
+        {
+          "title": "Zillow Group to acquire Follow Up Boss (2023)",
+          "url": "https://investors.zillowgroup.com/investors/news-and-events/news/news-details/2023/Zillow-Group-to-acquire-Follow-Up-Boss-an-industry-leader-in-customer-relationship-management",
+          "domain": "investors.zillowgroup.com",
+          "date": "2023"
+        }
+      ]
+    },
+    {
+      "id": "super_app_experience-20260407-001",
+      "date": "2026-04-07",
+      "title": "Unified Agent Workspace: Leads + Finance + Marketing Tools",
+      "category": "super_app_experience",
+      "summary": "Agents juggle Zillow (leads), FUB (follow-up), Zillow Home Loans (mortgage referrals), and Showcase (listing marketing). Create a single workspace where agents view leads, access mortgage qualification tools, upload Showcase listings, and track referral commissions. Embed Wacksman's super app vision into agent tools.",
+      "evidence": "Zillow announced 'AI mode' (Mar 2026) bringing guided intelligence across search/touring/financing/connections. Jeremy Wacksman emphasizes unified housing journey. Agents cite tool fragmentation as friction. Consolidation = retention + upsell.",
+      "assessment": {
+        "usable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "UX challenge: integrating 4 systems requires careful information architecture. Possible via tabs/modules. Onboarding must be simple."
+        },
+        "valuable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "Massive value prop. Agents stop context-switching. Zillow locks in agent spend across multiple products. Increases agent LTV."
+        },
+        "feasible": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Requires API consolidation, design rework, and careful feature prioritization. Phased approach: leads + FUB + Showcase first (2-3 quarters), then mortgage tools (4+ quarters)."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Aligns with Wacksman super app narrative. Consolidation drives agent spend and retention. Differentiator vs. independent agents using best-of-breed tools."
+        }
+      },
+      "overall_score": 7.75,
+      "recommendation": "build",
+      "priority": "high",
+      "tags": [
+        "super-app",
+        "agent-workspace",
+        "UX",
+        "consolidation",
+        "retention"
+      ],
+      "sources": [
+        {
+          "title": "Zillow debuts AI mode, bringing guided intelligence (Mar 2026)",
+          "url": "https://zillow.mediaroom.com/2026-03-25-Zillow-debuts-AI-mode,-bringing-guided-intelligence-to-every-step-of-the-housing-journey",
+          "domain": "zillow.mediaroom.com",
+          "date": "2026-03"
+        },
+        {
+          "title": "Jeremy Wacksman - Zillow LinkedIn",
+          "url": "https://www.linkedin.com/in/jeremywacksman/",
+          "domain": "linkedin.com",
+          "date": "2025"
+        },
+        {
+          "title": "An Interview with Zillow CEO Jeremy Wacksman - Stratechery",
+          "url": "https://stratechery.com/2024/an-interview-with-zillow-ceo-jeremy-wacksman-about-evolving-strategy/",
+          "domain": "stratechery.com",
+          "date": "2024"
+        }
+      ]
+    },
+    {
+      "id": "zillow_home_loans-20260407-001",
+      "date": "2026-04-07",
+      "title": "Mortgage Attach Rate Growth: Buy-Now-Finance-Later UX",
+      "category": "zillow_home_loans",
+      "summary": "Zillow Home Loans saw 67% purchase loan volume growth (Q4 2025: $1.5B). Agents lack easy tools to offer financing to buyers. Build in-app mortgage pre-qualification that agents can share in-app to buyers during tours. Increases attach rate and improves buyer experience.",
+      "evidence": "Zillow Home Loans: $1.5B purchase volume Q4 2025, up 67% YoY. Total mortgage revenue: $57M (39% YoY growth). Agents are largest buyer touchpoint but lack financing tools. Buy-now-finance-later UX proven in auto, commerce.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Agents already talk financing. Pre-qual widget is simple: income, credit check consent, instant estimate. Mobile-first design for tour context."
+        },
+        "valuable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "Direct mortgage origination growth. Increases buyer close rate. Agents earn referral upside. Zillow's biggest moat: ability to offer full transaction stack."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Zillow Home Loans backend exists. Build agent-facing widget + consumer pre-qual UX. Credit check integration = 1-2 quarters."
+        },
+        "viable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "Direct revenue driver. Increases attach rate and buyer-agent engagement. Supports Wacksman super app narrative of 'financing within flow.'"
+        }
+      },
+      "overall_score": 8.75,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "mortgages",
+        "attach-rate",
+        "financing",
+        "originations",
+        "buyer-experience"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Group Reports Fourth-Quarter and Full-Year 2025 Results",
+          "url": "https://www.prnewswire.com/news-releases/zillow-group-reports-fourth-quarter-and-full-year-2025-financial-results-302684089.html",
+          "domain": "prnewswire.com",
+          "date": "2026-01"
+        },
+        {
+          "title": "Zillow Home Loans On A Winning Streak - NMP",
+          "url": "https://nationalmortgageprofessional.com/news/zillow-home-loans-winning-streak",
+          "domain": "nationalmortgageprofessional.com",
+          "date": "2026"
+        },
+        {
+          "title": "Zillow Home Loans Mortgage Review 2026",
+          "url": "https://www.lendingtree.com/home/mortgage/zillow-home-loans-mortgage-review/",
+          "domain": "lendingtree.com",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "rentals_marketplace-20260407-001",
+      "date": "2026-04-07",
+      "title": "Rental Agents Feature: Multifamily Listing Tools for Premier Agent",
+      "category": "rentals_marketplace",
+      "summary": "Zillow multifamily inventory grew from 27K to 64K buildings. Rental marketplace is growth vector. Extend Premier Agent to rental agents: monthly subscription model for listing syndication, tenant screening integrations, rent collection APIs. Tap 3-5M rental agents.",
+      "evidence": "Zillow rental listings: 64K multifamily buildings (Q2 2025), up from 27K. 3-in-5 renters plan to keep renting next year. Multifamily rent growth: 0.3% (2026 forecast). Zillow + Redfin partnership (2025) for listing distribution. Rental agents currently lack integrated tools.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Rental agents understand monthly subscription model. Listing syndication + tenant screening are table-stake features."
+        },
+        "valuable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Opens new agent vertical. Rental TAM = 3-5M agents. Lower ARPUs than buy/sell but high volume. Recurring revenue."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Rental listing data exists. Build rental-specific UI for Premier Agent, integrations with screening platforms (Zillow already owns these). 2-3 quarters MVP."
+        },
+        "viable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "New revenue stream with high margins. Synergy with multifamily marketplace growth. Supports expansion narrative."
+        }
+      },
+      "overall_score": 7.5,
+      "recommendation": "build",
+      "priority": "high",
+      "tags": [
+        "rentals",
+        "multifamily",
+        "rental-agents",
+        "listings",
+        "new-TAM"
+      ],
+      "sources": [
+        {
+          "title": "Zillow expects calmer 2026 housing market, improved affordability",
+          "url": "https://www.housingwire.com/articles/zillow-expects-calmer-2026-housing-market-improved-affordability/",
+          "domain": "housingwire.com",
+          "date": "2026"
+        },
+        {
+          "title": "5 rental market realities Zillow is tackling head-on",
+          "url": "https://www.realestatenews.com/2025/02/18/5-rental-market-realities-zillow-is-tackling-head-on",
+          "domain": "realestatenews.com",
+          "date": "2025"
+        },
+        {
+          "title": "Zillow at Goldman Sachs Conference: Pursuing Housing Super App",
+          "url": "https://www.investing.com/news/transcripts/zillow-at-goldman-sachs-conference-pursuing-housing-super-app-vision-93CH-4234580",
+          "domain": "investing.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "agent_acquisition_pricing-20260407-001",
+      "date": "2026-04-07",
+      "title": "Premier Agent Flex Tier: Performance-Based Pricing for SMB Agents",
+      "category": "agent_acquisition_pricing",
+      "summary": "Current: $20-100+/lead (cost-per-lead) or 40% commission (Flex). Mid-market agents ($100-500K/year) are lost to cheaper competitors. Launch Flex-Plus: 30% commission + performance bonus (higher if conversion > market avg). Drives acquisition of growth-stage teams.",
+      "evidence": "Premier Agent pricing: $20-100+/lead by market; Flex 40% seller commission. SMB agents see high CPL costs as barrier to entry. Competitive alternatives: REX, eXp, etc. Performance-based tiers proven in SaaS (Salesforce, HubSpot).",
+      "assessment": {
+        "usable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Agents understand performance-based pricing. Transparency of bonus formula is key. Tie to benchmarking (item 1) for credibility."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Expands TAM to SMB. Reduces barriers to entry. Higher-converting agents get rewarded. Increases agent LTV vs. fixed CPL."
+        },
+        "feasible": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Requires bonus calculation logic, reporting, and payout infrastructure. Build atop existing Flex billing. 1-2 quarters."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Increases agent acquisition and lifetime value. Net revenue may be flat initially but scales faster with growth agents. Supports agent acquisition narrative."
+        }
+      },
+      "overall_score": 8.25,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "pricing",
+        "acquisition",
+        "SMB",
+        "flex",
+        "performance"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Premier Agent Review (2025)",
+          "url": "https://unifyrealestate.com/leads/zillow/",
+          "domain": "unifyrealestate.com",
+          "date": "2025"
+        },
+        {
+          "title": "Zillow Leads vs. Google Ads: Cost Comparison 2026",
+          "url": "https://joinrevalto.com/zillow-leads-vs-google-ads-the-true-cost-comparison-for-real-estate-agents-in-2026/",
+          "domain": "joinrevalto.com",
+          "date": "2026"
+        },
+        {
+          "title": "Is Zillow Flex Worth the 35% Referral Fee?",
+          "url": "https://theclose.com/zillow-flex/",
+          "domain": "theclose.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "measurement_attribution-20260407-001",
+      "date": "2026-04-07",
+      "title": "Agent ROI Dashboard: Lead-to-Closing Attribution",
+      "category": "measurement_attribution",
+      "summary": "Agents cannot see which Zillow leads close and at what price. Build real-time dashboard: lead source \u2192 closing date \u2192 commission earned. Requires MLS integration to capture closed status. Enables agents to optimize their spend and justify Premier Agent renewal.",
+      "evidence": "Agent feedback: 'Can't prove which leads actually close.' MLS data available via Zillow's own integrations. Competitors (Follow Up Boss, BoomTown) offer basic lead-to-close tracking. This is foundational for agent retention.",
+      "assessment": {
+        "usable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Agents already understand lead-to-close metrics. Simple timeline + $ display. Familiar from marketing dashboards."
+        },
+        "valuable": {
+          "score": 10,
+          "pass": true,
+          "rationale": "Directly impacts agent renewal decision. Agents who see ROI renew at 3x+ higher rates. Reduces churn. Enables upsell."
+        },
+        "feasible": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Requires MLS integration, closed deal data matching, and FUB sync. Complex matching logic (same agent, same lead, same property). 2-3 quarters."
+        },
+        "viable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Foundational infrastructure for measurement. Improves agent LTV and retention. Supports pricing model discussions (Flex tiers, benchmarking)."
+        }
+      },
+      "overall_score": 8.5,
+      "recommendation": "build",
+      "priority": "critical",
+      "tags": [
+        "attribution",
+        "measurement",
+        "MLS",
+        "ROI",
+        "retention"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Premier Agent Pricing and Cost Understanding",
+          "url": "https://www.zillow.com/premier-agent/understand-zillow-premier-agent-costs/",
+          "domain": "zillow.com",
+          "date": "2026"
+        },
+        {
+          "title": "Agent Satisfaction with Real Estate Platforms 2025",
+          "url": "https://www.realestatenews.com/2025/10/06/a-zillow-chatgpt-integration-final-offer-enters-new-market",
+          "domain": "realestatenews.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "measurement_attribution-20260407-002",
+      "date": "2026-04-07",
+      "title": "Comparative Market Analysis: Zillow vs. Competitor Lead Quality",
+      "category": "measurement_attribution",
+      "summary": "Agents compare Zillow lead quality vs. Redfin, Google Local Services, independent brokerages. Build hidden panel: agents in test markets get leads from 2+ sources with blind source labeling. Measure conversion by source. Build Zillow's positioning on data, not anecdote.",
+      "evidence": "Agent testimonials cite unpredictable lead quality. No systematic comparison data exists. Redfin, Google LSAs claim higher conversion. Zillow should run controlled tests to validate quality claims.",
+      "assessment": {
+        "usable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Agents accept randomized testing. Requires careful setup to avoid perception of 'throttling' bad leads. Clear communication is critical."
+        },
+        "valuable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Provides competitive differentiation backed by data. Enables aggressive sales positioning. Valuable for retention and upsell."
+        },
+        "feasible": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Requires partnership with 2+ competitor platforms (complex). Careful test design and statistical power. 2-3 quarters for pilot + analysis."
+        },
+        "viable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Supports sales narrative if Zillow wins (high risk if it doesn't). Medium-term value. Investigate before full build."
+        }
+      },
+      "overall_score": 7.0,
+      "recommendation": "investigate",
+      "priority": "high",
+      "tags": [
+        "measurement",
+        "competitive",
+        "quality",
+        "testing"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Premier Agent Reviews",
+          "url": "https://www.g2.com/products/zillow-premier-agent",
+          "domain": "g2.com",
+          "date": "2026"
+        },
+        {
+          "title": "Is Zillow Premier Agent Worth the Cost?",
+          "url": "https://theclose.com/zillow-premier-agent-worth-cost/",
+          "domain": "theclose.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "showcase_expansion-20260407-002",
+      "date": "2026-04-07",
+      "title": "Showcase Video + Virtual Tour Integration",
+      "category": "showcase_expansion",
+      "summary": "Showcase currently: photos + AI staging. Add native video editing (trim, transitions, music) and VR tour embedding. Agents cite need for easy video production. Reduce friction to adoption.",
+      "evidence": "Agent feedback: video is 'too hard to produce.' Showcase performance: 91% more shares (indicates visual appeal drives engagement). Video + VR are table stakes for premium listing tools.",
+      "assessment": {
+        "usable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Video templates + auto-music reduce friction. Agents know how to 'use' video \u2014 production is the blocker. Simple editor with stock footage = huge UX win."
+        },
+        "valuable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Increases Showcase adoption and usage. Video listings generate more engagement. Supports 10% adoption goal."
+        },
+        "feasible": {
+          "score": 6,
+          "pass": true,
+          "rationale": "Build video editor UI + media library. VR tour API integration. 2-3 quarters for MVP."
+        },
+        "viable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "Increases Showcase ARPUs and adoption. Differentiator vs. basic MLS listings. Supports agent acquisition."
+        }
+      },
+      "overall_score": 7.25,
+      "recommendation": "investigate",
+      "priority": "medium",
+      "tags": [
+        "showcase",
+        "video",
+        "VR",
+        "creative",
+        "adoption"
+      ],
+      "sources": [
+        {
+          "title": "Zillow Showcase AI listing adoption and performance",
+          "url": "https://www.ainvest.com/news/zillow-showcase-ai-revolution-real-estate-digital-tools-reshaping-agent-competitiveness-home-sales-performance-2508/",
+          "domain": "ainvest.com",
+          "date": "2025"
+        },
+        {
+          "title": "Zillow adds AI-powered Virtual Staging to Showcase",
+          "url": "https://www.realestatenews.com/2025/09/10/zillow-adds-ai-powered-virtual-staging-to-showcase",
+          "domain": "realestatenews.com",
+          "date": "2025"
+        }
+      ]
+    },
+    {
+      "id": "super_app_experience-20260407-002",
+      "date": "2026-04-07",
+      "title": "Buyer + Agent 1:1 Messaging Within Zillow App",
+      "category": "super_app_experience",
+      "summary": "Buyers tour homes through Zillow app but must leave to text agents or use agent's CRM. Build native 1:1 messaging: buyers message agents from listing, agents reply from agent workspace. Keeps conversations in Zillow ecosystem. Increases engagement and data capture.",
+      "evidence": "Zillow super app design aims to keep users in-flow. Messaging is natural next step after 'schedule tour.' Competitors (Redfin, Realtor.com) have messaging. Current gaps: friction between app and external tools.",
+      "assessment": {
+        "usable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Messaging is familiar. In-app design = zero friction for buyers. Agents receive in-platform notifications."
+        },
+        "valuable": {
+          "score": 9,
+          "pass": true,
+          "rationale": "Keeps buyer engagement in Zillow. Data capture enables future lead scoring. Improves agent-buyer connection rates."
+        },
+        "feasible": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Messaging infrastructure exists (Zillow already has user-to-user messaging). Build agent-consumer layer and webhooks to agent workspace. 1-2 quarters."
+        },
+        "viable": {
+          "score": 8,
+          "pass": true,
+          "rationale": "Increases buyer engagement and agent LTV. Data asset for future CRM/lead scoring. Aligns with super app vision."
+        }
+      },
+      "overall_score": 8.5,
+      "recommendation": "build",
+      "priority": "high",
+      "tags": [
+        "messaging",
+        "buyer-engagement",
+        "super-app",
+        "agent-workspace"
+      ],
+      "sources": [
+        {
+          "title": "Zillow debuts AI mode, bringing guided intelligence (Mar 2026)",
+          "url": "https://zillow.mediaroom.com/2026-03-25-Zillow-debuts-AI-mode,-bringing-guided-intelligence-to-every-step-of-the-housing-journey",
+          "domain": "zillow.mediaroom.com",
+          "date": "2026-03"
+        }
+      ]
+    },
+    {
+      "id": "agent_acquisition_pricing-20260407-002",
+      "date": "2026-04-07",
+      "title": "Franchise Partnerships: White-Label Premier Agent for Brokerages",
+      "category": "agent_acquisition_pricing",
+      "summary": "Large brokerages (Keller Williams, RE/MAX) run their own agent marketing tools. Offer white-label Premier Agent: Zillow handles lead generation + CRM, brokerage brands and owns economics. New revenue stream (B2B2B model) and expansion channel.",
+      "evidence": "RE/MAX, Keller Williams, Berkshire Hathaway HomeServices already have own tools. White-label SaaS model proven in other verticals. Brokerage partnerships are growth lever.",
+      "assessment": {
+        "usable": {
+          "score": 6,
+          "pass": true,
+          "rationale": "White-label requires customization. Doable but higher complexity than SMB direct sales."
+        },
+        "valuable": {
+          "score": 7,
+          "pass": true,
+          "rationale": "New revenue stream. Franchise partnerships = distribution multiplier. Medium-term TAM expansion."
+        },
+        "feasible": {
+          "score": 5,
+          "pass": false,
+          "rationale": "Requires significant product customization, separate billing, brand removal. Complex legal/partnership work. 3-4 quarters + business dev."
+        },
+        "viable": {
+          "score": 6,
+          "pass": false,
+          "rationale": "Margin compression (brokerage takes cut). Deployment risk (partner execution). Medium revenue impact."
+        }
+      },
+      "overall_score": 6.0,
+      "recommendation": "defer",
+      "priority": "medium",
+      "tags": [
+        "partnerships",
+        "white-label",
+        "brokerages",
+        "B2B2B"
+      ],
+      "sources": [
+        {
+          "title": "More than 50 brokerages adopt Zillow Showcase",
+          "url": "https://zillow.mediaroom.com/2025-09-30-More-than-50-brokerages-adopt-Zillow-Showcase-as-go-to-tool-for-listing-marketing-innovation",
+          "domain": "zillow.mediaroom.com",
+          "date": "2025-09"
+        }
+      ]
+    }
+  ]
+}

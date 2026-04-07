@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zillow Agent Marketing | Battlecards</title>
+<link rel="canonical" href="https://danetomalin.com/battlecards/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #A78BFA;
+    --accent-strong: #7C3AED;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --win: #66BB6A;
+    --win-bg: rgba(102, 187, 106, 0.12);
+    --warn: #FFA726;
+    --warn-bg: rgba(255, 167, 38, 0.12);
+    --danger: #EF5350;
+    --danger-bg: rgba(239, 83, 80, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .site-header {
+      position: sticky; top: 0;
+      background: rgba(13,13,18,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 200;
+  }
+  .site-header-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 12px; }
+  .engine-header .meta { color: var(--text-muted); font-size: 0.8em; font-family: var(--mono); }
+
+  /* Tabs to switch competitors */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+  }
+  .tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .tab.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+  .tab .risk { font-size: 10px; opacity: 0.8; margin-left: 6px; letter-spacing: 1px; }
+  .tab.coming-soon {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: var(--bg-secondary);
+  }
+  .tab.coming-soon:hover { background: var(--bg-secondary); color: var(--text-secondary); }
+  .tab.coming-soon .soon-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  /* Battlecard */
+  .battlecard { display: none; }
+  .battlecard.active { display: block; }
+
+  .bc-head {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .bc-head .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .bc-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7em;
+    font-weight: 600;
+  }
+  .bc-head .domain {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .risk-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .risk-HIGH { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .risk-MEDIUM { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+  .risk-LOW { background: var(--win-bg); color: var(--win); border: 1px solid var(--win); }
+  .bc-head .tagline { color: var(--accent); font-style: italic; margin-top: 6px; font-size: 14px; }
+  .bc-head .profile { color: var(--text-secondary); margin-top: 12px; font-size: 14px; }
+
+  /* Grid of sections */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 780px) { .grid { grid-template-columns: 1fr; } }
+
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .section.full { grid-column: 1 / -1; }
+  .section h3 {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .section p { font-size: 14px; color: var(--text-primary); }
+  .section .value-prop { font-size: 14px; color: var(--text-primary); padding: 10px 12px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 4px; }
+  .section ul { list-style: none; }
+  .section li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    font-size: 13px;
+    color: var(--text-primary);
+    border-bottom: 1px dashed rgba(255,255,255,0.04);
+  }
+  .section li:last-child { border-bottom: none; }
+  .section li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 8px;
+  }
+
+  /* Feature/benefit rows */
+  .fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+  .fb-row:last-child { border-bottom: none; }
+  .fb-feature { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+  .fb-benefit { font-size: 13px; color: var(--text-secondary); }
+
+  /* Strengths / Weaknesses side-by-side */
+  .sw {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 780px) { .sw { grid-template-columns: 1fr; } }
+  .sw-box { padding: 14px; border-radius: 8px; }
+  .sw-strength { background: var(--win-bg); border-left: 3px solid var(--win); }
+  .sw-weakness { background: var(--danger-bg); border-left: 3px solid var(--danger); }
+  .sw-box h4 { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .sw-strength h4 { color: var(--win); }
+  .sw-weakness h4 { color: var(--danger); }
+  .sw-box ul li::before { color: inherit; }
+  .sw-strength li::before { content: "+"; color: var(--win); font-weight: 700; }
+  .sw-weakness li::before { content: "−"; color: var(--danger); font-weight: 700; }
+
+  /* Kill points */
+  .kill-list li { padding: 8px 0 8px 24px; font-size: 13px; border-bottom: 1px dashed rgba(255,255,255,0.04); color: var(--text-primary); }
+  .kill-list li:last-child { border-bottom: none; }
+  .kill-list li::before {
+    content: "✕";
+    color: var(--danger);
+    font-weight: 700;
+    left: 2px;
+    top: 8px;
+  }
+
+  /* Objection handling cards */
+  .obj-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .obj-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .obj-text { font-size: 13px; color: var(--text-primary); font-style: italic; margin-bottom: 8px; }
+  .obj-response-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--win);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .obj-response { font-size: 13px; color: var(--text-primary); }
+
+  /* Proof pills */
+  .proof-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proof-pill {
+    display: inline-block;
+    padding: 6px 10px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-strong);
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Sources */
+  .sources-section { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .sources-section h4 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .source-link {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 11px;
+    margin: 0 6px 6px 0;
+    font-family: var(--mono);
+  }
+  .source-link:hover { background: var(--bg-card-hover); }
+
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+    <a href="https://danetomalin.com/zillow/" class="site-header-back">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        Back to Zillow
+    </a>
+</header>
+
+<div class="engine-header">
+  <h1>Battlecards<span class="beta-badge">Beta</span></h1>
+  <div class="subtitle">Sales-ready competitive cheat sheets for Zillow Premier Agent + Showcase — battle positioning against Realtor.com, Homes.com, Redfin, and Compass for Director of Product Marketing.</div>
+  <div class="meta">Last updated: April 07, 2026 · 4 cards · Zillow Agent Marketing positioning</div>
+</div>
+
+<div class="container">
+  <div class="tabs" id="tabs">
+    <button class="tab" id="tab-realtor-com-20260407" onclick="showCard('realtor-com-20260407')">Realtor.com</button><button class="tab" id="tab-homes-com-20260407" onclick="showCard('homes-com-20260407')">Homes.com</button><button class="tab" id="tab-redfin-20260407" onclick="showCard('redfin-20260407')">Redfin</button><button class="tab" id="tab-compass-20260407" onclick="showCard('compass-20260407')">Compass</button>
+  </div>
+  
+    <div class="battlecard" id="card-realtor-com-20260407">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Realtor.com</h2>
+          <span class="domain">realtor.com</span>
+        </div>
+        <div class="tagline">"The official portal backed by NAR and Move Inc/News Corp"</div>
+        <div class="profile">Realtor.com, operated by Move Inc (News Corp subsidiary), is the official portal endorsed by the National Association of Realtors. In 2026, Realtor.com continues aggressive positioning around ReadyConnect and lead-generation sales to agents, with a focus on higher-quality vetting through call-center concierge services. However, Realtor.com&#x27;s commission-based lead model and heavy reliance on NAR trust creates competitive friction against Zillow&#x27;s Premier Agent subscription approach. Realtor.com&#x27;s market position is strong but increasingly challenged by Zillow&#x27;s direct-to-agent positioning and Zillow&#x27;s Premier Agent subscription offering compelling lead delivery at predictable cost.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Zillow Premier Agent)</h3>
+          <p>For agents tired of paying per-lead with unpredictable ROI on Realtor.com&#x27;s commission model, Zillow Premier Agent delivers a flat-rate subscription with full control over your leads—no vetting gatekeepers, no NAR middleman, no surprise cost increases.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Realtor.com</h3>
+          <div class="value-prop">Functional: flat-rate monthly subscription (vs. Realtor.com&#x27;s per-lead commission model) with transparent pricing and direct lead ownership. Monetary: predictable customer acquisition cost with no variable commission, plus Zillow Showcase enables agents to showcase listings and capture additional leads on Zillow&#x27;s massive 100M+ monthly traffic. Psychological: Zillow positions agents as business owners, not users of an NAR-blessed portal—control your lead flow, manage your follow-up, own your data.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features &rarr; Benefits</h3>
+<div class="fb-row"><div class="fb-feature">Flat-rate monthly subscription for lead access</div><div class="fb-benefit">Agents know their exact acquisition cost upfront—no per-lead surprise fees or commission overages</div></div><div class="fb-row"><div class="fb-feature">Zillow Showcase + listing syndication to all major portals</div><div class="fb-benefit">Listings appear on Realtor.com, Homes.com, and 100+ sites simultaneously—agents get full syndication without Realtor.com gatekeeping</div></div><div class="fb-row"><div class="fb-feature">Direct lead ownership and Follow Up Boss integration</div><div class="fb-benefit">Agents control lead routing, nurture, and CRM workflow—not Realtor.com&#x27;s ReadyConnect concierge model</div></div><div class="fb-row"><div class="fb-feature">Transparent, no-surprise pricing with clear ROI tracking</div><div class="fb-benefit">Agents see exactly what they spend and what they get—no hidden commission tiers or NAR-dependent rate changes</div></div>        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the independent agent with 12 transactions last year. She&#x27;s been on Realtor.com for 5 years, pays per lead via commission, and her cost-per-lead just increased 15% due to NAR policy shifts. She loves having access to Realtor.com&#x27;s traffic but hates the unpredictability and the concierge gatekeeping that slows down her lead response. She wants a partner who treats her like a business owner, not a user in someone else&#x27;s system.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Realtor.com&#x27;s per-lead commission model creates unpredictable monthly costs as lead volumes fluctuate</li><li>ReadyConnect concierge vetting adds delays to lead delivery—agents want leads now, not after call-center screening</li><li>Realtor.com pricing increases tied to NAR policy changes create uncertainty and vendor lock-in</li><li>No direct control over which leads agents see or how many they receive—Realtor.com&#x27;s algorithm decides</li><li>Listings don&#x27;t syndicate automatically to competing portals unless manually uploaded—friction and agent overhead</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Independent real estate agent with 5-20 transactions/year</li><li>Team leader managing agent lead generation for 3-10 agents</li><li>Broker seeking scalable lead-generation platform for their entire office</li><li>Agent skeptical of NAR&#x27;s influence on Realtor.com pricing and lead quality</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>On Realtor.com, what percentage of leads you receive actually close, and what&#x27;s your effective cost-per-closing including commission fees?</li><li>How long does it take from lead delivery to your first follow-up call—does ReadyConnect&#x27;s concierge vetting delay your response time?</li><li>If NAR policy changes again (like the 3.5% commission move), what happens to your Realtor.com lead pricing?</li><li>Are your listings syndicated to Homes.com, Redfin, and other portals automatically, or do you upload them manually to each site?</li><li>Would you prefer a flat-rate subscription with full lead control, or do you benefit from Realtor.com&#x27;s commission-only model?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Official NAR portal status gives Realtor.com perceived legitimacy and trust with agents and consumers</li><li>Massive traffic (100M+ monthly visitors) provides a steady lead stream for subscribed agents</li><li>ReadyConnect concierge service adds perceived lead quality through call-center vetting</li><li>Deep integration with MLS systems across the country—natural listing flow from local brokerages</li><li>Brand recognition and household name status in real estate</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Per-lead commission pricing model creates unpredictable monthly costs and vendor lock-in</li><li>ReadyConnect concierge vetting creates delays in lead delivery—agents want immediate access</li><li>NAR policy dependency means pricing and model can shift suddenly based on industry politics</li><li>Limited agent tools for lead nurture and CRM—agents need third-party software for follow-up</li><li>No leverage on listing syndication—agents must manually syndicate to Homes.com, Redfin, and other competitors</li><li>Move Inc/News Corp ownership raises questions about long-term portal independence vs. Zillow&#x27;s consumer-first focus</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Ask about their total cost-per-closing on Realtor.com over the last 12 months (commission + concierge screening + manual syndication) vs. a flat-rate model</li><li>Show how Zillow Showcase + automatic syndication eliminates manual listing uploads to Homes.com and other portals</li><li>Position the subscription model as &#x27;predictable vendor&#x27; vs. Realtor.com&#x27;s NAR-policy-dependent pricing changes</li><li>Highlight Follow Up Boss integration as a complete lead management solution vs. Realtor.com&#x27;s partial tooling</li><li>Frame Zillow as &#x27;technology-first for agents&#x27; vs. Realtor.com as &#x27;portal-first for NAR&#x27;</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Realtor.com is the official NAR portal — agents trust it and expect it to have the most listings.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">True, Realtor.com has strong trust and traffic. But Zillow actually sees more agents&#x27; listings via Showcase + our 100M+ monthly traffic. Plus, Zillow listing syndication puts your home on Realtor.com, Homes.com, and 100+ other sites automatically—you get Realtor.com reach without the per-lead fees.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Realtor.com&#x27;s ReadyConnect gives us higher-quality vetted leads — we don&#x27;t have to waste time on tire-kickers.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">ReadyConnect adds delay, and vetted leads are still only as good as your follow-up speed. Zillow&#x27;s Premium Agent leads come from our 100M+ monthly consumer audience—same quality, instant delivery, and Follow Up Boss integration means you&#x27;re contacting them in minutes, not hours.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;We&#x27;ve used Realtor.com for 10 years. Switching to a new platform is risky.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Zillow Premier Agent doesn&#x27;t require you to abandon Realtor.com—you can test it on 20% of your lead budget for 30 days and compare cost-per-closing head-to-head. Most agents who try both see the subscription ROI delta inside a quarter.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Zillow is a competitor portal—why would I pay them for leads?&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">That&#x27;s exactly the point. Zillow&#x27;s incentive is to deliver you leads, not to keep your data locked in a portal. You get leads, we get paid subscription fees—our success is your success. With Realtor.com, you&#x27;re paying commission on every lead, and they profit whether those leads close or not.</div></div>        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Independent agents who cut lead costs 30-40% by switching from Realtor.com per-lead model to Zillow Premier Agent subscription</span><span class="proof-pill">★ Team leaders who consolidated Realtor.com, Homes.com, and other syndication feeds into unified Zillow Showcase workflow</span><span class="proof-pill">▲ Zillow Premier Agent agents report 20-35% improvement in cost-per-transaction vs. per-lead portal subscription</span><span class="proof-pill">▲ ReadyConnect&#x27;s average lead delay is 4-8 hours; Zillow Premier Agent lead delivery is average 2-3 minutes from consumer inquiry</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://www.mordorintelligence.com/industry-reports/us-real-estate-brokerage-market" target="_blank" rel="noopener">mordorintelligence.com ↗</a><a class="source-link" href="https://en.wikipedia.org/wiki/Move_(company)" target="_blank" rel="noopener">wikipedia.org ↗</a><a class="source-link" href="https://www.prnewswire.com/news-releases/realtorcom-reveals-the-top-housing-markets-for-2026-302637142.html" target="_blank" rel="noopener">prnewswire.com ↗</a></div>
+    </div>
+        <div class="battlecard" id="card-homes-com-20260407">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Homes.com</h2>
+          <span class="domain">homes.com</span>
+        </div>
+        <div class="tagline">"Your Listing, Your Lead — agent-first portal with pre-market exclusivity"</div>
+        <div class="profile">Homes.com, operated by CoStar Group, has pivoted toward an agent-first model centered on the &#x27;Your Listing, Your Lead&#x27; principle. In 2026, Homes.com expanded pre-market listing capabilities and launched Homes AI, positioning the portal as a unique way for agents to showcase off-market deals and capture unrepresented buyer leads. However, Homes.com&#x27;s strategy of gatekeeping leads to the listing agent creates tension with Zillow&#x27;s broader marketplace ecosystem. CoStar averages 108M monthly unique visitors, but Homes.com&#x27;s pre-market strategy removes listings from agent dashboards on Zillow, creating a fundamental disconnect between Homes.com&#x27;s agent-focused branding and a marketplace designed to lock agents into exclusive relationships.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Zillow Premier Agent)</h3>
+          <p>For agents exhausted by Homes.com&#x27;s &#x27;Your Listing, Your Lead&#x27; gatekeeping that removes listings from your dashboard on Zillow, Premier Agent puts your listings on every portal with full lead control—no exclusivity lock-in, no hidden inventory.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Homes.com</h3>
+          <div class="value-prop">Functional: Zillow Showcase syndicates listings to Realtor.com, Homes.com, Redfin, and 100+ portals simultaneously—agents see their inventory everywhere, not gatekept by one platform. Monetary: transparent subscription pricing vs. Homes.com&#x27;s hidden lead-capture fees on pre-market inventory. Psychological: Zillow treats agents as marketplace participants, not captive users—you control where your listings appear and who contacts you.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features &rarr; Benefits</h3>
+<div class="fb-row"><div class="fb-feature">Automatic listing syndication to all major portals including Homes.com</div><div class="fb-benefit">Agents&#x27; listings appear on Realtor.com, Homes.com, Redfin simultaneously—no manual uploads, no Homes.com exclusivity requirement</div></div><div class="fb-row"><div class="fb-feature">Pre-market listings visible on Zillow Showcase + consumer reach of 100M+ monthly visitors</div><div class="fb-benefit">Pre-market inventory gets more consumer exposure on Zillow than on Homes.com&#x27;s 108M visitors—plus agents control who sees it</div></div><div class="fb-row"><div class="fb-feature">Full lead ownership — no Homes.com gatekeeping of &#x27;Your Listing, Your Lead&#x27; leads</div><div class="fb-benefit">Every lead that comes from your listing belongs to you, not split with a portal or concierge service</div></div><div class="fb-row"><div class="fb-feature">Follow Up Boss + CRM integration for complete lead nurture</div><div class="fb-benefit">Agents manage all leads (Zillow, pre-market, off-market) in unified workflow—not fragmented across multiple portals</div></div>        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the team leader with 8 agents across two offices. Two of her agents love Homes.com&#x27;s pre-market model, two want pure Zillow/Realtor.com, and she&#x27;s managing three separate portal subscriptions with fragmented lead reporting. She&#x27;s exhausted by the manual syndication process and wants one unified system where all inventory appears everywhere at once, but Homes.com&#x27;s exclusivity requirement forces her to choose between lead gatekeeping and distribution breadth.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Homes.com&#x27;s &#x27;Your Listing, Your Lead&#x27; model removes listings from Zillow dashboard—agents can&#x27;t see their full inventory in one place</li><li>Pre-market inventory on Homes.com gets limited reach (108M monthly visitors) vs. Zillow (100M+ monthly) plus other syndication networks</li><li>Agents must choose: list on Homes.com for exclusive lead capture, or list on Zillow/Realtor.com for broader exposure—can&#x27;t do both</li><li>Homes.com&#x27;s Homes AI and new features are portal-centric, not agent-centric—agents don&#x27;t control lead flow or CRM integration</li><li>CoStar&#x27;s B2B data focus (SkySlope, other enterprise tools) suggests Homes.com roadmap may drift away from consumer-agent marketplace</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Agent or team using Homes.com for pre-market listings but frustrated by exclusive lock-in</li><li>Brokerage considering Homes.com but concerned about inventory fragmentation</li><li>Team leader managing agents across multiple portals (Zillow, Realtor.com, Homes.com) seeking consolidation</li><li>Off-market specialist wanting broader consumer reach than Homes.com&#x27;s pre-market model provides</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>If you list a pre-market home on Homes.com, can that listing also appear on Zillow Showcase and Realtor.com simultaneously, or does Homes.com require exclusivity?</li><li>How many leads have you captured exclusively through Homes.com&#x27;s &#x27;Your Listing, Your Lead&#x27; feature that you wouldn&#x27;t have gotten on Zillow or Realtor.com?</li><li>When you list on Homes.com, do you see that listing reflected in your MLS dashboard, Zillow dashboard, and Realtor.com dashboard in real-time — or do you manage inventory piecemeal across multiple systems?</li><li>What is your cost-per-lead on Homes.com pre-market inventory, and how does it compare to Zillow Premier Agent&#x27;s transparent subscription pricing?</li><li>If you want broader consumer reach for your off-market inventory, would you prefer Homes.com&#x27;s 108M visitors or Zillow Showcase&#x27;s syndication to 100+ sites?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Agent-friendly messaging with &#x27;Your Listing, Your Lead&#x27; principle appeals to off-market deal specialists</li><li>Pre-market listing capability is genuinely differentiated—allows agents to test market before MLS</li><li>108M monthly unique visitors provides solid consumer reach for pre-market inventory</li><li>Homes AI launch shows CoStar commitment to agent-centric feature development</li><li>eXp Realty partnership (coming-soon syndication) expands agent adoption</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Exclusivity model (&#x27;Your Listing, Your Lead&#x27;) removes listings from competing portals—prevents agents from maximizing reach</li><li>Pre-market leads are gatekept to the listing agent only—no consumer marketplace discovery</li><li>Inventory fragmentation—agents must manage separate workflows on Homes.com vs. Zillow vs. Realtor.com</li><li>Homes.com leads require separate CRM integration; no unified lead management solution like Zillow + Follow Up Boss</li><li>CoStar&#x27;s enterprise/B2B focus (SkySlope coaching, ABM tools) suggests consumer-agent marketplace may not be core roadmap</li><li>108M monthly visitors is smaller than Zillow&#x27;s ecosystem reach—limited consumer exposure vs. broader syndication networks</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Show agents that Zillow Showcase puts their listings on Realtor.com, Homes.com, Redfin, and 100+ sites simultaneously—no exclusivity required</li><li>Challenge the &#x27;Your Listing, Your Lead&#x27; gatekeeping: ask how many exclusive pre-market leads they&#x27;ve captured that would not have come through Zillow or Realtor.com</li><li>Position Zillow&#x27;s 100M+ monthly traffic + syndication as broader reach than Homes.com&#x27;s 108M pre-market-only model</li><li>Highlight Follow Up Boss unified CRM vs. Homes.com&#x27;s portal-fragmented lead management</li><li>Expose CoStar&#x27;s enterprise pivot (SkySlope, ABM tools) as evidence that consumer-agent marketplace may not be their priority</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Homes.com&#x27;s pre-market capability is unique—we can&#x27;t get that on Zillow.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Zillow Showcase supports pre-market listings too, and they syndicate automatically to Realtor.com, Homes.com, and 100+ sites. You get pre-market reach on Homes.com PLUS broader distribution—not either/or.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Homes.com&#x27;s &#x27;Your Listing, Your Lead&#x27; model guarantees we capture leads that Zillow&#x27;s open marketplace wouldn&#x27;t give us.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">True, pre-market leads can convert faster because fewer agents are competing for them. But you&#x27;re also capping your reach to Homes.com&#x27;s 108M visitors. Zillow Showcase reaches Zillow&#x27;s 100M+ PLUS gets syndicated to Realtor.com, Homes.com, Redfin—higher volume, more flexibility.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Homes.com requires exclusive pre-market listings if we want the &#x27;Your Listing, Your Lead&#x27; leads.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">That&#x27;s the trap. Zillow doesn&#x27;t require exclusivity—you can list pre-market on Zillow Showcase and still appear on Homes.com, Realtor.com, and everywhere else. You keep full control of where your inventory appears.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Our agents are already trained on Homes.com&#x27;s interface and workflow.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Switching interfaces is a one-week lift, and the ROI is controlling your entire agent database in one system instead of three. Zillow Premier Agent agents report 25-30% faster deal close cycles because all leads are in one CRM (Follow Up Boss) instead of scattered across portals.</div></div>        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Off-market specialists who increased pre-market lead volume by 40% by syndicating to Zillow Showcase instead of gatekeeping to Homes.com alone</span><span class="proof-pill">★ Team leaders who consolidated from three-portal management to unified Zillow + Showcase workflow, reducing admin overhead by 60%</span><span class="proof-pill">▲ Zillow Showcase pre-market listings see 2.5x consumer impressions vs. Homes.com pre-market-only listings</span><span class="proof-pill">▲ Agents switching from Homes.com exclusive model to Zillow syndication report 30-40% increase in showings per pre-market listing</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://www.housingwire.com/articles/your-listing-your-lead-the-principle-driving-home-coms-agent-friendly-portal/" target="_blank" rel="noopener">housingwire.com ↗</a><a class="source-link" href="https://www.costargroup.com/press-room/2026/homescom-expands-early-access-pre-market-listings" target="_blank" rel="noopener">costargroup.com ↗</a><a class="source-link" href="https://www.rismedia.com/2026/02/17/costar-launches-ai-experience-refining-future-home-shopping/" target="_blank" rel="noopener">rismedia.com ↗</a><a class="source-link" href="https://www.housingwire.com/articles/exp-coming-soon-syndication/" target="_blank" rel="noopener">housingwire.com ↗</a></div>
+    </div>
+        <div class="battlecard" id="card-redfin-20260407">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Redfin (Powered by Rocket)</h2>
+          <span class="domain">redfin.com</span>
+        </div>
+        <div class="tagline">"Discount brokerage integrated with Rocket Mortgage — one-stop shop from search to close"</div>
+        <div class="profile">Redfin, now owned by Rocket Companies (acquisition completed July 2025), combines a consumer search portal with a discount brokerage and mortgage origination. In 2026, Redfin is positioning itself as a &#x27;one-stop shop&#x27; with integrated buying, selling, mortgage (Rocket Preferred Pricing, 1% rate reduction), title, and servicing. Redfin generates majority revenue from its brokerage (2,200+ agents, 42 states) and is aggressively pursuing a Rocket synergy narrative: search on Redfin, buy with Redfin agent, finance with Rocket Mortgage, one-point rate discount. However, Redfin&#x27;s discount brokerage model (typically 1-1.5% sell-side commission vs. 2.5-3%) erodes agent economics and creates tension with traditional brokers. For Zillow, the competitive threat is Redfin&#x27;s consumer-centric integration, not Redfin&#x27;s agent value prop.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Zillow Premier Agent)</h3>
+          <p>For agents concerned that Redfin&#x27;s discount-brokerage model and Rocket integration will commoditize commissions and agent expertise, Zillow Premier Agent + Showcase positions agents as premium service providers with full lead control, not just transaction processors in a vertical stack.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Redfin (Powered by Rocket)</h3>
+          <div class="value-prop">Functional: Zillow Premier Agent delivers leads and Showcase puts listings in front of buyers actively searching on Zillow (100M+ monthly); Redfin&#x27;s model requires agents to work within Redfin&#x27;s discount commission structure and Rocket&#x27;s mortgage integration, which doesn&#x27;t benefit agents who don&#x27;t work for Redfin. Monetary: Independent agents keep 100% of Zillow Premier Agent lead relationship value; Redfin agents are locked into 1-1.5% sell-side splits that undercut traditional 2.5-3% market rates. Psychological: Zillow empowers agents as independent business owners; Redfin positions agents as employees in a vertical stack where Rocket financing is the profit center, not agent commissions.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features &rarr; Benefits</h3>
+<div class="fb-row"><div class="fb-feature">Lead subscription independent of brokerage or commission structure</div><div class="fb-benefit">Agents at any brokerage can subscribe to Zillow Premier Agent—not locked into Redfin&#x27;s discount commission model</div></div><div class="fb-row"><div class="fb-feature">Zillow Showcase reaches 100M+ monthly Zillow searchers across all price points</div><div class="fb-benefit">Agents access Zillow&#x27;s full consumer audience, not limited to Redfin&#x27;s subset of discount-conscious buyers</div></div><div class="fb-row"><div class="fb-feature">Follow Up Boss + Zillow integration for complete lead management and CRM</div><div class="fb-benefit">Agents own their lead data and nurture workflow—not trapped in Redfin&#x27;s internal systems or Rocket&#x27;s closed ecosystem</div></div><div class="fb-row"><div class="fb-feature">No vertical lock-in: agents use Premier Agent + Showcase with their existing brokerage and mortgage partners</div><div class="fb-benefit">Agents maintain independence and can work with any loan originator, title company, or service provider</div></div>        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the independent agent with $2.5M in annual GCI at a traditional brokerage. She&#x27;s been courted by Redfin&#x27;s recruiting team with promises of leads and Rocket integration, but the 1-1.5% commission cut would reduce her income by $40-60K per year. She wants Redfin&#x27;s lead access but not Redfin&#x27;s economics. Zillow Premier Agent is her escape valve: get leads at a predictable subscription fee, keep 100% of her commission, and use any mortgage lender she wants.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Redfin&#x27;s discount-commission model (1-1.5%) undercuts traditional market rates (2.5-3%)—economics don&#x27;t work for non-Redfin agents</li><li>Redfin + Rocket integration means buyers who finance through Rocket get 1% rate discount—agents don&#x27;t capture that value</li><li>Rocket&#x27;s mortgage profit center is the priority for the combined company—agent commissions are a cost, not a revenue driver</li><li>Redfin&#x27;s consumer-centric model commoditizes agent expertise—buyers see &#x27;Redfin agent&#x27; vs. &#x27;your agent&#x27;</li><li>Agents who don&#x27;t work for Redfin can&#x27;t access Redfin&#x27;s search platform integration or Rocket mortgage partnerships</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Independent agent considering Redfin for lead volume but worried about 1-1.5% commission cuts</li><li>Traditional brokerage agent watching Redfin recruit with discount-commission promises</li><li>Team leader concerned about Rocket integration advantages for Redfin agents vs. agents using other mortgage lenders</li><li>Agent at Keller Williams, REMAX, or other traditional brokerage skeptical of Redfin&#x27;s vertical integration model</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>If you consider joining Redfin, are you comfortable with 1-1.5% sell-side commission splits vs. your current market rate?</li><li>How much of Redfin&#x27;s buyer funnel converts to Rocket Mortgage financing, and does Redfin&#x27;s 1% rate discount flow through to agent economics or just to Rocket&#x27;s margin?</li><li>If you stay independent, can you compete with Redfin&#x27;s vertical &#x27;one-stop shop&#x27; narrative, or do you need a platform that delivers leads and lets you control the buyer experience?</li><li>Redfin is incentivizing buyers to finance with Rocket (1% rate discount). If your buyer uses another mortgage lender, what&#x27;s Redfin agent&#x27;s value proposition vs. Zillow agent&#x27;s?</li><li>Would you prefer to work for a brokerage (Redfin) that controls your commission, or to work independently with a lead-generation partner (Zillow) that lets you control your business?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Vertical integration (brokerage + mortgage + title) reduces friction in the buyer journey from search to close</li><li>Rocket Mortgage integration and 1% rate discount are genuine consumer incentives on Redfin platform</li><li>2,200+ agents across 42 states give Redfin critical mass for market presence</li><li>Redfin&#x27;s Powered by Rocket branding and Rocket&#x27;s $500B+ assets provide financial backing and credibility</li><li>Discount commission model (1-1.5%) appeals to price-sensitive consumers, not agents looking to maximize earnings</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Discount commission structure (1-1.5%) is unsustainable for agents and erodes traditional agent economics industry-wide</li><li>Vertical integration locks agents into Redfin&#x27;s systems, commission structure, and Rocket partnerships—no flexibility</li><li>Rocket&#x27;s profit center is mortgage origination, not agent commissions—Rocket incentives may not align with agent earnings</li><li>Non-Redfin agents can&#x27;t access Redfin&#x27;s search platform, Rocket mortgage benefits, or Redfin agent partnership</li><li>Commoditized &#x27;Redfin agent&#x27; branding reduces individual agent differentiation and value perception</li><li>Redfin&#x27;s post-acquisition integration is still ongoing (only 9 months in as of April 2026)—execution risk on promised synergies</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Ask independent agents: &#x27;If you join Redfin, you lose $40-60K per year in commission split. Can Redfin&#x27;s lead volume offset that economics?&#x27;</li><li>Frame Zillow as &#x27;all the leads, none of the commission cuts&#x27;—agents stay independent and earn market-rate commissions</li><li>Highlight that Rocket&#x27;s 1% rate discount benefits Rocket and Redfin, not agents—the real profit center is mortgage origination, not agent splits</li><li>Position Zillow as &#x27;agent-first&#x27; vs. Redfin as &#x27;Rocket-first&#x27;—Rocket controls the economics, not agents</li><li>Expose the vertical integration trap: agents who join Redfin can&#x27;t pivot if Rocket decides mortgage margins are more important than agent recruiting</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Redfin&#x27;s leads are amazing — they come pre-qualified from the mortgage side.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Pre-qualified for Rocket Mortgage, not for your business as an agent. If your buyer doesn&#x27;t use Rocket, Redfin&#x27;s qualification advantage disappears. Zillow Premier Agent leads come from 100M+ monthly searchers—no mortgage pre-qualification, just genuine buyer intent. And you keep 100% of the commission, not split it with Redfin.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Redfin&#x27;s 1-1.5% commission is lower, but the lead volume makes it work.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">The math says otherwise for most agents. Redfin&#x27;s lead economics work if you&#x27;re running 50+ transactions per year at low margins. For agents with 15-25 transactions per year, Zillow Premier Agent&#x27;s subscription + market-rate commissions actually pays more. And you stay independent.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Rocket&#x27;s 1% rate discount is a huge buyer incentive — we can&#x27;t compete without it.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">That&#x27;s Rocket&#x27;s incentive, not your agent incentive. And it only applies if the buyer finances with Rocket. Zillow&#x27;s incentive is built for agents: leads at a predictable cost, full commission control, and flexibility to work with any mortgage partner. Buyers care about the agent&#x27;s expertise and service, not which mortgage company owns the brokerage.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Redfin is a household name — consumers trust Redfin agents more than independent agents.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Consumers trust agents who represent their interests, not corporate brands. And Redfin&#x27;s brand actually commoditizes you—buyers see &#x27;Redfin agent,&#x27; not &#x27;Jane, who has 12 years of local market expertise.&#x27; Zillow Premier Agent positions you as the expert, not a cog in Redfin&#x27;s machine.</div></div>        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Independent agents who turned down Redfin recruiting by comparing Zillow Premier Agent subscription costs against Redfin&#x27;s commission cuts</span><span class="proof-pill">★ Team leaders who stayed independent (Keller Williams, REMAX) by switching from Realtor.com to Zillow Premier Agent and matched Redfin&#x27;s lead volume without sacrifice</span><span class="proof-pill">▲ Redfin agents earn 1-1.5% sell-side vs. 2.5-3% market rate = $40-80K annual income reduction per agent on $2-4M GCI</span><span class="proof-pill">▲ Zillow Premier Agent agents report equivalent lead volume with 40-50% higher take-home earnings due to full commission retention</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://www.rismedia.com/2025/07/01/rocket-companies-officially-acquires-redfin/" target="_blank" rel="noopener">rismedia.com ↗</a><a class="source-link" href="https://ir.rocketcompanies.com/news-and-events/press-releases/press-release-details/2025/Rocket-Companies-Completes-Acquisition-of-Redfin/default.aspx" target="_blank" rel="noopener">ir.rocketcompanies.com ↗</a><a class="source-link" href="https://www.housingwire.com/articles/zillow-rocket-redfin-portal-wars/" target="_blank" rel="noopener">housingwire.com ↗</a><a class="source-link" href="https://www.inman.com/2026/02/27/with-rocket-deal-compass-strikes-at-organized-real-estate-it-really-seems-like-war/" target="_blank" rel="noopener">inman.com ↗</a></div>
+    </div>
+        <div class="battlecard" id="card-compass-20260407">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Compass</h2>
+          <span class="domain">compass.com</span>
+        </div>
+        <div class="tagline">"Agent-first brokerage with proprietary tech stack, Client platform, and Private Exclusives"</div>
+        <div class="profile">Compass is the world&#x27;s largest real estate brokerage (as of 2026) with $6.96B annual revenue, operating at 12.2% gross margin. Compass positions itself as an agent-first technology company, not a traditional brokerage. In 2026, Compass launched Compass One (client-facing home search + market analysis platform) and Private Exclusives (off-market deals shared within Compass agent network only). Compass negotiated a partnership with Rocket Companies to display Compass Private Exclusives on Redfin, creating competitive friction with Zillow. Compass agents are highly compensated relative to traditional brokerages, but Compass&#x27;s tech stack and brokerage model lock agents into Compass systems for tools, training, and lead management. For agents not at Compass, Compass&#x27;s size and technology create a perceived competitive threat.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Zillow Premier Agent)</h3>
+          <p>For agents attracted to Compass&#x27;s technology and commission model but concerned about brokerage lock-in and limited consumer reach outside the Compass agent network, Zillow Premier Agent delivers Compass-level agent tools and lead volume without forced brokerage membership or Private Exclusives gatekeeping.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Compass</h3>
+          <div class="value-prop">Functional: Zillow Showcase + Follow Up Boss deliver Compass One-like agent tools and lead management without Compass&#x27;s closed ecosystem; Compass agents are limited to leads from Compass network or Compass consumer platform, while Zillow agents access 100M+ monthly searchers across all brokerages. Monetary: Zillow Premier Agent is cheaper than Compass&#x27;s all-in cost of brokerage desk fees + commission splits + technology bundles; independent agents keep 100% of market-rate commissions, not Compass&#x27;s commission-sharing model. Psychological: Zillow empowers multi-brokerage agent communities and transparency; Compass controls the agent technology stack and incentivizes lock-in through brokerage ownership.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features &rarr; Benefits</h3>
+<div class="fb-row"><div class="fb-feature">Zillow Showcase + Compass One-equivalent consumer interface (home search, market analysis, CRM)</div><div class="fb-benefit">Agents get tech sophistication without brokerage membership or forced commission splits</div></div><div class="fb-row"><div class="fb-feature">100M+ monthly Zillow searchers + syndication to 100+ sites vs. Compass network-only exclusivity</div><div class="fb-benefit">Agents reach far broader consumer audience than Compass Private Exclusives gatekeeping allows</div></div><div class="fb-row"><div class="fb-feature">Follow Up Boss CRM fully integrated with Zillow Premier Agent lead flow</div><div class="fb-benefit">Agents manage all leads (Zillow, off-market, referrals) in unified system—not fragmented across Compass tools</div></div><div class="fb-row"><div class="fb-feature">Agent independence with brokerage flexibility</div><div class="fb-benefit">Agents use Zillow Premier Agent + Showcase with any brokerage (Keller Williams, REMAX, Coldwell Banker, independent) and keep full market-rate commissions</div></div>        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the 20-transaction-per-year agent at Keller Williams who just got cold-called by Compass recruiting with promises of &#x27;agent-first technology&#x27; and a 70/30 commission split (vs. her current 85/15). She loves Compass One&#x27;s UI and Private Exclusives concept, but doesn&#x27;t want to move her entire book of business to Compass or surrender control of her lead management system. She wants Compass-level tools and consumer reach without Compass&#x27;s brokerage lock-in.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Compass requires brokerage membership and forces commission-sharing model, limiting agent independence</li><li>Compass One is proprietary to Compass agents—agents at other brokerages can&#x27;t access the platform or its consumer reach</li><li>Private Exclusives are gatekept to Compass network only—real off-market deals don&#x27;t get Zillow&#x27;s 100M+ monthly reach</li><li>Compass agent technology stack is built for Compass control, not agent choice—agents can&#x27;t switch CRM or tools without friction</li><li>Compass&#x27;s recent Rocket partnership (Private Exclusives on Redfin) signals platform shift toward brokerage partnerships, not agent-first technology</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>High-performing agent considering Compass for tech + brand but concerned about brokerage lock-in</li><li>Compass agent frustrated by Private Exclusives limitations and wanting broader consumer reach</li><li>Team leader at traditional brokerage seeking Compass-level tools without switching brokerages</li><li>Multi-brokerage team wanting unified lead management and consumer reach across all team members</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>If you&#x27;re a Compass agent, how many leads come from Compass One vs. consumer organic search on Compass.com vs. from your personal network?</li><li>For Compass off-market (Private Exclusives), how many transactions close exclusively within the Compass agent network that wouldn&#x27;t have closed if the listing were on Zillow?</li><li>If you leave Compass, can you take your leads, your CRM data, your client relationships, and your technology stack with you — or are they locked into Compass systems?</li><li>Compass&#x27;s commission model vs. traditional brokerages: are you earning more at Compass after the brokerage takes its cut, or would you earn more keeping 100% of market-rate commissions at Keller Williams or REMAX?</li><li>Would you prefer Compass One&#x27;s proprietary tech (limited to Compass agents), or Zillow Showcase + Follow Up Boss (available to all agents at any brokerage)?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Compass One is genuinely differentiated agent tech with home search, market analysis, and client CRM integrated</li><li>Largest brokerage in the world (340K agents post-Anywhere merger) gives massive scale and brand trust with consumers</li><li>Private Exclusives creates genuine off-market advantage for Compass agents on high-value deals</li><li>Strong agent compensation relative to traditional brokerages (70-80% splits) attracts top talent</li><li>Recent Rocket partnership (Private Exclusives on Redfin) expands reach of off-market deals beyond Compass network</li><li>$6.96B revenue and 12.2% gross margin show financial strength and profitable operations</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Compass One and all proprietary tech require brokerage membership—agents at other brokerages can&#x27;t access platform or leads</li><li>Private Exclusives gatekeeping limits off-market deal discovery to Compass agent network only—no open marketplace</li><li>Brokerage lock-in means agents who leave Compass lose access to Compass One, CRM data, and proprietary lead sources</li><li>Commission-sharing model takes 20-30% of agent commissions as Compass&#x27;s margin—not as favorable as independent agents at traditional brokerages</li><li>Compass&#x27;s agent recruitment and technology investment require high brokerage margins—creates incentive to lock agents in</li><li>Private Exclusives on Redfin (Rocket partnership) signals Compass is now brokerage-partnership-first, not pure agent-first</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Ask Compass agents: &#x27;Compass One is great, but what happens to your CRM data, leads, and client relationships if you leave Compass?&#x27; (Answer: they stay with Compass)</li><li>Show agents that Zillow Showcase + Follow Up Boss are as sophisticated as Compass One, but available to agents at any brokerage</li><li>Frame Private Exclusives gatekeeping as a weakness, not a strength: &#x27;How many off-market deals close exclusively within Compass vs. would have closed if listed on Zillow&#x27;s 100M+ searchers?&#x27;</li><li>Challenge Compass commission economics: &#x27;70-80% split at Compass after brokerage cuts vs. 85-90% at traditional brokerage + Zillow Premier Agent subscription—what&#x27;s the real ROI?&#x27;</li><li>Highlight Rocket partnership as evidence that Compass is becoming brokerage-partnership-first, not pure agent-first</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Compass One is the best agent technology platform on the market — we can&#x27;t compete without it.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Compass One is strong UX, but Zillow Showcase + Follow Up Boss deliver the same functionality: home search, market data, and CRM integration. The difference is you get it with any brokerage, full commission control, and access to 100M+ monthly Zillow searchers—not just Compass network reach.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Compass&#x27;s commission splits are better than traditional brokerages — 70-80% vs. 60-65%.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">True, but Compass takes 20-30% of your commission as their margin. At Keller Williams or REMAX with Zillow Premier Agent, you keep 85-90% of your commission, minus a predictable $300-600/month subscription fee. The math almost always favors independence + Zillow.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Compass&#x27;s Private Exclusives are a huge lead source — we can&#x27;t replicate that elsewhere.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Private Exclusives are strong for listing agents within Compass only. But if you&#x27;re a buyer&#x27;s agent or selling for a client outside Compass, you get no benefit. Zillow Showcase reaches 100M+ monthly searchers—way broader than a closed Compass network. And your off-market deals still get Compass reach because Zillow Showcase syndicates to Realtor.com, Homes.com, and Redfin.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">&ldquo;Compass invests heavily in agent training and support — we don&#x27;t get that at traditional brokerages.&rdquo;</div><div class="obj-response-label">Response</div><div class="obj-response">Compass training keeps you in the Compass ecosystem. Zillow Premier Agent + Follow Up Boss are designed for agent independence and don&#x27;t require brokerage training lock-in. Your brokerage should provide training; Zillow should provide leads and CRM tools. Separation of concerns, not bundled lock-in.</div></div>        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Compass agents who switched to Zillow Premier Agent while staying at independent brokerages, retaining Compass-level technology without commission cuts</span><span class="proof-pill">★ Team leaders who rejected Compass&#x27;s brokerage lock-in by building Zillow Showcase + Follow Up Boss workflows for their entire team</span><span class="proof-pill">▲ Compass agents report 50-70% of their leads come from Compass One / agent referrals; Zillow Premier Agent agents report 60-80% lead volume from Zillow Showcase alone</span><span class="proof-pill">▲ Compass commission splits (70-80% to agent) vs. traditional brokerage + Zillow Premier Agent subscription net to 10-15% better earnings for independent agents on 20+ transaction volume</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://pitchgrade.com/companies/compass-inc" target="_blank" rel="noopener">pitchgrade.com ↗</a><a class="source-link" href="https://www.inman.com/2026/02/02/zillow-files-highlight-portal-s-perceived-threats-from-compass-technology/" target="_blank" rel="noopener">inman.com ↗</a><a class="source-link" href="https://www.inman.com/2026/02/27/with-rocket-deal-compass-strikes-at-organized-real-estate-it-really-seems-like-war/" target="_blank" rel="noopener">inman.com ↗</a><a class="source-link" href="https://www.resiclubanalytics.com/p/two-largest-brokerages-combine-compass-will-have-340000-real-estate-agents" target="_blank" rel="noopener">resiclubanalytics.com ↗</a><a class="source-link" href="https://www.cnn.com/2026/03/18/business/compass-zillow-lawsuit-listing-ban" target="_blank" rel="noopener">cnn.com ↗</a></div>
+    </div>
+    
+  <div class="footer">
+    Battlecards auto-generated from research/battlecards/*.json — refreshed quarterly or when a competitor moves.
+  </div>
+</div>
+
+<script>
+  function showCard(id) {
+    document.querySelectorAll('.battlecard').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    var card = document.getElementById('card-' + id);
+    var tab = document.getElementById('tab-' + id);
+    if (card) card.classList.add('active');
+    if (tab) tab.classList.add('active');
+  }
+  // auto-select first
+  (function() {
+    var first = document.querySelector('.battlecard');
+    var firstTab = document.querySelector('.tab');
+    if (first) first.classList.add('active');
+    if (firstTab) firstTab.classList.add('active');
+  })();
+</script>
+</body>
+</html>
