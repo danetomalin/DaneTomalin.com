@@ -2152,138 +2152,170 @@
             <p class="section-intro">Each category tracks leading indicators (are we doing the right work?) flowing into lagging outcomes (is it working?).</p>
 
             <div class="tab-bar" id="metricTabBar">
-                <div class="tab-item active" onclick="showMetric(0)">Sales Enablement</div>
-                <div class="tab-item" onclick="showMetric(1)">Demand Gen</div>
-                <div class="tab-item" onclick="showMetric(2)">Market Perception</div>
-                <div class="tab-item" onclick="showMetric(3)">Product Influence</div>
+                <div class="tab-item active" onclick="showMetric(0)">Lifecycle Performance</div>
+                <div class="tab-item" onclick="showMetric(1)">Launch Excellence</div>
+                <div class="tab-item" onclick="showMetric(2)">Pricing & Packaging</div>
+                <div class="tab-item" onclick="showMetric(3)">Competitive & Market Position</div>
+                <div class="tab-item" onclick="showMetric(4)">Sales & Field Enablement</div>
             </div>
 
             <!-- Metric 0 -->
             <div class="tab-panel active" id="metric-0">
                 <div class="metric-panel">
                     <div class="metric-header">
-                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-                        <div class="metric-title">Sales Enablement</div>
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></div>
+                        <div class="metric-title">Lifecycle Performance</div>
                     </div>
                     <div class="metric-flow-large">
                         <div class="mf-col mf-leading">
                             <div class="mf-col-label">Leading Indicators</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Asset adoption rate</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Sales confidence score</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Enablement session attendance</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Activation rate post-onboarding by agent segment</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Feature adoption depth across Premier Agent + Showcase + FUB</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>NPS by lifecycle stage (acquire, adopt, retain, expand)</li>
                             </ul>
                         </div>
                         <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
                         <div class="mf-col mf-lagging">
                             <div class="mf-col-label">Lagging Outcomes</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Win rate</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Deal velocity</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Average deal size</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Net revenue retention by segment</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Expansion ARPU and attach rate (Showcase, FUB, ZHL)</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Churn by tenure and segment</li>
                             </ul>
                         </div>
                     </div>
                     <div class="mf-method">
                         <div class="mf-method-label">Measured via</div>
-                        CRM tracking, quarterly sales surveys, asset analytics
+                        Product analytics, agent surveys, FUB telemetry, finance attribution
                     </div>
                 </div>
             </div>
-
             <!-- Metric 1 -->
             <div class="tab-panel" id="metric-1">
                 <div class="metric-panel">
                     <div class="metric-header">
-                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></div>
-                        <div class="metric-title">Demand Generation</div>
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                        <div class="metric-title">Launch Excellence</div>
                     </div>
                     <div class="metric-flow-large">
                         <div class="mf-col mf-leading">
                             <div class="mf-col-label">Leading Indicators</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Content downloads</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Webinar registrations</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>ABM engagement</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Launch-readiness scorecard (positioning, pricing, enablement, comms)</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Sales and field coverage at launch day</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Beta-to-GA activation velocity</li>
                             </ul>
                         </div>
                         <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
                         <div class="mf-col mf-lagging">
                             <div class="mf-col-label">Lagging Outcomes</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pipeline influenced</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pipeline sourced</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>MQL-to-SQL conversion</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Launch-quarter adoption % vs. plan</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Time-to-revenue from GA to first $1M</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Share of new ARR from products launched in trailing 4 quarters</li>
                             </ul>
                         </div>
                     </div>
                     <div class="mf-method">
                         <div class="mf-method-label">Measured via</div>
-                        Marketing automation, attribution modeling, CRM pipeline reports
+                        Launch retros, finance reporting, product analytics, field debriefs
                     </div>
                 </div>
             </div>
-
             <!-- Metric 2 -->
             <div class="tab-panel" id="metric-2">
                 <div class="metric-panel">
                     <div class="metric-header">
-                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg></div>
-                        <div class="metric-title">Market Perception</div>
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg></div>
+                        <div class="metric-title">Pricing & Packaging</div>
                     </div>
                     <div class="metric-flow-large">
                         <div class="mf-col mf-leading">
                             <div class="mf-col-label">Leading Indicators</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Share of voice</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Analyst sentiment</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Press coverage volume</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Willingness-to-pay studies completed by segment</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Pricing experiments running concurrently</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Bundle test coverage across Premier Agent + Showcase + FUB</li>
                             </ul>
                         </div>
                         <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
                         <div class="mf-col mf-lagging">
                             <div class="mf-col-label">Lagging Outcomes</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Brand consideration in RFPs</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Inbound qualified leads</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Category recognition</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>ARPU lift quarter-over-quarter</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Attach rate on bundled packages</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Churn at price-change boundaries (within tolerance)</li>
                             </ul>
                         </div>
                     </div>
                     <div class="mf-method">
                         <div class="mf-method-label">Measured via</div>
-                        Media monitoring, analyst feedback, prospect surveys
+                        Pricing committee, finance dashboards, retention cohorts, A/B test platform
                     </div>
                 </div>
             </div>
-
             <!-- Metric 3 -->
             <div class="tab-panel" id="metric-3">
                 <div class="metric-panel">
                     <div class="metric-header">
-                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg></div>
-                        <div class="metric-title">Product Influence</div>
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg></div>
+                        <div class="metric-title">Competitive & Market Position</div>
                     </div>
                     <div class="metric-flow-large">
                         <div class="mf-col mf-leading">
                             <div class="mf-col-label">Leading Indicators</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Roadmap inputs submitted</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive gap analyses</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Win/loss interview cadence and coverage</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive content shipped per quarter (battlecards, teardowns, POVs)</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Field intelligence loop participation rate</li>
                             </ul>
                         </div>
                         <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
                         <div class="mf-col mf-lagging">
                             <div class="mf-col-label">Lagging Outcomes</div>
                             <ul class="mf-col-items">
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Features shipped from PMM input</li>
-                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Competitive win rate on features</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Win rate vs. Realtor.com, Homes.com, Compass</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Agent share-of-wallet vs. comp set</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Brand consideration and trust score in agent segments</li>
                             </ul>
                         </div>
                     </div>
                     <div class="mf-method">
                         <div class="mf-method-label">Measured via</div>
-                        Product team feedback, feature release tracking
+                        Win/loss program, brand tracker, third-party agent surveys, field reports
+                    </div>
+                </div>
+            </div>
+            <!-- Metric 4 -->
+            <div class="tab-panel" id="metric-4">
+                <div class="metric-panel">
+                    <div class="metric-header">
+                        <div class="metric-icon-lg"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg></div>
+                        <div class="metric-title">Sales & Field Enablement</div>
+                    </div>
+                    <div class="metric-flow-large">
+                        <div class="mf-col mf-leading">
+                            <div class="mf-col-label">Leading Indicators</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Asset adoption and certification rate across reps and field</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Enablement session coverage at launch and quarterly</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Brokerage partner playbook downloads (Howard Hanna, BHHS, The Agency)</li>
+                            </ul>
+                        </div>
+                        <div class="mf-arrow"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></div>
+                        <div class="mf-col mf-lagging">
+                            <div class="mf-col-label">Lagging Outcomes</div>
+                            <ul class="mf-col-items">
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Quota attainment in target segments and territories</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Rep- and field-driven Showcase adoption</li>
+                                <li><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Field-influenced Premier Agent pipeline</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mf-method">
+                        <div class="mf-method-label">Measured via</div>
+                        CRM, LMS, field reporting, brokerage adoption dashboards
                     </div>
                 </div>
             </div>
@@ -2325,7 +2357,7 @@
 
         /* ── Metric tabs ── */
         var currentMetric = 0;
-        var totalMetrics = 4;
+        var totalMetrics = 5;
 
         function showMetric(n) {
             currentMetric = n;
@@ -2723,7 +2755,7 @@
 
         /* ── Metric tabs ── */
         var currentMetric = 0;
-        var totalMetrics = 4;
+        var totalMetrics = 5;
 
         function showMetric(n) {
             currentMetric = n;
