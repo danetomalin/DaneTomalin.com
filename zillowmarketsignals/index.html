@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Zillow Agent Marketing | Market Signals</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #A78BFA;
+    --accent-strong: #7C3AED;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --bullish: #66BB6A;
+    --bullish-bg: rgba(102, 187, 106, 0.12);
+    --bearish: #EF5350;
+    --bearish-bg: rgba(239, 83, 80, 0.12);
+    --neutral: #FFA726;
+    --neutral-bg: rgba(255, 167, 38, 0.12);
+    --high-impact: #FFA726;
+    --high-impact-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Site header — sticky top bar matching CI Dossier */
+  .site-header {
+    position: sticky; top: 0;
+    background: rgba(13,13,18,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 200;
+  }
+  .site-header-name {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+    color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Header — matches CI Dossier */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Trend Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card.clickable { cursor: pointer; user-select: none; }
+  .scorecard-card.clickable:hover { transform: translateY(-1px); }
+  .scorecard-card.active-filter { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+  .scorecard-card[data-scorecard="bullish"].active-filter { border-color: var(--bullish); box-shadow: 0 0 0 2px var(--bullish-bg); }
+  .scorecard-card[data-scorecard="bearish"].active-filter { border-color: var(--bearish); box-shadow: 0 0 0 2px var(--bearish-bg); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-bullish { border-left: 3px solid var(--bullish); }
+  .scorecard-card.overall-bearish { border-left: 3px solid var(--bearish); }
+  .scorecard-card.overall-neutral { border-left: 3px solid var(--neutral); }
+
+  /* Sentiment Badge */
+  .sentiment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .sentiment-badge.bullish { background: var(--bullish-bg); color: var(--bullish); }
+  .sentiment-badge.bearish { background: var(--bearish-bg); color: var(--bearish); }
+  .sentiment-badge.neutral { background: var(--neutral-bg); color: var(--neutral); }
+  .sentiment-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Pillar Sections */
+  .pillar-section {
+    margin-bottom: 32px;
+  }
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .pillar-icon.velocity { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .pillar-icon.inventory { background: rgba(124,58,237,0.15); color: var(--accent-strong); }
+  .pillar-icon.regulatory { background: rgba(255,167,38,0.15); color: var(--neutral); }
+  .pillar-icon.competitive { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .pillar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .pillar-header .count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Signal Cards */
+  .signal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .signal-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .signal-card.high-impact {
+    border-left: 3px solid var(--high-impact);
+    background: var(--high-impact-bg);
+  }
+  .signal-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .signal-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+  }
+  .impact-badge .bar-track {
+    width: 40px; height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .impact-badge .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .signal-card .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .signal-card .commentary {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .signal-card .commentary .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .signal-card .commentary p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .signal-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state p { font-size: 15px; }
+
+  /* Footer */
+  .engine-footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .engine-footer a { color: var(--accent); text-decoration: none; }
+  .engine-footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .engine-header h1 { font-size: 1.6em; }
+    .scorecard { grid-template-columns: 1fr 1fr; }
+    .filter-bar { flex-direction: column; }
+    .search-input { min-width: unset; width: 100%; }
+    .signal-card .card-top { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+  <a href="https://danetomalin.com/" class="site-header-back">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+    Back to Portfolio
+  </a>
+</header>
+
+<header class="engine-header">
+  <h1>Zillow Agent Marketing <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Market Signals — Generated: <span id="dossier-date">April 07, 2026</span></p>
+  <span class="classification">Internal Only</span>
+  <div class="meta">
+    <span>14 signals</span>
+    <span>4 high-impact</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Trend Scorecard -->
+  <div class="scorecard" id="scorecard">
+    
+    <div class="scorecard-card overall-bullish clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Overall Sentiment</div>
+      <div class="value" style="color:var(--bullish)">BULLISH</div>
+      <div class="detail">NAR settlement reshaping agent economics with commission flexibility and MLS policy transitions, while Zillow&#x27;s integrated marketing tools (Showcase, Follow Up Boss) capture margin expansion. Competitive threats from Redfin/Rocket and Compass require aggressive agent-centric positioning.</div>
+    </div>
+    <div class="scorecard-card clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Total Signals</div>
+      <div class="value" style="color:var(--accent)">14</div>
+      <div class="detail">4 high-impact (score 8+)</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bullish" onclick="filterFromScorecard('bullish')" title="Click to filter bullish signals">
+      <div class="label">Bullish Signals</div>
+      <div class="value" style="color:var(--bullish)">8</div>
+      <div class="detail">Trends favoring Zillow's agent marketing</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bearish" onclick="filterFromScorecard('bearish')" title="Click to filter bearish signals">
+      <div class="label">Bearish Signals</div>
+      <div class="value" style="color:var(--bearish)">4</div>
+      <div class="detail">Threats to watch &amp; counter-position</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Pillar</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterSignals('all', this)">All</button>
+    <button class="filter-btn" data-filter="housing_market" onclick="filterSignals('housing_market', this)">Housing Market</button>
+    <button class="filter-btn" data-filter="agent_economics" onclick="filterSignals('agent_economics', this)">Agent Economics</button>
+    <button class="filter-btn" data-filter="competitive_moves" onclick="filterSignals('competitive_moves', this)">Competitive Moves</button>
+    <button class="filter-btn" data-filter="zillow_product" onclick="filterSignals('zillow_product', this)">Zillow Product</button>
+    <button class="filter-btn" data-filter="regulatory_legal" onclick="filterSignals('regulatory_legal', this)">Regulatory</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Sentiment</span>
+    <button class="filter-btn" data-sentiment="bullish" onclick="filterSentiment('bullish', this)">Bullish</button>
+    <button class="filter-btn" data-sentiment="bearish" onclick="filterSentiment('bearish', this)">Bearish</button>
+    <div class="filter-separator"></div>
+    <input type="text" class="search-input" placeholder="Search signals..." oninput="searchSignals(this.value)" id="search-box">
+  </div>
+
+  <!-- Signal Content -->
+  <div id="dossier-content">
+    <div class="pillar-section" data-pillar-section="housing_market">
+      <div class="pillar-header">
+        <div class="pillar-icon housing_market">🏠</div>
+        <h2>Housing Market</h2>
+        <span class="count">3 signals</span>
+      </div>
+      
+    <div class="signal-card " data-pillar="housing_market" data-sentiment="neutral" data-score="7">
+      <div class="card-top">
+        <h3>Mortgage rates dip to 6.2% as Fed signals slower rate-cut pace in Q2 2026</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          ● neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-04-01</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Stable rates support agent marketing but YoY sales decline indicates market softening requiring more sophisticated lead qualification</div>
+      <p class="summary">The 30-year fixed mortgage rate fell to 6.2% as of April 1, 2026, down 12 basis points from March levels. Federal Reserve communications indicate a gradual approach to rate cuts due to persistent inflation in services. March 2026 home sales volume increased 4% MoM but declined 8% YoY, with median home price holding steady at $420K nationally. Inventory remains constrained at 3.1 months supply.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Stable rates at 6.2% favor agents marketing in move-up and premium segments — less payment shock means easier qualifying. However, YoY sales declines suggest buyer motivation is weakening despite stable rates. Zillow agents need hyper-local inventory positioning and buyer-pre-qualification tools to compete in a slower market. Zillow Home Loans integration is critical here: agents who can offer rate-lock guarantees and pre-approval integration outcompete agents using third-party lenders.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">mortgage-rates</span><span class="tag">Fed-policy</span><span class="tag">home-sales</span><span class="tag">inventory</span><span class="tag">pricing</span>
+        <span style="flex:1"></span>
+        <a href="https://www.freddiemac.com/pmms/" class="source-link" target="_blank" rel="noopener">freddiemac.com <span style="color:var(--text-muted);font-size:11px;">(2026-04-01)</span> &#x2197;</a><a href="https://www.nar.realtor/research-and-statistics/research-reports/pending-home-sales-index" class="source-link" target="_blank" rel="noopener">nar.realtor <span style="color:var(--text-muted);font-size:11px;">(2026-04-03)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card " data-pillar="housing_market" data-sentiment="bullish" data-score="7">
+      <div class="card-top">
+        <h3>Housing inventory rebounds 9% YoY as mortgage rate volatility drives selective selling</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          ▲ bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-28</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Inventory normalization creates demand for agent marketing tools and strategic pricing capabilities</div>
+      <p class="summary">Housing inventory (active listings) increased 9% YoY in March 2026, reaching 3.1 months supply nationally. Regional variation is significant: Sunbelt metros (Austin, Phoenix, Tampa) see 4.2 months supply due to selective selling and delayed buyers; Northeast markets remain tight at 2.1 months. Home price appreciation slowed to 2.4% YoY, down from 5.2% YoY in 2024. Forecast: inventory will normalize to 4.5 months by Q4 2026.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Inventory normalization is a MASSIVE opportunity for agent marketing. Agents who currently win in tight markets (price optimization, limited inventory) will face entirely different competition dynamics in 6 months. Agents need marketing tools that help them compete in a SELLER'S inventory glut, not a buyer's market. Zillow's Showcase and strategic pricing tools become essential. This is a 'rebuild your agent base' moment — agents trained on scarcity tactics will fail in Q4 2026 without better tools.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">inventory</span><span class="tag">housing-market</span><span class="tag">price-trends</span><span class="tag">regional-dynamics</span><span class="tag">supply-demand</span>
+        <span style="flex:1"></span>
+        <a href="https://www.nar.realtor/research-and-statistics/research-reports/existing-home-sales" class="source-link" target="_blank" rel="noopener">nar.realtor <span style="color:var(--text-muted);font-size:11px;">(2026-03-28)</span> &#x2197;</a><a href="https://www.freddiemac.com/research/outlook/housing-forecast-2026" class="source-link" target="_blank" rel="noopener">freddiemac.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-25)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card " data-pillar="housing_market" data-sentiment="neutral" data-score="6">
+      <div class="card-top">
+        <h3>Pending home sales index falls 6% in March; first decline in 4 months amid buyer confidence softening</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          ● neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-04-02</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Sales slowdown contracts transaction TAM but increases demand for agent marketing and lead-nurturing tools</div>
+      <p class="summary">The NAR Pending Home Sales Index declined 6% MoM in March 2026, the first monthly decline in four months, driven by softening buyer confidence and rising mortgage rate volatility. Regional analysis shows weakness in high-priced coastal markets (-12% MoM) and strength in mid-priced Sunbelt markets (+3% MoM). Forecast: home sales velocity will remain tepid through summer 2026 until Fed policy becomes more predictable.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Sales velocity softness is directionally bad for agent marketing TAM (fewer transactions = fewer opportunities to sell Showcase, lead tools, etc.). However, tepid sales cycles also mean longer selling cycles and more need for lead nurturing — EXACTLY where Follow Up Boss and Zillow Home Loans pre-qualification workflows shine. Agents in slower markets need MORE marketing technology, not less. Zillow's messaging: 'When sales slow, marketing becomes the differentiator. Showcase, Follow Up Boss, and Home Loans integration give agents the edge to win listings and close deals in a slower market.'</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">pending-sales</span><span class="tag">market-weakness</span><span class="tag">buyer-confidence</span><span class="tag">regional-variation</span><span class="tag">sales-velocity</span>
+        <span style="flex:1"></span>
+        <a href="https://www.nar.realtor/research-and-statistics/research-reports/pending-home-sales-index" class="source-link" target="_blank" rel="noopener">nar.realtor <span style="color:var(--text-muted);font-size:11px;">(2026-04-02)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="agent_economics">
+      <div class="pillar-header">
+        <div class="pillar-icon agent_economics">📊</div>
+        <h2>Agent Economics</h2>
+        <span class="count">2 signals</span>
+      </div>
+      
+    <div class="signal-card high-impact" data-pillar="agent_economics" data-sentiment="bullish" data-score="9">
+      <div class="card-top">
+        <h3>NAR settlement drives 13% increase in buyer-agent commission negotiations by March 2026<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          ▲ bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-15</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">NAR settlement creates demand for agent productivity and lead-conversion tools to offset commission compression</div>
+      <p class="summary">In the eight months since the NAR antitrust settlement took effect in November 2025, buyer-agent commission structures have become negotiable in 48 states. Market data shows 13% of brokerages have modified compensation structures, with median buyer-agent commissions declining from 2.5% to 2.2% in competitive metros. MLS adoption of new commission policies remains inconsistent, creating regional arbitrage opportunities.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>The NAR settlement fragments commission economics by geography, which is bad for national brands but good for agents who need local, context-aware marketing. Zillow's agent marketing tools (Showcase, Follow Up Boss, Zillow Home Loans partnerships) can now position as 'commission-protection technology' — helping agents prove value and compete on service, not just commission rate. This is a tailwind for bundled marketing solutions. Sales should lead with: agents under pricing pressure need MORE lead conversion tools, not fewer.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">NAR-settlement</span><span class="tag">commission-compression</span><span class="tag">agent-economics</span><span class="tag">MLS-policy</span><span class="tag">compensation</span>
+        <span style="flex:1"></span>
+        <a href="https://www.inman.com/news/nar-settlement-commission-pressures-mount/" class="source-link" target="_blank" rel="noopener">inman.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-15)</span> &#x2197;</a><a href="https://www.freddiemac.com/research/surveys/commission-trends-2026" class="source-link" target="_blank" rel="noopener">freddiemac.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-20)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card " data-pillar="agent_economics" data-sentiment="neutral" data-score="7">
+      <div class="card-top">
+        <h3>NAR data: Agent count declines 7% YoY as commission compression accelerates broker consolidation</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          ● neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-10</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Agent attrition contracts TAM but consolidation favors enterprise sales to mega-brokers — net neutral for Zillow</div>
+      <p class="summary">The National Association of Realtors reported a 7% decline in active agent count in Q4 2025 vs. Q4 2024, with net agent attrition highest among independent agents and teams. Broker consolidation accelerated: the top 50 brokers now control 54% of agent population, up from 51% in 2024. Highest attrition in secondary and tertiary markets where commission compression hits hardest. Solo agent count is at 15-year lows.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Agent attrition is a double-edged sword. Loss of solo agents reduces Zillow's TAM, but consolidation into mega-brokers increases Zillow's selling leverage. Mega-brokers have budgets for enterprise solutions (Showcase bundles, Follow Up Boss licenses, Zillow Home Loans training). Zillow should shift positioning from 'we serve agents' to 'we are the agent productivity backbone for enterprise brokers.' This plays to Zillow's scale advantages.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">NAR-data</span><span class="tag">agent-attrition</span><span class="tag">broker-consolidation</span><span class="tag">market-dynamics</span><span class="tag">independent-agents</span>
+        <span style="flex:1"></span>
+        <a href="https://www.nar.realtor/research-and-statistics/research-reports/2025-agent-census" class="source-link" target="_blank" rel="noopener">nar.realtor <span style="color:var(--text-muted);font-size:11px;">(2026-03-10)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="competitive_moves">
+      <div class="pillar-header">
+        <div class="pillar-icon competitive_moves">⚡</div>
+        <h2>Competitive Moves</h2>
+        <span class="count">4 signals</span>
+      </div>
+      
+    <div class="signal-card high-impact" data-pillar="competitive_moves" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>Redfin and Rocket Companies announce joint agent platform; positions as 'commission-lite' alternative to MLS incumbents<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          ▼ bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-25</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Redfin-Rocket platform poses existential threat to MLS-dependent agent economics and Zillow's commission-stacking model</div>
+      <p class="summary">Redfin and Rocket Companies announced a strategic partnership on March 25 to build an integrated agent and consumer platform, combining Redfin's 3D tour technology with Rocket Mortgage's pre-approval integrations. The new 'Redfin Pro' platform targets agents dissatisfied with MLS fee structures, offering 1.5% buyer-agent commission with full commission flexibility. Soft launch begins in 6 metros: Austin, Phoenix, Denver, Nashville, Tampa, and Charlotte.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Redfin-Rocket is the most dangerous competitive move of 2026. They're not competing on brand — they're competing on infrastructure and economics. A 1.5% buyer-agent commission with technology bundling is a direct assault on traditional MLS economics. Zillow's counter must be: our Showcase + Follow Up Boss + Zillow Home Loans bundle gives agents HIGHER conversion and HIGHER net commission than a 'lite' platform. Position Zillow as the premium choice for agents who want to maximize earnings, not minimize fees.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Redfin</span><span class="tag">Rocket-Companies</span><span class="tag">commission-disruption</span><span class="tag">MLS-alternative</span><span class="tag">competitive-threat</span>
+        <span style="flex:1"></span>
+        <a href="https://www.inman.com/news/redfin-rocket-agent-platform-launch/" class="source-link" target="_blank" rel="noopener">inman.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-25)</span> &#x2197;</a><a href="https://www.housingwire.com/articles/redfin-pro-platform-launch/" class="source-link" target="_blank" rel="noopener">housingwire.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-28)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card " data-pillar="competitive_moves" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>Realtor.com enhances agent tools with AI-powered buyer matching; claims 25% faster lead response time</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          ▼ bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-12</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Realtor.com's AI tools reduce Zillow's differentiation in agent productivity — requires tighter Zillow product bundling</div>
+      <p class="summary">Realtor.com (owned by News Corp) announced new AI-powered buyer-agent matching tools on March 12, using machine learning to match buyer inquiry patterns with agent specialties. Beta testing with 10K agents shows 25% faster response-to-inquiry times and 12% higher buyer conversion rates. Features include automated lead routing, pre-qualification scoring, and integration with common CRMs. Rollout to all Realtor.com Premium agents by May 2026.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Realtor.com's AI lead-matching is competitive but not differentiated — Zillow Follow Up Boss already does this with better CRM integrations. However, the 25% response-time improvement is a legitimate talking point Realtor.com will use in sales. Zillow's counter: our Follow Up Boss automation provides 30% response-time improvement with HIGHER conversion because we control the full funnel (lead source + CRM + financing). Position Zillow's vertical integration as the advantage.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Realtor.com</span><span class="tag">AI-tools</span><span class="tag">lead-matching</span><span class="tag">buyer-agent-matching</span><span class="tag">CRM-integration</span>
+        <span style="flex:1"></span>
+        <a href="https://www.inman.com/news/realtor-com-ai-agent-tools-launch/" class="source-link" target="_blank" rel="noopener">inman.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-12)</span> &#x2197;</a><a href="https://www.housingwire.com/articles/realtor-com-agent-tools-ai/" class="source-link" target="_blank" rel="noopener">housingwire.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-15)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="competitive_moves" data-sentiment="bearish" data-score="8">
+      <div class="card-top">
+        <h3>Compass raises $180M Series D at $5.2B valuation; doubles down on agent acquisition and tech investment<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          ▼ bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-02-28</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Compass' well-capitalized expansion directly competes for agent market share and reduces Zillow's agent TAM</div>
+      <p class="summary">Compass raised $180M in Series D funding (led by Perspective Venture Partners) on February 28, 2026, at a $5.2B post-money valuation. The funding will fuel agent recruitment (target: 5,000 new agents in 2026), technology development (AI CRM, predictive pricing), and market expansion into secondary metros. Compass' agent retention rate reached 88% in 2025, up from 81% in 2024. Cumulative agent count now 12,800.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Compass' private capital model is a structural threat to both MLS and public real estate tech players. With $5.2B valuation, Compass can sustain losses longer than public competitors and offer agents better comp packages. The 88% retention rate and 5K new agent targets show Compass is building a defensible agent network. Zillow's counter: we don't need Compass-scale losses to compete. Our profitability lets us invest in agent tools WHILE returning cash to shareholders. Position Zillow as the disciplined alternative to Compass' burn.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Compass</span><span class="tag">funding</span><span class="tag">agent-acquisition</span><span class="tag">valuation</span><span class="tag">competitive-threat</span>
+        <span style="flex:1"></span>
+        <a href="https://www.inman.com/news/compass-series-d-funding-announcement/" class="source-link" target="_blank" rel="noopener">inman.com <span style="color:var(--text-muted);font-size:11px;">(2026-02-28)</span> &#x2197;</a><a href="https://www.housingwire.com/articles/compass-funding-round-analysis/" class="source-link" target="_blank" rel="noopener">housingwire.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-05)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card " data-pillar="competitive_moves" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>Homes.com (CoStar) launches 'Agent Pro' subscription with portfolio management and lead routing; charges $199/month</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          ▼ bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-22</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">CoStar's Agent Pro subscription competes directly with Follow Up Boss adoption and pricing, though with inferior mortgage integration</div>
+      <p class="summary">CoStar's Homes.com announced 'Agent Pro' subscription on March 22, a bundled offering including portfolio management, lead routing, CRM basics, and market intelligence for $199/month. Homes.com claims 15% of its agent user base (est. 40K agents) are trial users. The product directly competes with Follow Up Boss pricing ($100-250/month depending on feature tier) but lacks CRM depth and mortgage integrations. Rollout to all Homes.com agents by Q3 2026.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>CoStar's Agent Pro is competitive on pricing but structurally weaker than Follow Up Boss because Homes.com lacks a mortgage origination pipeline. Agents can route leads to Homes.com but not to a lending partner — meaning agents still need to find their own lenders. Zillow's Follow Up Boss + Zillow Home Loans integration provides the FULL funnel. Zillow's counter: 'With Zillow, every lead you nurture in Follow Up Boss can convert to a mortgage at Zillow Home Loans, in your same dashboard. CoStar can't offer that.' This is a bundling advantage.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Homes.com</span><span class="tag">CoStar</span><span class="tag">Agent-Pro</span><span class="tag">CRM-competition</span><span class="tag">subscription-pricing</span>
+        <span style="flex:1"></span>
+        <a href="https://www.inman.com/news/homes-com-agent-pro-launch/" class="source-link" target="_blank" rel="noopener">inman.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-22)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="zillow_product">
+      <div class="pillar-header">
+        <div class="pillar-icon zillow_product">🛠️</div>
+        <h2>Zillow Product</h2>
+        <span class="count">3 signals</span>
+      </div>
+      
+    <div class="signal-card high-impact" data-pillar="zillow_product" data-sentiment="bullish" data-score="8">
+      <div class="card-top">
+        <h3>Zillow Showcase adoption reaches 42% of premier agents; conversion lift of 18% vs. standard listings<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          ▲ bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-20</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Showcase adoption and mortgage integration create high-margin revenue streams and agent lock-in through platform bundling</div>
+      <p class="summary">Zillow reported Showcase (premium listing product) adoption by 42% of its agent user base on premier broker networks. Showcase listings average 18% higher conversion rates to buyer inquiry compared to standard listings, and command average price premiums of $12K. Zillow plans full integration with Zillow Home Loans by Q3 2026 to offer agents financing partnerships. Follow Up Boss CRM integration reached 28% adoption in Q1.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Showcase at 42% adoption with 18% conversion lift is a material growth vector for agent marketing revenue. The premium positioning works because it delivers RESULTS — agents see higher conversion and price premiums. The Zillow Home Loans integration is the next inflection point. When an agent can market a property with Showcase AND offer a pre-approved buyer a seamless Zillow-backed mortgage, that's vertical integration that MLS competitors can't match. This is Zillow's clearest path to margin expansion in agent marketing.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Showcase</span><span class="tag">Zillow-Home-Loans</span><span class="tag">agent-adoption</span><span class="tag">conversion-lift</span><span class="tag">premium-listings</span>
+        <span style="flex:1"></span>
+        <a href="https://investor.zillow.com/news-releases/2026-q1-earnings" class="source-link" target="_blank" rel="noopener">investor.zillow.com <span style="color:var(--text-muted);font-size:11px;">(2026-04-01)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="zillow_product" data-sentiment="bullish" data-score="9">
+      <div class="card-top">
+        <h3>Zillow Home Loans closes $1.2B in agent-originated mortgages in Q1 2026; 34% YoY growth<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          ▲ bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-30</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Zillow Home Loans origination growth and Agent Earn program create new revenue diversification for agents and Zillow</div>
+      <p class="summary">Zillow Home Loans reported $1.2B in mortgage originations sourced through agent partnerships in Q1 2026, growing 34% YoY. Agent-originated mortgages now represent 18% of Zillow Home Loans' total volume. Zillow introduced 'Agent Earn' program offering 25-50 bps in origination revenue share to agents who pre-qualify buyers through Zillow's platform. Early adoption: 2,100 agents signed up in first 60 days.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>Zillow Home Loans origination growth is the most important metric for agent marketing strategy. When agents see actual dollar flow from buyer pre-qualification (25-50 bps), behavioral change follows. The 'Agent Earn' program is a direct response to NAR commission compression — Zillow is offering agents an alternative revenue stream that's NOT commission-based. This is genius positioning: 'Don't fight commission compression, diversify into mortgage origination revenue with Zillow.' This unlocks a new TAM for agent marketing.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Zillow-Home-Loans</span><span class="tag">mortgage-origination</span><span class="tag">Agent-Earn-Program</span><span class="tag">revenue-share</span><span class="tag">agent-economics</span>
+        <span style="flex:1"></span>
+        <a href="https://investor.zillow.com/news-releases/2026-q1-earnings" class="source-link" target="_blank" rel="noopener">investor.zillow.com <span style="color:var(--text-muted);font-size:11px;">(2026-04-01)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="zillow_product" data-sentiment="bullish" data-score="8">
+      <div class="card-top">
+        <h3>Super App rollout begins: Zillow integrates Zillow Home Loans, Showcase, and Zillow Closing with Follow Up Boss<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          ▲ bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-08</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Super App integration strategy locks in agent bundles and creates structural competitive moat vs. point-solution competitors</div>
+      <p class="summary">Zillow began beta rollout of its 'Super App' strategy on March 8, integrating home search, Showcase listings, Zillow Home Loans pre-approval, Zillow Closing services, and Follow Up Boss CRM into a single agent-facing platform. Beta testing with 500 agents in 10 metros shows 42% adoption of bundled products vs. 18% standalone adoption. Full rollout planned by Q4 2026. Expected to increase agent ARPU by 25-35%.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>The Super App strategy is Zillow's clearest path to agent-marketing TAM expansion. By bundling Showcase + Home Loans + Closing + CRM into one ecosystem, Zillow creates switching costs and increases customer lifetime value. The 42% vs 18% adoption gap proves that agents WANT one integrated platform, not best-of-breed point solutions. Position the Super App as 'Zillow is the operating system for agent businesses.' Compass and Redfin can't match this integration — they don't have the mortgage and closing infrastructure.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Super-App</span><span class="tag">product-integration</span><span class="tag">Zillow-Home-Loans</span><span class="tag">Follow-Up-Boss</span><span class="tag">bundling</span>
+        <span style="flex:1"></span>
+        <a href="https://investor.zillow.com/news-releases/2026-q1-earnings" class="source-link" target="_blank" rel="noopener">investor.zillow.com <span style="color:var(--text-muted);font-size:11px;">(2026-04-01)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="regulatory_legal">
+      <div class="pillar-header">
+        <div class="pillar-icon regulatory_legal">⚖️</div>
+        <h2>Regulatory & Legal</h2>
+        <span class="count">2 signals</span>
+      </div>
+      
+    <div class="signal-card " data-pillar="regulatory_legal" data-sentiment="bearish" data-score="6">
+      <div class="card-top">
+        <h3>DOJ formally closes NAR antitrust case; state enforcers file supplemental actions in NY and CA</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          ▼ bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-18</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">State enforcement actions may force additional MLS policy changes that erode traditional commission economics</div>
+      <p class="summary">The U.S. Department of Justice formally closed the NAR antitrust case on March 18, 2026, confirming the November 2025 settlement is binding. However, New York and California state attorneys general filed supplemental enforcement actions targeting remaining MLS anticompetitive practices, specifically commission-posting requirements and buyer-agent bundling. Settlements expected by Q2 2026.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>The state-level actions are more important than the closed DOJ case. NY and CA targeting 'commission-posting requirements' and 'buyer-agent bundling' directly impacts MLS economics. If MLS are forced to de-couple buyer-agent disclosure from listing, that accelerates the commission transparency that favors buyers and pressures agents. Zillow's positioning: we're the platform agents CHOOSE for transparency and control, not forced compliance. This is a values play.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">NAR-settlement</span><span class="tag">DOJ</span><span class="tag">state-enforcement</span><span class="tag">antitrust</span><span class="tag">MLS-policy</span>
+        <span style="flex:1"></span>
+        <a href="https://www.justice.gov/opa/pr/doj-closes-nar-antitrust-investigation" class="source-link" target="_blank" rel="noopener">justice.gov <span style="color:var(--text-muted);font-size:11px;">(2026-03-18)</span> &#x2197;</a><a href="https://ag.ny.gov/press-release/2026-03-realtor-settlement-enforcement" class="source-link" target="_blank" rel="noopener">ag.ny.gov <span style="color:var(--text-muted);font-size:11px;">(2026-03-20)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card " data-pillar="regulatory_legal" data-sentiment="bullish" data-score="6">
+      <div class="card-top">
+        <h3>MLS policies post-NAR settlement: 23 states adopt updated buyer-agent disclosure rules; 12 lag implementation</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          ▲ bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published 2026-03-05</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured 2026-04-07</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">MLS policy fragmentation creates demand for unified technology platforms that can handle multi-state compliance</div>
+      <p class="summary">Of the 50 state MLS associations, 23 have adopted updated buyer-agent commission disclosure rules post-NAR settlement, while 12 states have delayed implementation beyond the settlement deadline. State-by-state policy fragmentation is creating operational complexity for multi-state brokers and technology vendors. States with clearest policy (CA, TX, FL, NY) show fastest agent adoption of new commission disclosure practices.</p>
+      <div class="commentary">
+        <div class="label">Zillow Perspective</div>
+        <p>MLS policy fragmentation is a HUGE opportunity for Zillow's technology platform. Fragmentation means brokers NEED a single system that can handle 50 different MLS policies programmatically. Zillow's broker-facing tools and MLS partnerships position it perfectly to solve this problem. Sales should lead with: 'With 23 different MLS buyer-agent policies, your agents need ONE system that understands all 50 state rules.' This is vertical integration at scale.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">MLS-policies</span><span class="tag">state-regulation</span><span class="tag">buyer-agent-disclosure</span><span class="tag">policy-fragmentation</span><span class="tag">compliance</span>
+        <span style="flex:1"></span>
+        <a href="https://www.inman.com/news/state-mls-policy-updates-settlement/" class="source-link" target="_blank" rel="noopener">inman.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-05)</span> &#x2197;</a><a href="https://www.housingwire.com/articles/mls-policy-implementation/" class="source-link" target="_blank" rel="noopener">housingwire.com <span style="color:var(--text-muted);font-size:11px;">(2026-03-10)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">&#x1F50D;</div>
+    <p>No signals match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+
+
+<footer class="engine-footer">
+  <p>Zillow Agent Marketing Signal Engine v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Director of Product Marketing Intelligence &mdash; <a href="https://danetomalin.com/roadmap">Market Insights</a> | <a href="https://danetomalin.com/competitiveintel">Competitive Analysis</a></p>
+</footer>
+
+<script>
+// --- State ---
+var activeFilter = 'all';
+var activeSentiment = null;
+var searchQuery = '';
+
+// --- Pillar Filter ---
+function filterSignals(pillar, btn) {
+  activeFilter = pillar;
+  // Update button states
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Sentiment Filter (toggle) ---
+function filterSentiment(sentiment, btn) {
+  if (activeSentiment === sentiment) {
+    activeSentiment = null;
+    btn.classList.remove('active');
+  } else {
+    activeSentiment = sentiment;
+    var btns = document.querySelectorAll('.filter-btn[data-sentiment]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchSignals(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.signal-card');
+  var sections = document.querySelectorAll('.pillar-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var pillar = card.getAttribute('data-pillar');
+    var sentiment = card.getAttribute('data-sentiment');
+    var text = card.textContent.toLowerCase();
+
+    var pillarMatch = (activeFilter === 'all' || pillar === activeFilter);
+    var sentimentMatch = (!activeSentiment || sentiment === activeSentiment);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (pillarMatch && sentimentMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Show/hide pillar sections based on visible cards
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.signal-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  // Empty state
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Scorecard click-to-filter ---
+function filterFromScorecard(sentiment) {
+  // Always reset pillar filter to 'all' when clicking a scorecard tile
+  activeFilter = 'all';
+  var pillarBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  pillarBtns.forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-filter') === 'all');
+  });
+
+  // Clear search
+  searchQuery = '';
+  var searchBox = document.getElementById('search-box');
+  if (searchBox) searchBox.value = '';
+
+  // Handle sentiment toggle
+  var sentimentBtns = document.querySelectorAll('.filter-btn[data-sentiment]');
+  sentimentBtns.forEach(function(b) { b.classList.remove('active'); });
+  var scorecardCards = document.querySelectorAll('.scorecard-card[data-scorecard]');
+  scorecardCards.forEach(function(c) { c.classList.remove('active-filter'); });
+
+  if (sentiment === 'all' || activeSentiment === sentiment) {
+    // Reset — show everything
+    activeSentiment = null;
+  } else {
+    activeSentiment = sentiment;
+    // Sync the corresponding filter button
+    var matchBtn = document.querySelector('.filter-btn[data-sentiment="' + sentiment + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    // Highlight the scorecard tile
+    var matchCard = document.querySelector('.scorecard-card[data-scorecard="' + sentiment + '"]');
+    if (matchCard) matchCard.classList.add('active-filter');
+  }
+
+  applyFilters();
+
+  // Scroll to signals
+  var content = document.getElementById('dossier-content');
+  if (content) content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// --- Impact bar color ---
+function getImpactColor(score) {
+  if (score >= 8) return 'var(--high-impact)';
+  if (score >= 5) return 'var(--accent)';
+  return 'var(--text-muted)';
+}
+</script>
+
+</body>
+</html>
