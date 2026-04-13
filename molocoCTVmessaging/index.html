@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moloco CTV Messaging Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0D0D12;
+      --bg-secondary: #16161E;
+      --bg-card: #1C1C28;
+      --bg-card-hover: #22222F;
+      --border: #2A2A3A;
+      --text-primary: #F0F0F4;
+      --text-secondary: #9B9BAF;
+      --text-muted: #6B6B80;
+      --accent: #A78BFA;
+      --accent-strong: #7C3AED;
+      --accent-bg: rgba(167, 139, 250, 0.12);
+      --secondary-accent: #7C5CFC;
+      --win: #66BB6A;
+      --win-bg: rgba(102, 187, 106, 0.12);
+      --warn: #FFA726;
+      --warn-bg: rgba(255, 167, 38, 0.12);
+      --info: #4F8CFF;
+      --info-bg: rgba(79, 140, 255, 0.12);
+      --danger: #EF5350;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      font-family: 'Inter', var(--font);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ============================================================ */
+    /* HEADER / STICKY NAV */
+    /* ============================================================ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, rgba(22, 22, 30, 0.8) 100%);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-header-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .site-header-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .site-header-back:hover {
+      color: var(--accent-strong);
+    }
+
+    .site-header-back svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* ============================================================ */
+    /* LAYOUT: SIDEBAR + MAIN */
+    /* ============================================================ */
+    .container {
+      display: flex;
+      min-height: calc(100vh - 60px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 60px;
+      width: 260px;
+      height: calc(100vh - 60px);
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      padding: 2rem 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      padding: 0 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background-color: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    /* ============================================================ */
+    /* MAIN CONTENT */
+    /* ============================================================ */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================ */
+    /* HERO SECTION */
+    /* ============================================================ */
+    .hero {
+      margin-bottom: 4rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 3rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .positioning-statement {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background-color: var(--accent-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+    }
+
+    .category-badge {
+      display: inline-block;
+      background-color: var(--info-bg);
+      color: var(--info);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* ============================================================ */
+    /* SECTION HEADERS */
+    /* ============================================================ */
+    .section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 80px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 2rem;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+      border-radius: 2px;
+    }
+
+    /* ============================================================ */
+    /* MESSAGING PRINCIPLES */
+    /* ============================================================ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .principle-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .principle-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.15);
+    }
+
+    .principle-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .principle-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .principle-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================ */
+    /* AUDIENCE PROFILES */
+    /* ============================================================ */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .profile-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .profile-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .profile-name {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .profile-section {
+      margin-bottom: 1rem;
+    }
+
+    .profile-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-content {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .profile-content-item {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ============================================================ */
+    /* MESSAGING LIBRARY */
+    /* ============================================================ */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font);
+      font-size: 0.9rem;
+    }
+
+    .search-box::placeholder {
+      color: var(--text-muted);
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .chip.active {
+      background-color: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .messaging-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .message-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .message-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.15);
+    }
+
+    .message-card-header {
+      background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(124, 58, 237, 0.1) 100%);
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .message-card-header:hover {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.18) 0%, rgba(124, 58, 237, 0.15) 100%);
+    }
+
+    .message-theme {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .message-audience {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .expand-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .message-card-body {
+      display: none;
+      padding: 1.25rem;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .message-card.expanded .message-card-body {
+      display: block;
+    }
+
+    .message-card.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .message-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .message-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .message-content {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .copy-button {
+      display: inline-block;
+      background-color: var(--accent-bg);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+    }
+
+    .copy-button:hover {
+      background-color: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .channels-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .channel-tag {
+      display: inline-block;
+      background-color: var(--info-bg);
+      color: var(--info);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* ============================================================ */
+    /* CHANNEL PLAYBOOK */
+    /* ============================================================ */
+    .playbook-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .playbook-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .playbook-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .playbook-channel {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      text-transform: capitalize;
+    }
+
+    .playbook-section {
+      margin-bottom: 1rem;
+    }
+
+    .playbook-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .playbook-content {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ============================================================ */
+    /* COMPETITIVE CHEAT SHEET */
+    /* ============================================================ */
+    .cheat-sheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .cheat-sheet-table th {
+      background-color: var(--bg-card);
+      color: var(--accent);
+      font-weight: 700;
+      text-align: left;
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    .cheat-sheet-table td {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .cheat-sheet-table tr:nth-child(even) td {
+      background-color: var(--bg-card);
+    }
+
+    .cheat-sheet-table tr:hover td {
+      background-color: var(--bg-card-hover);
+    }
+
+    .competitor-name {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .position-point {
+      color: var(--win);
+      font-weight: 500;
+    }
+
+    /* ============================================================ */
+    /* COPY EXAMPLES */
+    /* ============================================================ */
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .example-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .example-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .example-type {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .example-copy {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background-color: var(--bg-primary);
+      border-left: 2px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    /* ============================================================ */
+    /* FOOTER */
+    /* ============================================================ */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    /* ============================================================ */
+    /* SCROLLBAR */
+    /* ============================================================ */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* ============================================================ */
+    /* RESPONSIVE */
+    /* ============================================================ */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .main {
+        padding: 2rem;
+      }
+
+      .messaging-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+      }
+
+      .main {
+        padding: 1.5rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .principles-grid,
+      .profiles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="site-header">
+    <a class="site-header-name" href="https://danetomalin.com/moloco">Dane Tomalin</a>
+    <a class="site-header-back" href="https://danetomalin.com/molocoCTVpositioning">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Back to Positioning Engine
+    </a>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Navigation</div>
+        <a class="sidebar-link active" onclick="scrollToSection('hero')">Overview</a>
+        <a class="sidebar-link" onclick="scrollToSection('principles')">Messaging Principles</a>
+        <a class="sidebar-link" onclick="scrollToSection('audiences')">Audience Profiles</a>
+        <a class="sidebar-link" onclick="scrollToSection('themes')">Messaging Themes</a>
+        <a class="sidebar-link" onclick="scrollToSection('channels')">Channel Playbook</a>
+        <a class="sidebar-link" onclick="scrollToSection('competitive')">Competitive Cheat Sheet</a>
+        <a class="sidebar-link" onclick="scrollToSection('examples')">Copy Examples</a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Hero Section -->
+      <div class="section" id="hero">
+        <div class="hero">
+          <h1 class="hero-title">Moloco CTV Messaging Guide</h1>
+          <div class="positioning-statement">
+            "For growth marketers and performance teams who need CTV to deliver measurable business outcomes, not reach curves, Moloco is the Performance CTV platform that makes every connected TV impression accountable to ROAS, CAC, and revenue."
+          </div>
+          <span class="category-badge">Performance CTV</span>
+        </div>
+      </div>
+
+      <!-- Messaging Principles -->
+      <div class="section" id="principles">
+        <h2 class="section-title">Messaging Principles</h2>
+        <div class="principles-grid">
+          <div class="principle-card">
+            <div class="principle-icon">📊</div>
+            <div class="principle-title">Lead with Outcomes</div>
+            <div class="principle-desc">Start with the business result (ROAS, CAC, revenue) before mentioning features or tech.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🎯</div>
+            <div class="principle-title">Use Specific Numbers</div>
+            <div class="principle-desc">Avoid "better" and "faster." Use exact metrics: 5-12% WoW, 8.75 ROAS, 50-70% fraud reduction.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🛡️</div>
+            <div class="principle-title">Name Competitors</div>
+            <div class="principle-desc">TTD, MNTN, Amazon, Google, Roku—don't say "alternatives." Position directly against named rivals.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🧠</div>
+            <div class="principle-title">Match Buyer Brain</div>
+            <div class="principle-desc">CFOs want defensibility. Growth heads want speed. CMOs want unified story. Language shifts by role.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🚫</div>
+            <div class="principle-title">Never Reach Curves</div>
+            <div class="principle-desc">Reach, frequency, impressions don't prove value. Pivot immediately to conversions and ROI.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">✨</div>
+            <div class="principle-title">Show Proof First</div>
+            <div class="principle-desc">Customer wins, roadmap status (BUILD), market data—put evidence before claims.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audience Profiles -->
+      <div class="section" id="audiences">
+        <h2 class="section-title">Audience Profiles</h2>
+        <div class="profiles-grid">
+          <div class="profile-card">
+            <div class="profile-name">Head of Growth / VP Performance Marketing</div>
+            <div class="profile-section">
+              <div class="profile-label">Speaks Natively</div>
+              <div class="profile-content">ROAS, CAC, LTV, unit economics, performance metrics</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Background</div>
+              <div class="profile-content">Mobile app marketing, performance SEM, e-commerce demand gen</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Self-serve, fast iteration, measurable ROI, no vendor lock-in</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "ROAS improves as spend scales"</div>
+              <div class="profile-content-item">• "Launch in hours, iterate daily"</div>
+              <div class="profile-content-item">• "Custom ML per advertiser"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">CMO / VP Marketing</div>
+            <div class="profile-section">
+              <div class="profile-label">Cares About</div>
+              <div class="profile-content">Board accountability, unified customer story, brand safety, attribution</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Pressure</div>
+              <div class="profile-content">Defending CTV spend to CFO, proving it's not just reach</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Defensible CTV strategy, cross-device measurement, competitive positioning</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "Stop defending with reach curves"</div>
+              <div class="profile-content-item">• "Show exact conversion attribution"</div>
+              <div class="profile-content-item">• "Board-ready ROI proof"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">CFO / Board Member</div>
+            <div class="profile-section">
+              <div class="profile-label">Mindset</div>
+              <div class="profile-content">Every dollar defensible, quantifiable impact, no hand-waving</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Red Flags</div>
+              <div class="profile-content">Reach curves, unmeasured spend, vendor lock-in, undefined ROI</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Exact conversions, ROAS range, fraud prevention, scalability proof</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "$4.50-$8.50 ROAS"</div>
+              <div class="profile-content-item">• "Eliminate $7.4B fraud problem"</div>
+              <div class="profile-content-item">• "20-30% YoY ROAS compounding"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">Media Buyer / VP Media (Legacy)</div>
+            <div class="profile-section">
+              <div class="profile-label">Native Language</div>
+              <div class="profile-content">Reach, frequency, GRPs, insertion orders, negotiations</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Challenge</div>
+              <div class="profile-content">Trained on linear, still thinking in impressions not outcomes</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Bridge language, performance framework, programmatic efficiency</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "45% migration from linear"</div>
+              <div class="profile-content-item">• "Performance > reach"</div>
+              <div class="profile-content-item">• "No weekly IO negotiations"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">Performance Agency Leader</div>
+            <div class="profile-section">
+              <div class="profile-label">Motivation</div>
+              <div class="profile-content">New revenue stream, client differentiation, higher margins</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Challenge</div>
+              <div class="profile-content">TTD commoditized, need white-label differentiation</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">White-label platform, outcome-based pitch, recurring revenue model</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "$2M-$10M CTV revenue stream"</div>
+              <div class="profile-content-item">• "Your proprietary CTV engine"</div>
+              <div class="profile-content-item">• "Margin expansion on media spend"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messaging Themes Library -->
+      <div class="section" id="themes">
+        <h2 class="section-title">Messaging Themes</h2>
+        <div class="controls">
+          <input
+            type="text"
+            id="search-input"
+            class="search-box"
+            placeholder="Search themes, audiences, channels..."
+            onkeyup="filterMessages()"
+          >
+        </div>
+        <div class="controls">
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Filter by Audience:</div>
+          <div class="filter-chips" id="audience-filters"></div>
+        </div>
+        <div class="controls">
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Filter by Channel:</div>
+          <div class="filter-chips" id="channel-filters"></div>
+        </div>
+
+        <div class="messaging-grid" id="messages-grid"></div>
+      </div>
+
+      <!-- Channel Playbook -->
+      <div class="section" id="channels">
+        <h2 class="section-title">Channel Playbook</h2>
+        <div class="playbook-grid" id="playbook-grid"></div>
+      </div>
+
+      <!-- Competitive Cheat Sheet -->
+      <div class="section" id="competitive">
+        <h2 class="section-title">Competitive Positioning Cheat Sheet</h2>
+        <table class="cheat-sheet-table">
+          <thead>
+            <tr>
+              <th>Competitor</th>
+              <th>Their Story</th>
+              <th>Your Counter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="competitor-name">The Trade Desk</span></td>
+              <td>Reach + scale on CTV</td>
+              <td><span class="position-point">Reach curves don't answer what did this sell. Shared ML, not your ML.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">MNTN</span></td>
+              <td>CTV simplified, managed service</td>
+              <td><span class="position-point">Templates, not per-advertiser ML. What you move to when you outgrow MNTN.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Amazon DSP</span></td>
+              <td>First-party data + Amazon ecosystem</td>
+              <td><span class="position-point">Locked to Amazon ecosystem. No open supply. Walled garden.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Google DV360</span></td>
+              <td>Google ecosystem play</td>
+              <td><span class="position-point">Google ecosystem play. Depends on sunsetting cookies. Walled.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Roku OneView</span></td>
+              <td>Roku-only, unified measurement</td>
+              <td><span class="position-point">Roku-only inventory. Pivoting to commerce, diluting performance.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Manual IO</span></td>
+              <td>Premium relationships, human touch</td>
+              <td><span class="position-point">Weeks to negotiate. No unified measurement. Vendor finger-pointing.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">DIY Point Solutions</span></td>
+              <td>Best-of-breed point tools</td>
+              <td><span class="position-point">4-5 vendors, integration tax, $7.4B fraud. We're the unified answer.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Linear TV</span></td>
+              <td>Proven, brand-safe, reach</td>
+              <td><span class="position-point">Declining reach, 45% migrating to CTV. Performance beats impressions.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Copy Examples -->
+      <div class="section" id="examples">
+        <h2 class="section-title">Copy Examples</h2>
+        <div class="examples-grid" id="examples-grid"></div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        Moloco CTV Messaging Guide • Last Updated April 2026 • For Internal Marketing Use Only
+      </div>
+    </div>
+  </div>
+
+  <!-- Data & Interactivity -->
+  <script>
+    // Messaging themes data
+    const messagingThemes = [
+      {
+        id: 1,
+        theme: "ML & Performance",
+        audience: "Head of Growth / VP Performance",
+        coolThing: "Custom ML model trained on your outcomes, delivering 5-12% WoW improvement in ROAS.",
+        howDifferent: "MNTN uses templates. TTD shares ML across advertisers. Moloco is per-advertiser, per-vertical custom models.",
+        proof: "ROAS Models scoring 8.75/10 BUILD status. Compounding ROAS gains 20-30% YoY.",
+        channels: ["linkedin", "email", "sales_enablement"],
+        keywords: ["ml", "performance", "roas", "improvement"]
+      },
+      {
+        id: 2,
+        theme: "Measurement & Attribution",
+        audience: "CMO/VP/CFO",
+        coolThing: "Stop defending with reach curves. Show exact conversions across all CTV touches with unified attribution.",
+        howDifferent: "TTD = reach curves. Google = ecosystem only. Moloco = cross-screen conversion visibility.",
+        proof: "Cross-Screen Attribution 8.5/10 BUILD. Board-ready ROI proof.",
+        channels: ["email", "analyst_relations", "sales_enablement"],
+        keywords: ["measurement", "attribution", "conversions", "roi"]
+      },
+      {
+        id: 3,
+        theme: "Privacy & Regulation",
+        audience: "CMO/Legal/Data",
+        coolThing: "Your CTV strategy doesn't change when cookies sunset. Privacy-first, regulation-ready approach.",
+        howDifferent: "TTD = ACR dependent. DV360 = cookie dependent. Roku = audience siloed. Moloco = first-party agnostic.",
+        proof: "$7.4B fraud problem. Texas AG lawsuits. FTC COPPA enforcement.",
+        channels: ["thought_leadership", "email", "analyst_relations"],
+        keywords: ["privacy", "regulation", "cookies", "compliance"]
+      },
+      {
+        id: 4,
+        theme: "Self-Serve & Speed",
+        audience: "Head of Growth",
+        coolThing: "Launch a full CTV campaign in hours, not weeks. No agency dependency, no IO negotiation.",
+        howDifferent: "MNTN = managed service, slow. TTD = enterprise UX. Moloco = self-serve speed.",
+        proof: "Self-Serve Builder 8.0/10 BUILD. Campaign launch in hours.",
+        channels: ["email", "digital_ads", "sales_enablement"],
+        keywords: ["self-serve", "speed", "launch", "agile"]
+      },
+      {
+        id: 5,
+        theme: "Open Supply & Independence",
+        audience: "Head of Growth/CRO",
+        coolThing: "90%+ programmatic CTV. No lock-in, no walled gardens. Netflix, Paramount, everyone opening supply.",
+        howDifferent: "Amazon = Amazon only. Roku = Roku only. Google = Google ecosystem. Moloco = open to all.",
+        proof: "Netflix opening 80% of inventory. Programmatic CTV growing 13.8% YoY.",
+        channels: ["linkedin", "sales_enablement", "thought_leadership"],
+        keywords: ["open supply", "independence", "programmatic", "netflix"]
+      },
+      {
+        id: 6,
+        theme: "Fraud & Waste Prevention",
+        audience: "CFO/VP Marketing",
+        coolThing: "$7.4B fraud problem in CTV. ML deprioritizes bad inventory, protecting every dollar.",
+        howDifferent: "TTD = manual filtering. MNTN = can't adapt. DIY = 4-5 vendors, finger-pointing.",
+        proof: "50-70% fraud reduction. Transparent fraud scoring per impression.",
+        channels: ["email", "sales_enablement", "board_readiness"],
+        keywords: ["fraud", "waste", "prevention", "quality"]
+      },
+      {
+        id: 7,
+        theme: "Owned Audience Activation",
+        audience: "CMO/Retail Director",
+        coolThing: "Activate your CRM directly on CTV. Connect customer data to TV viewing, drive LTV lift.",
+        howDifferent: "Amazon = retail-only (1P data loss). Google = ecosystem loss. Moloco = your data, your rules.",
+        proof: "2-3x LTV improvement. First-party identity matching at scale.",
+        channels: ["email", "sales_enablement", "webinars"],
+        keywords: ["owned audience", "crm", "retail", "ltv"]
+      },
+      {
+        id: 8,
+        theme: "Agency Differentiation",
+        audience: "Agency Leaders",
+        coolThing: "White-label, outcome-based CTV for your clients. New $2M-$10M revenue stream with 60%+ margins.",
+        howDifferent: "TTD = commoditized for everyone. MNTN = competing with you. Moloco = your platform.",
+        proof: "$2M-$10M CTV revenue per agency. Client stickiness via Moloco's ML.",
+        channels: ["partner_marketing", "sales_enablement", "event_marketing"],
+        keywords: ["agency", "white-label", "revenue", "partnership"]
+      },
+      {
+        id: 9,
+        theme: "Linear-to-CTV Migration",
+        audience: "Media Buyer/VP Media",
+        coolThing: "45% of TV budgets migrating from linear. Moloco bridges the language gap: performance > reach.",
+        howDifferent: "Traditional tools speak reach. TTD speaks reach. Moloco speaks ROAS.",
+        proof: "$38B total CTV market, 13.8% YoY growth. 45% CAGR from linear.",
+        channels: ["email", "sales_enablement", "webinars"],
+        keywords: ["linear", "migration", "traditional", "reach"]
+      },
+      {
+        id: 10,
+        theme: "Board-Ready ROI",
+        audience: "CMO/CFO/Board",
+        coolThing: "$4.50-$8.50 ROAS per dollar, improving 20-30% YoY. No reach curves, just defensible ROI.",
+        howDifferent: "Reach curves don't answer ROI. Performance tools show ROI. Moloco owns the outcome.",
+        proof: "8.75/10 ROAS Models BUILD. Quarterly improvement proof.",
+        channels: ["email", "analyst_relations", "sales_enablement"],
+        keywords: ["roi", "board", "roas", "defensible"]
+      },
+      {
+        id: 11,
+        theme: "Scale Without Overhead",
+        audience: "Head of Growth",
+        coolThing: "ROAS improves as spend increases. 20-30% YoY lift. No hiring, no vendor sprawl.",
+        howDifferent: "MNTN plateaus. DIY = more people. Moloco = compounding returns on auto.",
+        proof: "20-30% YoY ROAS compounding. ML improvement per $1M spent.",
+        channels: ["email", "sales_enablement", "digital_ads"],
+        keywords: ["scale", "efficiency", "overhead", "compounding"]
+      },
+      {
+        id: 12,
+        theme: "CTV as Acquisition",
+        audience: "Head of Growth/VP UA",
+        coolThing: "Top 3 app install channel. CTV proven for high-intent mobile conversion.",
+        howDifferent: "TTD/MNTN can't measure app installs. Mobile networks can't measure CTV. Moloco does both.",
+        proof: "Cross-Screen Attribution 8.5/10 BUILD. App install ROAS benchmarks.",
+        channels: ["email", "sales_enablement", "linkedin"],
+        keywords: ["acquisition", "app installs", "mobile", "growth"]
+      }
+    ];
+
+    // Channel playbook data
+    const channelPlaybook = [
+      {
+        channel: "Email",
+        messaging: "Lead with outcome (ROAS, LTV lift). Mention specific competitor weakness. CTA to demo or docs.",
+        tone: "Direct, data-driven, personalized by role",
+        format: "Subject: $4.50-$8.50 ROAS guarantee. 1-2 paragraphs + CTA + proof link."
+      },
+      {
+        channel: "LinkedIn",
+        messaging: "Position as performance leadership thought. Share roadmap BUILD items. Name competitors tactfully.",
+        tone: "Authoritative, industry insights, battle-tested",
+        format: "300-400 word article with visuals. Tag key personas. Link to dossier or research."
+      },
+      {
+        channel: "Digital Ads",
+        messaging: "Hook on pain point (reach curves fail, $7.4B fraud). Offer specific benchmark (ROAS range).",
+        tone: "Conversational, outcome-focused, CTA-heavy",
+        format: "Headline (10 words max) + subheading + proof image + CTA button."
+      },
+      {
+        channel: "Social",
+        messaging: "Thread format: 1. Problem (reach doesn't = ROI). 2. Why (ML per advertiser). 3. Proof (8.75 ROAS).",
+        tone: "Conversational, relatable, thread-able",
+        format: "5-7 tweet thread. 1 proof image. CTA at end."
+      },
+      {
+        channel: "Thought Leadership",
+        messaging: "Deep dive: CTV market trend (45% linear shift). How Moloco leads (outcome framework). What's next.",
+        tone: "Expert, analytical, visionary",
+        format: "2000-2500 word article. Analyst quotes. Primary research. Published via own and partner channels."
+      },
+      {
+        channel: "Webinars",
+        messaging: "'Why CTV ROAS Matters More Than Reach.' Panel: marketer + Moloco product. Live demo. Q&A.",
+        tone: "Educational, interactive, peer-to-peer",
+        format: "45 min: intro (5min) + marketer story (15min) + demo (15min) + Q&A (10min)."
+      },
+      {
+        channel: "Analyst Relations",
+        messaging: "Moloco is redefining CTV from reach to performance. Roadmap innovation (attribution, ML, measurement).",
+        tone: "Strategic, visionary, analyst-friendly",
+        format: "Quarterly briefing + research participation + quote + press release."
+      },
+      {
+        channel: "Partner Marketing",
+        messaging: "White-label opportunity. Revenue stream. Client sticky. Moloco handles the ML, you own the relationship.",
+        tone: "Partnership-focused, win-win, business case",
+        format: "Partner datasheet + co-marketing playbook + case study + revenue model."
+      },
+      {
+        channel: "Event Marketing",
+        messaging: "Host: 'CTV Performance Summit.' Speakers: CMOs, growth heads, CFOs. Booth: live ROAS demo.",
+        tone: "Community, collaborative, peer learning",
+        format: "Virtual or in-person. 1-day summit. 5 speakers. 30-min Moloco workshop. Networking."
+      },
+      {
+        channel: "Sales Enablement",
+        messaging: "Battlecards by competitor. ROI calculator. Roadmap BUILD items. Cheat sheets by role. One-pagers.",
+        tone: "Sales-ready, fast-scannable, proof-heavy",
+        format: "1-2 pagers. Competitor matrix. Objection handles. Numbers anchored to roadmap status."
+      }
+    ];
+
+    // Copy examples data
+    const copyExamples = [
+      {
+        type: "Email Subject Lines",
+        theme: "ML & Performance",
+        examples: [
+          "$4.50-$8.50 ROAS? Stop reaching, start selling.",
+          "The one CTV metric that gets CFO sign-off",
+          "5-12% WoW: what happens when ML actually learns your business"
+        ]
+      },
+      {
+        type: "Email Subject Lines",
+        theme: "Measurement & Attribution",
+        examples: [
+          "Your CMO's biggest question: 'But what did CTV actually sell?'",
+          "Reach curves don't answer that. This does.",
+          "Stop defending CTV spend with impressions."
+        ]
+      },
+      {
+        type: "Email Subject Lines",
+        theme: "Board-Ready ROI",
+        examples: [
+          "The board loved our ROAS numbers. Here's how.",
+          "$4.50-$8.50 per dollar. 20-30% YoY improvement. Board approved.",
+          "We asked for accountability. Moloco showed us the receipts."
+        ]
+      },
+      {
+        type: "Ad Headlines",
+        theme: "Fraud & Waste Prevention",
+        examples: [
+          "$7.4B fraud in CTV. Moloco eliminates yours.",
+          "50-70% fraud reduction starts here.",
+          "Bad inventory costs you. ML deprioritizes it."
+        ]
+      },
+      {
+        type: "Ad Headlines",
+        theme: "Open Supply & Independence",
+        examples: [
+          "90% programmatic CTV. 0% lock-in.",
+          "Netflix is opening 80%. We're ready.",
+          "Walled gardens cost you. Open supply costs less."
+        ]
+      },
+      {
+        type: "Ad Headlines",
+        theme: "Self-Serve & Speed",
+        examples: [
+          "Launch CTV campaigns in hours. Not weeks.",
+          "No agency. No IO negotiation. Just performance.",
+          "Self-serve CTV platform for modern growth teams."
+        ]
+      },
+      {
+        type: "LinkedIn Posts",
+        theme: "Linear-to-CTV Migration",
+        examples: [
+          "45% of TV budgets moving from linear to CTV. Problem: legacy thinking. Solution: performance mindset. If you're still speaking reach curves, you're losing to Moloco.",
+          "The $38B CTV market is 45% CAGR. But your tools are still selling reach. Time for a reframe.",
+          "Linear worked for reach. CTV works for revenue. Moloco speaks revenue."
+        ]
+      },
+      {
+        type: "LinkedIn Posts",
+        theme: "Agency Differentiation",
+        examples: [
+          "Agencies: White-label CTV just became a $2M-$10M revenue stream. TTD commoditized it. Moloco white-labels it. Who wins the next 5 years?",
+          "Your clients don't want commoditized CTV. They want outcome-based, proprietary ML. Moloco is your white-label answer.",
+          "The agency that owns CTV wins the relationship. The rest become media buyers."
+        ]
+      },
+      {
+        type: "Website Copy",
+        theme: "ML & Performance",
+        examples: [
+          "Stop using shared ML. Moloco trains a custom model on your outcomes. 5-12% WoW improvement starts month 1.",
+          "Every advertiser is different. Your ML should be too. Moloco's per-advertiser custom models prove it.",
+          "Performance compounds. 20-30% YoY ROAS lift with Moloco's compounding ML advantage."
+        ]
+      },
+      {
+        type: "Website Copy",
+        theme: "Competitive Positioning",
+        examples: [
+          "MNTN is templates. TTD is shared ML. Amazon is walled. Moloco is custom, open, and outcome-focused.",
+          "Reach is linear. ROI is Moloco. Stop defending impressions. Start proving revenue.",
+          "The right CTV platform doesn't just run campaigns. It learns your business and makes every impression count."
+        ]
+      }
+    ];
+
+    // Initialize messaging cards
+    function initializeMessages() {
+      const grid = document.getElementById('messages-grid');
+      grid.innerHTML = '';
+
+      messagingThemes.forEach(theme => {
+        const card = document.createElement('div');
+        card.className = 'message-card';
+        card.setAttribute('data-theme', theme.theme.toLowerCase());
+        card.setAttribute('data-audience', theme.audience.toLowerCase());
+        card.setAttribute('data-channels', theme.channels.join(','));
+        card.setAttribute('data-keywords', theme.keywords.join(','));
+
+        const channelHTML = theme.channels.map(ch =>
+          `<span class="channel-tag">${ch.replace(/_/g, ' ')}</span>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="message-card-header" onclick="toggleCard(this.closest('.message-card'))">
+            <div>
+              <div class="message-theme">${theme.theme}</div>
+              <div class="message-audience">${theme.audience}</div>
+            </div>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="message-card-body">
+            <div class="message-section">
+              <div class="message-label">Something Cool We Do</div>
+              <div class="message-content">${theme.coolThing}</div>
+              <button class="copy-button" onclick="copyToClipboard('${theme.coolThing.replace(/'/g, "\\'")}')">Copy</button>
+            </div>
+            <div class="message-section">
+              <div class="message-label">How It's Different</div>
+              <div class="message-content">${theme.howDifferent}</div>
+              <button class="copy-button" onclick="copyToClipboard('${theme.howDifferent.replace(/'/g, "\\'")}')">Copy</button>
+            </div>
+            <div class="message-section">
+              <div class="message-label">Show Some Proof</div>
+              <div class="message-content">${theme.proof}</div>
+              <button class="copy-button" onclick="copyToClipboard('${theme.proof.replace(/'/g, "\\'")}')">Copy</button>
+            </div>
+            <div class="message-section">
+              <div class="message-label">Best for Channels</div>
+              <div class="channels-list">${channelHTML}</div>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      initializeFilters();
+    }
+
+    // Initialize filters
+    function initializeFilters() {
+      const audiences = [...new Set(messagingThemes.map(t => t.audience))];
+      const channels = [...new Set(messagingThemes.flatMap(t => t.channels))];
+
+      const audienceFilters = document.getElementById('audience-filters');
+      audiences.forEach(aud => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = aud;
+        chip.onclick = () => {
+          chip.classList.toggle('active');
+          filterMessages();
+        };
+        audienceFilters.appendChild(chip);
+      });
+
+      const channelFilters = document.getElementById('channel-filters');
+      channels.forEach(ch => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = ch.replace(/_/g, ' ');
+        chip.setAttribute('data-channel', ch);
+        chip.onclick = () => {
+          chip.classList.toggle('active');
+          filterMessages();
+        };
+        channelFilters.appendChild(chip);
+      });
+    }
+
+    // Filter messages
+    function filterMessages() {
+      const searchText = document.getElementById('search-input').value.toLowerCase();
+      const activeAudiences = Array.from(document.querySelectorAll('#audience-filters .chip.active')).map(c => c.textContent.toLowerCase());
+      const activeChannels = Array.from(document.querySelectorAll('#channel-filters .chip.active')).map(c => c.getAttribute('data-channel'));
+
+      const cards = document.querySelectorAll('.message-card');
+      cards.forEach(card => {
+        const theme = card.getAttribute('data-theme');
+        const audience = card.getAttribute('data-audience');
+        const channels = card.getAttribute('data-channels').split(',');
+        const keywords = card.getAttribute('data-keywords').split(',');
+
+        const matchesSearch = !searchText ||
+          theme.includes(searchText) ||
+          audience.includes(searchText) ||
+          keywords.some(k => k.includes(searchText));
+
+        const matchesAudience = activeAudiences.length === 0 || activeAudiences.some(a => audience.includes(a));
+        const matchesChannel = activeChannels.length === 0 || activeChannels.some(ch => channels.includes(ch));
+
+        card.style.display = matchesSearch && matchesAudience && matchesChannel ? '' : 'none';
+      });
+    }
+
+    // Toggle card expansion
+    function toggleCard(card) {
+      card.classList.toggle('expanded');
+    }
+
+    // Copy to clipboard
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+
+    // Initialize playbook
+    function initializePlaybook() {
+      const grid = document.getElementById('playbook-grid');
+      grid.innerHTML = '';
+
+      channelPlaybook.forEach(pb => {
+        const card = document.createElement('div');
+        card.className = 'playbook-card';
+        card.innerHTML = `
+          <div class="playbook-channel">${pb.channel}</div>
+          <div class="playbook-section">
+            <div class="playbook-label">Messaging Approach</div>
+            <div class="playbook-content">${pb.messaging}</div>
+          </div>
+          <div class="playbook-section">
+            <div class="playbook-label">Tone & Voice</div>
+            <div class="playbook-content">${pb.tone}</div>
+          </div>
+          <div class="playbook-section">
+            <div class="playbook-label">Format & Structure</div>
+            <div class="playbook-content">${pb.format}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Initialize examples
+    function initializeExamples() {
+      const grid = document.getElementById('examples-grid');
+      grid.innerHTML = '';
+
+      copyExamples.forEach(eg => {
+        const card = document.createElement('div');
+        card.className = 'example-card';
+        const examplesHTML = eg.examples.map(ex =>
+          `<div class="example-copy">"${ex}"</div>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="example-type">${eg.type}</div>
+          <div style="font-size: 0.85rem; color: var(--accent); margin-bottom: 0.75rem; font-weight: 600;">Theme: ${eg.theme}</div>
+          ${examplesHTML}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Scroll to section
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeMessages();
+      initializePlaybook();
+      initializeExamples();
+    });
+  </script>
+</body>
+</html>

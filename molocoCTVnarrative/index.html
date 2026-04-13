@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance CTV: Moloco Sales Narrative</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Design System */
+    :root {
+      --bg-primary: #0D0D12;
+      --bg-secondary: #16161E;
+      --bg-card: #1C1C28;
+      --bg-card-hover: #22222F;
+      --border: #2A2A3A;
+      --text-primary: #F0F0F4;
+      --text-secondary: #9B9BAF;
+      --text-muted: #6B6B80;
+      --accent: #A78BFA;
+      --accent-strong: #7C3AED;
+      --accent-bg: rgba(167, 139, 250, 0.12);
+      --secondary-accent: #7C5CFC;
+      --win: #66BB6A;
+      --win-bg: rgba(102, 187, 106, 0.12);
+      --warn: #FFA726;
+      --warn-bg: rgba(255, 167, 38, 0.12);
+      --info: #4F8CFF;
+      --info-bg: rgba(79, 140, 255, 0.12);
+      --danger: #EF5350;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background-color: rgba(13, 13, 18, 0.8);
+    }
+
+    .site-header-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .site-header-name:hover {
+      color: var(--accent);
+    }
+
+    .site-header-back {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .site-header-back:hover {
+      background: var(--bg-card-hover);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .site-header-back svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* Main Content */
+    .content-wrapper {
+      margin-top: 72px;
+      position: relative;
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 40px;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* Slide 1: Title */
+    .slide-title {
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .slide-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-title p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .slide-title .cta-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--accent-strong), var(--secondary-accent));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .slide-title .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(167, 139, 250, 0.3);
+    }
+
+    /* Section Headers */
+    .slide-header {
+      text-align: center;
+      max-width: 1000px;
+      margin-bottom: 80px;
+    }
+
+    .slide-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .slide-header .subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Stat Block */
+    .stat-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin: 24px;
+      flex: 1;
+      min-width: 200px;
+      transition: all 0.3s;
+    }
+
+    .stat-block:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .stat-block .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .stat-block .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Row Layout */
+    .row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Card Layouts */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Value Card */
+    .value-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s;
+    }
+
+    .value-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .value-metric {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .value-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .value-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Alternative Card */
+    .alt-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: all 0.3s;
+      position: relative;
+      padding-left: 48px;
+    }
+
+    .alt-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--warn);
+    }
+
+    .alt-card::before {
+      content: attr(data-number);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--warn);
+    }
+
+    .alt-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .alt-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Account Segment Card */
+    .segment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .segment-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .segment-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .segment-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .segment-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .segment-signals {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .segment-signals strong {
+      color: var(--text-secondary);
+    }
+
+    /* Navigation Dots */
+    .nav-dots {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .dot:hover {
+      background: var(--accent);
+    }
+
+    .dot.active {
+      background: var(--accent);
+      border-color: var(--text-primary);
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Proof Section */
+    .proof-item {
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .proof-item strong {
+      color: var(--accent);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent-bg), rgba(124, 58, 252, 0.08));
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .cta-section h3 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--accent-strong), var(--secondary-accent));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(167, 139, 250, 0.3);
+    }
+
+    .cta-btn-secondary {
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--accent);
+      text-decoration: none;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .cta-btn-secondary:hover {
+      background: var(--accent-bg);
+    }
+
+    /* Counter Animation */
+    @keyframes count-up {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .counter {
+      animation: count-up 0.6s ease-out forwards;
+    }
+
+    /* Positioning Statement */
+    .positioning-statement {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 900px;
+      margin-top: 40px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+
+    .positioning-statement strong {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 0 20px;
+        flex-direction: column;
+        height: auto;
+      }
+
+      .site-header-back {
+        margin-top: 12px;
+      }
+
+      .slide {
+        padding: 40px 20px;
+      }
+
+      .slide-title h1 {
+        font-size: 48px;
+      }
+
+      .slide-header h2 {
+        font-size: 40px;
+      }
+
+      .nav-dots {
+        display: none;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="site-header">
+    <a class="site-header-name" href="https://danetomalin.com/moloco">Dane Tomalin</a>
+    <a class="site-header-back" href="https://danetomalin.com/molocoCTVpositioning">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Back to Positioning Engine
+    </a>
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="nav-dots">
+    <div class="dot active" data-slide="0"></div>
+    <div class="dot" data-slide="1"></div>
+    <div class="dot" data-slide="2"></div>
+    <div class="dot" data-slide="3"></div>
+    <div class="dot" data-slide="4"></div>
+    <div class="dot" data-slide="5"></div>
+    <div class="dot" data-slide="6"></div>
+    <div class="dot" data-slide="7"></div>
+    <div class="dot" data-slide="8"></div>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Slide 1: Title Slide -->
+    <div class="slide slide-title">
+      <h1>Performance CTV</h1>
+      <p>The platform that makes every connected TV impression accountable to ROAS</p>
+      <a href="#" class="cta-btn">Book a Demo</a>
+    </div>
+
+    <!-- Slide 2: The Old World -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The Old World</h2>
+        <p class="subtitle">How CTV buying works today</p>
+      </div>
+      <div class="row">
+        <div class="stat-block">
+          <div class="stat-value">Reach Curves</div>
+          <div class="stat-label">Offline metrics that ignore business impact</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">No ROAS</div>
+          <div class="stat-label">Can't answer "what did this sell?"</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">Shared ML</div>
+          <div class="stat-label">Optimization models built for everyone, optimized for no one</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 40px;">
+        <div class="stat-block">
+          <div class="stat-value">Agency Dependency</div>
+          <div class="stat-label">Weeks to launch, days to pivot</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">Weekly Cycles</div>
+          <div class="stat-label">Optimization happens when performance suffers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: The Shift -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The Shift</h2>
+        <p class="subtitle">What changed in the world</p>
+      </div>
+      <div class="card-grid" style="max-width: 1100px;">
+        <div class="card">
+          <div class="card-number">45%</div>
+          <div class="card-title">Ad Budget Migration</div>
+          <div class="card-description">Cord-cutting is pushing marketing budgets from linear TV to CTV. The shift is unstoppable.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">$38B</div>
+          <div class="card-title">CTV Market Size</div>
+          <div class="card-description">Growing faster than digital display. CTV is no longer the "new channel" — it's the main channel.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">Privacy</div>
+          <div class="card-title">The Reckoning</div>
+          <div class="card-description">Cookies are gone. ACR data is questioned. Identity is fragmented. Reach-based targeting is obsolete.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">Measurement</div>
+          <div class="card-title">The Unlock</div>
+          <div class="card-description">First-party data, outcome tracking, and attribution are the new competitive weapon.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: The Stakes -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The Stakes</h2>
+        <p class="subtitle">What happens if you don't adapt</p>
+      </div>
+      <div class="alt-card" data-number="1">
+        <div class="alt-name">Competitors Gain Efficiency</div>
+        <div class="alt-desc">Rivals with outcome-based CTV are compounding performance week-over-week. Your reach curves stay flat.</div>
+      </div>
+      <div class="alt-card" data-number="2">
+        <div class="alt-name">Fraud Exposure</div>
+        <div class="alt-desc">The DIY approach to CTV (4-5 vendor stitching) costs the industry $7.4B in fraud annually. You're funding bad actors.</div>
+      </div>
+      <div class="alt-card" data-number="3">
+        <div class="alt-name">Agency Dependency</div>
+        <div class="alt-desc">You remain locked in slow cycles, unable to defend your CTV spend to CFOs. The board wants measurable ROI, not impressions.</div>
+      </div>
+      <div class="alt-card" data-number="4">
+        <div class="alt-name">Privacy Cliff</div>
+        <div class="alt-desc">Cookies are disappearing. ACR vendors are questioned. Your targeting strategy becomes indefensible.</div>
+      </div>
+      <div class="alt-card" data-number="5">
+        <div class="alt-name">Indefensible CTV Spend</div>
+        <div class="alt-desc">No attribution. No ROAS. Just reach curves and "that's what the industry uses." Your CFO will cut the budget.</div>
+      </div>
+    </div>
+
+    <!-- Slide 5: The New Way -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The New Way</h2>
+        <p class="subtitle">Performance CTV. A new category.</p>
+      </div>
+      <div class="positioning-statement">
+        <strong>Performance CTV</strong> is a category of outcome-driven connected TV platforms that bid on measurable business results — not impressions. Per-advertiser ML models, first-party signal ingestion, and cross-screen attribution replace reach curves and shared models.
+      </div>
+      <div class="card-grid" style="max-width: 1100px; margin-top: 60px;">
+        <div class="card">
+          <div class="card-title">Outcome-Based Bidding</div>
+          <div class="card-description">Bid on ROAS, CAC, or revenue. Not impressions. The platform optimizes toward what you care about.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Per-Advertiser ML</div>
+          <div class="card-description">Your model. Your data. Trained on your outcomes. Gets smarter with every dollar you spend.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">First-Party Data</div>
+          <div class="card-description">No ACR dependency. No cookie reliance. Your owned audience. Zero privacy risk.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Cross-Screen Attribution</div>
+          <div class="card-description">CTV → Mobile → Web → Offline. Single source of truth. One story to tell the board.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: How It Works -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>How It Works</h2>
+        <p class="subtitle">7 Distinct Capabilities</p>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-number">1</div>
+          <div class="card-title">Per-Advertiser Operational ML</div>
+          <div class="card-description">Custom models trained on each advertiser's outcomes. Compounds with spend. Improves 5-12% week-over-week.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">2</div>
+          <div class="card-title">Outcome-Based Bidding</div>
+          <div class="card-description">Bid on ROAS, CPA, or revenue. The algorithm optimizes toward your business goal, not a vanity metric.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">3</div>
+          <div class="card-title">First-Party Signal Ingestion</div>
+          <div class="card-description">Connect your owned audience. No third-party identity dependency. Privacy-native targeting.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">4</div>
+          <div class="card-title">Cross-Screen Attribution</div>
+          <div class="card-description">Track every CTV impression through mobile, web, and offline conversions. Unified measurement.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">5</div>
+          <div class="card-title">Privacy-Resilient Targeting</div>
+          <div class="card-description">Zero reliance on ACR or cookies. Contextual + first-party signals. Future-proof.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">6</div>
+          <div class="card-title">Biddable Open CTV Supply</div>
+          <div class="card-description">90%+ of programmatic CTV. No walled garden lock-in. Maximum reach, no vendor dependency.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">7</div>
+          <div class="card-title">Self-Serve Performance UX</div>
+          <div class="card-description">Launch in hours, not weeks. No agency gate. Iterate on your performance dashboard in real-time.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: The Value -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The Differentiated Value</h2>
+        <p class="subtitle">7 outcomes that matter to your business</p>
+      </div>
+      <div class="card-grid">
+        <div class="value-card">
+          <div class="value-metric">30-50%</div>
+          <div class="value-title">Measurable ROAS</div>
+          <div class="value-desc">Ecommerce revenue lift attributable to CTV. 10-20% lower CAC. Answer "what did this sell?" with confidence.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">5-12% WoW</div>
+          <div class="value-title">Compounding Performance</div>
+          <div class="value-desc">Weekly ROAS improvement. 20-30% YoY efficiency gains. Performance that accelerates, not plateaus.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">90%+</div>
+          <div class="value-title">Open Supply, Zero Lock-In</div>
+          <div class="value-desc">Independence from walled gardens. No Amazon. No Google. No Roku dependency.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">Cookie-Free</div>
+          <div class="value-title">Privacy Future-Proofing</div>
+          <div class="value-desc">Zero reliance on cookies or ACR. First-party signals only. Regulation-proof.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">40-50% Faster</div>
+          <div class="value-title">Speed to Value</div>
+          <div class="value-desc">Hours, not weeks. Self-serve UX. Iterate, measure, optimize in real-time. Agency-free agility.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">50-70%</div>
+          <div class="value-title">Reduced Waste</div>
+          <div class="value-desc">Fraud exposure reduction. No vendor finger-pointing. No "stitching" third-party solutions.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">40-60%</div>
+          <div class="value-title">Single Source of Truth</div>
+          <div class="value-desc">Unified attribution. 10-15 FTE hours saved per week. Attribution delay reduction. One story to leadership.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Who It's For -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Who It's For</h2>
+        <p class="subtitle">5 Best-Fit Account Segments</p>
+      </div>
+      <div class="card-grid">
+        <div class="segment-card">
+          <div class="segment-icon">🎯</div>
+          <div class="segment-title">DTC/App-First Brands</div>
+          <div class="segment-desc">$5M–$250M+ revenue. Speak ROAS natively. Outgrew template-based platforms like MNTN.</div>
+          <div class="segment-signals"><strong>Signals:</strong> Performance marketing org, owned audience, high CAC sensitivity</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">📈</div>
+          <div class="segment-title">Growth-Stage Companies</div>
+          <div class="segment-desc">$10M–$500M. Board scrutinizes ROAS. Need a defensible CTV story for the next funding round.</div>
+          <div class="segment-signals"><strong>Signals:</strong> CEO focused on efficiency, LTV:CAC optimization, board meetings</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">📺</div>
+          <div class="segment-title">Linear-to-CTV Migrators</div>
+          <div class="segment-desc">$100M+. Cord-cutting forcing budget shifts. Need a measurement framework that justifies the migration.</div>
+          <div class="segment-signals"><strong>Signals:</strong> Traditional media budget, TV agency relationships, measurement gaps</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">🛍️</div>
+          <div class="segment-title">Commerce Media / Retail</div>
+          <div class="segment-desc">$500M+. First-party data asset. Want to monetize owned audience with outcome-driven CTV.</div>
+          <div class="segment-signals"><strong>Signals:</strong> First-party data, owned audience, margin pressure on performance</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">🤝</div>
+          <div class="segment-title">Performance Agencies</div>
+          <div class="segment-desc">$50M–$1B+ AUM. Differentiate with outcome-based CTV. Win new brands with defensible ROAS stories.</div>
+          <div class="segment-signals"><strong>Signals:</strong> Performance clients, CTV revenue gap, client attrition pressure</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Proof -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Proof Points</h2>
+        <p class="subtitle">Real outcomes from customers like you</p>
+      </div>
+      <div style="max-width: 800px; width: 100%;">
+        <div class="proof-item">
+          <strong>DTC Apparel Brand:</strong> 40% ROAS lift in first 60 days. Per-advertiser ML trained on 3 months of first-party conversion data. Now compounding 8% WoW.
+        </div>
+        <div class="proof-item">
+          <strong>Performance Agency:</strong> Closed 4 new DTC clients with "outcome-based CTV" as the differentiator. Added $2.4M in AUM from CTV alone.
+        </div>
+        <div class="proof-item">
+          <strong>Growth-Stage Fintech:</strong> Defended $5M CTV budget to board with unified attribution across CTV+mobile+web. CAC decreased 18%.
+        </div>
+        <div class="proof-item">
+          <strong>Linear-to-CTV Migrator:</strong> Shifted $8M from traditional TV buys. Attribution framework enabled 25% efficiency improvement vs. legacy reach curves.
+        </div>
+        <div class="proof-item">
+          <strong>Commerce Media Platform:</strong> Monetized owned audience with outcome-based CTV. 35% ROAS on first-party audience, zero cookie dependency.
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 10: The Ask -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>What's Next?</h2>
+        <p class="subtitle">Let's talk about your CTV strategy</p>
+      </div>
+      <div class="cta-section">
+        <h3>Ready to Make CTV Accountable?</h3>
+        <p>Join leading DTC brands, growth-stage companies, and performance agencies that are shifting from reach curves to ROAS.</p>
+        <div class="cta-buttons">
+          <button class="cta-btn-primary" onclick="handleBookDemo()">Book a 30-Minute Demo</button>
+          <button class="cta-btn-secondary" onclick="handleTrialRequest()">Start a Free Trial</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Navigation Dots
+    const dots = document.querySelectorAll('.nav-dots .dot');
+    const slides = document.querySelectorAll('.slide');
+
+    function updateActiveDot() {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      slides.forEach((slide, index) => {
+        const slideTop = slide.offsetTop;
+        const slideBottom = slideTop + slide.offsetHeight;
+
+        if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+          dots.forEach(d => d.classList.remove('active'));
+          dots[index].classList.add('active');
+        }
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', updateActiveDot);
+
+    // Counter Animation
+    function animateCounter(element) {
+      const value = element.textContent;
+      const numMatch = value.match(/(\d+)/);
+
+      if (numMatch) {
+        const target = parseInt(numMatch[0]);
+        const start = 0;
+        const duration = 1000;
+        const startTime = Date.now();
+
+        function update() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const current = Math.floor(start + (target - start) * progress);
+
+          element.textContent = value.replace(target.toString(), current.toString());
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+
+        update();
+      }
+    }
+
+    // Observe when counters come into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.classList.contains('stat-value')) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll('.stat-value').forEach(el => observer.observe(el));
+    document.querySelectorAll('.value-metric').forEach(el => observer.observe(el));
+
+    // Button Handlers
+    function handleBookDemo() {
+      alert('Redirecting to booking calendar...\n\nIn production, this would link to your Calendly or booking system.');
+    }
+
+    function handleTrialRequest() {
+      alert('Starting free trial request...\n\nIn production, this would open a sign-up form.');
+    }
+  </script>
+</body>
+</html>

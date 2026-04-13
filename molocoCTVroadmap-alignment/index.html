@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Roadmap Alignment - Moloco CTV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0D0D12;
+      --bg-secondary: #16161E;
+      --bg-card: #1C1C28;
+      --bg-card-hover: #22222F;
+      --border: #2A2A3A;
+      --text-primary: #F0F0F4;
+      --text-secondary: #9B9BAF;
+      --text-muted: #6B6B80;
+      --accent: #A78BFA;
+      --accent-strong: #7C3AED;
+      --accent-bg: rgba(167, 139, 250, 0.12);
+      --secondary-accent: #7C5CFC;
+      --win: #66BB6A;
+      --win-bg: rgba(102, 187, 106, 0.12);
+      --warn: #FFA726;
+      --warn-bg: rgba(255, 167, 38, 0.12);
+      --info: #4F8CFF;
+      --info-bg: rgba(79, 140, 255, 0.12);
+      --danger: #EF5350;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .site-header-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .site-header-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .site-header-back:hover {
+      color: var(--accent);
+    }
+
+    .site-header-back svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Main container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Hero section */
+    .hero {
+      text-align: center;
+      padding: 3rem 0;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--secondary-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Section headers */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    /* Tab navigation */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-button:hover {
+      color: var(--accent);
+    }
+
+    .tab-button.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Section containers */
+    .section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .section-intro {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Capability cards */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .capability-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .capability-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .capability-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .capability-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .capability-icon {
+      flex-shrink: 0;
+      font-size: 1.5rem;
+    }
+
+    .capability-features {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .capability-features.expanded {
+      display: block;
+    }
+
+    .feature-item {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+    }
+
+    .feature-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .feature-name {
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+
+    .score {
+      background: var(--info-bg);
+      color: var(--info);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* Priority badges */
+    .badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-build {
+      background: var(--win-bg);
+      color: var(--win);
+    }
+
+    .badge-investigate {
+      background: var(--info-bg);
+      color: var(--info);
+    }
+
+    .badge-defer {
+      background: var(--warn-bg);
+      color: var(--warn);
+    }
+
+    .badge-kill {
+      background: rgba(239, 83, 80, 0.12);
+      color: var(--danger);
+    }
+
+    .badge-critical {
+      background: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    /* Competitive gap section */
+    .gaps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gap-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .gap-competitor {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .gap-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .gap-item {
+      padding: 0.75rem;
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    /* Value section */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .value-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .value-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .value-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .value-metric {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .value-details {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .value-details.expanded {
+      display: block;
+    }
+
+    /* Matrix section */
+    .priority-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .priority-category {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .priority-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .priority-badge {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .priority-badge.build { background: var(--win); }
+    .priority-badge.investigate { background: var(--info); }
+    .priority-badge.defer { background: var(--warn); }
+    .priority-badge.kill { background: var(--danger); }
+
+    .priority-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .priority-item {
+      padding: 1rem;
+      background: var(--bg-card);
+      border-radius: 6px;
+      border-left: 3px solid;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .priority-item.build { border-color: var(--win); }
+    .priority-item.investigate { border-color: var(--info); }
+    .priority-item.defer { border-color: var(--warn); }
+    .priority-item.kill { border-color: var(--danger); }
+
+    .priority-label {
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    /* Segment cards */
+    .segments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .segment-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .segment-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .segment-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .segment-needs {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .segment-needs.expanded {
+      display: block;
+    }
+
+    .need-item {
+      padding: 0.75rem;
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .need-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Explanation box */
+    .explanation-box {
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .explanation-box h4 {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .explanation-box p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.6rem; }
+      .capabilities-grid { grid-template-columns: 1fr; }
+      .gaps-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .segments-grid { grid-template-columns: 1fr; }
+      .priority-matrix { grid-template-columns: 1fr; }
+      .tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="site-header">
+    <a class="site-header-name" href="https://danetomalin.com/moloco">Dane Tomalin</a>
+    <a class="site-header-back" href="https://danetomalin.com/molocoCTVpositioning">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Back to Positioning Engine
+    </a>
+  </div>
+
+  <div class="container">
+    <!-- Hero -->
+    <div class="hero">
+      <h1>Product Roadmap Alignment</h1>
+      <p class="hero-subtitle">Mapping positioning to feature priorities — what to build, what to defer</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <button class="tab-button active" onclick="switchTab(event, 'connection')">The Connection</button>
+      <button class="tab-button" onclick="switchTab(event, 'capabilities')">Capabilities Map</button>
+      <button class="tab-button" onclick="switchTab(event, 'values')">Value Drivers</button>
+      <button class="tab-button" onclick="switchTab(event, 'priorities')">Build Matrix</button>
+      <button class="tab-button" onclick="switchTab(event, 'competitive')">Competitive Gaps</button>
+      <button class="tab-button" onclick="switchTab(event, 'segments')">Segment Needs</button>
+    </div>
+
+    <!-- TAB 1: The Positioning-Product Connection -->
+    <div id="connection" class="tab-content active">
+      <div class="section">
+        <h2>The Positioning-Product Connection</h2>
+        <div class="explanation-box">
+          <h4>Why This Matters</h4>
+          <p>Your positioning defines the value you deliver to buyers. The product roadmap must reinforce that value through feature investments. Every feature on the roadmap should map to one or more of your 7 distinct capabilities or enable one of your 7 differentiated values.</p>
+        </div>
+
+        <div class="section-intro">
+          <strong>The Core Logic:</strong> Moloco's market position rests on a tightly coupled set of capabilities and values. When you invest in the roadmap, you're either deepening those strengths or closing gaps that competitors exploit. This guide shows which features ladder up to which positioning pillars—and which don't belong on the roadmap at all.
+        </div>
+
+        <h3>Three Key Alignment Principles</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          <div class="gap-card">
+            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.75rem;">1. Every Feature Maps</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Ask: which capability does this feature strengthen? Which value does it enable? If the answer is "none," it's probably on the wrong roadmap.</p>
+          </div>
+          <div class="gap-card">
+            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.75rem;">2. Positioning Informs Priority</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Features that reinforce your competitive differentiation (ROAS, cross-screen, self-serve) rank higher than features that commoditize (basic reporting) or contradict your positioning (reach-first optimization).</p>
+          </div>
+          <div class="gap-card">
+            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.75rem;">3. Gaps Are Opportunities</div>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Where do competitors beat you? Which features would close that gap AND reinforce your positioning? Those go on the BUILD list. Features that just match competitors without differentiation go on DEFER.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 2rem;">Your Positioning at a Glance</h3>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+          <div class="gap-card">
+            <div style="font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);">7 Distinct Capabilities</div>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 0.95rem;">Per-Advertiser Operational ML • Outcome-Based Bidding • First-Party Signal Ingestion • Cross-Screen Attribution • Privacy-Resilient Targeting • Biddable Open CTV Supply • Self-Serve Performance UX</p>
+          </div>
+          <div class="gap-card">
+            <div style="font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);">7 Differentiated Values</div>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 0.95rem;">Measurable ROAS (30-50% lift) • Compounding Performance (5-12% WoW) • Independence from Walled Gardens (90%+ open) • Privacy Future-Proofing (zero cookie reliance) • Speed to Value (hours not weeks) • Reduced Waste (50-70% fraud reduction) • Single Source of Truth (10-15 FTE hrs/wk saved)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Capability → Feature Map -->
+    <div id="capabilities" class="tab-content">
+      <div class="section">
+        <h2>Capability → Feature Map</h2>
+        <p class="section-intro">Click each capability to see the features that reinforce it, their BUILD/INVESTIGATE/DEFER status, and competitive gaps.</p>
+
+        <div class="capabilities-grid">
+          <!-- Capability 1 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">Per-Advertiser Operational ML</div>
+              <div class="capability-icon">⚙️</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Models trained per advertiser capture their unique patterns</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">CTV ROAS & Purchase Optimization Models</div>
+                <div class="feature-meta">
+                  <span class="score">8.75/10</span>
+                  <span class="badge badge-build">BUILD</span>
+                  <span class="badge badge-critical">Critical</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">ML Model Training Pipeline</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Advertiser Data Ingestion</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Model Performance Dashboards</div>
+                <div class="feature-meta">
+                  <span class="badge badge-investigate">INVESTIGATE</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> MNTN has templates but not per-advertiser models. TTD has shared ML but not outcome-trained.
+              </div>
+            </div>
+          </div>
+
+          <!-- Capability 2 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">Outcome-Based Bidding</div>
+              <div class="capability-icon">🎯</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Bid to a business outcome, not just impressions</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">ROAS/CPA Bid Strategies</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Real-Time Bid Optimization</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Outcome-Based Campaign Goals</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Impression-Level ROAS Tracking</div>
+                <div class="feature-meta">
+                  <span class="badge badge-investigate">INVESTIGATE</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> TTD offers reach curves but not outcome-driven bidding. MNTN tracks KPI but not outcome-optimized bids.
+              </div>
+            </div>
+          </div>
+
+          <!-- Capability 3 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">First-Party Signal Ingestion</div>
+              <div class="capability-icon">📥</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Own your data, not third-party signals</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">CRM/CDP Connectors</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Hashed Email Support</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Device ID Ingestion</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Pixel Event Tracking</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> TTD relies heavily on 3P cookies. DV360 cookie-dependent and proprietary.
+              </div>
+            </div>
+          </div>
+
+          <!-- Capability 4 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">Cross-Screen Attribution</div>
+              <div class="capability-icon">📊</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Single source of truth across CTV, mobile, web, offline</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">Unified Cross-Screen Attribution Dashboard</div>
+                <div class="feature-meta">
+                  <span class="score">8.5/10</span>
+                  <span class="badge badge-build">BUILD</span>
+                  <span class="badge badge-critical">Critical</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">CTV→Mobile→Web→Offline Tracking</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Single Source of Truth Reporting</div>
+                <div class="feature-meta">
+                  <span class="badge badge-investigate">INVESTIGATE</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> Roku (Roku-only), Amazon (walled), TTD (requires stitching), DV360 (YouTube-only).
+              </div>
+            </div>
+          </div>
+
+          <!-- Capability 5 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">Privacy-Resilient Targeting</div>
+              <div class="capability-icon">🔐</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Thrive without cookies or ACR data</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">Contextual Signal Framework</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Content Affinity Targeting</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">First-Party-Only Bidding Mode</div>
+                <div class="feature-meta">
+                  <span class="badge badge-investigate">INVESTIGATE</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Compliance Dashboards</div>
+                <div class="feature-meta">
+                  <span class="badge badge-defer">DEFER</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> TTD is cookie-heavy. DV360 relies on 3P mix. Roku exposes ACR data.
+              </div>
+            </div>
+          </div>
+
+          <!-- Capability 6 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">Biddable Open CTV Supply</div>
+              <div class="capability-icon">📡</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Access to 90%+ of open supply, not locked to one platform</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">Programmatic Supply Integrations (Netflix, Roku, Peacock, Paramount+, Disney+, Tubi, Pluto)</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">PMP Deal Management</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Supply Quality Scoring</div>
+                <div class="feature-meta">
+                  <span class="badge badge-investigate">INVESTIGATE</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> Amazon (walled), Roku (Roku-only), DV360 (YouTube-only).
+              </div>
+            </div>
+          </div>
+
+          <!-- Capability 7 -->
+          <div class="capability-card" onclick="toggleCapability(this)">
+            <div class="capability-header">
+              <div class="capability-title">Self-Serve Performance UX</div>
+              <div class="capability-icon">🎨</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Discriminator: Hours to value, not weeks of onboarding</div>
+            <div class="capability-features">
+              <div class="feature-item">
+                <div class="feature-name">Self-Serve CTV Campaign Builder</div>
+                <div class="feature-meta">
+                  <span class="score">8.0/10</span>
+                  <span class="badge badge-build">BUILD</span>
+                  <span class="badge badge-critical">Critical</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Real-Time Dashboards</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Campaign Templates</div>
+                <div class="feature-meta">
+                  <span class="badge badge-build">BUILD</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-name">Onboarding Wizard</div>
+                <div class="feature-meta">
+                  <span class="badge badge-investigate">INVESTIGATE</span>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Competitive Gap:</strong> MNTN is managed service only. TTD has enterprise UX, not self-serve SMB ease.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Value → Feature Priorities -->
+    <div id="values" class="tab-content">
+      <div class="section">
+        <h2>Value → Feature Priorities</h2>
+        <p class="section-intro">Each of your 7 differentiated values requires specific product investments. Click each value to see what features enable it.</p>
+
+        <div class="values-grid">
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Measurable ROAS</div>
+            <div class="value-metric">30-50% revenue lift</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>ROAS optimization models (per-advertiser ML)</li>
+                <li>Attribution dashboard (cross-screen tracking)</li>
+                <li>Impression-level ROAS tracking</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Compounding Performance</div>
+            <div class="value-metric">5-12% WoW, 20-30% YoY</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>Per-advertiser ML pipeline (retraining cycles)</li>
+                <li>Model performance dashboards</li>
+                <li>Performance history & trend analysis</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Independence from Walled Gardens</div>
+            <div class="value-metric">90%+ open supply access</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>Supply integrations (Netflix, Roku, Peacock, Paramount+, Disney+, Tubi, Pluto)</li>
+                <li>PMP deal management</li>
+                <li>Cross-publisher optimization</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Privacy Future-Proofing</div>
+            <div class="value-metric">Zero cookie/ACR reliance</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>Contextual targeting framework</li>
+                <li>First-party signal connectors (CRM/CDP)</li>
+                <li>Compliance dashboards & audit trails</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Speed to Value</div>
+            <div class="value-metric">Hours not weeks, 40-50% faster</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>Self-serve campaign builder</li>
+                <li>Campaign templates</li>
+                <li>Onboarding wizard & guided flows</li>
+                <li>Real-time optimization (no manual intervention)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Reduced Waste</div>
+            <div class="value-metric">50-70% fraud reduction</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>ML fraud detection pipeline</li>
+                <li>Supply quality scoring</li>
+                <li>Invalid traffic filtering & blocking</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="value-card" onclick="toggleValue(this)">
+            <div class="value-title">Single Source of Truth</div>
+            <div class="value-metric">10-15 FTE hrs/wk saved</div>
+            <div class="value-details">
+              <strong style="color: var(--text-primary);">Product Enablers:</strong>
+              <ul style="margin-top: 0.5rem; margin-left: 1.5rem; color: var(--text-secondary);">
+                <li>Unified cross-screen attribution dashboard</li>
+                <li>Real-time reporting & alerts</li>
+                <li>Reporting APIs & data exports</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Build / Investigate / Defer / Kill Matrix -->
+    <div id="priorities" class="tab-content">
+      <div class="section">
+        <h2>Build / Investigate / Defer / Kill Matrix</h2>
+        <p class="section-intro">Feature recommendations organized by priority. Features that reinforce your positioning and close competitive gaps move higher.</p>
+
+        <div class="explanation-box">
+          <h4>Priority Logic</h4>
+          <p><strong>BUILD:</strong> Closes a competitive gap AND reinforces your positioning. <strong>INVESTIGATE:</strong> Shows promise but needs more validation. <strong>DEFER:</strong> Not a priority—may commoditize. <strong>KILL:</strong> Contradicts your positioning or diverts from core differentiation.</p>
+        </div>
+
+        <div class="priority-matrix">
+          <!-- BUILD -->
+          <div class="priority-category">
+            <div class="priority-header">
+              <span class="priority-badge build"></span>
+              <span>BUILD (Critical)</span>
+            </div>
+            <div class="priority-items">
+              <div class="priority-item build">
+                <div class="priority-label">CTV ROAS & Purchase Optimization Models (8.75/10)</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Core to measurable ROAS value. Competitive advantage vs MNTN (templates only) and TTD (shared ML).</p>
+              </div>
+              <div class="priority-item build">
+                <div class="priority-label">Unified Cross-Screen Attribution Dashboard (8.5/10)</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Single source of truth value. Closes gap vs Roku (Roku-only), Amazon (walled), TTD (requires stitching).</p>
+              </div>
+              <div class="priority-item build">
+                <div class="priority-label">Self-Serve CTV Campaign Builder (8.0/10)</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Speed to value. Differentiates from MNTN (managed service) and TTD (enterprise UX).</p>
+              </div>
+              <div class="priority-item build">
+                <div class="priority-label">First-Party Signal Connectors (CRM/CDP)</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Privacy-resilient positioning. Closes gap vs TTD (cookie-heavy) and DV360 (proprietary).</p>
+              </div>
+              <div class="priority-item build">
+                <div class="priority-label">ML Fraud Detection Pipeline</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Reduced waste value. Enables 50-70% fraud reduction claim.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INVESTIGATE -->
+          <div class="priority-category">
+            <div class="priority-header">
+              <span class="priority-badge investigate"></span>
+              <span>INVESTIGATE (High)</span>
+            </div>
+            <div class="priority-items">
+              <div class="priority-item investigate">
+                <div class="priority-label">Contextual Targeting Framework</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Supports privacy-resilient positioning. Validate demand before full build.</p>
+              </div>
+              <div class="priority-item investigate">
+                <div class="priority-label">PMP Deal Management & Supply Quality</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Reinforces open supply positioning. Understand deal complexity before investing.</p>
+              </div>
+              <div class="priority-item investigate">
+                <div class="priority-label">Real-Time Performance Dashboards</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Enables speed to value and single source of truth. Validate UX requirements.</p>
+              </div>
+              <div class="priority-item investigate">
+                <div class="priority-label">Onboarding Wizard</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Supports hours-to-value promise. Test with cohort before rollout.</p>
+              </div>
+              <div class="priority-item investigate">
+                <div class="priority-label">Interactive CTV Ad Formats (Shoppable, QR Overlays)</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Future-proofing. Validate demand and technical feasibility with supply partners.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEFER -->
+          <div class="priority-category">
+            <div class="priority-header">
+              <span class="priority-badge defer"></span>
+              <span>DEFER (Lower Priority)</span>
+            </div>
+            <div class="priority-items">
+              <div class="priority-item defer">
+                <div class="priority-label">Linear TV Integration</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Different buying paradigm. Doesn't reinforce CTV positioning. Revisit later.</p>
+              </div>
+              <div class="priority-item defer">
+                <div class="priority-label">Brand Awareness Measurement</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Conflicts with performance positioning. Commoditized in market.</p>
+              </div>
+              <div class="priority-item defer">
+                <div class="priority-label">Creative Ad Builder</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Not core to ML/performance differentiation. Supply partners handle creative.</p>
+              </div>
+              <div class="priority-item defer">
+                <div class="priority-label">White-Label Agency Dashboard</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Niche segment. Validate market size before investing.</p>
+              </div>
+              <div class="priority-item defer">
+                <div class="priority-label">Offline Attribution Integration</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Complex and niche. Revisit after core cross-screen attribution ships.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- KILL -->
+          <div class="priority-category">
+            <div class="priority-header">
+              <span class="priority-badge kill"></span>
+              <span>KILL (Removes Differentiation)</span>
+            </div>
+            <div class="priority-items">
+              <div class="priority-item kill">
+                <div class="priority-label">ACR-Based Targeting</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Contradicts privacy-resilient positioning. Do not pursue.</p>
+              </div>
+              <div class="priority-item kill">
+                <div class="priority-label">Third-Party Cookie Targeting</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Sunsetting and conflicts with positioning. Focus on first-party instead.</p>
+              </div>
+              <div class="priority-item kill">
+                <div class="priority-label">Reach/Frequency Optimization Mode</div>
+                <p style="font-size: 0.85rem; margin-top: 0.3rem;">Contradicts outcome-based positioning. Build ROAS/CPA goals instead.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Competitive Gap Analysis -->
+    <div id="competitive" class="tab-content">
+      <div class="section">
+        <h2>Competitive Gap Analysis</h2>
+        <p class="section-intro">What features would close gaps against each competitor AND reinforce your positioning?</p>
+
+        <div class="gaps-grid">
+          <div class="gap-card">
+            <div class="gap-competitor">MNTN</div>
+            <div class="gap-items">
+              <div class="gap-item">
+                <strong>Their Strength:</strong> Managed service → Hand-holding for clients
+              </div>
+              <div class="gap-item">
+                <strong>Your Gap:</strong> Self-serve needs more polish
+              </div>
+              <div class="gap-item">
+                <strong>Your Build:</strong> Self-serve campaign builder, onboarding wizard, templates → WIN on speed to value
+              </div>
+              <div class="gap-item">
+                <strong>Their Weakness:</strong> No per-advertiser ML (template-based)
+              </div>
+              <div class="gap-item">
+                <strong>Your Opportunity:</strong> ROAS optimization models → WIN on measurable performance
+              </div>
+            </div>
+          </div>
+
+          <div class="gap-card">
+            <div class="gap-competitor">Trade Desk (TTD)</div>
+            <div class="gap-items">
+              <div class="gap-item">
+                <strong>Their Strength:</strong> Cross-device reach via cookies
+              </div>
+              <div class="gap-item">
+                <strong>Your Gap:</strong> Attribution needs full stack visibility
+              </div>
+              <div class="gap-item">
+                <strong>Your Build:</strong> Unified cross-screen attribution dashboard → WIN on single source of truth
+              </div>
+              <div class="gap-item">
+                <strong>Their Weakness:</strong> Shared ML (not per-advertiser), cookie-dependent
+              </div>
+              <div class="gap-item">
+                <strong>Your Opportunity:</strong> First-party signal connectors + privacy-resilient targeting → WIN on future-proofing
+              </div>
+            </div>
+          </div>
+
+          <div class="gap-card">
+            <div class="gap-competitor">DV360</div>
+            <div class="gap-items">
+              <div class="gap-item">
+                <strong>Their Strength:</strong> YouTube ecosystem lock-in
+              </div>
+              <div class="gap-item">
+                <strong>Your Gap:</strong> Need to articulate open supply advantage
+              </div>
+              <div class="gap-item">
+                <strong>Your Build:</strong> Programmatic supply integrations (Netflix, Roku, Peacock, etc.) → WIN on independence
+              </div>
+              <div class="gap-item">
+                <strong>Their Weakness:</strong> 3P cookie dependent, no CTV-native ML
+              </div>
+              <div class="gap-item">
+                <strong>Your Opportunity:</strong> CTV ROAS models + first-party targeting → WIN on CTV-first optimization
+              </div>
+            </div>
+          </div>
+
+          <div class="gap-card">
+            <div class="gap-competitor">Amazon DSP</div>
+            <div class="gap-items">
+              <div class="gap-item">
+                <strong>Their Strength:</strong> Closed ecosystem (proprietary data + walled supply)
+              </div>
+              <div class="gap-item">
+                <strong>Your Gap:</strong> Can't match their first-party data, so emphasize choice
+              </div>
+              <div class="gap-item">
+                <strong>Your Build:</strong> Multi-supply PMP framework, client data connectors → WIN on independence + openness
+              </div>
+              <div class="gap-item">
+                <strong>Their Weakness:</strong> Only Amazon supply, no outside CTV access
+              </div>
+              <div class="gap-item">
+                <strong>Your Opportunity:</strong> Open supply integrations → WIN on reach beyond Amazon
+              </div>
+            </div>
+          </div>
+
+          <div class="gap-card">
+            <div class="gap-competitor">Roku Direct (Roku-only DSP)</div>
+            <div class="gap-items">
+              <div class="gap-item">
+                <strong>Their Strength:</strong> Native Roku data, fast onboarding
+              </div>
+              <div class="gap-item">
+                <strong>Your Gap:</strong> Need to move fast on Roku integrations
+              </div>
+              <div class="gap-item">
+                <strong>Your Build:</strong> Seamless Roku integration, real-time dashboards → WIN on ease of use
+              </div>
+              <div class="gap-item">
+                <strong>Their Weakness:</strong> Limited to Roku supply, no cross-publisher optimization
+              </div>
+              <div class="gap-item">
+                <strong>Your Opportunity:</strong> Offer Roku + Netflix + Peacock + others in one place → WIN on supply breadth
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: Account Segment Needs -->
+    <div id="segments" class="tab-content">
+      <div class="section">
+        <h2>Account Segment Needs</h2>
+        <p class="section-intro">What product investments matter most to each of your 5 target segments?</p>
+
+        <div class="segments-grid">
+          <div class="segment-card" onclick="toggleSegment(this)">
+            <div class="segment-name">DTC / App-First</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0;">E-commerce brands optimizing for app installs and in-app revenue</p>
+            <div class="segment-needs">
+              <div class="need-item">
+                <strong>Primary Need:</strong> Cross-screen attribution (CTV→app→web)
+              </div>
+              <div class="need-item">
+                <strong>Secondary Need:</strong> MMP integration (Adjust, Branch, AppsFlyer)
+              </div>
+              <div class="need-item">
+                <strong>Tertiary Need:</strong> LTV & payback period optimization
+              </div>
+              <div class="need-item">
+                <strong>Related Features:</strong> Unified cross-screen dashboard, MMP connectors, LTV models
+              </div>
+            </div>
+          </div>
+
+          <div class="segment-card" onclick="toggleSegment(this)">
+            <div class="segment-name">Growth-Stage</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0;">Mid-market brands needing board-ready reporting and unified ROI</p>
+            <div class="segment-needs">
+              <div class="need-item">
+                <strong>Primary Need:</strong> Single source of truth reporting (no spreadsheets)
+              </div>
+              <div class="need-item">
+                <strong>Secondary Need:</strong> Board deck templates & ROI calculators
+              </div>
+              <div class="need-item">
+                <strong>Tertiary Need:</strong> Real-time dashboards for stakeholder calls
+              </div>
+              <div class="need-item">
+                <strong>Related Features:</strong> Unified attribution, reporting APIs, ROI dashboard, export/template tools
+              </div>
+            </div>
+          </div>
+
+          <div class="segment-card" onclick="toggleSegment(this)">
+            <div class="segment-name">Linear Migrators</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0;">Traditional TV buyers transitioning to CTV</p>
+            <div class="segment-needs">
+              <div class="need-item">
+                <strong>Primary Need:</strong> Measurement framework familiar to TV buyers (reach, impression-level metrics)
+              </div>
+              <div class="need-item">
+                <strong>Secondary Need:</strong> Outcomes-based transition tool (reach goals → ROAS goals)
+              </div>
+              <div class="need-item">
+                <strong>Tertiary Need:</strong> Training & enablement (not self-serve, guided UX)
+              </div>
+              <div class="need-item">
+                <strong>Related Features:</strong> Reach curve analytics, outcome goal builders, onboarding wizard, media buyer UX
+              </div>
+            </div>
+          </div>
+
+          <div class="segment-card" onclick="toggleSegment(this)">
+            <div class="segment-name">Commerce / Retail</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0;">Retailers leveraging owned audiences and transaction data</p>
+            <div class="segment-needs">
+              <div class="need-item">
+                <strong>Primary Need:</strong> CRM/CDP connector & hashed email support
+              </div>
+              <div class="need-item">
+                <strong>Secondary Need:</strong> Owned audience activation & retention workflows
+              </div>
+              <div class="need-item">
+                <strong>Tertiary Need:</strong> LTV optimization & repeat purchase models
+              </div>
+              <div class="need-item">
+                <strong>Related Features:</strong> CDP connectors, lookalike modeling, LTV models, retention campaigns
+              </div>
+            </div>
+          </div>
+
+          <div class="segment-card" onclick="toggleSegment(this)">
+            <div class="segment-name">Performance Agencies</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0;">Agencies managing performance campaigns for multiple clients</p>
+            <div class="segment-needs">
+              <div class="need-item">
+                <strong>Primary Need:</strong> White-label options & multi-client dashboard
+              </div>
+              <div class="need-item">
+                <strong>Secondary Need:</strong> Agency billing & cost allocation
+              </div>
+              <div class="need-item">
+                <strong>Tertiary Need:</strong> Template library for fast campaign setup
+              </div>
+              <div class="need-item">
+                <strong>Related Features:</strong> Multi-client workspace, agency billing, white-label portal, campaign templates
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Product Roadmap Alignment Guide • Last updated April 2026 • Source: Moloco CTV Positioning Engine</p>
+  </div>
+
+  <script>
+    function switchTab(e, tabName) {
+      const buttons = document.querySelectorAll('.tab-button');
+      const contents = document.querySelectorAll('.tab-content');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+
+      e.target.classList.add('active');
+      document.getElementById(tabName).classList.add('active');
+    }
+
+    function toggleCapability(card) {
+      const features = card.querySelector('.capability-features');
+      features.classList.toggle('expanded');
+      card.style.borderColor = features.classList.contains('expanded') ? 'var(--accent)' : 'var(--border)';
+    }
+
+    function toggleValue(card) {
+      const details = card.querySelector('.value-details');
+      details.classList.toggle('expanded');
+      card.style.borderColor = details.classList.contains('expanded') ? 'var(--accent)' : 'var(--border)';
+    }
+
+    function toggleSegment(card) {
+      const needs = card.querySelector('.segment-needs');
+      needs.classList.toggle('expanded');
+      card.style.borderColor = needs.classList.contains('expanded') ? 'var(--accent)' : 'var(--border)';
+    }
+  </script>
+</body>
+</html>
