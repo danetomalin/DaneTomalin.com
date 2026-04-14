@@ -783,6 +783,86 @@
       margin-bottom: 4px;
     }
 
+    .philosophy-card { cursor: pointer; transition: background 0.2s; }
+    .philosophy-card:hover { background: #1a1a24; }
+
+    .dive-deep-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .dive-deep-link:hover { color: #c4b0ff; }
+    .dive-deep-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform 0.3s; }
+    .dive-deep-link.expanded svg { transform: rotate(90deg); }
+
+    /* ========== Framework Panels ========== */
+    .framework-panel {
+      display: none;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      margin-top: 40px;
+      overflow: hidden;
+      animation: slideDown 0.3s ease;
+    }
+    .framework-panel.active { display: block; }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .framework-header { padding: 32px 40px 24px; border-bottom: 1px solid var(--color-border); }
+    .framework-header h2 { font-family: var(--font-serif); font-size: 1.5rem; color: #fff; margin-bottom: 4px; }
+    .framework-header p { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; }
+    .framework-body { padding: 32px 40px; }
+    .framework-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 28px; }
+    .framework-steps.six-up { grid-template-columns: repeat(3, 1fr); }
+    .framework-step { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 24px; }
+    .step-number { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0.5; line-height: 1; margin-bottom: 10px; }
+    .step-title { font-weight: 600; font-size: 1rem; color: #fff; margin-bottom: 8px; }
+    .step-desc { font-size: 0.85rem; line-height: 1.65; color: var(--color-text-secondary); }
+    .framework-artifacts { padding-top: 24px; border-top: 1px solid var(--color-border); }
+    .artifacts-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); margin-bottom: 12px; }
+    .artifact-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .artifact-chip { background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); border-radius: 6px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; color: var(--color-accent-light); }
+    .close-panel { display: inline-flex; align-items: center; gap: 6px; margin-top: 24px; font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; background: none; border: none; transition: color 0.2s; }
+    .close-panel:hover { color: var(--color-accent); }
+
+    /* ========== GTM Hierarchy ========== */
+    .gtm-hierarchy { margin-top: 48px; }
+    .hierarchy-intro { text-align: center; margin-bottom: 20px; }
+    .hierarchy-intro h2 { font-family: var(--font-serif); font-size: 1.5rem; color: #fff; margin-bottom: 6px; }
+    .hierarchy-intro p { font-size: 0.9rem; color: var(--color-text-secondary); }
+    .hierarchy-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+    .hierarchy-tile { background: var(--color-surface); padding: 24px 20px; text-align: center; cursor: pointer; transition: background 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .hierarchy-tile:hover { background: #1a1a24; }
+    .ht-level { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); }
+    .ht-name { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .ht-arrow { font-size: 1rem; color: var(--color-accent); opacity: 0.4; line-height: 1; margin-top: 4px; }
+    .ht-foundation:not(.ht-active) { background: rgba(167,139,250,0.06); }
+    .hierarchy-grid:has(.ht-active) .ht-foundation:not(.ht-active) { background: var(--color-surface); }
+    .hierarchy-grid:has(.ht-active) .ht-foundation:not(.ht-active) .ht-level { color: var(--color-text-secondary); }
+    .hierarchy-grid:has(.ht-active) .ht-foundation:not(.ht-active) .ht-name { color: #fff; }
+    .ht-foundation:not(.ht-active):hover { background: rgba(167,139,250,0.1); }
+    .ht-foundation .ht-level { color: var(--color-accent); }
+    .ht-foundation .ht-name { color: var(--color-accent-light); }
+    .ht-active { background: rgba(167,139,250,0.12) !important; box-shadow: inset 0 -2px 0 var(--color-accent); }
+    .ht-active .ht-level { color: var(--color-accent) !important; }
+    .ht-active .ht-name { color: var(--color-accent-light) !important; }
+    .hierarchy-detail { display: none; margin-top: 16px; animation: slideDown 0.3s ease; }
+    .hierarchy-detail.active { display: block; }
+    .hd-inner { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: 28px 32px; }
+    .hd-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .hd-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent); background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); border-radius: 4px; padding: 3px 10px; white-space: nowrap; }
+    .hd-header h3 { font-family: var(--font-serif); font-size: 1.25rem; color: #fff; }
+    .hd-inner > p { font-size: 0.9rem; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 16px; }
+
     /* ========== Portfolio Grid ========== */
     .portfolio-grid {
       display: grid;
@@ -1042,6 +1122,11 @@
     @media (max-width: 600px) {
       .philosophy-grid { grid-template-columns: 1fr; }
       .philosophy-card { padding: 32px 24px; }
+      .framework-header, .framework-body { padding: 24px 20px; }
+      .framework-steps { grid-template-columns: 1fr; }
+      .framework-steps.six-up { grid-template-columns: 1fr; }
+      .hierarchy-grid { grid-template-columns: 1fr 1fr; }
+      .hd-inner { padding: 20px; }
     }
 
     /* ========== Testimonials ========== */
@@ -1501,7 +1586,7 @@
 
       <div class="philosophy-grid">
 
-        <div class="philosophy-card fade-in">
+        <div class="philosophy-card fade-in" onclick="toggleFramework('ambassador')">
           <p class="philosophy-number">01</p>
           <h3 class="philosophy-role">Ambassador</h3>
           <p class="philosophy-subtitle">Connecting Customer to Product</p>
@@ -1510,9 +1595,10 @@
             <span>Goal</span>
             Ensure the product is relevant to the people it's built for.
           </p>
+          <a class="dive-deep-link" id="link-ambassador">Dive deep <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></a>
         </div>
 
-        <div class="philosophy-card fade-in">
+        <div class="philosophy-card fade-in" onclick="toggleFramework('strategist')">
           <p class="philosophy-number">02</p>
           <h3 class="philosophy-role">Strategist</h3>
           <p class="philosophy-subtitle">Directing the Go-To-Market</p>
@@ -1521,9 +1607,10 @@
             <span>Goal</span>
             Align product capabilities with the most strategic market opportunities.
           </p>
+          <a class="dive-deep-link" id="link-strategist">Dive deep <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></a>
         </div>
 
-        <div class="philosophy-card fade-in">
+        <div class="philosophy-card fade-in" onclick="toggleFramework('storyteller')">
           <p class="philosophy-number">03</p>
           <h3 class="philosophy-role">Storyteller</h3>
           <p class="philosophy-subtitle">Shaping Perception</p>
@@ -1532,9 +1619,10 @@
             <span>Goal</span>
             Make the value prop so clear the customer feels "this was made for me."
           </p>
+          <a class="dive-deep-link" id="link-storyteller">Dive deep <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></a>
         </div>
 
-        <div class="philosophy-card fade-in">
+        <div class="philosophy-card fade-in" onclick="toggleFramework('evangelist')">
           <p class="philosophy-number">04</p>
           <h3 class="philosophy-role">Evangelist</h3>
           <p class="philosophy-subtitle">Enabling the Organization</p>
@@ -1543,9 +1631,124 @@
             <span>Goal</span>
             Consistent, powerful messaging regardless of which team the customer talks to.
           </p>
+          <a class="dive-deep-link" id="link-evangelist">Dive deep <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></a>
         </div>
 
       </div>
+
+      <!-- Framework Dive-Deep Panels -->
+      <div class="framework-panel" id="panel-ambassador">
+        <div class="framework-header">
+          <h2>The Signal Loop Framework</h2>
+          <p>A continuous feedback system that ensures the product team always has a clear, current picture of what the market needs. The Ambassador doesn't just relay information; they build a structured loop that turns raw market noise into actionable product intelligence.</p>
+        </div>
+        <div class="framework-body">
+          <div class="framework-steps">
+            <div class="framework-step"><div class="step-number">01</div><div class="step-title">Collect</div><div class="step-desc">Gather signals from every customer-facing surface: sales calls, support tickets, win/loss interviews, competitive moves, analyst reports, and community forums. Build intake channels so nothing gets lost.</div></div>
+            <div class="framework-step"><div class="step-number">02</div><div class="step-title">Synthesize</div><div class="step-desc">Pattern-match across raw signals to identify themes. Separate noise from signal. Cluster feedback into categories: unmet needs, competitive gaps, emerging use cases, and friction points.</div></div>
+            <div class="framework-step"><div class="step-number">03</div><div class="step-title">Translate</div><div class="step-desc">Convert market insights into product-team language: user stories, opportunity assessments, and prioritization recommendations. Bridge the gap between "customers are frustrated" and "here's what to build next."</div></div>
+            <div class="framework-step"><div class="step-number">04</div><div class="step-title">Feed Back</div><div class="step-desc">Close the loop. Share what was built and why with the field. Validate with customers that the solution landed. Measure adoption and feed new signals back into the cycle.</div></div>
+          </div>
+          <div class="framework-artifacts">
+            <div class="artifacts-label">Key Artifacts</div>
+            <div class="artifact-chips">
+              <div class="artifact-chip">Voice of Customer Report</div><div class="artifact-chip">Competitive Intelligence Brief</div><div class="artifact-chip">Win/Loss Analysis</div><div class="artifact-chip">Market Signal Dashboard</div><div class="artifact-chip">Product Feedback Digest</div><div class="artifact-chip">Customer Advisory Board</div>
+            </div>
+          </div>
+          <button class="close-panel" onclick="toggleFramework('ambassador')">Collapse</button>
+        </div>
+      </div>
+
+      <div class="framework-panel" id="panel-strategist">
+        <div class="framework-header">
+          <h2>Positioning-First GTM Strategy</h2>
+          <p>Positioning is a strategy decision, not a marketing exercise. It sits at the foundation of a hierarchy that flows from Positioning to Messaging to Sales Narrative to GTM Strategy. Without clear positioning, everything downstream is guesswork. Your first touchpoint (an ad, a homepage, a cold email) acts like the opening scene of a movie: set the wrong context and the buyer makes the wrong assumptions about your features, your price, and your value. Every GTM plan starts with these six interlocking positioning decisions.</p>
+        </div>
+        <div class="framework-body">
+          <div class="framework-steps six-up">
+            <div class="framework-step"><div class="step-number">01</div><div class="step-title">ICP Definition</div><div class="step-desc">Identify who your best customers actually are (not who you wish they were). Define firmographic, behavioral, and pain-based criteria. Build the profile from closed-won data and customer interviews, not assumptions.</div></div>
+            <div class="framework-step"><div class="step-number">02</div><div class="step-title">Competitive Alternatives</div><div class="step-desc">Map what your prospect would do if your product didn't exist. This isn't just direct competitors; it's spreadsheets, agencies, manual processes, and doing nothing. Your positioning is relative to these alternatives.</div></div>
+            <div class="framework-step"><div class="step-number">03</div><div class="step-title">Differentiated Value</div><div class="step-desc">Isolate the capabilities only you can deliver. Tie each differentiator to a specific customer outcome. If a competitor can credibly claim it too, it's not differentiation; it's table stakes.</div></div>
+            <div class="framework-step"><div class="step-number">04</div><div class="step-title">Market Category</div><div class="step-desc">Choose the market context that makes your value obvious. Category choice sets buyer expectations, competitive frame, and pricing benchmarks. Sometimes you fit an existing category; sometimes you define a new one. Get this wrong and your sales team spends half of every meeting correcting false assumptions.</div></div>
+            <div class="framework-step"><div class="step-number">05</div><div class="step-title">Category Trends</div><div class="step-desc">Identify the market shifts that make your positioning urgent. What's changing in the buyer's world that makes the old way untenable and your approach inevitable? Trends give your positioning a "why now" that transforms it from a static claim into a story with momentum.</div></div>
+            <div class="framework-step"><div class="step-number">06</div><div class="step-title">Strategic Narrative</div><div class="step-desc">Tie it all together into a story about market change. This is where positioning becomes a sales pitch. For sales-led motions, the narrative must match what reps actually say in meetings. For product-led motions, the product itself must do the positioning: value must be obvious within minutes of first use.</div></div>
+          </div>
+          <div class="framework-artifacts">
+            <div class="artifacts-label">Key Artifacts</div>
+            <div class="artifact-chips">
+              <div class="artifact-chip">ICP Definition Doc</div><div class="artifact-chip">Competitive Landscape Map</div><div class="artifact-chip">Positioning Canvas</div><div class="artifact-chip">Category Trends Analysis</div><div class="artifact-chip">Segmentation Matrix</div><div class="artifact-chip">Pricing &amp; Packaging Framework</div><div class="artifact-chip">TAM/SAM/SOM Analysis</div>
+            </div>
+          </div>
+          <button class="close-panel" onclick="toggleFramework('strategist')">Collapse</button>
+        </div>
+      </div>
+
+      <div class="framework-panel" id="panel-storyteller">
+        <div class="framework-header">
+          <h2>The Insight-Led Sales Narrative</h2>
+          <p>A pitch structure that leads with a market insight the buyer recognizes, not a product feature they don't care about yet. The goal is to earn the right to talk about your product by first proving you understand the buyer's world better than anyone else in the room.</p>
+        </div>
+        <div class="framework-body">
+          <div class="framework-steps">
+            <div class="framework-step"><div class="step-number">01</div><div class="step-title">The Shift</div><div class="step-desc">Open with an undeniable change in the buyer's market. This isn't your opinion; it's a trend they're already feeling. "The way streaming monetization works is fundamentally changing." Make them nod before you say a word about your product.</div></div>
+            <div class="framework-step"><div class="step-number">02</div><div class="step-title">The Stakes</div><div class="step-desc">Show what happens if they don't adapt. Quantify the cost of inaction. "Companies still relying on legacy ad stacks are leaving 30-40% of their inventory value on the table." Create urgency without fear-mongering.</div></div>
+            <div class="framework-step"><div class="step-number">03</div><div class="step-title">The New Way</div><div class="step-desc">Paint the picture of how winners are responding. Describe the approach, not your product. "The leaders are unifying their ad decisioning across all formats and letting ML optimize in real time." Now they want to know how.</div></div>
+            <div class="framework-step"><div class="step-number">04</div><div class="step-title">The Proof</div><div class="step-desc">Show evidence that this approach works. Customer results, case studies, third-party validation. "Tubi increased fill rates by X% and eCPMs by Y% in the first quarter." Then, and only then, connect it to your product.</div></div>
+          </div>
+          <div class="framework-artifacts">
+            <div class="artifacts-label">Key Artifacts</div>
+            <div class="artifact-chips">
+              <div class="artifact-chip">Strategic Narrative Deck</div><div class="artifact-chip">Messaging Framework</div><div class="artifact-chip">Case Studies</div><div class="artifact-chip">First-Call Deck</div><div class="artifact-chip">Demo Script</div><div class="artifact-chip">Objection Handling Guide</div>
+            </div>
+          </div>
+          <button class="close-panel" onclick="toggleFramework('storyteller')">Collapse</button>
+        </div>
+      </div>
+
+      <div class="framework-panel" id="panel-evangelist">
+        <div class="framework-header">
+          <h2>Equip, Certify, Activate, Measure + Refine</h2>
+          <p>Enablement isn't a content dump. It's a system that ensures every customer-facing team can deliver the narrative with confidence and consistency. Each stage builds on the last, and the measurement loop ensures the system improves over time.</p>
+        </div>
+        <div class="framework-body">
+          <div class="framework-steps">
+            <div class="framework-step"><div class="step-number">01</div><div class="step-title">Equip</div><div class="step-desc">Build the toolkit: battle cards, talk tracks, objection handlers, demo scripts, one-pagers, and competitive cheat sheets. Every asset maps to a specific stage of the buyer journey and a specific objection or question.</div></div>
+            <div class="framework-step"><div class="step-number">02</div><div class="step-title">Certify</div><div class="step-desc">Train and validate. Run enablement sessions, role-play exercises, and pitch certifications. Reps shouldn't just have the materials; they should be able to deliver the narrative cold. Certification sets the quality bar.</div></div>
+            <div class="framework-step"><div class="step-number">03</div><div class="step-title">Activate</div><div class="step-desc">Deploy in live deals. Ride along on calls. Join QBRs. Ensure the materials are actually being used, not collecting dust in a shared drive. Activation means the content is in the field, not just in the library.</div></div>
+            <div class="framework-step"><div class="step-number">04</div><div class="step-title">Measure + Refine</div><div class="step-desc">Track adoption, win rates, deal velocity, and rep confidence. Identify what's landing and what's falling flat. Update the toolkit quarterly. The best enablement programs are living systems, not one-time launches.</div></div>
+          </div>
+          <div class="framework-artifacts">
+            <div class="artifacts-label">Key Artifacts</div>
+            <div class="artifact-chips">
+              <div class="artifact-chip">Battle Cards</div><div class="artifact-chip">Sales Playbook</div><div class="artifact-chip">SKO Presentation</div><div class="artifact-chip">Pitch Certification Program</div><div class="artifact-chip">Enablement Scorecard</div><div class="artifact-chip">Rep Confidence Survey</div>
+            </div>
+          </div>
+          <button class="close-panel" onclick="toggleFramework('evangelist')">Collapse</button>
+        </div>
+      </div>
+
+      <!-- GTM Hierarchy -->
+      <div class="gtm-hierarchy">
+        <div class="hierarchy-intro">
+          <h2>The Hierarchy of Go-To-Market</h2>
+          <p>You cannot skip layers without causing friction in your sales process. Click any layer to learn more.</p>
+        </div>
+        <div class="hierarchy-grid">
+          <div class="hierarchy-tile ht-foundation" onclick="toggleLayer('positioning')"><span class="ht-level">Foundation</span><span class="ht-name">Positioning</span><span class="ht-arrow">&#8595;</span></div>
+          <div class="hierarchy-tile" onclick="toggleLayer('messaging')"><span class="ht-level">Layer 1</span><span class="ht-name">Messaging</span><span class="ht-arrow">&#8595;</span></div>
+          <div class="hierarchy-tile" onclick="toggleLayer('narrative')"><span class="ht-level">Layer 2</span><span class="ht-name">Sales Narrative</span><span class="ht-arrow">&#8595;</span></div>
+          <div class="hierarchy-tile" onclick="toggleLayer('gtmstrategy')"><span class="ht-level">Layer 3</span><span class="ht-name">GTM Strategy</span><span class="ht-arrow">&#8595;</span></div>
+        </div>
+      </div>
+
+      <div class="hierarchy-detail" id="layer-positioning"><div class="hd-inner"><div class="hd-header"><div class="hd-badge">Foundation</div><h3>Positioning</h3></div><p>Defines the "who, what, and why." What are we? Who is it for? Why are we better than the alternative? This is a strategy decision, not a marketing exercise. Your first touchpoint acts like the opening scene of a movie: set the wrong context and the buyer makes the wrong assumptions about your features, your price, and your value.</p><button class="close-panel" onclick="toggleLayer('positioning')">Collapse</button></div></div>
+
+      <div class="hierarchy-detail" id="layer-messaging"><div class="hd-inner"><div class="hd-header"><div class="hd-badge">Layer 1</div><h3>Messaging</h3></div><p>Translates positioning into words. This is the copy on your website, ads, emails, and campaigns. Without clear positioning underneath, messaging becomes guesswork. Every headline, tagline, and CTA should trace back to a positioning decision.</p><button class="close-panel" onclick="toggleLayer('messaging')">Collapse</button></div></div>
+
+      <div class="hierarchy-detail" id="layer-narrative"><div class="hd-inner"><div class="hd-header"><div class="hd-badge">Layer 2</div><h3>Sales Narrative</h3></div><p>Translates positioning into a story. This is the sales pitch that reps use to close deals. For sales-led motions, the narrative must match what reps actually say in meetings. For product-led motions, the product itself must do the positioning: value must be obvious within minutes of first use.</p><button class="close-panel" onclick="toggleLayer('narrative')">Collapse</button></div></div>
+
+      <div class="hierarchy-detail" id="layer-gtmstrategy"><div class="hd-inner"><div class="hd-header"><div class="hd-badge">Layer 3</div><h3>GTM Strategy</h3></div><p>The tactical plan: which channels do we use? What is the pricing? How do we distribute it? These decisions only work when everything above them is locked. Without clear positioning at the top, everything that follows is just random acts of marketing.</p><button class="close-panel" onclick="toggleLayer('gtmstrategy')">Collapse</button></div></div>
+
     </div>
   </section>
 
@@ -2237,6 +2440,36 @@
   </section>
 
   <script>
+    // ===== Framework dive-deep toggles =====
+    function toggleFramework(name) {
+      var panel = document.getElementById('panel-' + name);
+      var link = document.getElementById('link-' + name);
+      var wasActive = panel.classList.contains('active');
+      document.querySelectorAll('.framework-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.dive-deep-link').forEach(function(l) { l.classList.remove('expanded'); });
+      if (!wasActive) {
+        panel.classList.add('active');
+        link.classList.add('expanded');
+        setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+      }
+    }
+
+    // ===== GTM Hierarchy layer toggles =====
+    function toggleLayer(name) {
+      var panel = document.getElementById('layer-' + name);
+      var wasActive = panel.classList.contains('active');
+      document.querySelectorAll('.hierarchy-detail').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.hierarchy-tile').forEach(function(t) { t.classList.remove('ht-active'); });
+      if (!wasActive) {
+        panel.classList.add('active');
+        var tiles = document.querySelectorAll('.hierarchy-tile');
+        var names = ['positioning','messaging','narrative','gtmstrategy'];
+        var idx = names.indexOf(name);
+        if (idx >= 0) tiles[idx].classList.add('ht-active');
+        setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+      }
+    }
+
     // ===== Mobile nav toggle =====
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
