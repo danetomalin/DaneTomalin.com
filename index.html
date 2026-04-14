@@ -2466,7 +2466,12 @@
         var names = ['positioning','messaging','narrative','gtmstrategy'];
         var idx = names.indexOf(name);
         if (idx >= 0) tiles[idx].classList.add('ht-active');
-        setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+        setTimeout(function() {
+          var grid = document.querySelector('.hierarchy-grid');
+          if (grid) {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 50);
       }
     }
 
