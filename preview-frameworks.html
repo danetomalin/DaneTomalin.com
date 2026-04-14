@@ -240,115 +240,113 @@
   }
   .close-panel:hover { color: var(--color-accent); }
 
-  /* GTM Hierarchy */
+  /* GTM Hierarchy - Compact Interactive */
   .gtm-hierarchy {
     margin-top: 48px;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--color-surface);
   }
-  .hierarchy-header {
-    padding: 32px 40px 24px;
-    border-bottom: 1px solid var(--color-border);
+  .hierarchy-intro {
+    text-align: center;
+    margin-bottom: 20px;
   }
-  .hierarchy-header h2 {
+  .hierarchy-intro h2 {
     font-family: var(--font-serif);
     font-size: 1.5rem;
     color: #fff;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
-  .hierarchy-header p {
+  .hierarchy-intro p {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
-    line-height: 1.6;
   }
-  .hierarchy-stack {
-    padding: 32px 40px;
+  .hierarchy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .hierarchy-tile {
+    background: var(--color-surface);
+    padding: 24px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    align-items: center;
+    gap: 4px;
   }
-  .hierarchy-layer {
-    position: relative;
-    padding: 24px 28px;
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    transition: background 0.2s;
-  }
-  .hierarchy-layer:hover {
-    background: rgba(167,139,250,0.03);
-  }
-  .layer-label {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-  .layer-level {
-    font-size: 0.7rem;
+  .hierarchy-tile:hover { background: #1a1a24; }
+  .ht-level {
+    font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text-secondary);
-    min-width: 80px;
   }
-  .layer-name {
+  .ht-name {
+    font-family: var(--font-serif);
     font-size: 1.15rem;
     font-weight: 700;
     color: #fff;
   }
-  .layer-desc {
-    font-size: 0.85rem;
-    line-height: 1.65;
-    color: var(--color-text-secondary);
-    padding-left: 92px;
-  }
-  .layer-arrow {
-    text-align: center;
-    font-size: 1.2rem;
+  .ht-arrow {
+    font-size: 1rem;
     color: var(--color-accent);
-    opacity: 0.5;
-    padding: 8px 0;
+    opacity: 0.4;
     line-height: 1;
+    margin-top: 4px;
   }
-
-  /* Progressive width narrowing: foundation widest, builds down to narrowest */
-  .layer-foundation {
-    margin-left: 0;
-    margin-right: 0;
+  .ht-foundation {
     background: rgba(167,139,250,0.06);
-    border-color: rgba(167,139,250,0.25);
   }
-  .layer-1 {
-    margin-left: 4%;
-    margin-right: 4%;
-    background: var(--color-bg);
-  }
-  .layer-2 {
-    margin-left: 8%;
-    margin-right: 8%;
-    background: var(--color-bg);
-  }
-  .layer-3 {
-    margin-left: 12%;
-    margin-right: 12%;
-    background: var(--color-bg);
-  }
-  .layer-foundation .layer-level {
-    color: var(--color-accent);
-  }
-  .layer-foundation .layer-name {
-    color: var(--color-accent-light);
-  }
+  .ht-foundation .ht-level { color: var(--color-accent); }
+  .ht-foundation .ht-name { color: var(--color-accent-light); }
+  .ht-foundation:hover { background: rgba(167,139,250,0.1); }
 
-  .hierarchy-footnote {
-    padding: 0 40px 28px;
-    font-size: 0.85rem;
-    font-style: italic;
+  /* Hierarchy detail panels */
+  .hierarchy-detail {
+    display: none;
+    margin-top: 16px;
+    animation: slideDown 0.3s ease;
+  }
+  .hierarchy-detail.active { display: block; }
+  .hd-inner {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 28px 32px;
+  }
+  .hd-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .hd-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: rgba(167,139,250,0.1);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 4px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+  .hd-header h3 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: #fff;
+  }
+  .hd-inner > p {
+    font-size: 0.9rem;
+    line-height: 1.7;
     color: var(--color-text-secondary);
-    text-align: center;
-    opacity: 0.8;
+    margin-bottom: 16px;
   }
 
   @media (max-width: 900px) {
@@ -360,11 +358,8 @@
     .framework-header, .framework-body { padding: 24px 20px; }
     .framework-steps { grid-template-columns: 1fr; }
     .framework-steps.six-up { grid-template-columns: 1fr; }
-    .hierarchy-header, .hierarchy-stack { padding: 24px 20px; }
-    .hierarchy-footnote { padding: 0 20px 24px; }
-    .layer-3, .layer-2, .layer-1 { margin-left: 0; margin-right: 0; }
-    .layer-desc { padding-left: 0; margin-top: 4px; }
-    .layer-label { flex-direction: column; gap: 2px; }
+    .hierarchy-grid { grid-template-columns: 1fr 1fr; }
+    .hd-inner { padding: 20px; }
   }
 </style>
 </head>
@@ -435,48 +430,6 @@
       </a>
     </div>
 
-  </div>
-
-  <!-- GTM HIERARCHY -->
-  <div class="gtm-hierarchy">
-    <div class="hierarchy-header">
-      <h2>The Hierarchy of Go-To-Market</h2>
-      <p>You cannot skip layers without causing friction in your sales process. Each layer depends on the one above it. Get the foundation wrong and everything beneath it collapses.</p>
-    </div>
-    <div class="hierarchy-stack">
-      <div class="hierarchy-layer layer-foundation">
-        <div class="layer-label">
-          <span class="layer-level">Foundation</span>
-          <span class="layer-name">Positioning</span>
-        </div>
-        <div class="layer-desc">Defines the "who, what, and why." What are we? Who is it for? Why are we better than the alternative? This is a strategy decision, not a marketing exercise.</div>
-        <div class="layer-arrow">&#8595;</div>
-      </div>
-      <div class="hierarchy-layer layer-1">
-        <div class="layer-label">
-          <span class="layer-level">Layer 1</span>
-          <span class="layer-name">Messaging</span>
-        </div>
-        <div class="layer-desc">Translates positioning into words. This is the copy on your website, ads, emails, and campaigns. Without clear positioning underneath, messaging becomes guesswork.</div>
-        <div class="layer-arrow">&#8595;</div>
-      </div>
-      <div class="hierarchy-layer layer-2">
-        <div class="layer-label">
-          <span class="layer-level">Layer 2</span>
-          <span class="layer-name">Sales Narrative</span>
-        </div>
-        <div class="layer-desc">Translates positioning into a story. This is the sales pitch that reps use to close deals. For sales-led motions, it must match what reps actually say in meetings.</div>
-        <div class="layer-arrow">&#8595;</div>
-      </div>
-      <div class="hierarchy-layer layer-3">
-        <div class="layer-label">
-          <span class="layer-level">Layer 3</span>
-          <span class="layer-name">GTM Strategy</span>
-        </div>
-        <div class="layer-desc">The tactical plan: which channels do we use? What is the pricing? How do we distribute it? These decisions only work when everything above them is locked.</div>
-      </div>
-    </div>
-    <div class="hierarchy-footnote">Without clear positioning at the top, everything that follows is just random acts of marketing.</div>
   </div>
 
   <!-- AMBASSADOR: Signal Loop Framework -->
@@ -667,6 +620,80 @@
     </div>
   </div>
 
+  <!-- GTM HIERARCHY - Compact Interactive (below framework panels) -->
+  <div class="gtm-hierarchy">
+    <div class="hierarchy-intro">
+      <h2>The Hierarchy of Go-To-Market</h2>
+      <p>You cannot skip layers without causing friction in your sales process. Click any layer to learn more.</p>
+    </div>
+    <div class="hierarchy-grid">
+      <div class="hierarchy-tile ht-foundation" onclick="toggleLayer('positioning')">
+        <span class="ht-level">Foundation</span>
+        <span class="ht-name">Positioning</span>
+        <span class="ht-arrow">&#8595;</span>
+      </div>
+      <div class="hierarchy-tile" onclick="toggleLayer('messaging')">
+        <span class="ht-level">Layer 1</span>
+        <span class="ht-name">Messaging</span>
+        <span class="ht-arrow">&#8595;</span>
+      </div>
+      <div class="hierarchy-tile" onclick="toggleLayer('narrative')">
+        <span class="ht-level">Layer 2</span>
+        <span class="ht-name">Sales Narrative</span>
+        <span class="ht-arrow">&#8595;</span>
+      </div>
+      <div class="hierarchy-tile" onclick="toggleLayer('gtmstrategy')">
+        <span class="ht-level">Layer 3</span>
+        <span class="ht-name">GTM Strategy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hierarchy detail panels -->
+  <div class="hierarchy-detail" id="layer-positioning">
+    <div class="hd-inner">
+      <div class="hd-header">
+        <div class="hd-badge">Foundation</div>
+        <h3>Positioning</h3>
+      </div>
+      <p>Defines the "who, what, and why." What are we? Who is it for? Why are we better than the alternative? This is a strategy decision, not a marketing exercise. Your first touchpoint acts like the opening scene of a movie: set the wrong context and the buyer makes the wrong assumptions about your features, your price, and your value.</p>
+      <button class="close-panel" onclick="toggleLayer('positioning')">Collapse</button>
+    </div>
+  </div>
+
+  <div class="hierarchy-detail" id="layer-messaging">
+    <div class="hd-inner">
+      <div class="hd-header">
+        <div class="hd-badge">Layer 1</div>
+        <h3>Messaging</h3>
+      </div>
+      <p>Translates positioning into words. This is the copy on your website, ads, emails, and campaigns. Without clear positioning underneath, messaging becomes guesswork. Every headline, tagline, and CTA should trace back to a positioning decision.</p>
+      <button class="close-panel" onclick="toggleLayer('messaging')">Collapse</button>
+    </div>
+  </div>
+
+  <div class="hierarchy-detail" id="layer-narrative">
+    <div class="hd-inner">
+      <div class="hd-header">
+        <div class="hd-badge">Layer 2</div>
+        <h3>Sales Narrative</h3>
+      </div>
+      <p>Translates positioning into a story. This is the sales pitch that reps use to close deals. For sales-led motions, the narrative must match what reps actually say in meetings. For product-led motions, the product itself must do the positioning: value must be obvious within minutes of first use.</p>
+      <button class="close-panel" onclick="toggleLayer('narrative')">Collapse</button>
+    </div>
+  </div>
+
+  <div class="hierarchy-detail" id="layer-gtmstrategy">
+    <div class="hd-inner">
+      <div class="hd-header">
+        <div class="hd-badge">Layer 3</div>
+        <h3>GTM Strategy</h3>
+      </div>
+      <p>The tactical plan: which channels do we use? What is the pricing? How do we distribute it? These decisions only work when everything above them is locked. Without clear positioning at the top, everything that follows is just random acts of marketing.</p>
+      <button class="close-panel" onclick="toggleLayer('gtmstrategy')">Collapse</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -683,6 +710,20 @@ function toggleFramework(name) {
   if (!wasActive) {
     panel.classList.add('active');
     link.classList.add('expanded');
+    setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+  }
+}
+
+function toggleLayer(name) {
+  var panel = document.getElementById('layer-' + name);
+  var wasActive = panel.classList.contains('active');
+
+  // Close all layer panels
+  document.querySelectorAll('.hierarchy-detail').forEach(function(p) { p.classList.remove('active'); });
+
+  // Toggle the clicked one
+  if (!wasActive) {
+    panel.classList.add('active');
     setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
   }
 }
