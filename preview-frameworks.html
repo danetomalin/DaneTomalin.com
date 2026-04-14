@@ -313,10 +313,16 @@
     line-height: 1;
   }
 
-  /* Progressive width narrowing for pyramid effect */
-  .layer-3 {
-    margin-left: 12%;
-    margin-right: 12%;
+  /* Progressive width narrowing: foundation widest, builds down to narrowest */
+  .layer-foundation {
+    margin-left: 0;
+    margin-right: 0;
+    background: rgba(167,139,250,0.06);
+    border-color: rgba(167,139,250,0.25);
+  }
+  .layer-1 {
+    margin-left: 4%;
+    margin-right: 4%;
     background: var(--color-bg);
   }
   .layer-2 {
@@ -324,16 +330,10 @@
     margin-right: 8%;
     background: var(--color-bg);
   }
-  .layer-1 {
-    margin-left: 4%;
-    margin-right: 4%;
+  .layer-3 {
+    margin-left: 12%;
+    margin-right: 12%;
     background: var(--color-bg);
-  }
-  .layer-foundation {
-    margin-left: 0;
-    margin-right: 0;
-    background: rgba(167,139,250,0.06);
-    border-color: rgba(167,139,250,0.25);
   }
   .layer-foundation .layer-level {
     color: var(--color-accent);
@@ -444,21 +444,13 @@
       <p>Inspired by April Dunford: you cannot skip layers without causing friction in your sales process. Each layer builds on the one below it. Get the foundation wrong and everything above it collapses.</p>
     </div>
     <div class="hierarchy-stack">
-      <div class="hierarchy-layer layer-3">
+      <div class="hierarchy-layer layer-foundation">
         <div class="layer-label">
-          <span class="layer-level">Layer 3</span>
-          <span class="layer-name">GTM Strategy</span>
+          <span class="layer-level">Foundation</span>
+          <span class="layer-name">Positioning</span>
         </div>
-        <div class="layer-desc">The tactical plan: which channels do we use? What is the pricing? How do we distribute it? These decisions only work when everything below them is locked.</div>
-        <div class="layer-arrow">&#8593;</div>
-      </div>
-      <div class="hierarchy-layer layer-2">
-        <div class="layer-label">
-          <span class="layer-level">Layer 2</span>
-          <span class="layer-name">Sales Narrative</span>
-        </div>
-        <div class="layer-desc">Translates positioning into a story. This is the sales pitch that reps use to close deals. For sales-led motions, it must match what reps actually say in meetings.</div>
-        <div class="layer-arrow">&#8593;</div>
+        <div class="layer-desc">Defines the "who, what, and why." What are we? Who is it for? Why are we better than the alternative? This is a strategy decision, not a marketing exercise.</div>
+        <div class="layer-arrow">&#8595;</div>
       </div>
       <div class="hierarchy-layer layer-1">
         <div class="layer-label">
@@ -466,17 +458,25 @@
           <span class="layer-name">Messaging</span>
         </div>
         <div class="layer-desc">Translates positioning into words. This is the copy on your website, ads, emails, and campaigns. Without clear positioning underneath, messaging becomes guesswork.</div>
-        <div class="layer-arrow">&#8593;</div>
+        <div class="layer-arrow">&#8595;</div>
       </div>
-      <div class="hierarchy-layer layer-foundation">
+      <div class="hierarchy-layer layer-2">
         <div class="layer-label">
-          <span class="layer-level">Foundation</span>
-          <span class="layer-name">Positioning</span>
+          <span class="layer-level">Layer 2</span>
+          <span class="layer-name">Sales Narrative</span>
         </div>
-        <div class="layer-desc">Defines the "who, what, and why." What are we? Who is it for? Why are we better than the alternative? This is a strategy decision, not a marketing exercise.</div>
+        <div class="layer-desc">Translates positioning into a story. This is the sales pitch that reps use to close deals. For sales-led motions, it must match what reps actually say in meetings.</div>
+        <div class="layer-arrow">&#8595;</div>
+      </div>
+      <div class="hierarchy-layer layer-3">
+        <div class="layer-label">
+          <span class="layer-level">Layer 3</span>
+          <span class="layer-name">GTM Strategy</span>
+        </div>
+        <div class="layer-desc">The tactical plan: which channels do we use? What is the pricing? How do we distribute it? These decisions only work when everything above them is locked.</div>
       </div>
     </div>
-    <div class="hierarchy-footnote">Without clear positioning, everything above it is just random acts of marketing.</div>
+    <div class="hierarchy-footnote">Without clear positioning at the top, everything that follows is just random acts of marketing.</div>
   </div>
 
   <!-- AMBASSADOR: Signal Loop Framework -->
