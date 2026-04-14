@@ -2467,9 +2467,9 @@
         var idx = names.indexOf(name);
         if (idx >= 0) tiles[idx].classList.add('ht-active');
         setTimeout(function() {
-          var grid = document.querySelector('.hierarchy-grid');
-          if (grid) {
-            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          var intro = document.querySelector('.hierarchy-intro');
+          if (intro) {
+            intro.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 50);
       }
