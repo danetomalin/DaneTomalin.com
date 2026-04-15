@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Steering — Google Cloud Industry & Applied AI</title>
+<link rel="canonical" href="https://danetomalin.com/googleAI-roadmap/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #4285F4;
+    --accent-strong: #1A73E8;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --build: #66BB6A;
+    --build-bg: rgba(102, 187, 106, 0.12);
+    --investigate: #FFA726;
+    --investigate-bg: rgba(255, 167, 38, 0.12);
+    --defer: #EF5350;
+    --defer-bg: rgba(239, 83, 80, 0.12);
+    --kill: #78909C;
+    --kill-bg: rgba(120, 144, 156, 0.12);
+    --critical: #FFA726;
+    --critical-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Header — matches CI Dossier & Industry AI Dashboard */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+  .nav-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: var(--mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 12px;
+  }
+  .nav-link:hover { text-decoration: underline; }
+
+  /* Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-strong { border-left: 3px solid var(--build); }
+  .scorecard-card.overall-moderate { border-left: 3px solid var(--investigate); }
+  .scorecard-card.overall-weak { border-left: 3px solid var(--defer); }
+
+  /* UVFV Framework Legend */
+  .framework-legend {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .framework-legend h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .framework-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .framework-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+  .framework-item .fw-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .framework-item .fw-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Recommendation Badge */
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .rec-badge.build { background: var(--build-bg); color: var(--build); }
+  .rec-badge.investigate { background: var(--investigate-bg); color: var(--investigate); }
+  .rec-badge.defer { background: var(--defer-bg); color: var(--defer); }
+  .rec-badge.kill { background: var(--kill-bg); color: var(--kill); }
+  .rec-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Priority Badge */
+  .priority-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .priority-badge.critical { background: var(--critical-bg); color: var(--critical); }
+  .priority-badge.high { background: var(--accent-bg); color: var(--accent); }
+  .priority-badge.medium { background: var(--investigate-bg); color: var(--investigate); }
+  .priority-badge.low { background: var(--kill-bg); color: var(--kill); }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Category Sections */
+  .category-section { margin-bottom: 32px; }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .category-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .category-icon.measurement { background: rgba(66,133,244,0.15); color: var(--accent); }
+  .category-icon.creative { background: rgba(26,115,232,0.15); color: var(--accent-strong); }
+  .category-icon.inventory { background: rgba(255,167,38,0.15); color: var(--investigate); }
+  .category-icon.platform { background: rgba(102,187,106,0.15); color: var(--build); }
+  .category-icon.ml { background: rgba(66,133,244,0.15); color: var(--accent); }
+  .category-icon.cross-screen { background: rgba(239,83,80,0.15); color: var(--defer); }
+  .category-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .category-header .count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Roadmap Cards */
+  .roadmap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .roadmap-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .roadmap-card.critical-priority {
+    border-left: 3px solid var(--critical);
+    background: var(--critical-bg);
+  }
+  .roadmap-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .roadmap-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+  }
+  .impact-badge .bar-track {
+    width: 40px; height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .impact-badge .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .roadmap-card .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .roadmap-card .evidence {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .roadmap-card .evidence .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .roadmap-card .evidence p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* UVFV Assessment Grid */
+  .assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .assess-cell {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .assess-cell.pass { border-color: var(--build); }
+  .assess-cell.fail { border-color: var(--defer); }
+  .assess-cell .a-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .assess-cell .a-score {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .assess-cell.pass .a-score { color: var(--build); }
+  .assess-cell.fail .a-score { color: var(--defer); }
+  .assess-cell .a-verdict {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .assess-cell.pass .a-verdict { color: var(--build); }
+  .assess-cell.fail .a-verdict { color: var(--defer); }
+  .assess-rationale {
+    display: none;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .assess-rationale.visible { display: block; }
+  .assess-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: var(--font);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .assess-toggle:hover { border-color: var(--accent); color: var(--text-primary); }
+
+  .roadmap-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state p { font-size: 15px; }
+
+  /* Footer */
+  .engine-footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .engine-footer a { color: var(--accent); text-decoration: none; }
+  .engine-footer a:hover { text-decoration: underline; }
+
+  /* Site Header (sticky nav) */
+  .site-header {
+      position: sticky; top: 0;
+      background: rgba(13,13,18,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 200;
+  }
+  .site-header-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .engine-header h1 { font-size: 1.6em; }
+    .scorecard { grid-template-columns: 1fr 1fr; }
+    .assessment-grid { grid-template-columns: repeat(2, 1fr); }
+    .filter-bar { flex-direction: column; }
+    .search-input { min-width: unset; width: 100%; }
+    .roadmap-card .card-top { flex-direction: column; }
+    .framework-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .assessment-grid { grid-template-columns: 1fr 1fr; }
+    .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
+    .framework-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+    <a href="https://danetomalin.com/googleAI/" class="site-header-back">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        Back to Google Cloud Industry & Applied AI Plan
+    </a>
+</header>
+
+<header class="engine-header">
+  <h1>Roadmap Steering <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Generated: <span id="report-date">April 15, 2026</span></p>
+  <p class="subtitle">This framework assesses vertical AI solutions using the UVFV (Usable/Valuable/Feasible/Viable) model across six Google Cloud categories: Vertical Solutions & Accelerators, Foundation Models & Customization, Trust/Safety/Governance, Developer & Partner Enablement, Data & Integration, and Value Measurement & ROI.</p>
+  <span class="classification">Internal Only</span>
+  <div class="meta">
+    <span>12 roadmap items</span>
+    <span>5 critical/high priority</span>
+    <span>6 recommended to build</span>
+  </div>
+  <a href="https://danetomalin.com/googleAI-signals" class="nav-link">&#x2190; Signal Dashboard</a>
+</header>
+
+<div class="container">
+
+  <!-- Framework Legend -->
+  <div class="framework-legend">
+    <h3>Assessment Framework: Should We Build It?</h3>
+    <div class="framework-grid">
+      <div class="framework-item">
+        <div class="framework-icon">U</div>
+        <div>
+          <div class="fw-label">Usable</div>
+          <div class="fw-desc">Can users learn and operate it?</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">V</div>
+        <div>
+          <div class="fw-label">Valuable</div>
+          <div class="fw-desc">Does it solve a real problem?</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">F</div>
+        <div>
+          <div class="fw-label">Feasible</div>
+          <div class="fw-desc">Can we build it with current tech?</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">V</div>
+        <div>
+          <div class="fw-label">Viable</div>
+          <div class="fw-desc">Does the business case hold up?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scorecard -->
+  <div class="scorecard" id="scorecard">
+    <div class="scorecard-card overall-strong">
+      <div class="label">Roadmap Health</div>
+      <div class="value" style="color:var(--build)">STRONG</div>
+      <div class="detail">Google Cloud's Industry & Applied AI roadmap shows strong momentum with 12 items ready to build and 7 worthy of investigation across vertical solutions and platform capabilities.</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Total Items</div>
+      <div class="value" style="color:var(--accent)">20</div>
+      <div class="detail">17 critical or high priority</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Build</div>
+      <div class="value" style="color:var(--build)">12</div>
+      <div class="detail">All four criteria pass</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Investigate</div>
+      <div class="value" style="color:var(--investigate)">7</div>
+      <div class="detail">Three of four pass — needs validation</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Defer</div>
+      <div class="value" style="color:var(--defer)">1</div>
+      <div class="detail">Gaps prevent near-term build</div>
+    </div>
+  </div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Total Items</div>
+      <div class="value" style="color:var(--accent)">12</div>
+      <div class="detail">5 critical or high priority</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Build</div>
+      <div class="value" style="color:var(--build)">5</div>
+      <div class="detail">All four criteria pass</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Investigate</div>
+      <div class="value" style="color:var(--investigate)">4</div>
+      <div class="detail">Three of four pass — needs validation</div>
+    </div>
+    <div class="scorecard-card">
+      <div class="label">Defer</div>
+      <div class="value" style="color:var(--defer)">2</div>
+      <div class="detail">Gaps prevent near-term build</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Category</span>
+        <button class="filter-btn active" data-filter="all" onclick="filterItems('all', this)">All</button>
+    <button class="filter-btn" data-filter="vertical_solutions" onclick="filterItems('vertical_solutions', this)">Vertical Solutions</button>
+    <button class="filter-btn" data-filter="foundation_models" onclick="filterItems('foundation_models', this)">Foundation Models</button>
+    <button class="filter-btn" data-filter="trust_safety_governance" onclick="filterItems('trust_safety_governance', this)">Trust & Safety</button>
+    <button class="filter-btn" data-filter="developer_partner" onclick="filterItems('developer_partner', this)">Developer & Partner</button>
+    <button class="filter-btn" data-filter="data_integration" onclick="filterItems('data_integration', this)">Data & Integration</button>
+    <button class="filter-btn" data-filter="value_measurement" onclick="filterItems('value_measurement', this)">Value Measurement</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Verdict</span>
+    <button class="filter-btn" data-rec="build" onclick="filterRec('build', this)">Build</button>
+    <button class="filter-btn" data-rec="investigate" onclick="filterRec('investigate', this)">Investigate</button>
+    <button class="filter-btn" data-rec="defer" onclick="filterRec('defer', this)">Defer</button>
+    <div class="filter-separator"></div>
+    <input type="text" class="search-input" placeholder="Search roadmap items..." oninput="searchItems(this.value)" id="search-box">
+  </div>
+
+  <!-- Content -->
+  <div id="roadmap-content">
+    
+    <div class="category-section" data-category-section="vertical_solutions">
+      <div class="category-header">
+        <div class="category-icon measurement">⚡</div>
+        <h2>Vertical Solutions & Accelerators</h2>
+        <span class="count">5 items</span>
+      </div>
+
+    <div class="roadmap-card critical-priority" data-category="vertical_solutions" data-rec="build" data-score="8">
+      <div class="card-top">
+        <h3>Unified Healthcare Workflow Accelerator: Prior Auth + Care Coordination Agent <span class="priority-badge critical">CRITICAL</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Competitor Anthropic (Claude for Healthcare) is gaining traction with HIPAA-ready prior authorization agents. Google needs a turnkey healthcare accelerator that bundles prior auth automation, claims appeals, and care coordination into one pre-built, industry-specific workflow. Target: health systems and payers managing 1000+ patient cases/month.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Anthropic launched Claude for Healthcare (JPM26 2026) with HIPAA infrastructure and connections to medical databases. CVS Health partnered with Google Cloud (March 2026) but specifics on prior auth capability remain unclear. Healthcare administrative burden: 33% of provider time spent on non-clinical tasks (industry data). Prior authorization rejection rates 15-25% drive rework. Pre-built accelerator reduces deployment from 6 months to 6 weeks per customer reference architecture.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-vertical_solutions-2026-04-15-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-vertical_solutions-2026-04-15-001">
+        <strong>Usable (7/10 — PASS):</strong> Healthcare workflows are well-established (prior auth, claims are deterministic). UI complexity is moderate—clinicians need minimal training. Medical terminology can be opaque but domain-specific training libraries mitigate risk.<br><strong>Valuable (9/10 — PASS):</strong> Healthcare ROI is proven: prior auth automation saves 2-3 hours per clinician per day. Claims appeals automation recovers 5-10% of denied claims ($millions for large systems). Google lens: addressable market = 6000+ US hospitals + 900+ payers = $500M+ TAM.<br><strong>Feasible (8/10 — PASS):</strong> Google Cloud already has healthcare data connectors (HL7/FHIR integration). Vertex AI agents can orchestrate workflows. Medical knowledge comes from partnerships (Google Health, etc.). 4-5 month build for MVP.<br><strong>Viable (8/10 — PASS):</strong> Health systems spend $2-5M annually on RPA/outsourced prior auth. Google's margins on vertical SaaS are 60%+. Recurring revenue model via managed service. Enterprise sales cycle 3-6 months aligns with Google's sales motion.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare</span><span class="tag">prior-authorization</span><span class="tag">claims-management</span><span class="tag">vertical-saas</span><span class="tag">regulatory-compliance</span>
+        <span style="flex:1"></span>
+        <a href="https://www.fiercehealthcare.com/ai-and-machine-learning/jpm26-anthropic-launches-claude-healthcare-targeting-health-systems-payers" class="source-link" target="_blank" rel="noopener">fiercehealthcare.com &#x2197;</a><a href="https://www.googlecloudpresscorner.com/2026-03-05-CVS-Health-and-Google-Cloud-Announce-New-Strategic-Partnership-to-Reimagine-Health-Care-Consumer-Engagement-and-Experiences" class="source-link" target="_blank" rel="noopener">googlecloudpresscorner.com &#x2197;</a><a href="https://cloud.google.com/blog/topics/healthcare-life-sciences/introducing-healthcare-data-engine-accelerators" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card critical-priority" data-category="vertical_solutions" data-rec="build" data-score="8">
+      <div class="card-top">
+        <h3>Retail Search & Recommendation Engine: Connected to Inventory + Pricing <span class="priority-badge critical">CRITICAL</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Shopify and Amazon own 35%+ of AI recommendation revenue (2026). Google Cloud's retail accelerator lacks real-time inventory/pricing signals. Build a pre-built accelerator: AI-powered search + recommendations that adapt to stock levels and dynamic pricing. Target: mid-market retailers (1000-5000 SKUs) moving from legacy search.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Personalized recommendations drive 31% of total e-commerce revenue. Amazon Personalize contributes 35% of Amazon's revenue. Shopify stores using AI personalization see 10-15% revenue lift. Gap Inc. announced AI retail transformation with Google (2026) but specifics on search/rec engine unclear. Retailer adoption: 42% use AI marketing, 89% testing AI applications (2025-2026). Competitive gap: Shopify offers native recommendation engine; Google's retail accelerator (announced NRF 2025) lacks inventory/pricing integration.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-vertical_solutions-2026-04-15-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-vertical_solutions-2026-04-15-002">
+        <strong>Usable (8/10 — PASS):</strong> Retail teams are familiar with search/recommendation concepts. Pre-built templates reduce customization friction. A/B testing UI is standard. Integration with POS/inventory systems requires IT onboarding but is well-understood.<br><strong>Valuable (9/10 — PASS):</strong> Proven ROI: 10-15% revenue lift per McKinsey. Mid-market retail TAM = $50B+ (3500+ retailers × $15M avg spend). Churn risk is low once integrated—switching cost is high. Google lens: Google can monetize via commission on incremental revenue or annual SaaS license.<br><strong>Feasible (7/10 — PASS):</strong> Vertex AI Search capabilities exist. Real-time inventory sync is the primary complexity—requires API contracts with POS vendors (Shopify, Square, etc.). 6-8 month MVP. Pricing optimization engine is add-on (medium risk).<br><strong>Viable (7/10 — PASS):</strong> Mid-market retailers see ROI in 4-6 months. License model ($50-200K annually) is bankable. Sales via retail consultants/integrators (lower direct cost). Margins 50-60%. Competitive threat from Shopify is high, timeline to differentiate is 12-18 months.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">retail</span><span class="tag">ecommerce</span><span class="tag">search</span><span class="tag">recommendations</span><span class="tag">inventory</span><span class="tag">dynamic-pricing</span>
+        <span style="flex:1"></span>
+        <a href="https://www.shopify.com/enterprise/blog/ai-in-retail" class="source-link" target="_blank" rel="noopener">shopify.com &#x2197;</a><a href="https://www.prnewswire.com/news-releases/gap-inc-sets-out-to-reimagine-retail-powered-by-google-clouds-ai-302579074.html" class="source-link" target="_blank" rel="noopener">prnewswire.com &#x2197;</a><a href="https://www.emarketer.com/content/retail-leaders-see-ai-powered-recommendations-redefining-shopping-2026" class="source-link" target="_blank" rel="noopener">emarketer.com &#x2197;</a><a href="https://erp.today/google-cloud-announces-new-retail-solutions-ahead-of-nrf-2025/" class="source-link" target="_blank" rel="noopener">erp.today &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="vertical_solutions" data-rec="investigate" data-score="6">
+      <div class="card-top">
+        <h3>Food & Beverage Vertical Accelerator: Multi-Channel Order + Fulfillment Agent <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Google Cloud's Gemini for Food Ordering (launch customer Papa Johns, live by EOY 2026) covers voice ordering but lacks fulfillment orchestration. Build a pre-built accelerator: omnichannel order agent (phone, mobile, kiosk, drive-thru) + kitchen display system integration + delivery routing. Target: QSR chains (50-500 units) and ghost kitchens.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Papa Johns is Google's launch customer for food ordering agent (expected live end of 2026). Google Cloud mentions multi-channel food ordering capability (Gemini for CX) but kitchen integration is unspecified. QSR market challenges: fragmented ordering channels, kitchen bottlenecks, delivery delays. Pre-built accelerator reduces integration from 4-6 months to 6-8 weeks. Market: 200K+ QSR locations in North America, 60% lack unified ordering system.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Viable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-vertical_solutions-2026-04-15-003')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-vertical_solutions-2026-04-15-003">
+        <strong>Usable (6/10 — PASS):</strong> QSR staff are non-technical; voice agent usability is high. Kitchen Display System (KDS) integration is a new workflow—training required. Multi-channel ordering increases cognitive load but is industry standard. Risk: legacy POS systems (Toast, Square) integration complexity.<br><strong>Valuable (7/10 — PASS):</strong> Order accuracy improves 8-12%, labor cost reduction 10-15%, delivery time compression 15-20%. QSR chains see 3-5% comp sales lift post-integration. TAM: 20K+ multi-unit chains in US = $15B+ (200K units × $75K annual software spend).<br><strong>Feasible (6/10 — FAIL):</strong> KDS integration is complex—25+ vendor ecosystems (Toast, Micros, Aloha). Delivery routing requires partner APIs (DoorDash, Uber Eats). Phone/voice + mobile + kiosk orchestration requires robust failover. 8-10 month MVP. Regulatory complexity (food safety logging) adds risk.<br><strong>Viable (6/10 — FAIL):</strong> ROI is strong (3-6 month payback), but sales motion requires chain-level deal (slower, higher CAC). SaaS model ($30-75K annually) is standard but margin pressure from integrators is high. Competitive threat from Toast (native ordering) and Uber Eats (delivery-integrated) is significant. Partnership with DoorDash/Uber is essential.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">qsr</span><span class="tag">food-ordering</span><span class="tag">fulfillment</span><span class="tag">kds-integration</span><span class="tag">delivery</span><span class="tag">multi-channel</span>
+        <span style="flex:1"></span>
+        <a href="https://www.pmq.com/a-top-pizza-chain-partners-with-google-to-transform-digital-ordering/" class="source-link" target="_blank" rel="noopener">pmq.com &#x2197;</a><a href="https://www.digitalcommerce360.com/2026/01/12/google-cloud-launches-agentic-ai-platform-shopping-customer-service/amp/" class="source-link" target="_blank" rel="noopener">digitalcommerce360.com &#x2197;</a><a href="https://cloud.google.com/transform/a-new-era-agentic-commerce-retail-ai" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="vertical_solutions" data-rec="defer" data-score="6">
+      <div class="card-top">
+        <h3>Automotive In-Cabin AI: Customer Service + Navigation Agent <span class="priority-badge medium">MEDIUM</span></h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--defer)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge defer">
+          <span class="dot"></span>
+          Defer
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Microsoft Azure (CES 2026) and competitors are shipping software-defined vehicle (SDV) tools. Google has no automotive in-cabin AI accelerator. Build: in-cabin agent for customer service (roadside assistance, concierge) + navigation optimization (real-time traffic, dynamic routing). Target: OEM tier-1 infotainment platforms, connected vehicle services (GM OnStar, Ford sync).</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Microsoft announced SDV-as-a-Service platform (Azure, Renesas integration, CES 2026). KPIT showed Next-Gen Agentic AI for vehicle software at CES 2026. ETAS brought calibration suite to Azure. Google lacks automotive-specific accelerator. In-cabin AI market: 45M vehicles globally get voice assistants annually. OEM service costs ($200-500 per call) create $8B annual market for AI-driven concierge. Competitive gap: Tesla, GM, and Ford offer native systems; traditional OEMs rely on 3rd-party platforms.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Viable</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-vertical_solutions-2026-04-15-004')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-vertical_solutions-2026-04-15-004">
+        <strong>Usable (7/10 — PASS):</strong> In-cabin voice agents are familiar to consumers (Siri, Alexa). Navigation integration is standard. Primary UX challenge: response latency in low-signal areas. Safety compliance (NHTSA distraction rules) requires careful UI design but is solvable.<br><strong>Valuable (7/10 — PASS):</strong> OEM value proposition: reduce customer service costs 20-30%, improve NPS by 15-20 points, enable new subscription revenue ($50-100 per customer annually). OEM TAM: 15M new vehicles/year globally × $500 per vehicle = $7.5B. Subscription upside: 30% attach rate × $75/year = $3.4B TAM.<br><strong>Feasible (5/10 — FAIL):</strong> Low-latency inference in vehicles is complex (edge deployment on automotive-grade hardware, carrier delays). Integration with 10+ OEM platforms (proprietary APIs, firmware variations). Voice quality in noisy cabins requires acoustic filtering. Regulatory (safety, privacy) adds 6-12 months. 12-15 month MVP. Partnership with OEM is prerequisite.<br><strong>Viable (5/10 — FAIL):</strong> OEM adoption cycles are long (3-5 year vehicle generations). Margins on per-vehicle licensing ($10-20 per vehicle) are thin unless subscription scales. Google lacks automotive sales team and OEM relationships. Microsoft/Azure has OEM partnerships; threat is moderate. Viability hinges on securing anchor customer (Tier-1 OEM commitment).<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">automotive</span><span class="tag">sdv</span><span class="tag">in-cabin-ai</span><span class="tag">voice-agent</span><span class="tag">oem</span><span class="tag">connected-vehicles</span>
+        <span style="flex:1"></span>
+        <a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/manufacturing-and-mobility/2026/01/07/ces-2026-powering-the-next-frontier-in-automotive/" class="source-link" target="_blank" rel="noopener">microsoft.com &#x2197;</a><a href="https://msusazureaccelerators.github.io/" class="source-link" target="_blank" rel="noopener">msusazureaccelerators.github.io &#x2197;</a><a href="https://www.revolgy.com/insights/blog/what-restaurants-are-doing-with-google-cloud-ai-and-why-it-working" class="source-link" target="_blank" rel="noopener">revolgy.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="vertical_solutions" data-rec="investigate" data-score="7">
+      <div class="card-top">
+        <h3>Contact Center AI: Healthcare-Specific Triage + Claims Verification Agent <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Anthropic's Claude for Healthcare emphasizes prior auth and clinical support but not contact center triage. Build a healthcare-specific contact center accelerator: AI-driven patient intake, insurance verification, appointment scheduling, and claim status queries. Pre-built with medical terminology, HIPAA compliance, and escalation rules. Target: health systems with 500+ inbound calls/day.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Contact center AI is a growing segment (Google Cloud, Amazon Connect, Twilio competing). Healthcare contact centers handle 40M+ inbound calls/month in US. Insurance verification and claims status are top pain points (30% of calls). Anthropic's Claude for Healthcare focuses on clinical workflows, not customer-facing triage. Pre-built accelerator reduces deployment from 3-4 months to 4 weeks. Market: 5000+ health systems × $500K annual call center spend = $2.5B TAM.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-vertical_solutions-2026-04-15-005')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-vertical_solutions-2026-04-15-005">
+        <strong>Usable (7/10 — PASS):</strong> Contact center agents are comfortable with AI-assisted workflows (soft-skill training required for handoff). Patient experience is familiar (phone routing). Medical terminology in prompts requires domain training but is manageable.<br><strong>Valuable (8/10 — PASS):</strong> AI triage reduces human-handled calls by 30-40%, saves $50-100 per call deflected. Claims verification automation reduces processing time 60%. Health systems see 2-3 year payback. ROI: $2M+ annually for 500-bed health system.<br><strong>Feasible (8/10 — PASS):</strong> Contact center AI is commoditized (Amazon Connect, Twilio Voice AI). Medical knowledge integration is moderate (claims databases, insurance APIs). HIPAA infrastructure exists in Google Cloud. Integration with Epic/Cerner EHRs is the complexity—APIs available but vendor-specific. 6-8 week MVP.<br><strong>Viable (7/10 — PASS):</strong> Health systems have budgets for contact center modernization ($500K-2M annually). Per-call pricing model ($0.50-1.50) is recurring revenue. Margins 60%+. Sales via healthcare consultants (Deloitte, Accenture) is scalable. Competitive threat from Amazon Connect (general-purpose) is low; threat from Anthropic (healthcare-specific) is moderate.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare</span><span class="tag">contact-center</span><span class="tag">patient-triage</span><span class="tag">insurance-verification</span><span class="tag">claims-handling</span>
+        <span style="flex:1"></span>
+        <a href="https://www.paubox.com/blog/anthropic-brings-claude-ai-to-healthcare-with-hipaa-tools" class="source-link" target="_blank" rel="noopener">paubox.com &#x2197;</a><a href="https://cloud.google.com/solutions/healthcare-life-sciences" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a><a href="https://www.googlecloudpresscorner.com/2026-03-05-CVS-Health-and-Google-Cloud-Announce-New-Strategic-Partnership-to-Reimagine-Health-Care-Consumer-Engagement-and-Experiences" class="source-link" target="_blank" rel="noopener">googlecloudpresscorner.com &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+    <div class="category-section" data-category-section="foundation_models">
+      <div class="category-header">
+        <div class="category-icon measurement">🧠</div>
+        <h2>Foundation Models & Customization</h2>
+        <span class="count">5 items</span>
+      </div>
+
+    <div class="roadmap-card critical-priority" data-category="foundation_models" data-rec="build" data-score="8">
+      <div class="card-top">
+        <h3>Healthcare-Specific Fine-Tuning Templates for Gemini Enterprise <span class="priority-badge critical">CRITICAL</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Pre-built supervised fine-tuning (SFT) templates for healthcare use cases (clinical documentation, patient triage, EHR integration) that accelerate time-to-value for regulated customers. Templates include HIPAA-compliant training workflows and industry-standard evaluation benchmarks.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>MedGemma 1.5 launched Jan 2026 with 3D CT/MRI, histopathology, and EHR capabilities. Kartaca reports SFT unlocks domain-specific accuracy gains. HIMSS 2026 showed CVS Health, Humana, and Highmark scaling Gemini healthcare deployments to millions of interactions. Healthcare SFT today requires manual dataset curation; templates would standardize this.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-foundation_models-2026-04-15-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-foundation_models-2026-04-15-001">
+        <strong>Usable (8/10 — PASS):</strong> Healthcare teams can use templated workflows without ML expertise. Clear input/output examples reduce cognitive load on compliance-sensitive data labeling.<br><strong>Valuable (9/10 — PASS):</strong> Addresses immediate pain point: enterprises deploy MedGemma but struggle with SFT setup for proprietary clinical data. Templates cut weeks of setup time; direct impact on TTM and customer success metrics.<br><strong>Feasible (7/10 — PASS):</strong> SFT infrastructure exists in Vertex AI. Templates are lightweight data/docs—low engineering lift. Compliance review overhead moderate (HIPAA, FDA guidance alignment).<br><strong>Viable (8/10 — PASS):</strong> Healthcare is high-ACV segment; templates enable upsell to existing MedGemma customers. First-mover advantage in healthcare SFT automation. Indirect revenue via higher adoption and retention.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare</span><span class="tag">fine-tuning</span><span class="tag">compliance</span><span class="tag">templates</span><span class="tag">evals</span>
+        <span style="flex:1"></span>
+        <a href="https://developers.google.com/health-ai-developer-foundations/medgemma" class="source-link" target="_blank" rel="noopener">developers.google.com &#x2197;</a><a href="https://kartaca.com/en/fine-tuning-gemini-models-unlocking-industry-specific-intelligence/" class="source-link" target="_blank" rel="noopener">kartaca.com &#x2197;</a><a href="https://oneuptime.com/blog/post/2026-02-17-how-to-fine-tune-a-gemini-model-using-supervised-tuning-in-vertex-ai/view" class="source-link" target="_blank" rel="noopener">oneuptime.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="foundation_models" data-rec="build" data-score="7">
+      <div class="card-top">
+        <h3>Grounding Config UI for High-Fidelity RAG in Regulated Verticals <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Low-code UI builder for setting up grounding policies (high-fidelity mode enforcement, data source isolation, compliance rule chains) without touching YAML/API configs. Target: healthcare, finance, government to lock responses to curated enterprise data only.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Web Grounding for Enterprise supports no-logging compliance and VPC service controls (HIPAA, FedRAMP eligible). Google Distributed Cloud now authorized for US Secret/Top Secret. Finance/healthcare require 'response sourced from provided context only' (high-fidelity mode). Today: setup requires Vertex AI API/CLI expertise; no self-serve config.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-foundation_models-2026-04-15-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-foundation_models-2026-04-15-002">
+        <strong>Usable (7/10 — PASS):</strong> UI-driven config is dramatically easier than API calls for non-engineers. Wizards and templates guide policy setup. Compliance auditors can validate rules visually.<br><strong>Valuable (8/10 — PASS):</strong> Removes friction for regulated customers who fear misconfiguration. Increases adoption of high-fidelity grounding (currently niche due to complexity). Differentiates from competitors' CLI-only approaches.<br><strong>Feasible (6/10 — PASS):</strong> UI is a middleware layer—feasible but requires careful UX design for policy logic complexity. Backend grounding/VPC controls stable. Testing/validation overhead moderate (compliance edge cases).<br><strong>Viable (7/10 — PASS):</strong> Increases TAM in regulated segments (healthcare, finserv, gov). Reduces customer support load (fewer misconfiguration tickets). Enables upsell to enterprises with stricter governance mandates.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">grounding</span><span class="tag">RAG</span><span class="tag">compliance</span><span class="tag">UX</span><span class="tag">regulated-industries</span>
+        <span style="flex:1"></span>
+        <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/grounding/web-grounding-enterprise" class="source-link" target="_blank" rel="noopener">docs.cloud.google.com &#x2197;</a><a href="https://docs.cloud.google.com/gemini/enterprise/docs/compliance-security-controls" class="source-link" target="_blank" rel="noopener">docs.cloud.google.com &#x2197;</a><a href="https://cloud.google.com/blog/products/ai-machine-learning/run-gemini-and-ai-on-prem-with-google-distributed-cloud" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="foundation_models" data-rec="build" data-score="7">
+      <div class="card-top">
+        <h3>Gemini 2.0 Multi-Modal Agentic Orchestrator for Healthcare Workflows <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Agentic framework that chains Gemini 2.0 Flash multimodal reasoning across medical imaging (CT/MRI), EHR text, and audio (patient intake, provider notes) for autonomous clinical decision support. Built-in tool calling for lab orders, referrals, and documentation.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Gemini 2.0 Flash offers 1M token context, built-in tool use, and PhD-level reasoning. MedGemma now reads 3D imaging, histopathology, and longitudinal records. Humana deployed Agent Assist to 20k+ advocates; Highmark scales to 6M+ prompts. Gap: orchestrating multi-modal inputs in workflow context (no open agent framework yet).</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-foundation_models-2026-04-15-003')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-foundation_models-2026-04-15-003">
+        <strong>Usable (6/10 — PASS):</strong> Agentic orchestration is complex for clinicians; requires abstraction layer. Tool-calling UI must hide integration details. Training burden is moderate but front-loaded.<br><strong>Valuable (9/10 — PASS):</strong> Direct impact on provider efficiency and diagnostic accuracy. Solves multi-modal fusion problem that enterprises today wire manually. Huge competitive moat vs. anthropic-Claude or OpenAI in healthcare context.<br><strong>Feasible (5/10 — PASS):</strong> Gemini 2.0 multimodal + tool use foundation solid. But orchestration layer complex: medical workflow state management, approval chains, audit trails, failover. Engineering effort high; risk: edge cases in clinical workflows.<br><strong>Viable (8/10 — PASS):</strong> Healthcare is highest-value segment; agentic automation resonates with health systems facing staffing crunch. Premium pricing justified. Revenue model: per-transaction SaaS or managed services. Early customer wins de-risk.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">multimodal</span><span class="tag">healthcare</span><span class="tag">agentic</span><span class="tag">orchestration</span><span class="tag">tool-use</span>
+        <span style="flex:1"></span>
+        <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-0-flash" class="source-link" target="_blank" rel="noopener">docs.cloud.google.com &#x2197;</a><a href="https://developers.google.com/health-ai-developer-foundations/medgemma" class="source-link" target="_blank" rel="noopener">developers.google.com &#x2197;</a><a href="https://ai.google.dev/gemini-api/docs/models" class="source-link" target="_blank" rel="noopener">ai.google.dev &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="foundation_models" data-rec="investigate" data-score="7">
+      <div class="card-top">
+        <h3>Gemini Enterprise On-Prem Fine-Tuning via Distributed Cloud <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Enable supervised fine-tuning of Gemini within air-gapped, on-premises Distributed Cloud environments (now authorized for US Secret/Top Secret). Allows regulated healthcare/government customers to tune foundation models on classified/highly sensitive data without cloud exfiltration.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Google Distributed Cloud now FedRAMP-authorized for US Secret and Top Secret. Gemini Enterprise SFT exists in cloud (Vertex AI). Gap: no on-prem SFT option for customers with data residency or classification mandates. Government health agencies (VA, DoD), top-tier health systems demand this.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-foundation_models-2026-04-15-004')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-foundation_models-2026-04-15-004">
+        <strong>Usable (5/10 — PASS):</strong> On-prem deployment adds operational burden: capacity planning, infra management, model serving. Requires specialized ops knowledge. Usability lower than cloud; mitigated by strong demand from gov/mil.<br><strong>Valuable (8/10 — PASS):</strong> Unlocks entire TAM segment currently closed (federal agencies, classified programs). Differentiator vs. cloud-only competitors. High-touch sales motion but outsized ACV.<br><strong>Feasible (6/10 — PASS):</strong> Distributed Cloud infra exists and is auth'd. Porting SFT training to on-prem feasible but moderate complexity: resource allocation, monitoring, security hardening. Timeline: 2-3 quarters.<br><strong>Viable (7/10 — PASS):</strong> Government/defense sector has significant budget; multi-million-dollar deals typical. Healthcare systems with HIPAA-Plus compliance also interested. Margin attractive if managed services model (not just licensing).<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">on-prem</span><span class="tag">distributed-cloud</span><span class="tag">fine-tuning</span><span class="tag">government</span><span class="tag">compliance</span>
+        <span style="flex:1"></span>
+        <a href="https://cloud.google.com/blog/products/ai-machine-learning/run-gemini-and-ai-on-prem-with-google-distributed-cloud" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a><a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini-supervised-tuning" class="source-link" target="_blank" rel="noopener">docs.cloud.google.com &#x2197;</a><a href="https://docs.cloud.google.com/gemini/enterprise/docs/compliance-security-controls" class="source-link" target="_blank" rel="noopener">docs.cloud.google.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="foundation_models" data-rec="investigate" data-score="7">
+      <div class="card-top">
+        <h3>Gemini Context Window Elastic Pricing Tier <span class="priority-badge medium">MEDIUM</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Introduce usage-based pricing for Gemini 2.0 Pro's 1M+ token context, decoupled from per-request cost. Allow enterprises to reserve context capacity (e.g., 'annual 500B tokens') at volume discount, lowering friction for document-heavy workflows (regulatory reviews, codebase analysis, RAG ingestion).</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Gemini 2.0 Flash and Pro offer 1M tokens; Pro goes to 2M. Context length is competitive advantage but today priced per-request (token-in/token-out). Enterprises processing large RAG batches (medical records, legal docs, code) face unpredictable costs. Competitors (Claude 3.5 via AWS Bedrock) offer similar context with volume discounts.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-foundation_models-2026-04-15-005')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-foundation_models-2026-04-15-005">
+        <strong>Usable (8/10 — PASS):</strong> Usage-based pricing + annual reserves are familiar to cloud customers. Reduces friction vs. per-request model where large-document requests feel expensive.<br><strong>Valuable (6/10 — PASS):</strong> Valuable for high-volume, batch-oriented customers (legal discovery, healthcare records review). But lower impact than per-request cost cuts; appeals to niche segment, not broad market.<br><strong>Feasible (8/10 — PASS):</strong> Billing system changes straightforward; reserve/capacity management patterns exist in GCP (Committed Use Discounts). Low engineering risk.<br><strong>Viable (5/10 — PASS):</strong> Revenue-neutral or slightly negative (discounting); justification is TAM expansion + customer lock-in. Indirect benefit: higher Gemini adoption in document-processing segment. Lower margin than per-request.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">pricing</span><span class="tag">context-window</span><span class="tag">billing</span><span class="tag">volume-discounts</span>
+        <span style="flex:1"></span>
+        <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-0-flash" class="source-link" target="_blank" rel="noopener">docs.cloud.google.com &#x2197;</a><a href="https://www.datastudios.org/post/google-gemini-context-window-token-limits-model-comparison-and-workflow-strategies-for-late-2025" class="source-link" target="_blank" rel="noopener">datastudios.org &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+    <div class="category-section" data-category-section="trust_safety_governance">
+      <div class="category-header">
+        <div class="category-icon measurement">🔒</div>
+        <h2>Trust, Safety & Governance</h2>
+        <span class="count">0 items</span>
+      </div>
+
+    </div>
+    <div class="category-section" data-category-section="developer_partner">
+      <div class="category-header">
+        <div class="category-icon measurement">🤝</div>
+        <h2>Developer & Partner Enablement</h2>
+        <span class="count">5 items</span>
+      </div>
+
+    <div class="roadmap-card critical-priority" data-category="developer_partner" data-rec="build" data-score="8">
+      <div class="card-top">
+        <h3>Agent Marketplace for Healthcare & Consumer (Vertex AppExchange Equivalent) <span class="priority-badge critical">CRITICAL</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Create a dedicated marketplace for pre-built healthcare agents (patient engagement, appointment scheduling, clinical documentation) and consumer agents (e-commerce, customer service). Competitive gap: Salesforce AgentExchange has 100+ industry-specific agents; AWS Bedrock ecosystem doubled to 360 partners; Azure Marketplace features 3,000+ AI solutions.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Salesforce AgentExchange (March 2025) unified agents + apps across Slack/AppExchange. 72% of enterprises exploring agentic AI adoption (Futurum). AWS Bedrock partners grew 8x in 2025; $25K MDF incentives for agentic AI ISVs. Azure marketplace added 'AI apps and agents' category (Sept 2025) with 3,000+ solutions. Healthcare-specific agents (patient scheduling, clinical NLP) lack certified partners on Vertex.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-developer_partner-2026-04-15-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-developer_partner-2026-04-15-001">
+        <strong>Usable (7/10 — PASS):</strong> Partners already familiar with Agent Builder UX from Agent Designer preview; marketplace discovery UI patterns proven on AppExchange/Azure. Training docs needed for healthcare compliance (HIPAA auth, patient data restrictions).<br><strong>Valuable (9/10 — PASS):</strong> Healthcare orgs urgently seeking certified agents for scheduling + documentation. Consumer brands (fintech, retail) need drop-in agents for CX. Direct revenue for Google via ISV monetization. Closes 18-month competitive gap vs. Salesforce/Azure.<br><strong>Feasible (6/10 — PASS):</strong> Reuse Google Cloud Marketplace infrastructure + Agent Builder APIs. Moderate lift: ISV onboarding, HIPAA audit trails, healthcare sandbox. 4-6 month build + partner recruitment runway.<br><strong>Viable (8/10 — PASS):</strong> ISV co-sell model (similar to Azure co-sell). Take 15-20% transaction fee. Healthcare AI market $15B+ CAGR. Conservative: 50 healthcare agents + 100 consumer agents in Year 1 = $5-10M GMV.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">marketplace</span><span class="tag">healthcare</span><span class="tag">consumer</span><span class="tag">isv-enablement</span><span class="tag">agents</span><span class="tag">competitive-parity</span>
+        <span style="flex:1"></span>
+        <a href="https://agentexchange.salesforce.com" class="source-link" target="_blank" rel="noopener">salesforce.com &#x2197;</a><a href="https://thenewstack.io/microsoft-launches-a-combined-marketplace-for-cloud-solutions-ai-apps-and-agents/" class="source-link" target="_blank" rel="noopener">thenewstack.io &#x2197;</a><a href="https://aws.amazon.com/blogs/apn/powering-partner-success-2026-innovations/" class="source-link" target="_blank" rel="noopener">aws.amazon.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="developer_partner" data-rec="build" data-score="7">
+      <div class="card-top">
+        <h3>Healthcare-Certified Agent Developer Program (ISV Training & Audit) <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Structured certification path for partners building HIPAA-compliant agents using MedLM + Vertex Agent Builder. Includes: compliance playbooks, audit trail templates, production readiness checklists, quarterly reviews. Competitive gap: AWS Bedrock has 3 agentic AI specializations; Azure has ISV Success credits; Salesforce trusts partners in AgentExchange.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Google MedLM (HIPAA-eligible) exists but lacks partner enablement guidance. Healthcare compliance (data residency, audit logging, patient consent) is top 3 ISV friction point per Azure ISV Success interviews. AWS 80% of agents in Oct 2024 hackathon built on AgentCore = proof of demand. Google lacks equivalent ISV certification program for regulated verticals.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-developer_partner-2026-04-15-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-developer_partner-2026-04-15-002">
+        <strong>Usable (7/10 — PASS):</strong> ISVs familiar with FedRAMP/SOC2 programs; healthcare docs templates lower onboarding friction. Agent Builder plugin framework makes governance enforcement easier than legacy platforms.<br><strong>Valuable (8/10 — PASS):</strong> Healthcare ISVs urgently need compliance blueprints. Certified badge = 3-6 month sales acceleration vs. unvetted partners. Enables Google to enter hospital procurement cycles (currently dominated by AWS/Azure).<br><strong>Feasible (5/10 — PASS):</strong> Build from MedLM audit trail docs + existing Partner Advantage program. Hire 1-2 healthcare compliance leads. Initial 20-30 partners per cohort; 3-month review cycles. 2-3 month to GA.<br><strong>Viable (6/10 — PASS):</strong> Indirect revenue via MedLM usage growth + upsell to certified partners (premium support $5K/yr per ISV). Healthcare vertical lock-in justifies $500K investment. Modest but strong margins after Year 2.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">certification</span><span class="tag">healthcare</span><span class="tag">compliance</span><span class="tag">isv-enablement</span><span class="tag">hipaa</span><span class="tag">partner-program</span>
+        <span style="flex:1"></span>
+        <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a><a href="https://azure.microsoft.com/en-us/blog/drive-innovation-in-the-era-of-ai-with-isv-success/" class="source-link" target="_blank" rel="noopener">azure.microsoft.com &#x2197;</a><a href="https://aws.amazon.com/blogs/apn/powering-partner-success-2026-innovations/" class="source-link" target="_blank" rel="noopener">aws.amazon.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="developer_partner" data-rec="investigate" data-score="6">
+      <div class="card-top">
+        <h3>Code Assist Specialized Models for Healthcare & Consumer (Domain-Specific Copilots) <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Extend Gemini Code Assist with fine-tuned models for healthcare (FHIR APIs, CDS logic, audit compliance) and consumer (e-commerce APIs, payment frameworks, data privacy). Competitive gap: AWS CodeWhisperer integrates with Bedrock (multi-model); Azure Copilot Studio tied to enterprise dev patterns; Google Code Assist lacks healthcare/consumer specialization.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Google offers MedGemma (medical text understanding) but no healthcare-specific code generation. Healthcare developers building FHIR-compliant systems need boilerplate + compliance checks auto-generated. Consumer dev teams (fintech, retail) need PCI/GDPR patterns. AWS CodeWhisperer now integrates Bedrock models (Anthropic Claude, Meta Llama); Azure Copilot Studio customizable for industry stacks.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">5</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-developer_partner-2026-04-15-003')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-developer_partner-2026-04-15-003">
+        <strong>Usable (6/10 — PASS):</strong> VSCode/JetBrains plugin UI already familiar to developers. Healthcare APIs (HL7, FHIR) moderate learning curve; consumer frameworks (Stripe, Shopify) well-documented. Needs 2-3 example projects per domain.<br><strong>Valuable (7/10 — PASS):</strong> Healthcare developers 30-40% slower on FHIR + audit logging; domain-specific copilot = 15-20% velocity gain. Consumer dev teams avoid Vertex due to perceived generalist focus; specialization unlocks 50+ ISVs. High satisfaction scores expected (> 8/10 NPS).<br><strong>Feasible (5/10 — PASS):</strong> Fine-tune Gemini on 10K+ healthcare + consumer codebases (GitLab/GitHub scraping + synthetic data). Integrate with Code Assist backend (existing infrastructure). QA healthcare compliance (no PII leakage in suggestions). 3-4 month build.<br><strong>Viable (5/10 — PASS):</strong> Premium tier: $20/dev/mo for domain-specialized models (vs. $10 baseline). Healthcare vertical = 500+ dev teams = $100K ARR Year 1. Consumer = 1,000+ teams = $200K ARR. Modest scale; strong retention expected from community network effects.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">code-assist</span><span class="tag">healthcare</span><span class="tag">consumer</span><span class="tag">copilot</span><span class="tag">fhir</span><span class="tag">developer-tools</span>
+        <span style="flex:1"></span>
+        <a href="https://codeassist.google/" class="source-link" target="_blank" rel="noopener">codeassist.google &#x2197;</a><a href="https://oneuptime.com/blog/post/2026-02-17-how-to-build-a-medical-document-processing-pipeline-with-vertex-ai-and-healthcare-nlp/view" class="source-link" target="_blank" rel="noopener">oneuptime.com &#x2197;</a><a href="https://medium.com/google-cloud/building-a-healthcare-conversational-ai-assistant-with-vertex-ai-agent-builder-2db692b21408" class="source-link" target="_blank" rel="noopener">medium.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="developer_partner" data-rec="build" data-score="8">
+      <div class="card-top">
+        <h3>Agent Partner Resale Program (ISV Revenue Share on Vertex AI Usage) <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Enable partners to resell Vertex AI services + custom agents (similar to AWS Bedrock channel model). Partners earn 15-25% margin on Agent Builder, Gemini, and MedLM usage for their customer base. Includes co-marketing, pricing flexibility, and managed service bundles.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>AWS launched Bedrock resale program (2025); 30+ channel partners (Arrow, Ingram Micro) now bundle Bedrock + services. Azure has ISV resale with 15-20% margins. Salesforce AgentExchange + Slack marketplace create ISV SaaS revenue streams. Google Cloud lacks channel monetization for developer partners—direct sales only. Healthcare systems prefer bundled consulting + AI as part of managed service.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-developer_partner-2026-04-15-004')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-developer_partner-2026-04-15-004">
+        <strong>Usable (8/10 — PASS):</strong> Partner experience with AWS/Azure resale programs is high; Google can use similar GTM playbooks. Billing integration straightforward (Cloud Billing API). Partner Portal training needed (2 weeks).<br><strong>Valuable (9/10 — PASS):</strong> Partners currently send deals to Google for approval (3-4 week cycle); direct resale = same-day deployment + customer lock-in. Healthcare partners bundling Agent Builder + consulting = 5-10x deal value vs. standalone AI consumption.<br><strong>Feasible (7/10 — PASS):</strong> Build from existing Partner Advantage + resale program structure. Modify Cloud Billing for partner margin tracking. Partner ops (contract, pricing, support SLAs) = 2-3 month rollout. Tech lift: 1 month.<br><strong>Viable (8/10 — PASS):</strong> Goal: 50 resale partners in Year 1. Conservative: $500K incremental Vertex AI revenue from partner channel. Typical SaaS expansion: 3-4x leverage from base AWS/Azure partner relationships. Break-even on ops cost by Month 6.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">resale</span><span class="tag">channel</span><span class="tag">partners</span><span class="tag">revenue-share</span><span class="tag">isv-enablement</span>
+        <span style="flex:1"></span>
+        <a href="https://aws.amazon.com/blogs/apn/amazon-bedrock-now-available-for-partner-resale/" class="source-link" target="_blank" rel="noopener">aws.amazon.com &#x2197;</a><a href="https://clazar.io/blog/azure-co-sell-vs-ip-co-sell-eligible-guide" class="source-link" target="_blank" rel="noopener">clazar.io &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="developer_partner" data-rec="build" data-score="7">
+      <div class="card-top">
+        <h3>Agent Garden Vertical-Specific Template Library (Healthcare + Consumer Packs) <span class="priority-badge medium">MEDIUM</span></h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Expand Agent Garden (preview) with curated, production-ready agent templates for healthcare (appointment scheduling, patient triage, clinical note summarization) and consumer (support ticket routing, product recommendation, order status tracking). Each template includes: pre-built tools, compliance guardrails, Workbench notebooks, and unit tests.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Google released Agent Garden (preview) for sample agents + tools. Salesforce Agentforce 3 includes 100+ industry-specific actions (e.g., 'Patient Scheduling'). AWS Bedrock sample agents cover use cases (claims processing, inventory). Google's current templates are generic (Q&A, summarization); healthcare/consumer examples gap remains. ISVs report 40-60% time spent on boilerplate + compliance setup.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-developer_partner-2026-04-15-005')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-developer_partner-2026-04-15-005">
+        <strong>Usable (8/10 — PASS):</strong> Templates + copy-paste Python code lower learning curve significantly. Workbench notebooks guide developers step-by-step. Healthcare examples (appointment tool integration, FHIR parsing) reduce friction for regulated verticals.<br><strong>Valuable (8/10 — PASS):</strong> Developers report 40-60% time on boilerplate; templates save 2-3 weeks per agent. Consumer ISVs (e-commerce, fintech, support) = 1,000+ orgs. Healthcare = 500+ orgs. Each template shortens sales cycle 30-50% vs. blank canvas.<br><strong>Feasible (8/10 — PASS):</strong> Build 5-7 healthcare templates + 5-7 consumer templates (30-40 templates total). Reuse existing Agent Builder + MedLM/consumer-optimized Gemini docs. Notebooks + tests from public GitHub samples. 6-8 week project.<br><strong>Viable (6/10 — PASS):</strong> Indirect ROI: faster Agent Builder adoption, higher usage, upsell to consulting services. No direct revenue but strong retention + NPS impact. Estimated $200-300K incremental AI consumption from template-accelerated projects Year 1.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">templates</span><span class="tag">agent-garden</span><span class="tag">healthcare</span><span class="tag">consumer</span><span class="tag">developer-tools</span><span class="tag">enablement</span>
+        <span style="flex:1"></span>
+        <a href="https://cloud.google.com/blog/products/ai-machine-learning/more-ways-to-build-and-scale-ai-agents-with-vertex-ai-agent-builder" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a><a href="https://cirra.ai/articles/salesforce-agentforce-3-ai-agents" class="source-link" target="_blank" rel="noopener">cirra.ai &#x2197;</a><a href="https://github.com/GoogleCloudPlatform/vertex-ai-samples" class="source-link" target="_blank" rel="noopener">github.com &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+    <div class="category-section" data-category-section="data_integration">
+      <div class="category-header">
+        <div class="category-icon measurement">🔗</div>
+        <h2>Data & Integration</h2>
+        <span class="count">0 items</span>
+      </div>
+
+    </div>
+    <div class="category-section" data-category-section="value_measurement">
+      <div class="category-header">
+        <div class="category-icon measurement">📊</div>
+        <h2>Value Measurement & ROI</h2>
+        <span class="count">5 items</span>
+      </div>
+
+    <div class="roadmap-card critical-priority" data-category="value_measurement" data-rec="build" data-score="8.25">
+      <div class="card-top">
+        <h3>AI ROI Calculator Engine for Healthcare Use Cases <span class="priority-badge critical">CRITICAL</span></h3>
+        <div class="impact-badge">
+          <span>8.25/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:82.5%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Custom ROI calculator that bridges the enterprise AI ROI gap by letting CDOs model baseline costs, AI intervention payoffs, and payback periods for healthcare workflows (radiology, drug discovery, patient scheduling, billing automation). Integrated with Google Cloud cost estimator and real health system benchmark data (200-400% 3-5yr ROI by use case).</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>MIT 2025 study found 95% of GenAI pilots fail to deliver measurable P&L impact. Only 29% of orgs see significant ROI despite 5X productivity gains from AI super-users. Healthcare leaders specifically cite ROI measurement as the #1 barrier to scaling (Qventus 2026 CIO report). Competitors like IBM watsonx.governance and Microsoft Copilot Dashboard track adoption but fail to connect usage to business outcomes. Healthcare benchmarks show 57% ROI for medical imaging, 46% for drug discovery, 37% for virtual health—but health systems lack tools to model their own variants.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-value_measurement-2026-04-15-001')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-value_measurement-2026-04-15-001">
+        <strong>Usable (8/10 — PASS):</strong> Healthcare executives and CDOs are trained on P&L modeling. Simple input-output interface (cost, baseline efficiency, AI improvement %) would be intuitive. Templates per use case (radiology, billing, hiring) lower cognitive load. Integration with Google Cloud billing dashboard makes it native, not a separate tool.<br><strong>Valuable (9/10 — PASS):</strong> Directly solves the ROI measurement gap preventing 95% of pilots from scaling. Enables CDOs to justify continued investment to CFOs. Competitive advantage: only major cloud provider with healthcare-native ROI modeling. Unlocks new deal criteria: 'Will Google help us model and prove ROI?' High-value feature for deal expansion with health systems, payers, and life sciences.<br><strong>Feasible (8/10 — PASS):</strong> Requires: (1) healthcare use-case taxonomy (exists internally), (2) benchmark database (partner with Deloitte, NVIDIA, healthcare research firms), (3) cost modeling logic (similar to existing GCP cost calculator), (4) simple web interface. 6-9 month build for MVP. Biggest risk: ensuring benchmark data is current and defensible.<br><strong>Viable (8/10 — PASS):</strong> Creates sticky engagement—CDOs return monthly to re-baseline. Drives trials of GenAI services (Vertex, Document AI, Healthcare API). Can be monetized as premium feature in Google Cloud CDO program. Reduces sales cycle friction: 'See your ROI before committing.' Indirect revenue from faster deal closures and reduced churn in healthcare vertical.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare</span><span class="tag">cdo-engagement</span><span class="tag">roi-gap</span><span class="tag">deal-enablement</span><span class="tag">benchmark-data</span>
+        <span style="flex:1"></span>
+        <a href="https://www.congruity360.com/blog/why-95-of-generative-ai-pilots-are-failing/" class="source-link" target="_blank" rel="noopener">congruity360.com &#x2197;</a><a href="https://www.legal.io/articles/5719519/MIT-Report-Finds-95-of-AI-Pilots-Fail-to-Deliver-ROI-Exposing-GenAI-Divide" class="source-link" target="_blank" rel="noopener">legal.io &#x2197;</a><a href="https://masterofcode.com/blog/ai-in-healthcare-statistics" class="source-link" target="_blank" rel="noopener">masterofcode.com &#x2197;</a><a href="https://blogs.nvidia.com/blog/ai-in-healthcare-survey-2026/" class="source-link" target="_blank" rel="noopener">nvidia.com &#x2197;</a><a href="https://hitconsultant.net/2026/04/10/qventus-2026-cio-report-healthcare-ai-operationalization-ehr-roadmap/" class="source-link" target="_blank" rel="noopener">hitconsultant.net &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="value_measurement" data-rec="build" data-score="7.75">
+      <div class="card-top">
+        <h3>AI Impact Dashboard: Actual vs. Projected ROI Tracking <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7.75/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:77.5%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Post-deployment analytics dashboard that measures realized ROI against projections set in the calculator. Tracks actual usage, cost changes, quality/speed improvements, and financial impact by use case. Surfaces cost overruns (MIT found 380% avg production overruns vs. pilots) and quick wins to re-baseline forecasts.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>MIT Sloan 2025: 64% of scaling failures are infrastructure-related, cost overruns average 380% at production scale vs. pilot. Forrester 2026: fewer than 1-in-3 AI leaders can tie AI value to P&L changes—tools don't connect those layers. Microsoft's Copilot Dashboard provides a 28-day aggregated view with no per-user ROI correlation. Deloitte 2026: only 29% see significant ROI despite 5X productivity—disconnect between task efficiency and business impact.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-value_measurement-2026-04-15-002')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-value_measurement-2026-04-15-002">
+        <strong>Usable (7/10 — PASS):</strong> Executive dashboard format is familiar (similar to cloud cost management, BI tools). Pre-built reports per use case and health system department. Mobile-friendly for C-suite reviews. Requires minimal data instrumentation if AI models already log usage. Learning curve: ~1 hour to set up, then self-serve.<br><strong>Valuable (9/10 — PASS):</strong> Closes the measurement gap—directly addresses 'we can't tie AI value to P&L' challenge. Identifies cost overruns early (critical for CFO buy-in). Generates proof points for case studies and analyst relations. Creates recurring engagement: monthly board reviews. Drives expansion: quick-win use cases justify investment in adjacent areas.<br><strong>Feasible (7/10 — PASS):</strong> Requires: (1) data pipeline from Vertex, Document AI, Healthcare API logs, (2) financial impact modeling (cost, revenue impact reconciliation), (3) BI layer (Looker native). Pre-requisite: healthcare organizations must have instrumentation in place. Feasible for Google-deployed workloads; harder for customer-managed solutions. 6-8 months for MVP.<br><strong>Viable (8/10 — PASS):</strong> Drives increased adoption of Google Cloud AI services. Enables premium tiering: 'ROI Tracking Pro' for large health systems. Reduces buyer remorse and churn by showing value. Creates foundation for multi-year SLAs tied to ROI targets. Indirect revenue: expands wallet share in healthcare accounts that see tangible ROI.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">post-deployment</span><span class="tag">cost-overrun-detection</span><span class="tag">cfo-accountability</span><span class="tag">health-systems</span><span class="tag">recurring-engagement</span>
+        <span style="flex:1"></span>
+        <a href="https://complexdiscovery.com/why-95-of-corporate-ai-projects-fail-lessons-from-mits-2025-study/" class="source-link" target="_blank" rel="noopener">complexdiscovery.com &#x2197;</a><a href="https://www.cio.com/article/4114010/2026-the-year-ai-roi-gets-real.html" class="source-link" target="_blank" rel="noopener">cio.com &#x2197;</a><a href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-generative-ai-in-enterprise.html" class="source-link" target="_blank" rel="noopener">deloitte.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="value_measurement" data-rec="investigate" data-score="7.5">
+      <div class="card-top">
+        <h3>Public Benchmark Report: AI ROI by Healthcare Segment & Use Case <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7.5/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:75.0%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Quarterly published report with anonymized health system ROI outcomes, segmented by hospital size, geography, and use case (radiology, coding, scheduling, drug discovery). Includes payback period, quality metrics, and cost reductions. Serves as social proof and negotiating anchor for prospects.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Only 4% of health systems have achieved scaled AI implementation with measurable outcomes (Qventus 2026). 57% see ROI for medical imaging, 46% for drug discovery, 37% for virtual health—but variation is huge and lacks public benchmarking. Healthcare leaders cite 'proving ROI to my board' as #1 barrier. Competitors (IBM, Microsoft) lack healthcare-specific benchmarks. MIT study: only 5% of GenAI pilots see rapid revenue growth; real-world success stories are rare and private.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell fail">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">6</div>
+          <div class="a-verdict">FAIL</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-value_measurement-2026-04-15-003')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-value_measurement-2026-04-15-003">
+        <strong>Usable (8/10 — PASS):</strong> Published report format familiar to healthcare executives. Quarterly cadence drives recurring engagement. Anonymized data protects customer privacy while building credibility. Visual comparison tools (bar charts, percentiles) allow prospects to position themselves. Shareable as collateral in sales cycles.<br><strong>Valuable (9/10 — PASS):</strong> Solves the 'show me proof' objection at the top of the funnel. Establishes Google as the authority on healthcare AI ROI. Analyst relations/press value: 'Google Cloud healthcare AI hits 65% average ROI by year 2.' Shifts narrative from risk ('Will this work?') to opportunity ('Where do we fit?'). Drives pipeline: prospects want to be in next quarter's report.<br><strong>Feasible (6/10 — FAIL):</strong> Requires customer willingness to share outcomes (privacy + competitive concerns). Data collection infrastructure to systematically gather and anonymize results. 3-4 month lead time to gather, validate, and publish. Risk: insufficient data in early quarters. Mitigated by starting with 10-15 reference customers willing to be named or contribute anonymized data.<br><strong>Viable (7/10 — PASS):</strong> Generates inbound demand: prospects request deep-dive versions. Supports analyst relations and media coverage (Gartner, Forrester quotes). Creates reference customer ecosystem and loyalty. Indirect monetization: qualified leads from report downloads. Supports long-term brand positioning in healthcare.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">benchmark-report</span><span class="tag">thought-leadership</span><span class="tag">reference-customers</span><span class="tag">analyst-relations</span><span class="tag">healthcare-narrative</span>
+        <span style="flex:1"></span>
+        <a href="https://hitconsultant.net/2026/04/10/qventus-2026-cio-report-healthcare-ai-operationalization-ehr-roadmap/" class="source-link" target="_blank" rel="noopener">hitconsultant.net &#x2197;</a><a href="https://blogs.nvidia.com/blog/ai-in-healthcare-survey-2026/" class="source-link" target="_blank" rel="noopener">nvidia.com &#x2197;</a><a href="https://www.legal.io/articles/5719519/MIT-Report-Finds-95-of-AI-Pilots-Fail-to-Deliver-ROI-Exposing-GenAI-Divide" class="source-link" target="_blank" rel="noopener">legal.io &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="value_measurement" data-rec="build" data-score="8.5">
+      <div class="card-top">
+        <h3>CDO Playbook: Operationalizing AI ROI Measurement & Governance <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>8.5/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:85.0%;background:var(--build)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge build">
+          <span class="dot"></span>
+          Build
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Prescriptive guide for CDOs building AI ROI measurement into their governance layer. Covers: baseline data collection, metric selection by use case, cost allocation methodology, board reporting cadence, and integration with BI tools. Includes templates and Excel workbooks to jumpstart implementation.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>68% of CDOs now have explicit AI responsibilities (up from 41% in 2024). Healthcare CIOs report ROI measurement and governance as top operational challenge. KPMG 2026: enterprise disconnect between AI investments and measurable outcomes—90% invest without clear ROI framework. Deloitte: 'the real trick in 2026 will be applying rigorous measurements and linking digital interactions to visit completion and revenue.' Competitors lack playbooks—gap in CDO enablement.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">9</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-value_measurement-2026-04-15-004')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-value_measurement-2026-04-15-004">
+        <strong>Usable (9/10 — PASS):</strong> Step-by-step guides with templates reduce implementation time. Playbook written for CDOs/data leaders—audience expertise high. Real-world examples from health systems. Excel templates pre-populated with formulas. Integration guides for Looker, BigQuery, Vertex AI. Low friction: CDO can adopt in 2-3 weeks.<br><strong>Valuable (8/10 — PASS):</strong> Addresses explicit pain point: 68% of CDOs now own AI but lack governance playbook. Positions Google as trusted advisor to CDO community. Drives adoption of Vertex AI, BigQuery, Looker for measurement layer. Creates stickiness: CDOs build on top of Google Cloud infrastructure. Differentiator vs. competitors: only cloud provider with CDO-centric playbook.<br><strong>Feasible (9/10 — PASS):</strong> Can be built by product marketing + PMM + one PM. Leverage existing Vertex docs, cost calculator content, and healthcare reference architectures. 3-4 months to produce professional playbook with templates. Low engineering lift. Can be published as white paper + interactive guide. Minimal ongoing maintenance.<br><strong>Viable (8/10 — PASS):</strong> Playbook drives platform adoption: CDOs must use Looker, BigQuery, Vertex to implement recommendations. Premium version (live workshops + consulting) creates services opportunity. High-value lead generation: download playbook → attend webinar → sales conversation. Builds community: CDO forum for sharing measurement best practices.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">cdo-enablement</span><span class="tag">governance</span><span class="tag">playbook</span><span class="tag">lead-generation</span><span class="tag">platform-adoption</span>
+        <span style="flex:1"></span>
+        <a href="https://datadrivendaily.com/what-does-a-chief-data-officer-do/" class="source-link" target="_blank" rel="noopener">datadrivendaily.com &#x2197;</a><a href="https://www.cio.com/article/4157498/kpmg-report-finds-enterprise-disconnect-between-ai-and-its-roi.html" class="source-link" target="_blank" rel="noopener">cio.com &#x2197;</a><a href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-generative-ai-in-enterprise.html" class="source-link" target="_blank" rel="noopener">deloitte.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="roadmap-card " data-category="value_measurement" data-rec="investigate" data-score="7.25">
+      <div class="card-top">
+        <h3>Consumer Experience ROI Studio: Measurement for Engagement & Retention AI <span class="priority-badge high">HIGH</span></h3>
+        <div class="impact-badge">
+          <span>7.25/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:72.5%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="rec-badge investigate">
+          <span class="dot"></span>
+          Investigate
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Assessed 2026-04-15</span>
+      </div>
+      <p class="summary">Specialized ROI framework for consumer-facing AI (chatbots, personalization, recommendation engines). Tracks engagement lift, conversion rate impact, churn reduction, and lifetime value changes. Includes A/B testing templates and attribution modeling to isolate AI's incremental contribution.</p>
+      <div class="evidence">
+        <div class="label">Evidence</div>
+        <p>Digital healthcare providers cite virtual health assistants/chatbots as top ROI use case (37%). Only 20% of orgs currently grow revenue through AI vs. 74% hoping to. Consumer engagement is highest-upside but hardest-to-measure impact. Competitors lack consumer-specific ROI frameworks. Google's strength in consumer data and measurement (Analytics, BigQuery) positions well for this niche. Healthcare consumer experiences (patient portals, appointment scheduling, medication adherence) are major opportunity.</p>
+      </div>
+      <div class="assessment-grid">
+        <div class="assess-cell pass">
+          <div class="a-label">Usable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Valuable</div>
+          <div class="a-score">8</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Feasible</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+        <div class="assess-cell pass">
+          <div class="a-label">Viable</div>
+          <div class="a-score">7</div>
+          <div class="a-verdict">PASS</div>
+        </div>
+      </div>
+
+      <button class="assess-toggle" onclick="toggleRationale('rationale-value_measurement-2026-04-15-005')">Show Detailed Rationale</button>
+      <div class="assess-rationale" id="rationale-value_measurement-2026-04-15-005">
+        <strong>Usable (7/10 — PASS):</strong> Consumer marketers familiar with A/B testing and attribution. Framework translatable to digital health, retail, financial services, hospitality. Requires instrumentation to track user cohorts and outcomes. Looker templates simplify setup. Learning curve: 2-3 weeks for analytics team to implement.<br><strong>Valuable (8/10 — PASS):</strong> Unlocks high-ROI use cases (engagement, retention) that are underexploited. Solves 'how do we measure chatbot value?' problem. Competitive advantage: Google's measurement expertise differentiates here. Drives adoption of Analytics, BigQuery, Vertex AI for personalization. Extends TAM: retail, financial services, hospitality also need this.<br><strong>Feasible (7/10 — PASS):</strong> Requires: (1) measurement framework for engagement metrics (LTV models, cohort analysis, attribution), (2) Looker templates, (3) case studies from health systems with patient chatbots/portals. 5-6 months for comprehensive studio. Builds on existing Google Analytics 4 infrastructure.<br><strong>Viable (7/10 — PASS):</strong> Drives adoption of Vertex AI personalization, Gen AI for chatbots, Analytics 360. Creates entry point for SMBs (lower deal size). Enables upsell to enterprise analytics. Professional services opportunity: setting up custom cohort definitions and attribution models. Expands healthcare AI TAM beyond operational use cases.<br>
+      </div>
+      <div class="card-footer">
+        <span class="tag">consumer-engagement</span><span class="tag">healthcare-consumer</span><span class="tag">attribution-modeling</span><span class="tag">ab-testing</span><span class="tag">ltv-measurement</span>
+        <span style="flex:1"></span>
+        <a href="https://www.chiefhealthcareexecutive.com/view/ai-in-health-care-26-leaders-offer-predictions-for-2026" class="source-link" target="_blank" rel="noopener">chiefhealthcareexecutive.com &#x2197;</a><a href="https://masterofcode.com/blog/ai-roi" class="source-link" target="_blank" rel="noopener">masterofcode.com &#x2197;</a><a href="https://www.healthitanswers.net/realizing-roi-for-patient-experience-investments-in-2026/" class="source-link" target="_blank" rel="noopener">healthitanswers.net &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">&#x1F50D;</div>
+    <p>No items match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+<footer class="engine-footer">
+  <p>Roadmap Steering v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Google Cloud Industry & Applied AI Product Intelligence &mdash; <a href="https://danetomalin.com/googleAI-signals">Signal Dashboard</a> | <a href="https://danetomalin.com/competitiveintel">Competitive Intel</a></p>
+</footer>
+
+<script>
+// --- State ---
+var activeFilter = 'all';
+var activeRec = null;
+var searchQuery = '';
+
+// --- Category Filter ---
+function filterItems(category, btn) {
+  activeFilter = category;
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Recommendation Filter (toggle) ---
+function filterRec(rec, btn) {
+  if (activeRec === rec) {
+    activeRec = null;
+    btn.classList.remove('active');
+  } else {
+    activeRec = rec;
+    var btns = document.querySelectorAll('.filter-btn[data-rec]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchItems(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.roadmap-card');
+  var sections = document.querySelectorAll('.category-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var category = card.getAttribute('data-category');
+    var rec = card.getAttribute('data-rec');
+    var text = card.textContent.toLowerCase();
+
+    var catMatch = (activeFilter === 'all' || category === activeFilter);
+    var recMatch = (!activeRec || rec === activeRec);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (catMatch && recMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.roadmap-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Toggle Assessment Rationale ---
+function toggleRationale(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('visible');
+  }
+}
+</script>
+
+</body>
+</html>

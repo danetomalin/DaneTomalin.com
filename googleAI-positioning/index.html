@@ -1,0 +1,2526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Positioning — Google Cloud Industry & Applied AI</title>
+<link rel="canonical" href="https://danetomalin.com/googleAI-positioning/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #4285F4;
+    --accent-strong: #1A73E8;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --secondary-accent: #7C5CFC;
+    --secondary-accent-bg: rgba(124, 92, 252, 0.12);
+    --win: #66BB6A;
+    --win-bg: rgba(102, 187, 106, 0.12);
+    --warn: #FFA726;
+    --warn-bg: rgba(255, 167, 38, 0.12);
+    --info: #4F8CFF;
+    --info-bg: rgba(79, 140, 255, 0.12);
+    --danger: #EF5350;
+    --danger-bg: rgba(239, 83, 80, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .site-header {
+      position: sticky; top: 0;
+      background: rgba(13,13,18,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 200;
+  }
+  .site-header-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  .engine-header {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .engine-header .subtitle { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px; }
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 0.8em;
+    font-family: var(--mono);
+  }
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-value {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Main section tabs */
+  .section-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .section-tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+  }
+  .section-tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .section-tab.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+
+  /* Sub-tabs for positioning framework */
+  .framework-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .framework-tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: all 0.15s;
+  }
+  .framework-tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .framework-tab.active {
+    background: var(--secondary-accent-bg);
+    border-color: var(--secondary-accent);
+    color: var(--secondary-accent);
+  }
+
+  /* Section content */
+  .section-content { display: none; }
+  .section-content.active { display: block; animation: fadeIn 0.25s ease-in; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .framework-panel { display: none; }
+  .framework-panel.active { display: block; animation: fadeIn 0.25s ease-in; }
+
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) { .cards-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .card-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-alternative { background: var(--info-bg); color: var(--info); border: 1px solid var(--info); }
+  .badge-diy { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+  .badge-status-quo { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .badge-adjacent { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-strong); }
+
+  .card-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .card-content {
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+  .card-content ul {
+    list-style: none;
+    margin: 8px 0;
+  }
+  .card-content li {
+    padding: 4px 0 4px 18px;
+    position: relative;
+    font-size: 12px;
+    border-bottom: 1px dashed rgba(255,255,255,0.04);
+  }
+  .card-content li:last-child { border-bottom: none; }
+  .card-content li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .card-callout {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .callout-label {
+    font-weight: 600;
+    color: var(--warn);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .card-evidence {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-strong);
+    border-left: 3px solid var(--accent-strong);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  /* Capability to value mapping */
+  .mapping-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .mapping-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .mapping-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .mapping-row > div {
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .mapping-row > div:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+  .mapping-label {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .mapping-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .mapping-impact {
+    background: var(--win-bg);
+    color: var(--win);
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--win);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* Category panel */
+  .category-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .category-primary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .category-primary {
+      grid-template-columns: 1fr;
+    }
+  }
+  .category-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .category-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--secondary-accent);
+    margin-bottom: 16px;
+  }
+  .positioning-statement {
+    background: var(--secondary-accent-bg);
+    border: 2px solid var(--secondary-accent);
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .category-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .adjacent-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .adjacent-badge {
+    padding: 6px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .maturity-indicator {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .maturity-label {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .maturity-stage {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* Messaging cards */
+  .messaging-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .chip.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+
+  .messaging-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 768px) { .messaging-grid { grid-template-columns: 1fr; } }
+
+  .messaging-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .messaging-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+
+  .messaging-panel {
+    padding: 14px;
+    flex: 1;
+    border-right: 1px solid var(--border);
+  }
+  .messaging-card > .messaging-panel:last-child {
+    border-right: none;
+  }
+  .messaging-panel-header {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .messaging-panel-content {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .messaging-meta {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+    border-top: 1px dashed var(--border);
+    flex-wrap: wrap;
+  }
+  .meta-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+
+  /* Campaign briefs */
+  .channel-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .channel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .channel-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .channel-btn.active {
+    background: var(--info-bg);
+    border-color: var(--info);
+    color: var(--info);
+  }
+
+  .brief-content { display: none; }
+  .brief-content.active { display: block; animation: fadeIn 0.25s ease-in; }
+
+  .brief-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1024px) { .brief-grid { grid-template-columns: 1fr; } }
+
+  .brief-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .brief-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .brief-row {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .brief-row:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .brief-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  .brief-value {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .brief-list {
+    list-style: none;
+    margin: 0;
+  }
+  .brief-list li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    font-size: 12px;
+  }
+  .brief-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--info);
+    font-size: 10px;
+  }
+
+  /* ── Positioning Statement Hero ── */
+  .positioning-hero {
+    max-width: 1400px;
+    margin: 0 auto 0;
+    padding: 0 32px 32px;
+  }
+  .positioning-hero-inner {
+    background: linear-gradient(135deg, rgba(124, 92, 252, 0.08) 0%, rgba(79, 140, 255, 0.06) 100%);
+    border: 1px solid var(--secondary-accent);
+    border-radius: 16px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .positioning-hero-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-accent), var(--info), var(--accent));
+  }
+  .positioning-hero-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--secondary-accent);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .positioning-hero-statement {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .positioning-hero-statement strong {
+    color: var(--secondary-accent);
+    font-weight: 700;
+  }
+  .positioning-hero-statement em {
+    color: var(--info);
+    font-style: normal;
+    font-weight: 600;
+  }
+  .positioning-hero-unlike {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-top: 16px;
+    border-top: 1px solid rgba(124, 92, 252, 0.2);
+  }
+  .positioning-hero-unlike strong {
+    color: var(--warn);
+    font-weight: 600;
+  }
+  @media (max-width: 640px) {
+    .positioning-hero { padding: 0 20px 24px; }
+    .positioning-hero-inner { padding: 24px 20px; }
+    .positioning-hero-statement { font-size: 1.05rem; }
+  }
+
+  /* ── Alternative Cards (redesigned) ── */
+  .alt-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .alt-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+  .alt-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .alt-header h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .alt-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .alt-badge-direct_competitor { background: var(--info-bg); color: var(--info); border: 1px solid var(--info); }
+  .alt-badge-diy_approach { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+  .alt-badge-status_quo { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .alt-badge-adjacent_solution { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-strong); }
+  .alt-what-do {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    flex-grow: 1;
+  }
+  .alt-limitations {
+    background: var(--warn-bg);
+    border: 1px solid rgba(255,167,38,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .alt-limitations h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .alt-limitations ul {
+    list-style: none;
+    margin: 0;
+  }
+  .alt-limitations li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.45;
+    border-bottom: 1px dashed rgba(255,167,38,0.12);
+  }
+  .alt-limitations li:last-child { border-bottom: none; }
+  .alt-limitations li::before {
+    content: "×";
+    position: absolute;
+    left: 0;
+    color: var(--warn);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* ── Capability Cards ── */
+  .capability-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .capability-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--secondary-accent);
+  }
+  .capability-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--secondary-accent);
+    margin-bottom: 8px;
+  }
+  .cap-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .cap-section {
+    background: rgba(79,140,255,0.06);
+    border: 1px solid rgba(79,140,255,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .cap-section h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--info);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .cap-section ul { list-style: none; margin: 0; }
+  .cap-section li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .cap-section li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--info);
+    font-size: 10px;
+  }
+  .cap-evidence {
+    background: var(--accent-bg);
+    border: 1px solid rgba(66,133,244,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .cap-evidence h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .cap-evidence p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ── Value Cards ── */
+  .value-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .value-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--win);
+  }
+  .value-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .value-header h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .value-cap-ref {
+    font-size: 9px;
+    padding: 3px 8px;
+    background: var(--secondary-accent-bg);
+    border: 1px solid var(--secondary-accent);
+    border-radius: 4px;
+    color: var(--secondary-accent);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .value-impact {
+    font-size: 13px;
+    color: var(--win);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--win-bg);
+    border: 1px solid rgba(102,187,106,0.25);
+    border-radius: 8px;
+  }
+  .value-impact strong { color: var(--win); }
+  .value-proof {
+    padding-top: 8px;
+  }
+  .value-proof h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .value-proof ul { list-style: none; margin: 0; }
+  .value-proof li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .value-proof li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--win);
+    font-size: 10px;
+  }
+
+  /* ── Account Cards ── */
+  .account-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .account-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+  .account-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .acct-characteristics, .acct-care, .acct-signals {
+    margin-bottom: 12px;
+  }
+  .acct-characteristics h5, .acct-care h5, .acct-signals h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .acct-characteristics ul, .acct-signals ul { list-style: none; margin: 0; }
+  .acct-characteristics li, .acct-signals li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .acct-characteristics li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: 10px; }
+  .acct-signals li::before { content: "◉"; position: absolute; left: 0; color: var(--info); font-size: 8px; top: 6px; }
+  .acct-care p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ── Message Cards ── */
+  .message-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .message-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+  .message-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .message-header h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .message-audience {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .message-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height: 0;
+  }
+  @media (max-width: 900px) { .message-grid { grid-template-columns: 1fr; } }
+  .message-col {
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+  }
+  .message-col:last-child { border-right: none; }
+  @media (max-width: 900px) {
+    .message-col { border-right: none; border-bottom: 1px solid var(--border); }
+    .message-col:last-child { border-bottom: none; }
+  }
+  .message-col h5 {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .message-col:nth-child(1) h5 { color: var(--secondary-accent); }
+  .message-col:nth-child(2) h5 { color: var(--info); }
+  .message-col:nth-child(3) h5 { color: var(--win); }
+  .message-col p {
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  /* ── Campaign Briefs ── */
+  .campaign-brief {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+  .campaign-brief:hover { border-color: var(--info); }
+  .brief-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .brief-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .brief-channel {
+    font-size: 10px;
+    padding: 3px 10px;
+    background: var(--info-bg);
+    border: 1px solid var(--info);
+    border-radius: 4px;
+    color: var(--info);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .brief-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 768px) { .brief-grid { grid-template-columns: 1fr; } }
+  .brief-section h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brief-section p {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .brief-section ul { list-style: none; margin: 0; }
+  .brief-section li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .brief-section li::before { content: "▸"; position: absolute; left: 0; color: var(--info); font-size: 10px; }
+  .brief-messages { margin-bottom: 14px; }
+  .brief-messages h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brief-messages ul { list-style: none; margin: 0; }
+  .brief-messages li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .brief-messages li::before { content: "▸"; position: absolute; left: 0; color: var(--info); font-size: 10px; }
+  .brief-cta {
+    margin-bottom: 14px;
+  }
+  .brief-cta h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brief-cta p {
+    font-size: 13px;
+    color: var(--info);
+    font-weight: 600;
+  }
+  .brief-footer {
+    display: flex;
+    gap: 24px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+  .brief-footer strong { color: var(--text-secondary); }
+
+  /* ── Category Panel (refined) ── */
+  .category-panel .category-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .category-panel .category-header h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--secondary-accent);
+    font-family: 'Playfair Display', serif;
+  }
+  .maturity-badge {
+    font-size: 10px;
+    padding: 4px 12px;
+    background: var(--win-bg);
+    border: 1px solid var(--win);
+    border-radius: 20px;
+    color: var(--win);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .category-panel .category-positioning {
+    margin-bottom: 20px;
+  }
+  .category-panel .category-positioning h4 {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .category-panel blockquote {
+    background: var(--secondary-accent-bg);
+    border: 2px solid var(--secondary-accent);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .category-panel .category-description p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .category-panel .adjacent-categories h4 {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .category-panel .adjacent-categories ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+  }
+  .category-panel .adjacent-categories li {
+    padding: 6px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .empty-state-text {
+    font-size: 14px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .engine-header { padding: 32px 20px 24px; }
+    .engine-header h1 { font-size: 1.8em; }
+    .stats-bar { flex-direction: column; gap: 12px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .mapping-row { grid-template-columns: 1fr; }
+    .category-primary { grid-template-columns: 1fr; }
+    .brief-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+    <a href="https://danetomalin.com/googleAI/" class="site-header-back">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        Back to Google Cloud Industry & Applied AI Plan
+    </a>
+</header>
+
+<div class="engine-header">
+    <h1>Positioning Framework</h1>
+    <p class="subtitle">April Dunford 5-element positioning for Google Cloud's Industry & Applied AI. This framework synthesizes competitive intelligence, market signals, and roadmap insights into structured positioning: Competitive Alternatives, Distinct Capabilities, Differentiated Value, Best Fit Accounts, and Market Category.</p>
+    <div class="stats-bar">
+      <div class="stat-item"><span class="stat-value">7</span> Competitive Alternatives</div>
+      <div class="stat-item"><span class="stat-value">5</span> Distinct Capabilities</div>
+      <div class="stat-item"><span class="stat-value">5</span> Value Statements</div>
+      <div class="stat-item"><span class="stat-value">4</span> Best-Fit Segments</div>
+    </div>
+  </div><div class="container">
+  <!-- Main Section Navigation -->
+  <div class="section-tabs" id="sectionTabs">
+    <div class="section-tab active" data-section="positioning">Positioning Framework</div>
+    <div class="section-tab" data-section="messaging">Messaging Library</div>
+    <div class="section-tab" data-section="campaigns">Campaign Briefs</div>
+  </div>
+
+  <!-- SECTION 1: POSITIONING FRAMEWORK -->
+  <div id="positioning" class="section-content active">
+    <!-- Sub-tabs -->
+    <div class="framework-tabs" id="frameworkTabs">
+      <div class="framework-tab active" data-panel="alternatives">Competitive Alternatives</div>
+      <div class="framework-tab" data-panel="capabilities">Distinct Capabilities</div>
+      <div class="framework-tab" data-panel="value">Differentiated Value</div>
+      <div class="framework-tab" data-panel="accounts">Best Fit Accounts</div>
+      <div class="framework-tab" data-panel="category">Market Category</div>
+    </div>
+
+    <!-- Alternatives Panel -->
+    <div id="alternatives" class="framework-panel active">
+      <div class="cards-grid">
+        
+    <div class="alt-card" id="alt-alt-ttd-agency">
+      <div class="alt-header">
+        <h4>The Trade Desk + Agency-Managed Reach Buying</h4>
+        <span class="alt-badge alt-badge-direct_competitor">Direct Competitor</span>
+      </div>
+      <p class="alt-what-do">Use TTD&#x27;s demand-side platform for programmatic Industry & Applied AI with traditional agency or in-house team managing reach curves, frequency, and creative</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Reach curves don&#x27;t answer &#x27;what did this sell?&#x27; — no direct ROAS measurement</li><li>Outcome attribution requires stitching third-party data sources (MMP + CRM + pixel)</li><li>Weekly optimization cycles, not real-time bidding on business outcomes</li><li>Shared ML models across all advertisers — not advertiser-specific</li><li>ACR/cookie-based targeting becoming regulated (Kentucky, Texas lawsuits)</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-mntn">
+      <div class="alt-header">
+        <h4>MNTN&#x27;s Template-Driven Performance TV</h4>
+        <span class="alt-badge alt-badge-direct_competitor">Direct Competitor</span>
+      </div>
+      <p class="alt-what-do">Run performance TV through MNTN&#x27;s simplified self-serve platform with pre-built templates for TV campaigns, targeting rules, and KPI tracking</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Template-based optimization, not per-advertiser ML — one-size-fits-most approach</li><li>Limited to MNTN&#x27;s own inventory relationships (not true open Industry & Applied AI)</li><li>100+ KPIs but limited cross-screen attribution (TV to mobile/web weak)</li><li>Best for mid-market; performance plateaus at scale</li><li>Higher fees due to managed service model</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-amazon-dsp">
+      <div class="alt-header">
+        <h4>Amazon DSP with First-Party Shopper Data</h4>
+        <span class="alt-badge alt-badge-direct_competitor">Direct Competitor</span>
+      </div>
+      <p class="alt-what-do">Advertise on Industry & Applied AI inventory using Amazon&#x27;s first-party retail data (purchase history, browsing behavior) for targeting and attribution</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Locked to Amazon ecosystem — limited access to open Industry & Applied AI inventory (Netflix, Roku, Peacock)</li><li>Amazon first-party data only works for retail/ecommerce; B2B/SaaS limited value</li><li>Outpacing TTD in Industry & Applied AI growth (23% vs 14%) due to first-party advantage, but only for Amazon-scale advertisers</li><li>Black box optimization — limited customization of bidding strategy</li><li>Inventory bias toward Amazon properties</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-google-dv360">
+      <div class="alt-header">
+        <h4>Google Display &amp; Video 360 (DV360)</h4>
+        <span class="alt-badge alt-badge-adjacent_solution">Adjacent Solution</span>
+      </div>
+      <p class="alt-what-do">Manage Industry & Applied AI campaigns within Google&#x27;s ecosystem via DV360, leveraging Google first-party data (GA, Gmail, Chrome) for targeting and measurement</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Primarily a Google ecosystem play — limited to YouTube Industry & Applied AI and Google-connected inventory</li><li>Depends on Google third-party cookies (sunsetting) and consent signals (SKAdNetwork-like limitations in Chrome)</li><li>Shared ML models, not advertiser-specific optimization</li><li>Attribution tied to Google conversion pixel — incomplete cross-platform view</li><li>Not designed for true open Industry & Applied AI (Roku, MNTN, independent publishers)</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-roku-oneview">
+      <div class="alt-header">
+        <h4>Roku OneView Native Platform</h4>
+        <span class="alt-badge alt-badge-direct_competitor">Direct Competitor</span>
+      </div>
+      <p class="alt-what-do">Buy Industry & Applied AI directly through Roku OneView, leveraging Roku platform first-party data and native inventory prioritization</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Roku-only inventory — no true open Industry & Applied AI access</li><li>Recently pivoting to &#x27;commerce engine&#x27; narrative (Roku Shop), diluting focus on performance measurement</li><li>Limited cross-device attribution (Roku data only)</li><li>Self-serve UX less mature than TTD or DV360</li><li>Smaller user base means fewer case studies and slower product innovation</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-direct-io">
+      <div class="alt-header">
+        <h4>Manual IO Buying with Publishers Directly</h4>
+        <span class="alt-badge alt-badge-diy_approach">Diy Approach</span>
+      </div>
+      <p class="alt-what-do">Negotiate insertion orders directly with publishers (Netflix, Amazon Prime Video, Peacock, Paramount, Disney+) for Industry & Applied AI inventory</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Highly manual — weeks to negotiate IOs, no programmatic agility</li><li>Limited targeting and data activation (publishers restrict data usage)</li><li>No unified measurement across multiple publisher deals</li><li>Minimum spend commitments, inflexible pricing</li><li>Doesn&#x27;t scale for growth companies needing to shift budgets weekly</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-point-solutions">
+      <div class="alt-header">
+        <h4>DIY: Stitch Point Solutions (MMP + DSP + Measurement)</h4>
+        <span class="alt-badge alt-badge-diy_approach">Diy Approach</span>
+      </div>
+      <p class="alt-what-do">Combine best-of-breed tools: Adjust/Branch for mobile, Trade Desk or DV360 for programmatic, Mixpanel/Amplitude for analytics, Rockerbox for attribution</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>High operational overhead — 4-5 vendors to manage, integrate, reconcile</li><li>Attribution data lag (daily reconciliation, not real-time)</li><li>Vendor finger-pointing on data discrepancies (no single source of truth)</li><li>Requires senior data engineer / analyst headcount</li><li>Industry & Applied AI-specific measurement gaps (cross-device attribution weak)</li><li>$7.4B Industry & Applied AI fraud/inaccuracy problem — no single vendor owns fraud detection across all sources</li></ul>
+      </div>
+    </div>
+    
+    <div class="alt-card" id="alt-alt-status-quo">
+      <div class="alt-header">
+        <h4>Stay on Linear TV (Status Quo)</h4>
+        <span class="alt-badge alt-badge-status_quo">Status Quo</span>
+      </div>
+      <p class="alt-what-do">Continue buying linear TV through traditional media buyers, avoiding Industry & Applied AI complexity entirely or treating Industry & Applied AI as experimental/testing channel</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul><li>Linear TV inventory declining (cord-cutting accelerates) — reach erosion YoY</li><li>No programmatic agility — yearly contracts, quarterly adjustments</li><li>Limited outcome measurement — reach + frequency metrics only</li><li>45% of Industry & Applied AI budgets now coming from linear TV migration (IAB 2026) — missing growth</li><li>Competitors adopting Industry & Applied AI gaining competitive advantage in targeting efficiency</li></ul>
+      </div>
+    </div>
+    
+      </div>
+    </div>
+
+    <!-- Capabilities Panel -->
+    <div id="capabilities" class="framework-panel">
+      <div class="cards-grid">
+        
+    <div class="capability-card" id="cap-cap-per-advertiser-ml">
+      <h4>Per-Advertiser Operational ML</h4>
+      <p class="cap-description">Custom ML models trained on each advertiser&#x27;s unique business outcomes (ROAS, CAC, LTV, conversion rate) rather than shared templates or cross-advertiser learning. Models compound with spend — the more data, the smarter the bidding.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>MNTN (template-driven optimization)</li><li>Roku OneView (platform-level, not advertiser-specific)</li><li>TTD (shared ML across customer base)</li><li>DV360 (shared Google ML models)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Roadmap: Industry & Applied AI ROAS &amp; Purchase Optimization Models (8.75/10, BUILD, Critical). Industry & Applied AI Signal Engine: PMP deals grew from 41% to 59%, favoring ML-driven optimization. Battlecard insight: &#x27;Per-advertiser ML vs template optimization&#x27; — Google Cloud Industry & Applied AI is what you move to when you outgrow MNTN.</p>
+      </div>
+    </div>
+    
+    <div class="capability-card" id="cap-cap-outcome-bidding">
+      <h4>Outcome-Based Bidding (ROAS/CPA, Not Impressions)</h4>
+      <p class="cap-description">Bid on measurable business outcomes (revenue per impression, CAC, ROAS) instead of impression volume or reach curves. Automatically optimizes spend allocation toward highest-return inventory and audiences.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>TTD (reach curves, not outcome curves)</li><li>MNTN (KPI tracking, but not outcome-driven bidding)</li><li>Google DV360 (conversion-based bidding, but limited cross-platform context)</li><li>Direct IO (manual IO placement, no algorithmic optimization)</li><li>Roku OneView (limited to Roku SKU/attribution context)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Battlecard: &#x27;Outcome-based bidding vs reach curves — TTD can&#x27;t answer what did this sell?&#x27; Core elevator pitch: &#x27;For growth marketers tired of defending Industry & Applied AI spend with reach curves, Google Cloud Industry & Applied AI turns every impression into a measurable business outcome.&#x27;</p>
+      </div>
+    </div>
+    
+    <div class="capability-card" id="cap-cap-first-party-signal">
+      <h4>First-Party Signal Ingestion (Not Dependent on Shared Identity Graphs)</h4>
+      <p class="cap-description">Ingest advertiser-owned first-party data (CRM, CDP, purchase history, pixel events) directly into bidding without relying on third-party cookies or shared identity resolution. Native support for hashed emails, device IDs, and customer IDs.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>TTD (relies on third-party cookies, ID5, Liveramp — increasingly regulated)</li><li>DV360 (Google cookie-dependent, SKAdNetwork limitations)</li><li>DIY approaches (need 3-4 vendors for signal stitching)</li><li>Manual IO buying (no data activation at scale)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Industry & Applied AI Signal Engine: ACR data regulations tightening (Texas AG lawsuits, Kentucky classifying ACR as sensitive data). Capability directly addresses $7.4B Industry & Applied AI fraud/inaccuracy problem by using first-party, auditable signals.</p>
+      </div>
+    </div>
+    
+    <div class="capability-card" id="cap-cap-cross-screen-attribution">
+      <h4>Cross-Screen Attribution (Industry & Applied AI → Mobile → Web → Offline)</h4>
+      <p class="cap-description">Unified measurement framework that ties Industry & Applied AI impressions to downstream user behavior across mobile apps, web, and offline (ecommerce, app installs). Single source of truth for attribution, not multi-vendor reconciliation.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>Roku OneView (Roku-only context)</li><li>Amazon DSP (Amazon ecosystem bias)</li><li>TTD (requires stitching third-party data)</li><li>MNTN (TV→mobile weak, TV→web not native)</li><li>DIY point solutions (vendor finger-pointing on attribution)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD, Critical). Battlecard: Google Cloud Industry & Applied AI&#x27;s ability to prove Industry & Applied AI drove app installs, web conversions, and offline purchases differentiates vs TTD (reach curves only).</p>
+      </div>
+    </div>
+    
+    <div class="capability-card" id="cap-cap-privacy-resilient">
+      <h4>Privacy-Resilient Targeting (No ACR/Cookie Dependency)</h4>
+      <p class="cap-description">Bidding and targeting strategies that don&#x27;t degrade when third-party cookies sunset or ACR data becomes regulated. Designed for a post-cookie future using contextual signals, content affinity, and first-party data.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>TTD (cookie-heavy, cookie sunset = immediate impact)</li><li>DV360 (Google 1P + 3P mix, sunsetting 3P)</li><li>Roku OneView (ACR-based, exposed to regulatory risk)</li><li>Manual IO (no data activation, so no ACR risk, but limited optimization)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Industry & Applied AI Signal Engine: Texas AG lawsuits, Kentucky ACR classification as sensitive data. $7.4B fraud/inaccuracy problem exacerbated by low-quality ACR. Google Cloud Industry & Applied AI&#x27;s first-party signal + contextual approach future-proofs against regulation.</p>
+      </div>
+    </div>
+    
+    <div class="capability-card" id="cap-cap-open-supply">
+      <h4>Biddable Open Industry & Applied AI Supply (Not Locked to One Walled Garden)</h4>
+      <p class="cap-description">Access to 90%+ programmatically-transacted Industry & Applied AI inventory across independent publishers (Roku, Pluto, Tubi, The Roku Channel), AVOD platforms (Netflix, Amazon Prime Video, Peacock, Paramount+, Disney+), and direct publisher deals. Not dependent on any single platform&#x27;s inventory.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>Amazon DSP (Amazon ecosystem bias; limited Netflix, Roku, Peacock access)</li><li>Roku OneView (Roku inventory + relationships only)</li><li>Google DV360 (YouTube Industry & Applied AI + Google partners only)</li><li>Manual IO (requires separate negotiations per publisher)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Industry & Applied AI Signal Engine: 90%+ Industry & Applied AI transacted programmatically. Netflix opening 80% inventory to programmatic ($3B ad revenue). Amazon DSP growing 23% vs TTD 14% due to first-party data, but limited to Amazon ecosystem. Google Cloud Industry & Applied AI&#x27;s open supply advantage enables scale without vendor lock-in.</p>
+      </div>
+    </div>
+    
+    <div class="capability-card" id="cap-cap-self-serve-ux">
+      <h4>Self-Serve Performance UX (Not Agency-Gated)</h4>
+      <p class="cap-description">Intuitive, performance-marketing-native dashboard where growth teams can launch, optimize, and measure campaigns in hours, not weeks. No agency dependency, direct control over bidding strategy, real-time performance dashboards.</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <ul><li>MNTN (managed service model, higher fees, slower time-to-launch)</li><li>TTD (enterprise-first UX, requires agency or senior technical operator)</li><li>Manual IO (requires media buyer or agency management)</li><li>DV360 (enterprise platform, steep learning curve for performance teams)</li></ul>
+      </div>
+      <div class="cap-evidence">
+        <h5>Evidence</h5>
+        <p>Roadmap: Self-Serve Industry & Applied AI Campaign Builder (8.0/10, BUILD, Critical). Battlecard: Best-fit buyer profile is &#x27;Head of Growth at scaling consumer brand, came up running mobile performance, fluent in ROAS/CAC&#x27; — they want to self-serve like they do mobile.</p>
+      </div>
+    </div>
+    
+      </div>
+    </div>
+
+    <!-- Value Panel -->
+    <div id="value" class="framework-panel">
+      <div class="mapping-grid">
+        
+    <div class="value-card" id="val-value-measurable-roas">
+      <div class="value-header">
+        <h4>Measurable ROAS on Industry & Applied AI — Prove It Works</h4>
+        <span class="value-cap-ref">cap-outcome-bidding</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> Growth teams can attribute 30-50% of ecommerce revenue lift to Industry & Applied AI (vs 0% with reach curves). CAC 10-20% lower than linear TV + mobile mix.
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Roadmap: Industry & Applied AI ROAS &amp; Purchase Optimization Models (8.75/10, BUILD, Critical) enables per-impression ROAS tracking</li><li>Battlecard: &#x27;For growth marketers tired of defending Industry & Applied AI spend with reach curves, Google Cloud Industry & Applied AI turns every impression into a measurable business outcome&#x27;</li><li>Industry & Applied AI Signal Engine: $38B US market, 70% of advertisers increasing spend 17% avg — measurement is the unlock</li></ul>
+      </div>
+    </div>
+    
+    <div class="value-card" id="val-value-compounding-performance">
+      <div class="value-header">
+        <h4>Compounding Performance (Models Improve with Spend)</h4>
+        <span class="value-cap-ref">cap-per-advertiser-ml</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> Week-over-week ROAS improvement of 5-12% in first 90 days as models train. Year-over-year compounding 20-30% efficiency gains.
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Per-advertiser ML models improve with data — more spend = smarter bidding</li><li>Industry & Applied AI Signal Engine: PMP deals grew from 41% to 59%, indicating advertiser preference for ML-driven optimization</li><li>Battlecard: &#x27;Per-advertiser ML vs template optimization — Google Cloud Industry & Applied AI is what you move to when you outgrow MNTN&#x27;</li></ul>
+      </div>
+    </div>
+    
+    <div class="value-card" id="val-value-independence-walled-gardens">
+      <div class="value-header">
+        <h4>Independence from Walled Gardens</h4>
+        <span class="value-cap-ref">cap-open-supply</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> Access to 90%+ of programmatically-transacted Industry & Applied AI supply without vendor lock-in. Negotiate better rates; easily shift spend between platforms.
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Industry & Applied AI Signal Engine: 90%+ Industry & Applied AI transacted programmatically</li><li>Amazon DSP growing 23% vs TTD 14%, but at cost of ecosystem lock-in. Google Cloud Industry & Applied AI&#x27;s open supply prevents single-vendor dependency.</li><li>Netflix opening 80% inventory to programmatic ($3B ad revenue) — open platforms creating competitive advantage</li></ul>
+      </div>
+    </div>
+    
+    <div class="value-card" id="val-value-privacy-future-proof">
+      <div class="value-header">
+        <h4>Privacy-Resilient Future-Proofing (Regulate-Ready)</h4>
+        <span class="value-cap-ref">cap-privacy-resilient</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> Zero reliance on third-party cookies or regulated ACR data. Strategy remains unchanged regardless of regulatory shifts (Texas AG, Kentucky, FCC).
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Industry & Applied AI Signal Engine: $7.4B Industry & Applied AI fraud/inaccuracy due to low-quality ACR data. Texas AG lawsuits, Kentucky classifying ACR as sensitive.</li><li>TTD, DV360, Roku OneView all exposed to cookie sunsetting or ACR regulation. Google Cloud Industry & Applied AI&#x27;s first-party + contextual approach immune.</li><li>Regulatory Watch pillar shows tightening ACR regulations (FCC, FTC, COPPA impacts)</li></ul>
+      </div>
+    </div>
+    
+    <div class="value-card" id="val-value-speed-to-value">
+      <div class="value-header">
+        <h4>Speed to Value (Hours, Not Weeks)</h4>
+        <span class="value-cap-ref">cap-self-serve-ux</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> Launch campaigns in hours (not weeks), optimize in real-time. Self-serve eliminates agency lag, 40-50% faster campaign iteration.
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Roadmap: Self-Serve Industry & Applied AI Campaign Builder (8.0/10, BUILD, Critical) enables non-technical growth teams</li><li>Battlecard: Target buyer is performance marketer (mobile-trained), expects self-serve UX like they know from mobile</li><li>vs MNTN: Template model slower; vs TTD: enterprise UX requires expertise</li></ul>
+      </div>
+    </div>
+    
+    <div class="value-card" id="val-value-reduced-waste">
+      <div class="value-header">
+        <h4>Reduced Waste (ML Identifies &amp; Avoids Fraud)</h4>
+        <span class="value-cap-ref">cap-first-party-signal</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> $7.4B Industry & Applied AI fraud/inaccuracy market problem. Google Cloud Industry & Applied AI&#x27;s per-advertiser ML + first-party signal ingestion reduces fraud exposure by 50-70% vs status quo.
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Industry & Applied AI Signal Engine: $7.4B wasted on Industry & Applied AI fraud/inaccurate data — ML fraud detection is a differentiator</li><li>First-party signal ingestion (auditable, known-quality) vs third-party ACR (low-quality, fraud-prone)</li><li>Outcome-based bidding automatically deprioritizes high-fraud, low-ROAS inventory</li></ul>
+      </div>
+    </div>
+    
+    <div class="value-card" id="val-value-cross-platform-view">
+      <div class="value-header">
+        <h4>Single Source of Truth for Attribution (No Vendor Finger-Pointing)</h4>
+        <span class="value-cap-ref">cap-cross-screen-attribution</span>
+      </div>
+      <div class="value-impact">
+        <strong>Impact:</strong> Unified Industry & Applied AI→mobile→web→offline measurement. Eliminate data reconciliation overhead (10-15 FTE hours/week in mid-market companies). 40-60% reduction in attribution delay (real-time vs daily reconciliation).
+      </div>
+      <div class="value-proof">
+        <h5>Proof Points</h5>
+        <ul><li>Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD, Critical)</li><li>DIY point solutions require 4-5 vendors + engineering overhead. Single source of truth reduces complexity.</li><li>Battlecard: Industry & Applied AI measurability is the differentiator — unified attribution proves ROI vs reach curves</li></ul>
+      </div>
+    </div>
+    
+      </div>
+    </div>
+
+    <!-- Accounts Panel -->
+    <div id="accounts" class="framework-panel">
+      <div class="cards-grid">
+        
+    <div class="account-card" id="acct-segment-dtc-app">
+      <h4>DTC / App-First Brands Scaling from Mobile to Industry & Applied AI</h4>
+      <div class="acct-characteristics">
+        <h5>Characteristics</h5>
+        <ul><li>Revenue: $5M-$250M+</li><li>Primary KPI: Unit economics (ROAS, CAC, LTV)</li><li>Marketing: Performance-led (came up on mobile / Facebook / UA)</li><li>Growth stage: Series B-D or profitable SaaS</li><li>Geographic: US, UK, expanding Australia/Canada</li></ul>
+      </div>
+      <div class="acct-care">
+        <h5>Why They Care</h5>
+        <p>They speak ROAS/CAC natively. They outgrew MNTN (templates too constraining). They avoid TTD (agency dependency, reach curves instead of outcomes). They want self-serve mobile-like UX for Industry & Applied AI — Google Cloud Industry & Applied AI is the Industry & Applied AI equivalent of Adjust/Branch for mobile.</p>
+      </div>
+      <div class="acct-signals">
+        <h5>Observable Signals</h5>
+        <ul><li>High mobile app spend ($50K-$500K/month)</li><li>Recent Industry & Applied AI experiments with MNTN or TTD (not satisfied)</li><li>Team includes Head of Growth or VP Performance Marketing</li><li>Using MMPs (Adjust, Branch) + cohort analytics (Amplitude, Mixpanel)</li><li>Quarterly budget reviews with ROAS targets</li></ul>
+      </div>
+    </div>
+    
+    <div class="account-card" id="acct-segment-growth-performance">
+      <h4>Growth-Stage Companies with Performance Accountability</h4>
+      <div class="acct-characteristics">
+        <h5>Characteristics</h5>
+        <ul><li>Revenue: $10M-$500M</li><li>Structure: CFO/board scrutinizes every channel&#x27;s ROAS</li><li>Budget: $5M-$50M annual marketing spend</li><li>Team: CMO/VP Marketing + Performance team</li><li>Industry: B2C SaaS, ecommerce, consumer apps, fintech</li></ul>
+      </div>
+      <div class="acct-care">
+        <h5>Why They Care</h5>
+        <p>Every media dollar must be defensible in board meetings. Industry & Applied AI reach curves are indefensible. Google Cloud Industry & Applied AI&#x27;s outcome-based bidding + unified attribution = board-ready story (&#x27;Industry & Applied AI drove $X revenue&#x27;).</p>
+      </div>
+      <div class="acct-signals">
+        <h5>Observable Signals</h5>
+        <ul><li>Monthly / weekly performance reviews (not quarterly)</li><li>CFO or board rep attends marketing meetings</li><li>Recently reallocated budget away from low-ROAS channels</li><li>Using marketing analytics platforms (Rockerbox, Contentsquare, etc.)</li><li>Questions like &#x27;What&#x27;s the ROAS on Industry & Applied AI?&#x27; in early sales conversations</li></ul>
+      </div>
+    </div>
+    
+    <div class="account-card" id="acct-segment-linear-migration">
+      <h4>Linear-to-Industry & Applied AI Migrators Needing Measurement</h4>
+      <div class="acct-characteristics">
+        <h5>Characteristics</h5>
+        <ul><li>Revenue: $100M+</li><li>Marketing: Media buyer team managing linear TV budgets ($5M-$100M+)</li><li>Challenge: Cord-cutting eroding linear reach; board wants Industry & Applied AI allocation</li><li>Geography: Primarily US, CPG, QSR, automotive, financial services</li></ul>
+      </div>
+      <div class="acct-care">
+        <h5>Why They Care</h5>
+        <p>Linear TV is declining (cord-cutting accelerates). Industry & Applied AI is 45% of new budget growth (IAB 2026), but media buyers are trained on reach/frequency, not outcomes. Google Cloud Industry & Applied AI bridges: gives media teams a performance framework they can defend to brands.</p>
+      </div>
+      <div class="acct-signals">
+        <h5>Observable Signals</h5>
+        <ul><li>Large legacy media buyer team ($2M-$10M headcount)</li><li>Recent linear TV budget cuts or shift-to-Industry & Applied AI directive from brand</li><li>Using Nielsen/comScore for measurement (looking to modernize)</li><li>Questions about &#x27;how to measure Industry & Applied AI&#x27; in discovery calls</li><li>Brand side: CPG, QSR, auto with $50M+ linear budgets</li></ul>
+      </div>
+    </div>
+    
+    <div class="account-card" id="acct-segment-commerce-retail">
+      <h4>Commerce Media / Retail Brands with Owned Audiences</h4>
+      <div class="acct-characteristics">
+        <h5>Characteristics</h5>
+        <ul><li>Revenue: $500M+</li><li>Competitive advantage: First-party customer data (CRM, purchase history, browsing)</li><li>Marketing: Retail marketing director managing owned customer spend</li><li>Channel: Direct-to-consumer (DTC brands with scale)</li></ul>
+      </div>
+      <div class="acct-care">
+        <h5>Why They Care</h5>
+        <p>Google Cloud Industry & Applied AI&#x27;s first-party signal ingestion enables them to activate owned audiences on Industry & Applied AI — drive repurchase, upsell, LTV. They have the data asset (Amazon, Shopify), but can&#x27;t activate it at scale on Industry & Applied AI. Google Cloud Industry & Applied AI unlocks owned-audience Industry & Applied AI strategy.</p>
+      </div>
+      <div class="acct-signals">
+        <h5>Observable Signals</h5>
+        <ul><li>CRM with 1M+ customers</li><li>Allocation to &#x27;owned audience&#x27; or &#x27;loyalty&#x27; marketing channel</li><li>Exploring third-party Industry & Applied AI (not exclusive to Amazon DSP/Roku if they&#x27;re already using it)</li><li>Data team (or CDO) in organization</li><li>Questions about &#x27;how to use our customer data for Industry & Applied AI&#x27; in conversations</li></ul>
+      </div>
+    </div>
+    
+    <div class="account-card" id="acct-segment-agencies">
+      <h4>Performance Agencies Managing Multi-Channel Budgets</h4>
+      <div class="acct-characteristics">
+        <h5>Characteristics</h5>
+        <ul><li>AUM: $50M-$1B+</li><li>Specialization: Performance marketing (not brand/creative focused)</li><li>Client base: DTC, ecommerce, mobile-app, fintech brands</li><li>Team: Performance strategists, paid media specialists, data analysts</li></ul>
+      </div>
+      <div class="acct-care">
+        <h5>Why They Care</h5>
+        <p>Agencies can differentiate from competitors by offering Industry & Applied AI as a performance channel (not reach/frequency). Google Cloud Industry & Applied AI enables white-label or Google Cloud Industry & Applied AI-powered Industry & Applied AI services; agencies charge premium for outcome-based optimization vs TTD reach-buying.</p>
+      </div>
+      <div class="acct-signals">
+        <h5>Observable Signals</h5>
+        <ul><li>Already managing mobile/paid social/search for clients (ROAS-driven)</li><li>Client request: &#x27;Can you do Industry & Applied AI?&#x27; or &#x27;Add Industry & Applied AI to our media mix&#x27;</li><li>Frustration with TTD (requires agency support, less self-serve)</li><li>Interest in proprietary optimization (differentiation from other agencies)</li><li>Team capacity to build Industry & Applied AI expertise</li></ul>
+      </div>
+    </div>
+    
+      </div>
+    </div>
+
+    <!-- Category Panel -->
+    <div id="category" class="framework-panel">
+      
+    <div class="category-panel">
+      <div class="category-header">
+        <h3>Performance Industry & Applied AI</h3>
+        <span class="maturity-badge">Growth</span>
+      </div>
+      <div class="category-positioning">
+        <h4>Positioning Statement</h4>
+        <blockquote>Google Cloud Industry & Applied AI is the performance Industry & Applied AI platform that turns connected TV from a reach play into a measurable, outcome-driven business outcome channel. Unlike reach-based alternatives (TTD, Roku, manual IO), Google Cloud Industry & Applied AI optimizes Industry & Applied AI for ROAS, CAC, and LTV using per-advertiser ML and unified cross-screen attribution — giving growth teams and performance agencies the measurement certainty they need to defend Industry & Applied AI spend.</blockquote>
+      </div>
+      <div class="category-description">
+        <p>Performance Industry & Applied AI is the emerging segment of connected TV advertising focused on measurable business outcomes (ROAS, CAC, LTV, incrementality) rather than traditional TV metrics (reach, frequency, impressions). It combines operational ML with cross-device attribution and first-party signal activation to enable performance marketing teams to treat Industry & Applied AI like mobile/paid social/search — where every dollar spent is tied to a measurable business outcome.</p>
+      </div>
+    
+      <div class="adjacent-categories">
+        <h4>Adjacent Categories</h4>
+        <ul><li>Programmatic Advertising</li><li>Marketing Attribution &amp; Measurement</li><li>Cross-Device Advertising</li><li>ML-Powered Bidding</li><li>Privacy-Resilient Advertising</li></ul>
+      </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: MESSAGING LIBRARY -->
+  <div id="messaging" class="section-content">
+    <div class="messaging-controls">
+      <span class="filter-label">Theme:</span>
+      <div class="filter-chips" id="themeFilters">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+
+    <div class="messaging-controls">
+      <span class="filter-label">Channel:</span>
+      <div class="filter-chips" id="channelFilters">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+
+    <div class="messaging-grid" id="messagingGrid">
+      
+    <div class="messaging-card" id="msg-msg-001" data-themes="ML &amp; Performance" data-channels="linkedin,email,webinars,sales_enablement">
+      <div class="message-header">
+        <h4>ML &amp; Performance</h4>
+        <span class="message-audience">Head of Growth, VP Performance Marketing</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Google Cloud Industry & Applied AI trains a custom ML model on your business outcomes (ROAS, CAC, LTV) — not shared templates. The more you spend, the smarter it gets. Week-over-week ROAS improves 5-12% in first 90 days.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>MNTN uses templates (one-size-fits-most). TTD uses shared ML (same model for every customer). Google Cloud Industry & Applied AI builds your model — it learns your business, not the category.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: Industry & Applied AI ROAS &amp; Purchase Optimization Models (8.75/10, BUILD). Battlecard: &#x27;Per-advertiser ML vs template optimization — Google Cloud Industry & Applied AI is what you move to when you outgrow MNTN.&#x27;</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-002" data-themes="Measurement &amp; Attribution" data-channels="email,linkedin,thought_leadership,webinars">
+      <div class="message-header">
+        <h4>Measurement &amp; Attribution</h4>
+        <span class="message-audience">CMO, VP Marketing, CFO (board reporting)</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Stop defending Industry & Applied AI with reach curves. Google Cloud Industry & Applied AI shows you exactly which Industry & Applied AI impressions drove conversions, app installs, and revenue across mobile and web. Single source of truth.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>TTD answers &#x27;reach.&#x27; Google Cloud Industry & Applied AI answers &#x27;what did this sell?&#x27; Unified attribution eliminates vendor finger-pointing (vs point-solution vendors requiring 4+ integrations).</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD). $38B Industry & Applied AI market, 70% increasing spend 17% avg — but 45% say measurement is the blocker.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-003" data-themes="Privacy &amp; Regulation" data-channels="email,thought_leadership,analyst_relations">
+      <div class="message-header">
+        <h4>Privacy &amp; Regulation</h4>
+        <span class="message-audience">CMO, Legal/Compliance, Head of Data</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Google Cloud Industry & Applied AI&#x27;s strategy doesn&#x27;t change when cookies sunset or ACR gets regulated. We use first-party data and contextual signals — no third-party cookies, no ACR dependency.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>TTD, DV360, Roku OneView all rely on cookies or ACR (both tightening regulation). Google Cloud Industry & Applied AI was built for a post-cookie world. You&#x27;re regulate-ready today.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Industry & Applied AI Signal Engine: $7.4B fraud/inaccuracy due to low-quality ACR. Texas AG lawsuits, Kentucky classifying ACR as sensitive data. Google Cloud Industry & Applied AI already compliant.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-004" data-themes="Self-Serve &amp; Speed" data-channels="linkedin,digital_ads,social,sales_enablement">
+      <div class="message-header">
+        <h4>Self-Serve &amp; Speed</h4>
+        <span class="message-audience">Head of Growth, Performance Marketer (mobile background)</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Launch Industry & Applied AI campaigns in hours, optimize in real-time. No agency dependency. Self-serve dashboard built for growth teams who speak ROAS, not &#x27;impressions.&#x27;</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>MNTN requires managed service overhead. TTD requires agency/technical operator. Google Cloud Industry & Applied AI = self-serve like Adjust for mobile.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: Self-Serve Industry & Applied AI Campaign Builder (8.0/10, BUILD). Best-fit buyer: &#x27;Head of Growth at scaling consumer brand, came up running mobile, fluent in ROAS/CAC.&#x27;</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-005" data-themes="Open Supply &amp; Independence" data-channels="email,linkedin,sales_enablement">
+      <div class="message-header">
+        <h4>Open Supply &amp; Independence</h4>
+        <span class="message-audience">Head of Growth, Chief Revenue Officer</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Access 90%+ of programmable Industry & Applied AI inventory (Netflix, Roku, Peacock, Amazon, independent publishers) without lock-in. Negotiate better rates, shift spend instantly.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>Amazon DSP locks you into Amazon ecosystem (23% growth, but at cost of walled garden). Roku locks you to Roku. Google Cloud Industry & Applied AI gives you optionality.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Industry & Applied AI Signal Engine: 90%+ Industry & Applied AI transacted programmatically. Netflix opening 80% inventory ($3B ad revenue). Google Cloud Industry & Applied AI&#x27;s open supply = competitive advantage.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-006" data-themes="Fraud &amp; Waste Prevention" data-channels="email,webinars,sales_enablement">
+      <div class="message-header">
+        <h4>Fraud &amp; Waste Prevention</h4>
+        <span class="message-audience">CFO, VP Marketing, Head of Performance</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Industry & Applied AI has $7.4B fraud/inaccuracy problem. Google Cloud Industry & Applied AI&#x27;s per-advertiser ML + first-party signals automatically deprioritize fraud and low-ROAS inventory. You avoid waste before it happens.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>TTD requires manual fraud filtering. MNTN templates can&#x27;t adapt. Google Cloud Industry & Applied AI&#x27;s models learn your fraud profile and continuously optimize away from it.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Industry & Applied AI Signal Engine: $7.4B wasted on Industry & Applied AI fraud/inaccurate data. Outcome-based bidding (value #5: Reduced Waste) reduces fraud exposure by 50-70%.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-007" data-themes="Owned Audience Activation" data-channels="email,webinars,partner_marketing">
+      <div class="message-header">
+        <h4>Owned Audience Activation</h4>
+        <span class="message-audience">CMO, Retail Marketing Director (D2C brands)</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Activate your owned customer data (CRM, purchase history) on Industry & Applied AI for repurchase, upsell, and LTV growth. Google Cloud Industry & Applied AI&#x27;s first-party ingestion lets you use your data asset.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>Amazon DSP is retail-only and still limits data activation. Manual IO requires negotiations. Google Cloud Industry & Applied AI + your CDP = proprietary Industry & Applied AI audience strategy.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: First-party signal ingestion (cap-first-party-signal). $500M+ ecommerce brands activating owned audiences for 2-3x LTV improvement.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-008" data-themes="Agency Differentiation" data-channels="email,partner_marketing,sales_enablement">
+      <div class="message-header">
+        <h4>Agency Differentiation</h4>
+        <span class="message-audience">Performance Agency Leader, Managing Partner</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Differentiate from competitors by offering outcome-based Industry & Applied AI (not reach-based). White-label Google Cloud Industry & Applied AI&#x27;s optimization + your client relationships = new $2M-$10M revenue stream.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>Other agencies offer TTD services (commoditized). Google Cloud Industry & Applied AI-powered Industry & Applied AI is proprietary, defensible, higher-margin.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Battlecard: Performance agencies are adding Industry & Applied AI services. Google Cloud Industry & Applied AI enables them to charge premium for outcome-based optimization vs TTD reach-buying.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-009" data-themes="Linear-to-Industry & Applied AI Migration" data-channels="email,webinars,thought_leadership,analyst_relations">
+      <div class="message-header">
+        <h4>Linear-to-Industry & Applied AI Migration</h4>
+        <span class="message-audience">Media Buyer, VP Media, Brand (CPG, QSR, Auto)</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Linear TV is declining (cord-cutting). 45% of Industry & Applied AI budgets coming from linear. Google Cloud Industry & Applied AI bridges media teams to performance — gives you an outcomes framework to defend Industry & Applied AI to your brand.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>Traditional Industry & Applied AI tools (Roku, TTD) speak reach/frequency (linear language). Google Cloud Industry & Applied AI speaks performance (outcomes, ROAS) — familiar to performance marketers.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Industry & Applied AI Signal Engine: $38B market growing 13.8% YoY. 45% of Industry & Applied AI budgets from linear migration. Measurement is the unlock.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-010" data-themes="Board-Ready ROI" data-channels="email,webinars,thought_leadership">
+      <div class="message-header">
+        <h4>Board-Ready ROI</h4>
+        <span class="message-audience">CMO, CFO, Board Member (during budget reviews)</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Industry & Applied AI ROAS: $4.50-$8.50 per dollar spent (depending on category). Google Cloud Industry & Applied AI&#x27;s attribution proves it. No more reach curves.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>Reach curves don&#x27;t answer ROI. Point-solution vendors require 4+ integrations (manual reconciliation, slow). Google Cloud Industry & Applied AI: single source of truth, real-time dashboards.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: Industry & Applied AI ROAS &amp; Purchase Optimization Models (8.75/10, BUILD). Battlecard: &#x27;Outcome-based bidding vs reach curves — TTD can&#x27;t answer what did this sell?&#x27;</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-011" data-themes="Scale Without Scaling Overhead" data-channels="linkedin,email,webinars,sales_enablement">
+      <div class="message-header">
+        <h4>Scale Without Scaling Overhead</h4>
+        <span class="message-audience">Head of Growth, VP Performance Marketing</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Your ROAS improves as spend increases (models compound). No plateau. 20-30% YoY efficiency gains without hiring more analysts.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>MNTN + templates plateau at 6-8 figures/month. Manual point-solution scaling = hiring analysts. Google Cloud Industry & Applied AI&#x27;s per-advertiser ML scales with your spend.</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: Industry & Applied AI ROAS &amp; Purchase Optimization Models (8.75/10, BUILD, Critical). Value: &#x27;Compounding Performance&#x27; (5-12% WoW ROAS improvement, 20-30% YoY).</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="messaging-card" id="msg-msg-012" data-themes="Industry & Applied AI as Acquisition Channel" data-channels="email,webinars,sales_enablement">
+      <div class="message-header">
+        <h4>Industry & Applied AI as Acquisition Channel</h4>
+        <span class="message-audience">Head of Growth (app/SaaS), VP User Acquisition</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Something Cool We Do</h5>
+          <p>Industry & Applied AI is becoming a top 3 app install channel (alongside mobile and web). Google Cloud Industry & Applied AI&#x27;s attribution tracks app installs driven by Industry & Applied AI. Optimize ROAS per install.</p>
+        </div>
+        <div class="message-col">
+          <h5>How It&#39;s Different</h5>
+          <p>TTD + MNTN can&#x27;t measure app installs reliably (Industry & Applied AI→app linkage weak). Google Cloud Industry & Applied AI&#x27;s cross-screen attribution bridges Industry & Applied AI to MMP (Adjust, Branch).</p>
+        </div>
+        <div class="message-col">
+          <h5>Show Some Proof</h5>
+          <p>Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD). Industry & Applied AI Signal Engine: 70% of Industry & Applied AI advertisers increasing spend, app installs increasingly tracked.</p>
+        </div>
+      </div>
+    </div>
+    
+    </div>
+  </div>
+
+  <!-- SECTION 3: CAMPAIGN BRIEFS -->
+  <div id="campaigns" class="section-content">
+    <div class="channel-nav" id="channelNav">
+      <div class="channel-btn" data-channel="email">Email</div>
+      <div class="channel-btn" data-channel="linkedin">Linkedin</div>
+      <div class="channel-btn" data-channel="digital_ads">Digital Ads</div>
+      <div class="channel-btn" data-channel="social">Social</div>
+      <div class="channel-btn" data-channel="thought_leadership">Thought Leadership</div>
+      <div class="channel-btn" data-channel="webinars">Webinars</div>
+      <div class="channel-btn" data-channel="analyst_relations">Analyst Relations</div>
+      <div class="channel-btn" data-channel="partner_marketing">Partner Marketing</div>
+      <div class="channel-btn" data-channel="event_marketing">Event Marketing</div>
+      <div class="channel-btn" data-channel="sales_enablement">Sales Enablement</div>
+      
+    </div>
+
+    <div class="brief-content" id="brief-email">
+
+      <div class="campaign-brief" id="cb-brief-001">
+        <div class="brief-header">
+          <h4>Performance Industry & Applied AI Proof Points — 5-Email Sequence</h4>
+          <span class="brief-channel">Email</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Educate growth marketers on Industry & Applied AI&#x27;s ROAS potential; position Google Cloud Industry & Applied AI as the measurement solution; drive demo signup</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>Head of Growth, VP Performance Marketing at DTC/ecommerce (revenue $5M-$250M)</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Industry & Applied AI is now measurable — shift from reach to outcomes (msg-002, msg-010)</li><li>Per-advertiser ML compounds ROAS over time (msg-001, msg-011)</li><li>Your owned data activates on Industry & Applied AI via Google Cloud Industry & Applied AI (msg-007)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Book a 20-min walkthrough of your Industry & Applied AI potential</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Email template 1: &#x27;Industry & Applied AI ROAS is predictable&#x27; (stat-heavy)</li><li>Email template 2: &#x27;Per-advertiser ML&#x27; (how different)</li><li>Email template 3: &#x27;Activate your owned data&#x27; (owned audience angle)</li><li>Email template 4: &#x27;Scale without hiring&#x27; (compounding performance)</li><li>Email template 5: &#x27;See your Industry & Applied AI ROAS&#x27; (demo CTA)</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Open rate: 25-35%</li><li>Click-through rate: 3-5%</li><li>Demo signup rate: 8-15% of clicks</li><li>Conversion to trial/pilot: 20-30%</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> 4-week campaign (weekly send)</span>
+          <span><strong>Budget:</strong> $5K-$15K (email platform, list hygiene, template design)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-linkedin">
+
+      <div class="campaign-brief" id="cb-brief-002">
+        <div class="brief-header">
+          <h4>Thought Leadership: &#x27;Why Industry & Applied AI Reach Curves Are Dead&#x27;</h4>
+          <span class="brief-channel">Linkedin</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Establish Google Cloud Industry & Applied AI as Industry & Applied AI authority; build awareness of &#x27;Performance Industry & Applied AI&#x27; category; drive engagement and lead generation</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>CMO, VP Marketing, Head of Growth (all industries) at growth-stage companies</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Reach curves are outdated — Industry & Applied AI is outcome-driven now (msg-002)</li><li>TTD can&#x27;t answer &#x27;what did this sell?&#x27; — only Google Cloud Industry & Applied AI can (msg-002, msg-010)</li><li>Privacy regulation makes first-party Industry & Applied AI the future (msg-003)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Read the full guide: &#x27;Performance Industry & Applied AI Playbook&#x27; (lead magnet)</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>LinkedIn article 1: &#x27;Reach Curves vs Outcome Bidding&#x27; (opinion piece)</li><li>LinkedIn article 2: &#x27;Why Your Industry & Applied AI ROAS Matters More Than Impressions&#x27; (data-backed)</li><li>LinkedIn article 3: &#x27;Privacy-First Industry & Applied AI Strategy&#x27; (regulatory angle)</li><li>Video: 30-sec Industry & Applied AI ROAS demo clip</li><li>Guide: &#x27;Performance Industry & Applied AI Playbook&#x27; (downloadable)</li><li>LinkedIn carousel: &#x27;Industry & Applied AI Measurement Myths&#x27; (5-slide debunk)</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Engagement rate (reactions + comments): 3-5%</li><li>Click-through to guide: 5-8%</li><li>Lead capture rate: 25-40%</li><li>Content shares: 10+ per post</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> 6-week campaign (2x/week posts + ads)</span>
+          <span><strong>Budget:</strong> $10K-$25K (LinkedIn ads, content creation, copywriting)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-digital_ads">
+
+      <div class="campaign-brief" id="cb-brief-003">
+        <div class="brief-header">
+          <h4>Performance Industry & Applied AI Demand Generation — Google + LinkedIn Ads</h4>
+          <span class="brief-channel">Digital Ads</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Capture high-intent demand (search + social); drive qualified pipeline to sales</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>Growth-stage CMO/VP Marketing/Head of Growth searching for Industry & Applied AI platform or measurement solution</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Industry & Applied AI ROAS is measurable (and compounding) (msg-001, msg-010)</li><li>Your Industry & Applied AI data is locked in point solutions — Google Cloud Industry & Applied AI unifies it (msg-002)</li><li>Performance Industry & Applied AI is the category (category positioning)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Start your 14-day free trial (or &#x27;Schedule demo&#x27;)</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Google Search ad copy (4 variants): &#x27;Industry & Applied AI ROAS Measurement&#x27;, &#x27;Outcome-Based Industry & Applied AI Bidding&#x27;, etc.</li><li>LinkedIn Display: 1200x628 banner (3 creative variants)</li><li>Testimonial video: 30-sec customer success story (ROAS improvement)</li><li>Landing page: &#x27;Industry & Applied AI ROAS Calculator&#x27; (interactive tool showing ROAS potential)</li><li>Retargeting ad copy: &#x27;See Your Industry & Applied AI ROAS in 3 Minutes&#x27;</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Cost per lead (CPL): $15-$40</li><li>Conversion rate (lead to trial): 20-30%</li><li>Cost per trial signup: $75-$150</li><li>Trial-to-paid conversion: 25-40%</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Ongoing (optimize weekly; refresh creative every 2 weeks)</span>
+          <span><strong>Budget:</strong> $20K-$50K/month (Google Search + LinkedIn display + retargeting)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-social">
+
+      <div class="campaign-brief" id="cb-brief-004">
+        <div class="brief-header">
+          <h4>Community &amp; Engagement: Industry & Applied AI Performance Tips (Twitter/X + Instagram)</h4>
+          <span class="brief-channel">Social</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Build community; establish brand authority; drive top-of-funnel awareness</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>Performance marketers, growth leaders, marketing ops professionals</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Industry & Applied AI performance tips (weekly actionable advice) (all messaging themes)</li><li>Industry & Applied AI industry news + Google Cloud Industry & Applied AI hot takes (market context)</li><li>Measurement best practices (cross-channel attribution) (msg-002)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Follow for weekly Industry & Applied AI tips; visit [guide link]</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Social post templates (text + 1-2 visual variants, 15+ posts/month)</li><li>Infographic: &#x27;Industry & Applied AI ROAS Benchmarks by Industry&#x27; (shareable)</li><li>Twitter threads: &#x27;5 Industry & Applied AI Measurement Mistakes&#x27; (weekly)</li><li>Instagram stories: &#x27;Industry & Applied AI Trends This Week&#x27; (weekly)</li><li>Carousel posts: &#x27;Industry & Applied AI Buyer Personas&#x27; (3 posts)</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Follower growth: 10% MoM</li><li>Engagement rate: 2-4%</li><li>Click-through to website: 1-2%</li><li>Community sentiment (NPS-equivalent): 7+/10</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Ongoing (3-4x/week posts, weekly threads)</span>
+          <span><strong>Budget:</strong> $5K-$10K/month (community manager + design)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-thought_leadership">
+
+      <div class="campaign-brief" id="cb-brief-005">
+        <div class="brief-header">
+          <h4>Industry Reports &amp; Research: &#x27;State of Performance Industry & Applied AI 2026&#x27;</h4>
+          <span class="brief-channel">Thought Leadership</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Establish Google Cloud Industry & Applied AI as category thought leader; generate PR coverage; build credibility with influencers and analysts</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>CMO, VP Marketing, Chief Revenue Officer, industry analysts, journalists</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Performance Industry & Applied AI is a new category (Google Cloud Industry & Applied AI is defining it) (market category)</li><li>Measurement is the #1 blocker for Industry & Applied AI adoption (market data)</li><li>Privacy regulation is reshaping Industry & Applied AI strategy (msg-003)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Download the full report; share your feedback</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Research report (30-40 pages): &#x27;State of Performance Industry & Applied AI 2026&#x27; (data + insights)</li><li>Executive summary (2-page PDF)</li><li>Infographic: &#x27;Key Industry & Applied AI Performance Metrics 2026&#x27;</li><li>Press release: &#x27;Google Cloud Industry & Applied AI Report Reveals...&#x27;</li><li>Interview series: 3-5 customer case studies (video + written)</li><li>Webinar: &#x27;Unlocking Industry & Applied AI ROAS — Insights from 500+ Advertisers&#x27;</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Report downloads: 1,000+</li><li>PR mentions: 10+ publications</li><li>Analyst briefings: 3-5 key firms</li><li>Webinar attendance: 500-1,000</li><li>Social reach (report launch): 50K+ impressions</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> 6-month production cycle; launch + promotion over 3 months</span>
+          <span><strong>Budget:</strong> $30K-$50K (research, writing, design, PR distribution)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-webinars">
+
+      <div class="campaign-brief" id="cb-brief-006">
+        <div class="brief-header">
+          <h4>Webinar Series: &#x27;Industry & Applied AI ROAS Masterclass&#x27; (Monthly)</h4>
+          <span class="brief-channel">Webinars</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Nurture mid-funnel leads; position Google Cloud Industry & Applied AI as expert; drive demo conversions</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>VP Marketing, Head of Growth, performance marketers with Industry & Applied AI interest</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>How to measure Industry & Applied AI ROAS (foundations) (msg-002, msg-010)</li><li>Per-advertiser ML: compounding performance over time (msg-001, msg-011)</li><li>Privacy-first Industry & Applied AI strategy for 2026 (msg-003)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Sign up for next webinar; book a 1:1 walkthrough</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Webinar 1 slides: &#x27;Industry & Applied AI Measurement 101&#x27; (45 min)</li><li>Webinar 2 slides: &#x27;Per-Advertiser ML Explained&#x27; (45 min)</li><li>Webinar 3 slides: &#x27;Privacy-Resilient Industry & Applied AI Strategy&#x27; (45 min)</li><li>Webinar 4 slides: &#x27;Cross-Screen Attribution for Industry & Applied AI&#x27; (45 min)</li><li>Video: Google Cloud Industry & Applied AI product demo (10 min, embedded in slides)</li><li>Handout: &#x27;Industry & Applied AI ROAS Calculation Template&#x27; (spreadsheet)</li><li>Follow-up email sequence (3 emails post-webinar)</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Registrations: 200-400 per webinar</li><li>Attendance: 50-60% of registrations</li><li>Q&amp;A engagement: 10-15 questions</li><li>Post-webinar demo bookings: 10-20% of attendees</li><li>Content reuse: 1,000+ YouTube views per recording</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Ongoing (monthly; 4 webinars/year minimum)</span>
+          <span><strong>Budget:</strong> $8K-$15K per webinar (production, promotion, follow-up)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-analyst_relations">
+
+      <div class="campaign-brief" id="cb-brief-007">
+        <div class="brief-header">
+          <h4>Analyst Engagement: Gartner, Forrester, eMarketer Coverage</h4>
+          <span class="brief-channel">Analyst Relations</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Achieve analyst recognition; influence market opinion; build credibility with enterprise buyers</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>Gartner, Forrester, eMarketer analysts; CIO/CMO decision-makers relying on analyst reports</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Google Cloud Industry & Applied AI is defining the Performance Industry & Applied AI category (market_category)</li><li>Privacy-resilient Industry & Applied AI is the future (msg-003)</li><li>Outcome-based bidding is replacing reach curves (msg-002, msg-010)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Analyst briefing; custom research sponsorship</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Briefing deck: &#x27;Google Cloud Industry & Applied AI&#x27;s Industry & Applied AI Vision &amp; Category Definition&#x27; (20 slides)</li><li>Analyst fact sheet (2-page one-pager)</li><li>Executive bios (CEO, CMO, product leads)</li><li>Case study pack: 3-5 customer success stories (anonymized)</li><li>Thought piece: &#x27;The Future of Industry & Applied AI Attribution&#x27; (2-3 pages, bylined exec)</li><li>Research sponsorship proposal (custom Gartner/Forrester study)</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Analyst briefing meetings: 5-10 per quarter</li><li>Gartner Magic Quadrant / Forrester Wave inclusion: Goal for 2027</li><li>Analyst mentions in reports: 5+ mentions/year</li><li>Analyst-guided RFP wins: 2-4 per year</li><li>Media coverage amplified by analyst quotes: 10+ articles</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Ongoing (quarterly briefings; annual sponsorship cycle)</span>
+          <span><strong>Budget:</strong> $50K-$100K/year (research sponsorships, briefing prep)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-partner_marketing">
+
+      <div class="campaign-brief" id="cb-brief-008">
+        <div class="brief-header">
+          <h4>Agency Partnership Program Launch</h4>
+          <span class="brief-channel">Partner Marketing</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Recruit and enable performance agencies to resell/white-label Google Cloud Industry & Applied AI; build agency ecosystem</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>Performance agencies (AUM $50M-$1B+), marketing consultants, boutique agencies</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Differentiate with outcome-based Industry & Applied AI (vs commoditized TTD services) (msg-008)</li><li>New revenue stream: 2-3x margin on Industry & Applied AI services (msg-008)</li><li>White-label Google Cloud Industry & Applied AI + your client relationships = proprietary offering</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Apply to partner program; schedule partner kickoff</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Partner program deck: &#x27;Agency Opportunity Overview&#x27; (15 slides)</li><li>Agency playbook: &#x27;How to Sell Performance Industry & Applied AI to Your Clients&#x27; (20 pages)</li><li>White-label materials: Co-branded case studies, pitch decks, ROI calculator</li><li>Partner enablement: Sales training, product training, certification program</li><li>Joint GTM: Co-branded webinars, email campaigns, thought leadership</li><li>Deal registration program details (margin structure, co-sell opportunities)</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Partner applications: 20-30 per quarter</li><li>Partner onboarding: 8-12 agencies enrolled per year</li><li>Agency-sourced ARR: Target $500K-$2M by end of year 1</li><li>Partner satisfaction (NPS): 8+/10</li><li>Co-marketing campaigns executed: 4+ per year</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Q2 2026 launch; ongoing recruitment</span>
+          <span><strong>Budget:</strong> $20K-$40K (program setup, enablement materials, co-marketing fund)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-event_marketing">
+
+      <div class="campaign-brief" id="cb-brief-009">
+        <div class="brief-header">
+          <h4>Google Cloud Industry & Applied AI at Marketing Conferences: Ad Week, Tech Summit, etc.</h4>
+          <span class="brief-channel">Event Marketing</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Build brand awareness; generate qualified leads; network with influencers</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>CMO, VP Marketing, Head of Growth attending Adweek, MarTech Summit, SES, etc.</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>Industry & Applied AI is now measurable — shift to Performance Industry & Applied AI (msg-002, msg-010)</li><li>Google Cloud Industry & Applied AI is the category leader (market_category)</li><li>Come see the future of outcome-based Industry & Applied AI bidding (msg-004)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Visit booth; schedule a 1:1; attend our talk</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Booth design &amp; setup (10x10 or 10x20 at key conferences)</li><li>Demo station: Live Google Cloud Industry & Applied AI dashboard walkthrough</li><li>Conference talk: &#x27;5 Years of Industry & Applied AI Data: What We Learned&#x27; (45 min)</li><li>Booth collateral: Flyers, booth video, CTA signage</li><li>Lead capture: Badge scans, contact forms, lead magnet (guide or demo recording)</li><li>Post-event follow-up: Email sequence, targeted ads, sales outreach</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Booth traffic: 50-100 visitors per day</li><li>Lead capture rate: 30-50% of traffic</li><li>MQL conversion: 15-25%</li><li>Talk attendance: 100-200 people</li><li>Post-event SAL (sales-accepted lead) rate: 20-30%</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Q3-Q4 2026 (Adweek, MarTech Summit, SES)</span>
+          <span><strong>Budget:</strong> $15K-$30K per conference (booth, travel, materials, follow-up)</span>
+        </div>
+      </div>
+</div>
+<div class="brief-content" id="brief-sales_enablement">
+
+      <div class="campaign-brief" id="cb-brief-010">
+        <div class="brief-header">
+          <h4>Sales Battlecard &amp; Enablement Toolkit</h4>
+          <span class="brief-channel">Sales Enablement</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>Equip sales team to close faster; answer common objections; shorten sales cycle</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>Google Cloud Industry & Applied AI sales team (AE, SDR, sales engineers)</p>
+          </div>
+        </div>
+        <div class="brief-messages">
+          <h5>Key Messages</h5>
+          <ul><li>vs TTD: Outcome-based bidding vs reach curves (msg-002, msg-010)</li><li>vs MNTN: Per-advertiser ML vs templates (msg-001, msg-008)</li><li>Core elevator pitch: Industry & Applied AI ROAS is measurable (and compounding)</li></ul>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>Close the deal; move to trial/pilot</p>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Assets Needed</h5>
+            <ul><li>Master battlecard: &#x27;Google Cloud Industry & Applied AI vs Competition&#x27; (objection handling, proof points)</li><li>Persona playbooks: 4-5 buyer personas (Head of Growth, CMO, CFO, Agency, Media Buyer)</li><li>ROI calculator: Interactive tool showing Google Cloud Industry & Applied AI ROAS upside vs current state</li><li>Case study collection: 8-10 anonymized case studies (by industry, company size)</li><li>Pitch deck template: &#x27;Google Cloud Industry & Applied AI Product Walkthrough&#x27; (customizable per buyer)</li><li>Demo script: Live product demo walkthrough (10-15 min)</li><li>Pricing &amp; packaging guide: Clear positioning, packaging options, discount framework</li><li>Sales training: Kickoff call, weekly enablement updates, monthly AE coaching</li></ul>
+          </div>
+          <div class="brief-section">
+            <h5>KPIs</h5>
+            <ul><li>Sales cycle length: Reduce by 20-30% (vs baseline)</li><li>Win rate: Target 35-45% for SAL→closed</li><li>Average deal size: Target $50K-$200K ARR</li><li>Sales team utilization of enablement tools: 80%+ adoption</li><li>Objection handling success rate: 80%+ resolve on first call</li></ul>
+          </div>
+        </div>
+        <div class="brief-footer">
+          <span><strong>Timeline:</strong> Q2 2026 launch (initial toolkit); quarterly updates</span>
+          <span><strong>Budget:</strong> $15K-$25K initial; $5K/quarter ongoing updates</span>
+        </div>
+      </div>
+</div>
+
+  </div>
+
+  <div class="footer">
+    Positioning framework auto-generated from research/positioning/*.json — refreshed weekly with market intelligence and competitive signals.
+  </div>
+</div>
+
+<script>
+  // Section tab switching
+  const sectionTabs = document.querySelectorAll('.section-tab');
+  sectionTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const section = this.dataset.section;
+      document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.section-tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(section).classList.add('active');
+      this.classList.add('active');
+    });
+  });
+
+  // Framework tab switching
+  const frameworkTabs = document.querySelectorAll('.framework-tab');
+  frameworkTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const panel = this.dataset.panel;
+      document.querySelectorAll('.framework-panel').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.framework-tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(panel).classList.add('active');
+      this.classList.add('active');
+    });
+  });
+
+  // Messaging filter logic
+  function initMessagingFilters() {
+    const messagingCards = document.querySelectorAll('.messaging-card');
+    const themeFilters = document.getElementById('themeFilters');
+    const channelFilters = document.getElementById('channelFilters');
+
+    // Collect unique themes and channels
+    const themes = new Set();
+    const channels = new Set();
+
+    messagingCards.forEach(card => {
+      const cardThemes = card.dataset.themes ? card.dataset.themes.split(',') : [];
+      const cardChannels = card.dataset.channels ? card.dataset.channels.split(',') : [];
+      cardThemes.forEach(t => themes.add(t.trim()));
+      cardChannels.forEach(c => channels.add(c.trim()));
+    });
+
+    // Populate theme filters
+    themes.forEach(theme => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.textContent = theme;
+      chip.dataset.filter = 'theme';
+      chip.dataset.value = theme;
+      chip.addEventListener('click', applyFilters);
+      themeFilters.appendChild(chip);
+    });
+
+    // Populate channel filters
+    channels.forEach(channel => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.textContent = channel;
+      chip.dataset.filter = 'channel';
+      chip.dataset.value = channel;
+      chip.addEventListener('click', applyFilters);
+      channelFilters.appendChild(chip);
+    });
+  }
+
+  function applyFilters(evt) {
+    // Toggle the clicked chip's active state
+    if (evt && evt.currentTarget) {
+      evt.currentTarget.classList.toggle('active');
+    }
+
+    const activeThemes = Array.from(document.querySelectorAll('.chip[data-filter="theme"].active')).map(c => c.dataset.value);
+    const activeChannels = Array.from(document.querySelectorAll('.chip[data-filter="channel"].active')).map(c => c.dataset.value);
+
+    const messagingCards = document.querySelectorAll('.messaging-card');
+    messagingCards.forEach(card => {
+      const cardThemes = card.dataset.themes ? card.dataset.themes.split(',').map(t => t.trim()) : [];
+      const cardChannels = card.dataset.channels ? card.dataset.channels.split(',').map(c => c.trim()) : [];
+
+      const matchesTheme = activeThemes.length === 0 || activeThemes.some(t => cardThemes.includes(t));
+      const matchesChannel = activeChannels.length === 0 || activeChannels.some(c => cardChannels.includes(c));
+
+      card.style.display = (matchesTheme && matchesChannel) ? '' : 'none';
+    });
+  }
+
+  // Channel navigation for campaign briefs
+  const channelBtns = document.querySelectorAll('.channel-btn');
+  channelBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const channel = this.dataset.channel;
+      document.querySelectorAll('.brief-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.channel-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('brief-' + channel).classList.add('active');
+      this.classList.add('active');
+    });
+  });
+
+  // Initialize on page load
+  (function() {
+    initMessagingFilters();
+    // Auto-select first channel brief if available
+    const firstChannelBtn = document.querySelector('.channel-btn');
+    if (firstChannelBtn) {
+      firstChannelBtn.click();
+    }
+  })();
+</script>
+
+<!-- Deliverables Section -->
+<div style="max-width:1400px; margin:0 auto; padding:64px 20px 80px;">
+  <div style="border-top:1px solid var(--border); padding-top:48px;">
+    <h2 style="font-family:'Playfair Display',serif; font-size:1.8em; font-weight:600; margin-bottom:8px;">Positioning Deliverables</h2>
+    <p style="color:var(--text-secondary); font-size:1rem; margin-bottom:32px;">Three outputs built from the positioning framework above — ready for sales, marketing, and product.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:20px;">
+      <a href="https://danetomalin.com/googleAI-narrative" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='#4285F4'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor=''; this.style.transform='';">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(66,133,244,0.15); display:flex; align-items:center; justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.2em; font-weight:600; color:var(--text-primary);">Sales Narrative</h3>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.55; margin-bottom:16px;">A structured pitch deck that leads with the problem and the change in the world — not features. Scrollable narrative arc from Old World to New Way.</p>
+        <span style="font-size:0.85rem; color:#4285F4; font-weight:600;">View Narrative &rarr;</span>
+      </a>
+      <a href="https://danetomalin.com/googleAI-messaging" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='#7C5CFC'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor=''; this.style.transform='';">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(124,92,252,0.15); display:flex; align-items:center; justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.2em; font-weight:600; color:var(--text-primary);">Messaging Guide</h3>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.55; margin-bottom:16px;">A marketing team reference for writing website copy, ads, and content that resonates. 12 themes, channel playbook, competitive cheat sheet, and sample copy.</p>
+        <span style="font-size:0.85rem; color:#7C5CFC; font-weight:600;">View Guide &rarr;</span>
+      </a>
+      <a href="https://danetomalin.com/googleAI-roadmap-alignment" style="display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='#4F8CFF'; this.style.transform='translateY(-3px)';" onmouseout="this.style.borderColor=''; this.style.transform='';">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:rgba(79,140,255,0.15); display:flex; align-items:center; justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:1.2em; font-weight:600; color:var(--text-primary);">Roadmap Alignment</h3>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.55; margin-bottom:16px;">Maps positioning to feature priorities — what to build, investigate, defer, and kill. Competitive gap analysis and account segment product needs.</p>
+        <span style="font-size:0.85rem; color:#4F8CFF; font-weight:600;">View Alignment &rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

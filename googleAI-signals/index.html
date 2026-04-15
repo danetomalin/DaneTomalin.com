@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Cloud Industry & Applied AI Signal Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #4285F4;
+    --accent-strong: #1A73E8;
+    --accent-bg: rgba(66, 133, 244, 0.12);
+    --bullish: #66BB6A;
+    --bullish-bg: rgba(102, 187, 106, 0.12);
+    --bearish: #EF5350;
+    --bearish-bg: rgba(239, 83, 80, 0.12);
+    --neutral: #FFA726;
+    --neutral-bg: rgba(255, 167, 38, 0.12);
+    --high-impact: #FFA726;
+    --high-impact-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Site header — sticky top bar matching CI Dossier */
+  .site-header {
+    position: sticky; top: 0;
+    background: rgba(13,13,18,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 200;
+  }
+  .site-header-name {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+    color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Header — matches CI Dossier */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Trend Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card.clickable { cursor: pointer; user-select: none; }
+  .scorecard-card.clickable:hover { transform: translateY(-1px); }
+  .scorecard-card.active-filter { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+  .scorecard-card[data-scorecard="bullish"].active-filter { border-color: var(--bullish); box-shadow: 0 0 0 2px var(--bullish-bg); }
+  .scorecard-card[data-scorecard="bearish"].active-filter { border-color: var(--bearish); box-shadow: 0 0 0 2px var(--bearish-bg); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-bullish { border-left: 3px solid var(--bullish); }
+  .scorecard-card.overall-bearish { border-left: 3px solid var(--bearish); }
+  .scorecard-card.overall-neutral { border-left: 3px solid var(--neutral); }
+
+  /* Sentiment Badge */
+  .sentiment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .sentiment-badge.bullish { background: var(--bullish-bg); color: var(--bullish); }
+  .sentiment-badge.bearish { background: var(--bearish-bg); color: var(--bearish); }
+  .sentiment-badge.neutral { background: var(--neutral-bg); color: var(--neutral); }
+  .sentiment-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Pillar Sections */
+  .pillar-section {
+    margin-bottom: 32px;
+  }
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .pillar-icon.velocity { background: rgba(66,133,244,0.15); color: var(--accent); }
+  .pillar-icon.inventory { background: rgba(26,115,232,0.15); color: var(--accent-strong); }
+  .pillar-icon.regulatory { background: rgba(255,167,38,0.15); color: var(--neutral); }
+  .pillar-icon.competitive { background: rgba(66,133,244,0.15); color: var(--accent); }
+  .pillar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .pillar-header .count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Signal Cards */
+  .signal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .signal-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .signal-card.high-impact {
+    border-left: 3px solid var(--high-impact);
+    background: var(--high-impact-bg);
+  }
+  .signal-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .signal-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+  }
+  .impact-badge .bar-track {
+    width: 40px; height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .impact-badge .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .signal-card .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .signal-card .commentary {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .signal-card .commentary .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .signal-card .commentary p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .signal-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state p { font-size: 15px; }
+
+  /* Footer */
+  .engine-footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .engine-footer a { color: var(--accent); text-decoration: none; }
+  .engine-footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .engine-header h1 { font-size: 1.6em; }
+    .scorecard { grid-template-columns: 1fr 1fr; }
+    .filter-bar { flex-direction: column; }
+    .search-input { min-width: unset; width: 100%; }
+    .signal-card .card-top { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+  <a href="https://danetomalin.com/googleAI/" class="site-header-back">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+    Back to Google AI Portfolio
+  </a>
+</header>
+
+<header class="engine-header">
+  <h1>Google Cloud Industry & Applied AI Signal Engine <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Generated: <span id="dossier-date">April 15, 2026</span></p>
+  <span class="classification">Internal Only</span>
+  <div class="meta">
+    <span>24 signals</span>
+    <span>13 high-impact</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Trend Scorecard -->
+  <div class="scorecard" id="scorecard">
+    
+    <div class="scorecard-card overall-bullish clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Overall Sentiment</div>
+      <div class="value" style="color:var(--bullish)">BEARISH</div>
+      <div class="detail">Enterprise vertical AI adoption accelerating across healthcare and consumer experiences, with foundation models becoming increasingly specialized and competitive positioning fragmenting across cloud vendors.</div>
+    </div>
+    <div class="scorecard-card clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Total Signals</div>
+      <div class="value" style="color:var(--accent)">24</div>
+      <div class="detail">13 high-impact (score 8+)</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bullish" onclick="filterFromScorecard('bullish')" title="Click to filter bullish signals">
+      <div class="label">Bullish Signals</div>
+      <div class="value" style="color:var(--bullish)">6</div>
+      <div class="detail">Trends accelerating vertical AI adoption</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bearish" onclick="filterFromScorecard('bearish')" title="Click to filter bearish signals">
+      <div class="label">Bearish Signals</div>
+      <div class="value" style="color:var(--bearish)">15</div>
+      <div class="detail">Emerging risks to address in positioning</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Pillar</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterSignals('all', this)">All</button>
+    <button class="filter-btn" data-filter="vertical_adoption_velocity" onclick="filterSignals('vertical_adoption_velocity', this)">Adoption Velocity</button>
+    <button class="filter-btn" data-filter="foundation_model_landscape" onclick="filterSignals('foundation_model_landscape', this)">Foundation Models</button>
+    <button class="filter-btn" data-filter="trust_and_regulation" onclick="filterSignals('trust_and_regulation', this)">Trust & Regulation</button>
+    <button class="filter-btn" data-filter="competitive_positioning" onclick="filterSignals('competitive_positioning', this)">Competitive</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Sentiment</span>
+    <button class="filter-btn" data-sentiment="bullish" onclick="filterSentiment('bullish', this)">Bullish</button>
+    <button class="filter-btn" data-sentiment="bearish" onclick="filterSentiment('bearish', this)">Bearish</button>
+    <div class="filter-separator"></div>
+    <input type="text" class="search-input" placeholder="Search signals..." oninput="searchSignals(this.value)" id="search-box">
+  </div>
+
+  <!-- Signal Content -->
+  <div id="dossier-content">
+    <div class="pillar-section" data-pillar-section="vertical_adoption_velocity">
+      <div class="pillar-header">
+        <div class="pillar-icon velocity">↑</div>
+        <h2>Vertical AI Adoption Velocity</h2>
+        <span class="count">6 signals</span>
+      </div>
+
+    <div class="signal-card high-impact" data-pillar="vertical_adoption_velocity" data-sentiment="bullish" data-score="8">
+      <div class="card-top">
+        <h3>Healthcare Agentic AI moves from pilots to operational deployment at scale<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">HIMSS 2026 confirmed the shift from AI experimentation to enterprise-scale execution. 77% of healthcare orgs investing in agentic AI; two-thirds planning or actively deploying custom agents within 12 months. Abridge (clinical conversations), Epic (Agent Factory EHR native), and FinThrive (financial workflows) leading deployments with proven ROI (FinThrive customers recovering ~$1M in 3 months).</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>This signals the transition from healthcare&#x27;s &#x27;pilot graveyard&#x27; to real operational adoption. Google Cloud&#x27;s AI capabilities across conversational AI, workflow orchestration, and data pipelines directly enable these use cases. The franchise opportunity: position Google as the &#x27;agentic infrastructure layer&#x27; for healthcare orgs scaling from 1-2 pilots to enterprise-wide deployment. Early win case studies from HIMSS announcements prove ROI—critical for closing budget cycles.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare</span><span class="tag">agentic-ai</span><span class="tag">enterprise-scale</span><span class="tag">ehr-integration</span><span class="tag">financial-workflows</span><span class="tag">roi-proven</span>
+        <span style="flex:1"></span>
+        <a href="https://www.digitalhealthnews.com/himss26-highlights-shift-toward-agentic-ai-across-healthcare-it-workflows" class="source-link" target="_blank" rel="noopener">digitalhealthnews.com &#x2197;</a><a href="https://www.capsahealthcare.com/blog/health-it/from-ai-hype-to-ai-operations-himss-2026-takeaways/" class="source-link" target="_blank" rel="noopener">capsahealthcare.com &#x2197;</a><a href="https://www.productiveedge.com/blog/himss-2026-recap-ai-gets-real-in-healthcare" class="source-link" target="_blank" rel="noopener">productiveedge.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="vertical_adoption_velocity" data-sentiment="bullish" data-score="7">
+      <div class="card-top">
+        <h3>Healthcare diagnostics AI market projected to hit $8.1B by 2032 (22% CAGR)</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Clinical diagnostics now accounts for 52% of all healthcare AI investment. Funded startups (PathAI, Aidoc, Paige AI) addressing radiology, pathology, and urgent case prioritization. Q1 2026 saw $5.34B invested in digital health across 105 deals, with AI-driven companies representing 75% of all health tech funding. Series B rounds alone account for 60% of AI transactions.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud&#x27;s competitive advantage in medical imaging AI (Vertex AI Vision, trained models for pathology/radiology) positions the franchise to capture market share as diagnostic AI transitions from startups to enterprise adoption. The signal: healthcare systems are no longer asking &#x27;should we adopt diagnostic AI?&#x27; but &#x27;which vendor integrates with our EHR and imaging infrastructure?&#x27; Google&#x27;s vertical healthcare expertise (APIs, compliance, cloud security) can differentiate against pure-play startups losing engineering velocity post-Series B.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare</span><span class="tag">diagnostics</span><span class="tag">medical-imaging</span><span class="tag">ai-market-growth</span><span class="tag">pathology</span><span class="tag">radiology</span>
+        <span style="flex:1"></span>
+        <a href="https://www.galengrowth.com/the-american-powerplay-u-s-digital-health-funding-in-q1-2026/" class="source-link" target="_blank" rel="noopener">galengrowth.com &#x2197;</a><a href="https://americanhealthcareleader.com/2026/top-picks-10-ai-driven-diagnostics-transforming-american-healthcare" class="source-link" target="_blank" rel="noopener">americanhealthcareleader.com &#x2197;</a><a href="https://www.mobihealthnews.com/news/ai-focused-deals-now-make-75-health-tech-funding-jp-morgan-finds" class="source-link" target="_blank" rel="noopener">mobihealthnews.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="vertical_adoption_velocity" data-sentiment="bullish" data-score="8">
+      <div class="card-top">
+        <h3>Retail inventory/demand forecasting crosses 28% of AI spend; 97% planning increases<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Inventory and demand forecasting now represents 28.3% of global AI retail market share ($19.9B market by 2026). 97% of retailers planning to increase AI spend in next fiscal year. Gartner names Impact Analytics in 2026 Market Guides for Forecasting/Allocation/Replenishment. Retailers replacing spreadsheet-based planning with unified AI platforms; retail leaders (Walmart, Lowe&#x27;s, Best Buy) deploying micro-segmentation and predictive restocking.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>This is Google Cloud&#x27;s highest-ROI vertical opportunity in retail. Demand forecasting drives direct margin recovery (reduced out-of-stocks, overstock, markdown waste). BigQuery + Vertex AI for demand modeling + supply chain APIs position Google to become the &#x27;default forecasting platform&#x27; for mid-market and enterprise retail. The signal: 97% spending increases + proven Gartner recognition = sealed budgets. Google should accelerate retail-specific solutions (inventory templates, supply chain connectors) to capture market consolidation now.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">retail</span><span class="tag">demand-forecasting</span><span class="tag">inventory-optimization</span><span class="tag">supply-chain</span><span class="tag">margin-recovery</span><span class="tag">ces-2026</span>
+        <span style="flex:1"></span>
+        <a href="https://www.globenewswire.com/news-release/2026/03/24/3261050/0/en/Impact-Analytics-Named-in-the-2026-Gartner-Market-Guides-for-Retail-Forecasting-Allocation-and-Replenishment-Solutions.html" class="source-link" target="_blank" rel="noopener">globenewswire.com &#x2197;</a><a href="https://www.ringly.io/blog/ai-in-retail-statistics-2026" class="source-link" target="_blank" rel="noopener">ringly.io &#x2197;</a><a href="https://maritime-executive.com/features/retailers-turn-to-ai-for-precision-forecasting-amid-supply-chain-challenges" class="source-link" target="_blank" rel="noopener">maritime-executive.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="vertical_adoption_velocity" data-sentiment="neutral" data-score="6">
+      <div class="card-top">
+        <h3>Automotive robotaxi AI funding surge: Wayve $8.6B, Waymo targeting $110B valuation</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          &#x25C6; neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Wayve secured $1.2B Series D (Feb 2026) at $8.6B valuation, backed by Microsoft, NVIDIA, Uber. Waymo in fundraising discussions targeting $110B+ valuation (2.4x previous round). QCraft raised $100M Series D (March 2026). Uber committing multi-year deployment capital for Wayve robotaxis; Zoox launching Uber-integrated driverless service in Las Vegas summer 2026, LA expansion 2027.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Autonomous vehicle funding is moving beyond R&amp;D to deployment capital. Wayve&#x27;s $8.6B + Waymo&#x27;s $110B signals consolidation around two platforms competing for rideshare integration. Google&#x27;s position: Waymo equity + Vertex AI for training autonomous models. Threat: if Wayve (NVIDIA-backed, multi-cloud strategy) becomes the chosen platform for global robotaxi, Google&#x27;s stake in Waymo weakens unless Google accelerates Vertex for AV training/simulation. Opportunity: position Google Cloud as the &#x27;training + data management&#x27; layer for AV fleets post-deployment.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">automotive</span><span class="tag">autonomous-vehicles</span><span class="tag">robotaxi</span><span class="tag">funding-mega-round</span><span class="tag">deployment-stage</span>
+        <span style="flex:1"></span>
+        <a href="https://wayve.ai/press/series-d/" class="source-link" target="_blank" rel="noopener">wayve.ai &#x2197;</a><a href="https://www.cbtnews.com/autonomy-and-ai-dominate-ces-2026" class="source-link" target="_blank" rel="noopener">cbtnews.com &#x2197;</a><a href="https://autovista24.autovistagroup.com/news/the-automotive-update-carmakers-accelerate-ai-applications-at-ces-2026/" class="source-link" target="_blank" rel="noopener">autovista24.autovistagroup.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="vertical_adoption_velocity" data-sentiment="bullish" data-score="6">
+      <div class="card-top">
+        <h3>Restaurant AI adoption crossing 40% with 82% of chains planning 2026 spend increases</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">38.75% of restaurant executives actively investing in AI/ML; 48% plan adoption soon. 82% of restaurant leaders invested in AI customer service in past 12 months; 87% plan additional 2026 investment. 73% expect to increase AI spend in next fiscal year. Food delivery market hit $284.7B (2026), growing to $468.5B by 2031 (10.47% CAGR). AI routing systems cutting delivery times by 30%.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Restaurant AI adoption is still emerging (40% vs. 88% in other verticals), but budget acceleration (87% planning 2026 spend) signals this is entering &#x27;growth phase.&#x27; Google Cloud can differentiate with vertical stack: customer engagement AI (recommendation, personalization), supply chain optimization (kitchen workflow, delivery routing via Maps API), and payment/loyalty integrations. The opportunity: become the &#x27;restaurant operating system&#x27; via partnerships with POS vendors (Toast, Square) and delivery platforms. Market is fragmented and ready for consolidation.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">restaurants</span><span class="tag">food-delivery</span><span class="tag">customer-engagement</span><span class="tag">supply-chain</span><span class="tag">emerging-adoption</span>
+        <span style="flex:1"></span>
+        <a href="https://restauranttechnologynews.com/2026/02/research-69-of-restaurants-are-adopting-ai-while-81-increase-digital-marketing-investment/" class="source-link" target="_blank" rel="noopener">restauranttechnologynews.com &#x2197;</a><a href="https://www.qsrweb.com/articles/why-2026-is-the-year-of-the-ai-driven-restaurant/" class="source-link" target="_blank" rel="noopener">qsrweb.com &#x2197;</a><a href="https://www.techryde.com/blog/food-delivery-statistics-2026/" class="source-link" target="_blank" rel="noopener">techryde.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="vertical_adoption_velocity" data-sentiment="bullish" data-score="7">
+      <div class="card-top">
+        <h3>CES 2026 retail theme: agentic AI moves from concept to in-store deployment reality</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Retailers (Walmart, Lowe&#x27;s, Amazon, IKEA, Instacart, Best Buy) showcased agentic AI solutions at CES 2026 for personalization, discovery, inventory, and checkout. Industry officially entered &#x27;Outcomes Era&#x27;—AI must deliver measurable financial impact. Micro-strategies offering real-time dynamic pricing, personalized recommendations, and predictive restocking. 62% of retailers now experimenting with AI agents.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Agentic AI in retail is the franchise&#x27;s &#x27;next wave&#x27; after demand forecasting. CES 2026 signals are clear: competitive retailers will expect Google Cloud to deliver agent builders (no-code + custom), unified customer/product data graphs, and real-time decision APIs. Google&#x27;s Vertex Agent Builder + BigQuery can compete, but execution matters. The signal: retailers want agents that integrate with existing POS, loyalty, and e-commerce systems—not greenfield builds. Google should accelerate retail partnerships to prove agent ROI before Anthropic/OpenAI+vendors cement alternative positions.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">retail</span><span class="tag">agentic-ai</span><span class="tag">customer-experience</span><span class="tag">personalization</span><span class="tag">ces-2026</span><span class="tag">dynamic-pricing</span>
+        <span style="flex:1"></span>
+        <a href="https://www.ces.tech/press-releases/retailers-gather-at-ces-2026-to-discover-innovations-shaping-consumer-behavior" class="source-link" target="_blank" rel="noopener">ces.tech &#x2197;</a><a href="https://agilebrandguide.com/overheard-at-ces-2026-the-shift-from-ai-hype-to-accountability-and-the-outcomes-era/" class="source-link" target="_blank" rel="noopener">agilebrandguide.com &#x2197;</a><a href="https://www.gladly.ai/blog/ai-in-retail-industry/" class="source-link" target="_blank" rel="noopener">gladly.ai &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="pillar-section" data-pillar-section="foundation_model_landscape">
+      <div class="pillar-header">
+        <div class="pillar-icon inventory">▦</div>
+        <h2>Foundation Model & Platform Race</h2>
+        <span class="count">6 signals</span>
+      </div>
+
+    <div class="signal-card high-impact" data-pillar="foundation_model_landscape" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>Claude Opus 4.6 Shatters Coding Leaderboard with 1561 Elo — Vertical Specialization Fractures Monolithic Model Strategy<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Anthropic&#x27;s Claude Opus 4.6 Thinking achieved a historic 1561 Elo on LMSYS Coding Leaderboard as of April 2026, the first model to exceed 1500 Elo. LMSYS now publishes separate General and Coding arenas, signaling that frontier capabilities have vertically specialized — generalist models no longer dominate all tasks equally.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>For Google&#x27;s Industry &amp; Applied AI, this signals a critical shift: healthcare and consumer experience workflows will benefit from specialized reasoning engines. Gemini&#x27;s strength in multimodal scaling and context-window depth may not suffice for complex medical diagnostics or clinical decision support requiring narrow, deep expertise. Google should prioritize fine-tuned vertical models and mixture-of-experts architectures that combine Gemini&#x27;s multi-modal foundation with domain-specific reasoning layers.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">model-specialization</span><span class="tag">competitive-threat</span><span class="tag">coding-capability</span><span class="tag">leaderboard-shift</span>
+        <span style="flex:1"></span>
+        <a href="https://aidevdayindia.org/blogs/lmsys-chatbot-arena-high-elo-rankings/lmsys-chatbot-arena-high-elo-rankings.html" class="source-link" target="_blank" rel="noopener">aidevdayindia.org &#x2197;</a><a href="https://aidevdayindia.org/blogs/lmsys-chatbot-arena-current-rankings/live-ai-leaderboard-2026.html" class="source-link" target="_blank" rel="noopener">aidevdayindia.org &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="foundation_model_landscape" data-sentiment="bearish" data-score="8">
+      <div class="card-top">
+        <h3>OpenAI ChatGPT Health + Healthcare Platform Targets 230M Weekly Health Queries — Consumer Adjacency Threatens Google&#x27;s Industry AI Narrative<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">OpenAI launched ChatGPT Health with HIPAA-compliant enterprise product (OpenAI for Healthcare) in January 2026, powered by GPT-5 and backed by physician-led clinical testing. The company validated 230M weekly health/wellness questions globally and partnered with b.well, Abridge, Ambience, and EliseAI. Enterprise healthcare deals offer 25–40% discounts for volume commitments with data isolation and IP ownership guarantees.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>OpenAI&#x27;s rapid healthcare verticalization with clinical validation and integrated patient-portal partnerships positions it as the default choice for health systems buying foundation models. Google&#x27;s HIMSS announcements (CVS Health, Humana, Quest Diagnostics) are agentic orchestration plays, not foundation model plays. Google must either acquire or rapidly certify Gemini through clinical benchmarks (USMLE, MIMIC-III, RadImageNet) to compete on parity, or reframe Gemini as a platform layer, not the primary model.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare-market</span><span class="tag">competitive-threat</span><span class="tag">clinical-validation</span><span class="tag">enterprise-pricing</span>
+        <span style="flex:1"></span>
+        <a href="https://fortune.com/2026/01/07/openai-launches-chatgpt-health-in-a-push-to-become-a-hub-for-personal-health-data/" class="source-link" target="_blank" rel="noopener">fortune.com &#x2197;</a><a href="https://openai.com/index/openai-for-healthcare/" class="source-link" target="_blank" rel="noopener">openai.com &#x2197;</a><a href="https://www.finout.io/blog/openai-pricing-in-2026" class="source-link" target="_blank" rel="noopener">finout.io &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="foundation_model_landscape" data-sentiment="bearish" data-score="8">
+      <div class="card-top">
+        <h3>Anthropic Azure Partnership Reaches Microsoft 365 Tenant Boundary — Data Residency Becomes Competitive Moat<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Anthropic became a Microsoft sub-processor in January 2026 under a $30B Azure compute agreement (announced Nov 2025). Claude now runs inside M365 tenants with Microsoft Data Protection framework guarantees. Anthropic implemented EU data residency (Europe region inference), negotiable custom retention periods, and Zero Data Retention (ZDR) options for enterprise. Geographic expansion to India planned.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Anthropic&#x27;s native integration into Azure and Microsoft&#x27;s data governance framework creates a structural advantage for regulated industries (healthcare, finance) where data residency is non-negotiable. Google&#x27;s cloud-agnostic Gemini APIs lack this tenant-boundary protection. For healthcare and government, this is a deal-closing advantage. Google must accelerate Vertex AI native governance controls and position Gemini as cross-cloud, not cloud-specific.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">data-residency</span><span class="tag">enterprise-security</span><span class="tag">cloud-integration</span><span class="tag">competitive-moat</span>
+        <span style="flex:1"></span>
+        <a href="https://idm.net.au/article/0015519-claude-now-inside-your-m365-tenant-mind-data-residency-gap" class="source-link" target="_blank" rel="noopener">idm.net.au &#x2197;</a><a href="https://platform.claude.com/docs/en/build-with-claude/data-residency" class="source-link" target="_blank" rel="noopener">platform.claude.com &#x2197;</a><a href="https://learn.microsoft.com/en-us/copilot/microsoft-365/connect-to-ai-subprocessor" class="source-link" target="_blank" rel="noopener">learn.microsoft.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="foundation_model_landscape" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>Open-Source Models Close Proprietary Gap — Llama 3.3 5-14x Cheaper at Parity Quality, Enterprise Specialization Accelerates</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Meta&#x27;s Llama 3 models now achieve 88.5% parity with GPT-4o/Claude 3.5 Sonnet on MMLU. Llama 3.3 70B costs 5–14x less than GPT-4o API (depending on input/output ratio), with self-hosted deployments reaching 20–25x savings. Fine-tuning with LoRA enables specialized task performance exceeding proprietary baselines. AT&amp;T, banking, telecom now power production workloads on Llama for data sovereignty.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Open-source vertical specialization via fine-tuning threatens Gemini&#x27;s pricing power in cost-sensitive verticals (consumer health engagement, call-center AI). Healthcare and consumer experience teams will evaluate fine-tuned Llama for commodity tasks (triage, FAQ automation) and reserve Gemini for multi-modal reasoning. Google should position Gemini as the premium reasoning + scale layer, not the cost leader. Vertex AI fine-tuning tools must match Llama API UX and cost efficiency to retain mid-market.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">open-source-threat</span><span class="tag">cost-competition</span><span class="tag">fine-tuning</span><span class="tag">vertical-specialization</span>
+        <span style="flex:1"></span>
+        <a href="https://blog.premai.io/llama-vs-mistral-vs-phi-complete-open-source-llm-comparison-for-enterprise-2026/" class="source-link" target="_blank" rel="noopener">blog.premai.io &#x2197;</a><a href="https://llama.developer.meta.com/docs/features/fine-tuning/" class="source-link" target="_blank" rel="noopener">llama.developer.meta.com &#x2197;</a><a href="https://thinkpeak.ai/fine-tuning-llama-3-2026-guide/" class="source-link" target="_blank" rel="noopener">thinkpeak.ai &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="foundation_model_landscape" data-sentiment="neutral" data-score="7">
+      <div class="card-top">
+        <h3>Gemini vs GPT-5.4 Model Routing Strategy Emerges — Cost-Performance Trade-Off Forces Enterprise Multi-Model Architecture</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          &#x25C6; neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Industry consensus has shifted from single-model to model-routing: GPT-5.4 for deep reasoning/agentic behavior; Gemini 3.1 Pro for scale, context, and rich media. Pricing: Gemini ~$2.00/$12 per 1M tokens; GPT-5.4 ~$1.75/$14. Azure and AWS Bedrock now bundle both via platform pricing. For enterprises processing 10–50M tokens monthly, model routing saves 15–25% over single-model dependency. Hidden data egress costs add 10–20%.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Model routing is a positive signal for Gemini (validates multimodal/context strengths) but reveals Gemini cannot anchor enterprise strategy alone. Healthcare requires both Gemini&#x27;s context depth (patient charts, imaging) and GPT-like reasoning (clinical decisions). Google should position Vertex AI as a model-agnostic orchestration layer: Gemini + best-of-breed reasoning models (Claude, fine-tuned Llama) bundled under one governance/cost framework. Reframe as Industry &amp; Applied AI platform, not Gemini monopoly.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">model-routing</span><span class="tag">cost-optimization</span><span class="tag">multi-model-strategy</span><span class="tag">platform-consolidation</span>
+        <span style="flex:1"></span>
+        <a href="https://medium.com/@sanjeevpatel3007/gpt-5-4-vs-gemini-3-1-pro-cc66acb98f5e" class="source-link" target="_blank" rel="noopener">medium.com &#x2197;</a><a href="https://www.finout.io/blog/bedrock-vs.-vertex-vs.-azure-cognitive-a-finops-comparison-for-ai-spend" class="source-link" target="_blank" rel="noopener">finout.io &#x2197;</a><a href="https://www.index.dev/skill-vs-skill/ai-aws-bedrock-vs-azure-ai-vs-vertex" class="source-link" target="_blank" rel="noopener">index.dev &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="foundation_model_landscape" data-sentiment="bullish" data-score="8">
+      <div class="card-top">
+        <h3>Enterprise Multi-Model Adoption Baseline Reaches 68% — Generalist Models Declining as Vertical Specialization Accelerates<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">A January 2026 survey of 200 enterprise AI leaders found 68% use at least three foundation models concurrently, 54% plan model-agnostic platform adoption within 18 months. Generalist model dominance is declining; platforms (orchestration, fine-tuning, governance) are the faster-growing revenue stream (45% CAGR vs 40% for model revenue alone). Cloud platforms (AWS Bedrock, Vertex AI, Azure) competing on platform breadth and unified governance, not single-model performance.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>This is a structural opportunity for Google. Enterprises are saturated on model choice and desperate for platform-level orchestration, governance, and cost controls. Vertex AI should position as the multi-model, unified governance platform for Industry &amp; Applied AI. Lead with healthcare&#x27;s data governance needs (HIPAA, HITRUST, data residency), consumer AI&#x27;s cost optimization (routing), and developer experience (model-agnostic SDKs). Commoditize model selection; win on platform.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">platform-strategy</span><span class="tag">enterprise-trend</span><span class="tag">governance-priority</span><span class="tag">market-consolidation</span>
+        <span style="flex:1"></span>
+        <a href="https://claude5.com/news/enterprise-ai-adoption-2026-how-businesses-deploy-claude-gpt" class="source-link" target="_blank" rel="noopener">claude5.com &#x2197;</a><a href="https://intuitionlabs.ai/articles/claude-vs-chatgpt-vs-copilot-gemini-enterprise-comparison" class="source-link" target="_blank" rel="noopener">intuitionlabs.ai &#x2197;</a><a href="https://www.openpr.com/news/4469250/generative-ai-foundational-models-and-platforms-market" class="source-link" target="_blank" rel="noopener">openpr.com &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="pillar-section" data-pillar-section="trust_and_regulation">
+      <div class="pillar-header">
+        <div class="pillar-icon regulatory">⚠</div>
+        <h2>Trust, Regulation & Industry Compliance</h2>
+        <span class="count">6 signals</span>
+      </div>
+
+    <div class="signal-card high-impact" data-pillar="trust_and_regulation" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>OCR AI Enforcement Surge: 340% Rise in Actions Targeting HIPAA AI Violations<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">The HHS Office for Civil Rights (OCR) has dramatically escalated enforcement against AI systems processing protected health information (PHI). Enforcement actions targeting AI violations have risen 340%, signaling aggressive compliance monitoring. OCR is finalizing Q1 2026 comprehensive AI-specific HIPAA guidance including mandatory AI Impact Assessments before deployment, annual third-party audits for high-risk AI applications, and strict training data governance rules for PHI usage in model development.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud Healthcare AI solutions must implement built-in compliance controls for AI Impact Assessments and automated audit logging to reduce buyer risk. Buyers now face material enforcement risk if deploying AI on unmonitored PHI—Google&#x27;s compliance-first architecture and managed audit capabilities become a critical decision factor in regulated healthcare settings.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">hipaa</span><span class="tag">ai-enforcement</span><span class="tag">healthcare-compliance</span><span class="tag">regulatory-risk</span>
+        <span style="flex:1"></span>
+        <a href="https://www.hipaajournal.com/when-ai-technology-and-hipaa-collide/" class="source-link" target="_blank" rel="noopener">hipaajournal.com &#x2197;</a><a href="https://www.dataprotectionreport.com/2026/04/navigating-ai-compliance-with-hipaa-essentials/" class="source-link" target="_blank" rel="noopener">dataprotectionreport.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="trust_and_regulation" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>EU AI Act High-Risk Enforcement Goes Live August 2026: 78% of Enterprises Unprepared<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">The EU AI Act&#x27;s high-risk AI enforcement takes effect August 2, 2026, with penalties up to €35 million or 7% of global revenue. Healthcare-specific enforcement for AI-embedded medical devices begins August 2027. A recent readiness report found 78% of enterprises have not taken meaningful compliance steps; 83% lack formal inventories of their AI systems. Finland activates first national supervision authority January 1, 2026, signaling regulatory enforcement machinery is active now.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud can position EU-compliant AI infrastructure and AI system inventory/governance tooling as table-stakes for European healthcare and consumer AI. Buyers operating in EU markets face existential compliance risk if they cannot demonstrate high-risk AI categorization and documented control measures. Google&#x27;s ability to provide pre-built compliance controls and audit trails becomes non-negotiable.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">eu-ai-act</span><span class="tag">healthcare-regulation</span><span class="tag">medical-devices</span><span class="tag">enforcement-deadline</span>
+        <span style="flex:1"></span>
+        <a href="https://artificialintelligenceact.eu/implementation-timeline/" class="source-link" target="_blank" rel="noopener">artificialintelligenceact.eu &#x2197;</a><a href="https://natlawreview.com/press-releases/vision-compliance-releases-2026-eu-ai-act-readiness-report-finds-78" class="source-link" target="_blank" rel="noopener">natlawreview.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="trust_and_regulation" data-sentiment="neutral" data-score="8">
+      <div class="card-top">
+        <h3>FDA PCCP Framework: Locked vs. Adaptive AI Medical Devices Now Legally Distinct<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          &#x25C6; neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">FDA&#x27;s August 2025 guidance on Predetermined Change Control Plans (PCCPs) for AI-enabled medical devices creates a legal bright-line between locked algorithms (output fixed post-deployment) and adaptive algorithms (that learn from new data). 2026 FY guidance consolidates AI-enabled device submission requirements, and February 2026 cybersecurity guidance mandates quality management controls. FDA expects submissions to address ten &#x27;Good Machine Learning Practice&#x27; principles established with Health Canada and UK MHRA.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud&#x27;s AI governance and model versioning infrastructure directly addresses FDA&#x27;s locked vs. adaptive distinction. Buyers deploying AI medical devices must prove algorithmic stability post-launch and document change control trails. Google&#x27;s MLOps platform and audit-ready data governance become essential for achieving FDA pre-market approval timelines.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">fda-guidance</span><span class="tag">ai-medical-devices</span><span class="tag">pccp</span><span class="tag">adaptive-algorithms</span>
+        <span style="flex:1"></span>
+        <a href="https://www.hoganlovells.com/en/publications/fda-device-guidance-agenda-what-to-watch-in-2026" class="source-link" target="_blank" rel="noopener">hoganlovells.com &#x2197;</a><a href="https://www.fda.gov/medical-devices/guidance-documents-medical-devices-and-radiation-emitting-products/cdrh-proposed-guidances-fiscal-year-2026-fy2026" class="source-link" target="_blank" rel="noopener">fda.gov &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="trust_and_regulation" data-sentiment="bearish" data-score="8">
+      <div class="card-top">
+        <h3>FTC March 2026 Policy: AI Section 5 Enforcement on Deception, Discrimination, Privacy<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">On March 11, 2026, the FTC issued binding Policy Statement on AI under Section 5 of the FTC Act, applying existing consumer protection statutes to AI systems without waiting for new legislation. Focus areas: algorithmic discrimination, deceptive AI-generated content, and privacy violations in data collection/use. FTC emphasizes concrete consumer harm (not theoretical risk). Recent enforcement against Growth Cave (January 2026) for AI-washing demonstrates active case building.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud must position transparency, explainability, and bias-detection controls as built-in defaults. Buyers deploying consumer-facing AI face immediate FTC enforcement risk for discriminatory outcomes, deceptive capabilities claims, or improper data use. Google&#x27;s responsible AI framework and fairness tooling become compliance proof points.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">ftc-enforcement</span><span class="tag">consumer-protection</span><span class="tag">algorithmic-discrimination</span><span class="tag">ai-deception</span>
+        <span style="flex:1"></span>
+        <a href="https://regulations.ai/regulations/RAI-US-NA-ENFORCE-2026" class="source-link" target="_blank" rel="noopener">regulations.ai &#x2197;</a><a href="https://www.morganlewis.com/pubs/2026/04/ai-enforcement-accelerates-as-federal-policy-stalls-and-states-step-in" class="source-link" target="_blank" rel="noopener">morganlewis.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="trust_and_regulation" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>California ADMT/CPRA Goes Live: $2,500-$7,500 Per-Consumer Fines for Unapproved AI Decisions<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Effective January 1, 2026, California&#x27;s Automated Decision-Making Technology (ADMT) rules mandate consumer notice, transparency, and opt-out rights for AI systems making decisions on employment, housing, insurance, or other high-stakes use cases without meaningful human involvement. Risk assessments now mandatory (January 1, 2026). Fines run $2,500-$7,500 per unintentional/intentional violation, per consumer. California Privacy Protection Agency has hundreds of active investigations; record fines exceeded $1.3M in 2025.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud&#x27;s transparency and explainability APIs directly address California&#x27;s consumer notice and AI decision disclosure requirements. Buyers operating consumer-facing AI in California face per-consumer fine exposure; Google&#x27;s built-in ADMT compliance controls and audit trails become mandatory infrastructure. This creates recurring revenue for compliance-as-a-service modules.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">cpra</span><span class="tag">admt</span><span class="tag">consumer-rights</span><span class="tag">state-enforcement</span><span class="tag">california</span>
+        <span style="flex:1"></span>
+        <a href="https://secureprivacy.ai/blog/california-ai-regulations-2026" class="source-link" target="_blank" rel="noopener">secureprivacy.ai &#x2197;</a><a href="https://www.wiley.law/alert-California-Finalizes-Pivotal-CCPA-Regulations-on-AI-Cyber-Audits-and-Risk-Governance" class="source-link" target="_blank" rel="noopener">wiley.law &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="trust_and_regulation" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>Multi-State AG Enforcement Acceleration: UDAP Statutes, Texas RAIGA, No Federal Preemption Yet</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">State attorneys general are escalating AI enforcement using broad Unfair/Deceptive Acts or Practices (UDAP) statutes, which allow per-violation penalties and do not require proof of individual damages. Texas Responsible AI Governance Act (RAIGA, effective January 1, 2026) grants AG broad civil investigative authority on a single complaint. Federal executive order (December 2025) proposes state preemption, but courts have not ruled; all state laws remain enforceable in 2026. State AG priorities: minors protection, consumer information access, cost reduction.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud must demonstrate state-by-state compliance readiness (Texas RAIGA, Colorado AI Act, California CPRA). Buyers operating across multiple states face fragmented enforcement risk. Google&#x27;s federated compliance controls and state-specific governance templates reduce buyer liability exposure and accelerate deployment across state lines.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">state-enforcement</span><span class="tag">udap</span><span class="tag">texas-raiga</span><span class="tag">colorado-ai-act</span><span class="tag">ag-enforcement</span>
+        <span style="flex:1"></span>
+        <a href="https://www.morganlewis.com/pubs/2026/04/ai-enforcement-accelerates-as-federal-policy-stalls-and-states-step-in" class="source-link" target="_blank" rel="noopener">morganlewis.com &#x2197;</a><a href="https://www.morganlewis.com/pubs/2026/01/state-attorneys-general-escalate-online-platform-scrutiny-over-csam-and-ai-generated-sexual-content" class="source-link" target="_blank" rel="noopener">morganlewis.com &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="pillar-section" data-pillar-section="competitive_positioning">
+      <div class="pillar-header">
+        <div class="pillar-icon competitive">⌖</div>
+        <h2>Competitive Positioning</h2>
+        <span class="count">6 signals</span>
+      </div>
+
+    <div class="signal-card high-impact" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="8">
+      <div class="card-top">
+        <h3>Microsoft Agentic AI Goes Mainstream with Azure Agent Service and Fortune 500 Adoption<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Microsoft has positioned agentic AI as the 2026 frontier, with Azure&#x27;s Foundry Agent Service now supporting multi-agent orchestration at enterprise scale. Over 60% of Fortune 500 companies now deploy Azure AI agents, with IBM Consulting backing enterprise adoption through asset-based services. Microsoft&#x27;s narrative: agentic AI is not niche—it&#x27;s the standard operating model for enterprise transformation.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google Cloud is positioned as innovation leader in agent reasoning (Gartner &#x27;Company to Beat&#x27;), but faces narrative pressure on enterprise adoption speed and vendor lock-in concerns. Azure&#x27;s 60% Fortune 500 footprint and IBM&#x27;s enterprise consulting services create a formidable go-to-market advantage that Gemini Enterprise will need to match with compelling customer wins and ISV partnerships.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">agentic-ai</span><span class="tag">enterprise-adoption</span><span class="tag">competitive-narrative</span><span class="tag">azure-dominance</span>
+        <span style="flex:1"></span>
+        <a href="https://www.ibm.com/new/announcements/ibm-consulting-enterprise-advantage-unlocks-new-era-of-agentic-ai-powered-by-microsoft-partnership" class="source-link" target="_blank" rel="noopener">ibm.com &#x2197;</a><a href="https://www.kai-waehner.de/blog/2026/04/06/enterprise-agentic-ai-landscape-2026-trust-flexibility-and-vendor-lock-in" class="source-link" target="_blank" rel="noopener">kai-waehner.de &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>OpenAI and Anthropic Converge on Healthcare, Dividing Narrative Territory in Regulated Verticals</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Both OpenAI (ChatGPT for Healthcare) and Anthropic (Claude for Healthcare) launched enterprise healthcare suites in January 2026, powered by their consumer LLMs but with HIPAA readiness, EHR integrations, and regulatory partnerships. OpenAI targets health systems at scale; Anthropic emphasizes safety and precision for enterprise. Both now claim healthcare as differentiator, fragmenting the narrative that any single cloud vendor (GCP, Azure, AWS) owns vertical-specific AI.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Google&#x27;s healthcare narrative (MedGemma 1.5, HIMSS 2026 health system deployments, Datavant partnership) is credible but competes with both OpenAI and Anthropic for perception of healthcare expertise. The risk: OpenAI and Anthropic&#x27;s direct enterprise relationships via healthcare-specific platforms may position them as &#x27;healthtech natives&#x27; versus &#x27;cloud vendors playing healthcare,&#x27; even if Google&#x27;s models are technically superior.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">healthcare-vertical</span><span class="tag">foundation-models-vs-cloud</span><span class="tag">regulatory-trust</span><span class="tag">narrative-fragmentation</span>
+        <span style="flex:1"></span>
+        <a href="https://openai.com/index/openai-for-healthcare/" class="source-link" target="_blank" rel="noopener">openai.com &#x2197;</a><a href="https://www.fiercehealthcare.com/ai-and-machine-learning/jpm26-anthropic-launches-claude-healthcare-targeting-health-systems-payers" class="source-link" target="_blank" rel="noopener">fiercehealthcare.com &#x2197;</a><a href="https://cloud.google.com/blog/products/ai-machine-learning/gemini-3-is-available-for-enterprise" class="source-link" target="_blank" rel="noopener">cloud.google.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>AWS Bedrock + Industry Solutions Narrative: &#x27;Just Works&#x27; for Regulated Workloads, Minimal Lock-in</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">AWS is repositioning Bedrock not as a foundation-model hub but as the &#x27;pragmatic choice&#x27; for healthcare and consumer industries—Amazon Connect Health launched with 5 HIPAA-eligible purpose-built agents, GeBBs Healthcare achieved 96-98% coding accuracy. AWS narrative: we handle the hard parts (compliance, integrations) so you stay vendor-agnostic on models. This appeals to enterprises tired of cloud lock-in debates.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>AWS is subtly inverting the competitive narrative: instead of &#x27;best models,&#x27; AWS is claiming &#x27;cleanest APIs, easiest compliance, model freedom.&#x27; Gemini Enterprise, anchored to GCP infrastructure, will struggle with this message if buyers interpret Google&#x27;s vertical AI as tighter coupling to GCP services.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">aws-positioning</span><span class="tag">vendor-lock-in-narrative</span><span class="tag">compliance-first</span><span class="tag">model-agnosticism</span>
+        <span style="flex:1"></span>
+        <a href="https://aws.amazon.com/blogs/machine-learning/building-health-care-agents-using-amazon-bedrock-agentcore/" class="source-link" target="_blank" rel="noopener">aws.amazon.com &#x2197;</a><a href="https://aws.amazon.com/blogs/industries/gebbs-healthcare-revolutionizes-medical-coding-workflows-with-amazon-bedrock/" class="source-link" target="_blank" rel="noopener">aws.amazon.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>Salesforce Agentforce Gains Vertical Momentum: 30-50% Task Automation with 12,000+ Customers Live</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Salesforce&#x27;s Agentforce has moved from announcement to production scale with 12,000+ customers live (as of early 2026) reporting 30-50% reductions in manual task time. Vertical-specific agents (Insurance Policy Renewal, Commerce Shopping Assistants) are now embedded in Spring &#x27;26 release across all Salesforce Clouds. Narrative: &#x27;agentic AI is not separate from your business process—it&#x27;s woven into your CRM.&#x27;</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Salesforce controls the narrative in CRM-adjacent AI, and their 12,000+ live customer base dwarfs any comparable Google Cloud vertical-AI customer list. If Google targets consumer/retail or healthcare through Vertex AI, it competes against Salesforce&#x27;s installed base and embedded sales motion. Google&#x27;s advantage: better foundation models; Salesforce&#x27;s advantage: 20-year process integration and relationship lock-in.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">salesforce-dominance</span><span class="tag">crm-ai-integration</span><span class="tag">customer-scale</span><span class="tag">process-lock-in</span>
+        <span style="flex:1"></span>
+        <a href="https://www.salesforce.com/agentforce/" class="source-link" target="_blank" rel="noopener">salesforce.com &#x2197;</a><a href="https://vantagepoint.io/blog/sf/the-complete-guide-to-salesforces-agentforce-ecosystem-understanding-the-full-product-portfolio-in-2026" class="source-link" target="_blank" rel="noopener">vantagepoint.io &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>Epic AI Charting Goes Live: EHR-Native AI Dominates Healthcare Workflow Narrative, Not Cloud Vendors<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Epic announced general release of AI Charting suite in February 2026 with 85% of healthcare customers live on ambient AI features (Art, Emmie, Penny copilots). Epic is building an agentic platform with 125+ generative AI features in development, supporting multiple LLM providers but keeping workflow ownership in-house. Narrative: &#x27;The AI you need is where your data lives, not in the cloud.&#x27;</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Epic&#x27;s narrative is the single biggest threat to Google&#x27;s Industry AI positioning in healthcare. Enterprises won&#x27;t choose &#x27;Google&#x27;s industry AI&#x27; if Epic has already embedded AI into their EHR workflows as a matter of platform evolution. Google must position MedGemma not as &#x27;better model&#x27; but as &#x27;the specialized capability Epic and other vendors integrate,&#x27; shifting from vendor competition to infrastructure play.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">epic-dominance</span><span class="tag">healthcare-vendor-lock-in</span><span class="tag">workflow-layer-control</span><span class="tag">multi-model-future</span>
+        <span style="flex:1"></span>
+        <a href="https://www.fiercehealthcare.com/ai-and-machine-learning/epic-rolls-out-ai-charting-and-more-built-automation-clinicians-and" class="source-link" target="_blank" rel="noopener">fiercehealthcare.com &#x2197;</a><a href="https://thisweekhealth.com/news_story/epic-expands-ai-in-ehrs-transforming-healthcare-operations-by-2026" class="source-link" target="_blank" rel="noopener">thisweekhealth.com &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="6">
+      <div class="card-top">
+        <h3>Adobe Firefly Expands into Industry Verticals: 850M Monthly Active Users, 75% Fortune 500 Adoption</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Captured Apr 15, 2026</span>
+      </div>
+      <p class="summary">Adobe Firefly crossed 850 million monthly active users in Q1 2026 (17% YoY growth), with adoption across 75% of Fortune 500 companies and $400M direct revenue since 2024. Accenture and Adobe are co-developing industry-specific generative AI solutions for healthcare, automotive, financial services, and retail. Narrative: &#x27;Enterprise AI starts with your creative and martech stack,&#x27; fragmenting narrative from infrastructure-first positioning.</p>
+      <div class="commentary">
+        <div class="label">Industry & Applied AI So What</div>
+        <p>Adobe&#x27;s narrative (&#x27;AI in your workflow, not your data center&#x27;) appeals to consumer/retail verticals where Google might target with Industry AI. Adobe&#x27;s existing 75% Fortune 500 footprint and creative-workflow lock-in make it a narrative competitor even though it&#x27;s not a cloud provider. Google must articulate why Gemini + BigQuery beats &#x27;AI baked into Adobe Experience Cloud&#x27; for consumer industry customers.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">adobe-expansion</span><span class="tag">martech-lock-in</span><span class="tag">workflow-first-narrative</span><span class="tag">fortune-500-penetration</span>
+        <span style="flex:1"></span>
+        <a href="https://mlq.ai/stocks/ADBE/q1-2026-earnings/" class="source-link" target="_blank" rel="noopener">mlq.ai &#x2197;</a><a href="https://newsroom.accenture.com/news/2024/accenture-and-adobe-to-co-develop-industry-specific-generative-ai-solutions-to-accelerate-marketing-transformation" class="source-link" target="_blank" rel="noopener">accenture.com &#x2197;</a>
+      </div>
+    </div>
+
+    </div>
+
+
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">&#x1F50D;</div>
+    <p>No signals match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+<footer class="engine-footer">
+  <p>Google Cloud Industry & Applied AI Signal Engine v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Google Cloud Industry & Applied AI Intelligence &mdash; <a href="https://danetomalin.com/googleAI-roadmap">Product Roadmap Steering</a> | <a href="https://danetomalin.com/googleAI-ci">Competitive Intel</a></p>
+</footer>
+
+<script>
+// --- State ---
+var activeFilter = 'all';
+var activeSentiment = null;
+var searchQuery = '';
+
+// --- Pillar Filter ---
+function filterSignals(pillar, btn) {
+  activeFilter = pillar;
+  // Update button states
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Sentiment Filter (toggle) ---
+function filterSentiment(sentiment, btn) {
+  if (activeSentiment === sentiment) {
+    activeSentiment = null;
+    btn.classList.remove('active');
+  } else {
+    activeSentiment = sentiment;
+    var btns = document.querySelectorAll('.filter-btn[data-sentiment]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchSignals(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.signal-card');
+  var sections = document.querySelectorAll('.pillar-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var pillar = card.getAttribute('data-pillar');
+    var sentiment = card.getAttribute('data-sentiment');
+    var text = card.textContent.toLowerCase();
+
+    var pillarMatch = (activeFilter === 'all' || pillar === activeFilter);
+    var sentimentMatch = (!activeSentiment || sentiment === activeSentiment);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (pillarMatch && sentimentMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Show/hide pillar sections based on visible cards
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.signal-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  // Empty state
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Scorecard click-to-filter ---
+function filterFromScorecard(sentiment) {
+  // Always reset pillar filter to 'all' when clicking a scorecard tile
+  activeFilter = 'all';
+  var pillarBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  pillarBtns.forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-filter') === 'all');
+  });
+
+  // Clear search
+  searchQuery = '';
+  var searchBox = document.getElementById('search-box');
+  if (searchBox) searchBox.value = '';
+
+  // Handle sentiment toggle
+  var sentimentBtns = document.querySelectorAll('.filter-btn[data-sentiment]');
+  sentimentBtns.forEach(function(b) { b.classList.remove('active'); });
+  var scorecardCards = document.querySelectorAll('.scorecard-card[data-scorecard]');
+  scorecardCards.forEach(function(c) { c.classList.remove('active-filter'); });
+
+  if (sentiment === 'all' || activeSentiment === sentiment) {
+    // Reset — show everything
+    activeSentiment = null;
+  } else {
+    activeSentiment = sentiment;
+    // Sync the corresponding filter button
+    var matchBtn = document.querySelector('.filter-btn[data-sentiment="' + sentiment + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    // Highlight the scorecard tile
+    var matchCard = document.querySelector('.scorecard-card[data-scorecard="' + sentiment + '"]');
+    if (matchCard) matchCard.classList.add('active-filter');
+  }
+
+  applyFilters();
+
+  // Scroll to signals
+  var content = document.getElementById('dossier-content');
+  if (content) content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// --- Impact bar color ---
+function getImpactColor(score) {
+  if (score >= 8) return 'var(--high-impact)';
+  if (score >= 5) return 'var(--accent)';
+  return 'var(--text-muted)';
+}
+</script>
+
+</body>
+</html>

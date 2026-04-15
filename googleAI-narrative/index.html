@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="canonical" href="https://danetomalin.com/googleAI-narrative">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Narrative — Google Cloud Industry & Applied AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Design System */
+    :root {
+      --bg-primary: #0D0D12;
+      --bg-secondary: #16161E;
+      --bg-card: #1C1C28;
+      --bg-card-hover: #22222F;
+      --border: #2A2A3A;
+      --text-primary: #F0F0F4;
+      --text-secondary: #9B9BAF;
+      --text-muted: #6B6B80;
+      --accent: #4285F4;
+      --accent-strong: #1A73E8;
+      --accent-bg: rgba(167, 139, 250, 0.12);
+      --secondary-accent: #7C5CFC;
+      --win: #66BB6A;
+      --win-bg: rgba(102, 187, 106, 0.12);
+      --warn: #FFA726;
+      --warn-bg: rgba(255, 167, 38, 0.12);
+      --info: #4F8CFF;
+      --info-bg: rgba(79, 140, 255, 0.12);
+      --danger: #EF5350;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background-color: rgba(13, 13, 18, 0.8);
+    }
+
+    .site-header-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .site-header-name:hover {
+      color: var(--accent);
+    }
+
+    .site-header-back {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .site-header-back:hover {
+      background: var(--bg-card-hover);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .site-header-back svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* Main Content */
+    .content-wrapper {
+      margin-top: 72px;
+      position: relative;
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 40px;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* Slide 1: Title */
+    .slide-title {
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .slide-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-title p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .slide-title .cta-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--accent-strong), var(--secondary-accent));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .slide-title .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(167, 139, 250, 0.3);
+    }
+
+    /* Section Headers */
+    .slide-header {
+      text-align: center;
+      max-width: 1000px;
+      margin-bottom: 80px;
+    }
+
+    .slide-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .slide-header .subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Stat Block */
+    .stat-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin: 24px;
+      flex: 1;
+      min-width: 200px;
+      transition: all 0.3s;
+    }
+
+    .stat-block:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .stat-block .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .stat-block .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Row Layout */
+    .row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Card Layouts */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Value Card */
+    .value-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s;
+    }
+
+    .value-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .value-metric {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .value-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .value-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Alternative Card */
+    .alt-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: all 0.3s;
+      position: relative;
+      padding-left: 48px;
+    }
+
+    .alt-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--warn);
+    }
+
+    .alt-card::before {
+      content: attr(data-number);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--warn);
+    }
+
+    .alt-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .alt-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Account Segment Card */
+    .segment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .segment-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .segment-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .segment-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .segment-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .segment-signals {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .segment-signals strong {
+      color: var(--text-secondary);
+    }
+
+    /* Navigation Dots */
+    .nav-dots {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .dot:hover {
+      background: var(--accent);
+    }
+
+    .dot.active {
+      background: var(--accent);
+      border-color: var(--text-primary);
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Proof Section */
+    .proof-item {
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .proof-item strong {
+      color: var(--accent);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent-bg), rgba(124, 58, 252, 0.08));
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .cta-section h3 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--accent-strong), var(--secondary-accent));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(167, 139, 250, 0.3);
+    }
+
+    .cta-btn-secondary {
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--accent);
+      text-decoration: none;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .cta-btn-secondary:hover {
+      background: var(--accent-bg);
+    }
+
+    /* Counter Animation */
+    @keyframes count-up {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .counter {
+      animation: count-up 0.6s ease-out forwards;
+    }
+
+    /* Positioning Statement */
+    .positioning-statement {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 900px;
+      margin-top: 40px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+
+    .positioning-statement strong {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 0 20px;
+        flex-direction: column;
+        height: auto;
+      }
+
+      .site-header-back {
+        margin-top: 12px;
+      }
+
+      .slide {
+        padding: 40px 20px;
+      }
+
+      .slide-title h1 {
+        font-size: 48px;
+      }
+
+      .slide-header h2 {
+        font-size: 40px;
+      }
+
+      .nav-dots {
+        display: none;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="site-header">
+    <a class="site-header-name" href="https://danetomalin.com/googleAI">Dane Tomalin</a>
+    <a class="site-header-back" href="https://danetomalin.com/googleAI-positioning">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Back to Positioning Engine
+    </a>
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="nav-dots">
+    <div class="dot active" data-slide="0"></div>
+    <div class="dot" data-slide="1"></div>
+    <div class="dot" data-slide="2"></div>
+    <div class="dot" data-slide="3"></div>
+    <div class="dot" data-slide="4"></div>
+    <div class="dot" data-slide="5"></div>
+    <div class="dot" data-slide="6"></div>
+    <div class="dot" data-slide="7"></div>
+    
+  </div>
+
+  <div class="content-wrapper">
+        <!-- Slide 1: Title Slide -->
+    <div class="slide slide-title">
+      <h1>Vertical Applied AI</h1>
+      <p>The enterprise AI platform for regulated industries that move from pilots to production in weeks, not months</p>
+      <a href="#" class="cta-btn">Book a Demo</a>
+    </div>
+
+        <!-- Slide 3: The Competitive Landscape -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Why Every Competitor Stalls</h2>
+        <p class="subtitle">The vertical AI fragmentation problem</p>
+      </div>
+      <div class="card-grid" style="max-width: 1100px;">
+        <div class="card">
+          <div class="card-number">1</div>
+          <div class="card-title">Microsoft (Copilot + E7 Bundling)</div>
+          <div class="card-description">85% of Fortune 500 via Copilot seats. Strong in productivity copilots. But compliance is add-on, not native. And E7 bundling forces seat commitments that feel like lock-in.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">2</div>
+          <div class="card-title">Anthropic (Claude for Enterprise)</div>
+          <div class="card-description">The safety narrative wins with GCs. 40% of enterprise LLM spend. But no infrastructure, no vertical accelerators, no multi-model orchestration. Customers still build custom integrations.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">3</div>
+          <div class="card-title">AWS (Bedrock + Multi-Model Flexibility)</div>
+          <div class="card-description">Claude, Llama, Mistral under one governance layer. Model-agnostic hedge. But no vertical solutions, no compliance-by-design, and data integration tax is steep.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">4</div>
+          <div class="card-title">Salesforce (Agentforce + CRM Lock-In)</div>
+          <div class="card-description">Native contact center agents go GA Feb 2026. Workflow-first. But CRM lock-in and no appeal outside Salesforce ecosystem. Healthcare and finance buyers resist.</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Slide 4: The 2026 Inflection -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The 2026 Inflection Point</h2>
+        <p class="subtitle">Why the buyer's decision has changed</p>
+      </div>
+      <div class="alt-card" data-number="1">
+        <div class="alt-name">OCR Enforcement Surge</div>
+        <div class="alt-desc">340% increase in AI violations in healthcare. Compliance is now board-level risk. Buyers need platform-native compliance, not added modules.</div>
+      </div>
+      <div class="alt-card" data-number="2">
+        <div class="alt-name">Multi-Model Is Now Default</div>
+        <div class="alt-desc">68% of enterprises run Gemini, Claude, GPT in parallel. Single-model vendors lose. Platform orchestration is the new moat.</div>
+      </div>
+      <div class="alt-card" data-number="3">
+        <div class="alt-name">Pilot Paralysis</div>
+        <div class="alt-desc">95% of AI pilots stall at deployment. Integration tax, compliance reviews, and unproven ROI kill momentum. Faster deployment = existential advantage.</div>
+      </div>
+      <div class="alt-card" data-number="4">
+        <div class="alt-name">Vertical Specialization Wins</div>
+        <div class="alt-desc">Generic AI platforms commoditize. Vertical solutions — built for healthcare compliance, retail revenue, automotive safety — unlock board-reportable outcomes in weeks, not months.</div>
+      </div>
+      <div class="alt-card" data-number="5">
+        <div class="alt-name">Board AI Accountability</div>
+        <div class="alt-desc">The CDO mandate: 2-3 production AI use cases tied to measurable KPIs by end of FY26. Success is defined by revenue impact and compliance proof, not model capability.</div>
+      </div>
+    </div>
+
+        <!-- Slide 5: The Vertical Applied AI Category -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Vertical Applied AI</h2>
+        <p class="subtitle">The category that emerges from this inflection</p>
+      </div>
+      <div class="positioning-statement">
+        <strong>Vertical Applied AI</strong> is the platform layer that translates foundation models into regulated-industry, revenue-attached outcomes. Not raw models for developers. Not productivity copilots for knowledge workers. Applied AI with: frontier models (Gemini), compliance-native infrastructure (BigQuery + confidential computing), pre-built vertical solutions (Healthcare DocAI, retail search, contact center triage), and multi-model orchestration. Enterprises ship from zero to production in 6-8 weeks with measurable ROI in 4-6 months.
+      </div>
+      <div class="card-grid" style="max-width: 1100px; margin-top: 60px;">
+        <div class="card">
+          <div class="card-title">Frontier Models</div>
+          <div class="card-description">Gemini 3.1 Pro (2M token context, multimodal reasoning) run alongside Claude and Llama. Multi-model orchestration, not lock-in.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Compliance-By-Design</div>
+          <div class="card-description">HIPAA, SOC 2, FedRAMP, EU AI Act built into platform layer. Confidential computing, audit trails, governance dashboards. No add-on modules.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Vertical Accelerators</div>
+          <div class="card-description">Healthcare prior-auth and claims agents, retail search + personalization, contact center triage, automotive in-cabin AI. Pre-built, compliance-ready, deployable in weeks.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Data + AI Unified</div>
+          <div class="card-description">BigQuery as the AI foundation. Real-time streaming, HIPAA BAA native, SQL analytics. AI inherits data governance; no ETL tax.</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Slide 6: Google's Distinctive Capabilities -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>What Makes Google Cloud Different</h2>
+        <p class="subtitle">5 structural advantages in vertical applied AI</p>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-number">1</div>
+          <div class="card-title">2M Token Context + Multimodal</div>
+          <div class="card-description">Gemini 3.1 Pro's context depth is decisive for healthcare (full patient charts) and retail (multi-product recommendations). Competitors max out at 1M tokens. Scale + richness = structural advantage.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">2</div>
+          <div class="card-title">Compliance Is Platform-Native</div>
+          <div class="card-description">BigQuery HIPAA BAA, confidential computing (sensitive data encrypted in memory), audit trails, governance dashboards. Not add-on modules. Microsoft, AWS, Anthropic bolt on compliance; Google engineers it in.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">3</div>
+          <div class="card-title">Healthcare DocAI + Vertical Accelerators</div>
+          <div class="card-description">Prior-auth automation, claims processing, care coordination agents ship as deployable solutions. Not R&D platforms. CVS Health, Humana, Hackensack Meridian in production. 6-week deployment, $2M+/year savings per health system.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">4</div>
+          <div class="card-title">Multi-Model Platform Without Lock-In</div>
+          <div class="card-description">Vertex AI runs Gemini (scale + context), Claude (reasoning), Llama (cost). Unified governance, audit, compliance. Consumption-based pricing ($0.02-0.05 per call) scales with actual usage. No seat minimums. No forced upgrades.</div>
+        </div>
+        <div class="card">
+          <div class="card-number">5</div>
+          <div class="card-title">Data Platform Moat</div>
+          <div class="card-description">Enterprises with BigQuery investments unlock AI at zero incremental governance cost. Real-time streaming, SQL analytics, HIPAA BAA native. Data + AI stack integration eliminates ETL tax competitors impose. 5-10x lower query cost vs. custom middleware.</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Slide 7: Business Outcomes That Matter -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>The Differentiated Value</h2>
+        <p class="subtitle">Outcomes the board will recognize</p>
+      </div>
+      <div class="card-grid">
+        <div class="value-card">
+          <div class="value-metric">6-8 Weeks</div>
+          <div class="value-title">Pilot to Production</div>
+          <div class="value-desc">Vertical accelerators eliminate integration months. Healthcare prior-auth and retail personalization agents go live in weeks, not quarters.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">$2M+/Year</div>
+          <div class="value-title">Healthcare Cost Savings</div>
+          <div class="value-desc">Prior-auth automation reduces denied claims and recovery time. Per health system. Humana, Quest, Hackensack validating at scale.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">10-15%</div>
+          <div class="value-title">Retail Revenue Lift</div>
+          <div class="value-desc">Personalization + inventory agents drive conversion uplift. Gap Inc., Walmart in production. Board recognizes revenue impact.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">30-40%</div>
+          <div class="value-title">Contact Center Call Deflection</div>
+          <div class="value-desc">Triage agents handle routine requests, free FTEs for complex cases. AHT reduction of $50-100 per call saved. CCAI Platform in healthcare and consumer verticals.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">15-25%</div>
+          <div class="value-title">TCO Savings vs. Single-Model Vendors</div>
+          <div class="value-desc">Consumption-based Vertex AI pricing + unified governance = lower cost than per-seat Copilot or single-model Claude contracts. Multi-model optimization compounds savings.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-metric">3-6 Months</div>
+          <div class="value-title">Compliance Deployment Reduction</div>
+          <div class="value-desc">Platform-native compliance (audit trails, governance dashboards, HIPAA/EU AI Act templates) eliminates custom compliance engineering. CDOs bypass the 6-month legal review.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Who It's For -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Who It's For</h2>
+        <p class="subtitle">5 Best-Fit Account Segments</p>
+      </div>
+      <div class="card-grid">
+        <div class="segment-card">
+          <div class="segment-icon">🎯</div>
+          <div class="segment-title">DTC/App-First Brands</div>
+          <div class="segment-desc">$5M–$250M+ revenue. Speak ROAS natively. Outgrew template-based platforms like MNTN.</div>
+          <div class="segment-signals"><strong>Signals:</strong> Performance marketing org, owned audience, high CAC sensitivity</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">📈</div>
+          <div class="segment-title">Growth-Stage Companies</div>
+          <div class="segment-desc">$10M–$500M. Board scrutinizes ROAS. Need a defensible Vertical Applied AI story for the next funding round.</div>
+          <div class="segment-signals"><strong>Signals:</strong> CEO focused on efficiency, LTV:CAC optimization, board meetings</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">📺</div>
+          <div class="segment-title">Linear-to-Vertical Applied AI Migrators</div>
+          <div class="segment-desc">$100M+. Cord-cutting forcing budget shifts. Need a measurement framework that justifies the migration.</div>
+          <div class="segment-signals"><strong>Signals:</strong> Traditional media budget, TV agency relationships, measurement gaps</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">🛍️</div>
+          <div class="segment-title">Commerce Media / Retail</div>
+          <div class="segment-desc">$500M+. First-party data asset. Want to monetize owned audience with outcome-driven Vertical Applied AI.</div>
+          <div class="segment-signals"><strong>Signals:</strong> First-party data, owned audience, margin pressure on performance</div>
+        </div>
+        <div class="segment-card">
+          <div class="segment-icon">🤝</div>
+          <div class="segment-title">Performance Agencies</div>
+          <div class="segment-desc">$50M–$1B+ AUM. Differentiate with outcome-based Vertical Applied AI. Win new brands with defensible ROAS stories.</div>
+          <div class="segment-signals"><strong>Signals:</strong> Performance clients, Vertical Applied AI revenue gap, client attrition pressure</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Slide 9: Proof Points -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Production at Scale</h2>
+        <p class="subtitle">Real outcomes from industry leaders like you</p>
+      </div>
+      <div style="max-width: 800px; width: 100%;">
+        <div class="proof-item">
+          <strong>Humana (Healthcare Payer):</strong> Prior-auth agent deployment reduces claims adjudication time by 60%. $1.2M in denied claims recovered in first quarter. Now rolling out across all lines of business.
+        </div>
+        <div class="proof-item">
+          <strong>CVS Health (Healthcare / Retail):</strong> Unified retail + pharmacy AI platform reduces customer triage time. Contact center deflection 35%. Revenue impact: $8M+ first year from improved customer journeys.
+        </div>
+        <div class="proof-item">
+          <strong>Gap Inc. (Retail):</strong> AI-powered product search and recommendations drives 10-15% conversion lift. Inventory optimization reduces stockouts by 22%. Compounding 5% weekly improvement.
+        </div>
+        <div class="proof-item">
+          <strong>Hackensack Meridian (Regional Health System):</strong> From first meeting to production prior-auth agent in 8 weeks. One system, one deployment. Industry benchmark is 4-6 months. Speed advantage is 60-75% compression.
+        </div>
+        <div class="proof-item">
+          <strong>Papa Johns (QSR):</strong> AI order fulfillment and routing reduces delivery time by 12%. Customer NPS +8 points. Repeatable playbook now rolling to 3,500+ locations globally.
+        </div>
+      </div>
+    </div>
+
+        <!-- Slide 10: Your Next Move -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Let's Get to Production</h2>
+        <p class="subtitle">The 2026 board mandate is real. Your peer institutions are moving now.</p>
+      </div>
+      <div class="cta-section">
+        <h3>Your #1 AI Use Case, From Zero to Revenue in 6 Weeks</h3>
+        <p>Healthcare systems deploying prior-auth and claims agents. Retailers launching personalization. Financial services running fraud and underwriting automation. All production. All measurable. All using Google Cloud's Industry & Applied AI. Schedule a 30-minute discovery call to map your use case against our vertical accelerators and reference architectures.</p>
+        <div class="cta-buttons">
+          <button class="cta-btn-primary" onclick="handleBookDemo()">Book a 30-Minute Discovery Call</button>
+          <button class="cta-btn-secondary" onclick="handleTrialRequest()">View Customer Case Studies</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Navigation Dots
+    const dots = document.querySelectorAll('.nav-dots .dot');
+    const slides = document.querySelectorAll('.slide');
+
+    function updateActiveDot() {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      slides.forEach((slide, index) => {
+        const slideTop = slide.offsetTop;
+        const slideBottom = slideTop + slide.offsetHeight;
+
+        if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+          dots.forEach(d => d.classList.remove('active'));
+          dots[index].classList.add('active');
+        }
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', updateActiveDot);
+
+    // Counter Animation
+    function animateCounter(element) {
+      const value = element.textContent;
+      const numMatch = value.match(/(\d+)/);
+
+      if (numMatch) {
+        const target = parseInt(numMatch[0]);
+        const start = 0;
+        const duration = 1000;
+        const startTime = Date.now();
+
+        function update() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const current = Math.floor(start + (target - start) * progress);
+
+          element.textContent = value.replace(target.toString(), current.toString());
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+
+        update();
+      }
+    }
+
+    // Observe when counters come into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.classList.contains('stat-value')) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll('.stat-value').forEach(el => observer.observe(el));
+    document.querySelectorAll('.value-metric').forEach(el => observer.observe(el));
+
+    // Button Handlers
+    function handleBookDemo() {
+      alert('Redirecting to booking calendar...\n\nIn production, this would link to your Calendly or booking system.');
+    }
+
+    function handleTrialRequest() {
+      alert('Starting free trial request...\n\nIn production, this would open a sign-up form.');
+    }
+  </script>
+</body>
+</html>

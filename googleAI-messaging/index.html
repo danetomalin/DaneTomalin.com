@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Cloud Industry & Applied AI Messaging Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0D0D12;
+      --bg-secondary: #16161E;
+      --bg-card: #1C1C28;
+      --bg-card-hover: #22222F;
+      --border: #2A2A3A;
+      --text-primary: #F0F0F4;
+      --text-secondary: #9B9BAF;
+      --text-muted: #6B6B80;
+      --accent: #4285F4;
+      --accent-strong: #1A73E8;
+      --accent-bg: rgba(167, 139, 250, 0.12);
+      --secondary-accent: #7C5CFC;
+      --win: #66BB6A;
+      --win-bg: rgba(102, 187, 106, 0.12);
+      --warn: #FFA726;
+      --warn-bg: rgba(255, 167, 38, 0.12);
+      --info: #4F8CFF;
+      --info-bg: rgba(79, 140, 255, 0.12);
+      --danger: #EF5350;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      font-family: 'Inter', var(--font);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ============================================================ */
+    /* HEADER / STICKY NAV */
+    /* ============================================================ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, rgba(22, 22, 30, 0.8) 100%);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-header-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .site-header-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .site-header-back:hover {
+      color: var(--accent-strong);
+    }
+
+    .site-header-back svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* ============================================================ */
+    /* LAYOUT: SIDEBAR + MAIN */
+    /* ============================================================ */
+    .container {
+      display: flex;
+      min-height: calc(100vh - 60px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 60px;
+      width: 260px;
+      height: calc(100vh - 60px);
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      padding: 2rem 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      padding: 0 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background-color: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    /* ============================================================ */
+    /* MAIN CONTENT */
+    /* ============================================================ */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================ */
+    /* HERO SECTION */
+    /* ============================================================ */
+    .hero {
+      margin-bottom: 4rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 3rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .positioning-statement {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background-color: var(--accent-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+    }
+
+    .category-badge {
+      display: inline-block;
+      background-color: var(--info-bg);
+      color: var(--info);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* ============================================================ */
+    /* SECTION HEADERS */
+    /* ============================================================ */
+    .section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 80px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 2rem;
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+      border-radius: 2px;
+    }
+
+    /* ============================================================ */
+    /* MESSAGING PRINCIPLES */
+    /* ============================================================ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .principle-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .principle-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.15);
+    }
+
+    .principle-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .principle-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .principle-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================ */
+    /* AUDIENCE PROFILES */
+    /* ============================================================ */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .profile-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .profile-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .profile-name {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .profile-section {
+      margin-bottom: 1rem;
+    }
+
+    .profile-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-content {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .profile-content-item {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ============================================================ */
+    /* MESSAGING LIBRARY */
+    /* ============================================================ */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font);
+      font-size: 0.9rem;
+    }
+
+    .search-box::placeholder {
+      color: var(--text-muted);
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .chip.active {
+      background-color: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .messaging-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .message-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .message-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.15);
+    }
+
+    .message-card-header {
+      background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(124, 58, 237, 0.1) 100%);
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .message-card-header:hover {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.18) 0%, rgba(124, 58, 237, 0.15) 100%);
+    }
+
+    .message-theme {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .message-audience {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .expand-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .message-card-body {
+      display: none;
+      padding: 1.25rem;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .message-card.expanded .message-card-body {
+      display: block;
+    }
+
+    .message-card.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .message-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .message-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .message-content {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .copy-button {
+      display: inline-block;
+      background-color: var(--accent-bg);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+    }
+
+    .copy-button:hover {
+      background-color: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .channels-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .channel-tag {
+      display: inline-block;
+      background-color: var(--info-bg);
+      color: var(--info);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* ============================================================ */
+    /* CHANNEL PLAYBOOK */
+    /* ============================================================ */
+    .playbook-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .playbook-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .playbook-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .playbook-channel {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      text-transform: capitalize;
+    }
+
+    .playbook-section {
+      margin-bottom: 1rem;
+    }
+
+    .playbook-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .playbook-content {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ============================================================ */
+    /* COMPETITIVE CHEAT SHEET */
+    /* ============================================================ */
+    .cheat-sheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .cheat-sheet-table th {
+      background-color: var(--bg-card);
+      color: var(--accent);
+      font-weight: 700;
+      text-align: left;
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    .cheat-sheet-table td {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .cheat-sheet-table tr:nth-child(even) td {
+      background-color: var(--bg-card);
+    }
+
+    .cheat-sheet-table tr:hover td {
+      background-color: var(--bg-card-hover);
+    }
+
+    .competitor-name {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .position-point {
+      color: var(--win);
+      font-weight: 500;
+    }
+
+    /* ============================================================ */
+    /* COPY EXAMPLES */
+    /* ============================================================ */
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .example-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .example-card:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .example-type {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .example-copy {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background-color: var(--bg-primary);
+      border-left: 2px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    /* ============================================================ */
+    /* FOOTER */
+    /* ============================================================ */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    /* ============================================================ */
+    /* SCROLLBAR */
+    /* ============================================================ */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* ============================================================ */
+    /* RESPONSIVE */
+    /* ============================================================ */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .main {
+        padding: 2rem;
+      }
+
+      .messaging-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+      }
+
+      .main {
+        padding: 1.5rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .principles-grid,
+      .profiles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="site-header">
+    <a class="site-header-name" href="https://danetomalin.com/googleAI/">Dane Tomalin</a>
+    <a class="site-header-back" href="https://danetomalin.com/googleAI-positioning/">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Back to Positioning
+    </a>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Navigation</div>
+        <a class="sidebar-link active" onclick="scrollToSection('hero')">Overview</a>
+        <a class="sidebar-link" onclick="scrollToSection('principles')">Messaging Principles</a>
+        <a class="sidebar-link" onclick="scrollToSection('audiences')">Audience Profiles</a>
+        <a class="sidebar-link" onclick="scrollToSection('themes')">Messaging Themes</a>
+        <a class="sidebar-link" onclick="scrollToSection('channels')">Channel Playbook</a>
+        <a class="sidebar-link" onclick="scrollToSection('competitive')">Competitive Cheat Sheet</a>
+        <a class="sidebar-link" onclick="scrollToSection('examples')">Copy Examples</a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Hero Section -->
+      <div class="section" id="hero">
+        <div class="hero">
+          <h1 class="hero-title">Google Cloud Industry & Applied AI Messaging Guide</h1>
+          <div class="positioning-statement">
+            "For CDOs and enterprise AI leaders who need production-scale outcomes from vertical AI in healthcare and consumer experiences, Google Cloud is the Industry & Applied AI platform that turns frontier models into compliance-ready, revenue-attached solutions deployable in weeks."
+          </div>
+          <span class="category-badge">Vertical Applied AI</span>
+        </div>
+      </div>
+
+      <!-- Messaging Principles -->
+      <div class="section" id="principles">
+        <h2 class="section-title">Messaging Principles</h2>
+        <div class="principles-grid">
+          <div class="principle-card">
+            <div class="principle-icon">📊</div>
+            <div class="principle-title">Lead with Outcomes</div>
+            <div class="principle-desc">Start with business impact (time-to-production, compliance assurance, ROI proof) before mentioning features.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🎯</div>
+            <div class="principle-title">Use Specific Numbers</div>
+            <div class="principle-desc">Avoid generics like 'faster' or 'easier.' Use exact metrics: 6-week deployment, $2M+/year savings, 340% OCR surge.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🛡️</div>
+            <div class="principle-title">Name Competitive Gaps</div>
+            <div class="principle-desc">Position against Microsoft bundling, Salesforce lock-in, Anthropic safety-first narrowness—show the full-stack advantage.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🧠</div>
+            <div class="principle-title">Match Buyer Brain</div>
+            <div class="principle-desc">CDOs want compliance-by-default. CFOs want ROI proof. CIOs want model flexibility. Language shifts by seniority.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🚫</div>
+            <div class="principle-title">Compliance is Outcome</div>
+            <div class="principle-desc">Regulatory readiness isn't technical overhead—it's a competitive advantage. Lead with audit trails, governance pre-built.</div>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">✨</div>
+            <div class="principle-title">Show Production Scale</div>
+            <div class="principle-desc">Customer wins (CVS, Humana, Gap), not pilots. Published outcomes, multi-site deployments, board-reportable metrics.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audience Profiles -->
+      <div class="section" id="audiences">
+        <h2 class="section-title">Audience Profiles</h2>
+        <div class="profiles-grid">
+          <div class="profile-card">
+            <div class="profile-name">Chief Digital Officer / Head of Enterprise AI</div>
+            <div class="profile-section">
+              <div class="profile-label">Speaks Natively</div>
+              <div class="profile-content">OCR compliance, time-to-production, multi-model governance, board-reportable ROI</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Background</div>
+              <div class="profile-content">Digital transformation, regulated industry (healthcare, financial services), enterprise infrastructure</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Vertical solutions that deploy in weeks, compliance-by-default, multi-model flexibility, executive visibility</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "From zero to production in 6 weeks with compliance pre-built"</div>
+              <div class="profile-content-item">• "Model flexibility without vendor lock-in"</div>
+              <div class="profile-content-item">• "BigQuery + Vertex AI unified governance"</div>
+            </div>
+          </div>
+
+          
+            <div class="profile-section">
+              <div class="profile-label">Pressure</div>
+              <div class="profile-content">Defending Industry AI spend to CFO, proving it's not just reach</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Defensible Industry AI strategy, cross-device measurement, competitive positioning</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "Stop defending with reach curves"</div>
+              <div class="profile-content-item">• "Show exact conversion attribution"</div>
+              <div class="profile-content-item">• "Board-ready ROI proof"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">CFO / Board Member</div>
+            <div class="profile-section">
+              <div class="profile-label">Mindset</div>
+              <div class="profile-content">Every dollar defensible, quantifiable impact, no hand-waving</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Red Flags</div>
+              <div class="profile-content">Reach curves, unmeasured spend, vendor lock-in, undefined ROI</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Exact conversions, ROAS range, fraud prevention, scalability proof</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "$4.50-$8.50 ROAS"</div>
+              <div class="profile-content-item">• "Eliminate $7.4B fraud problem"</div>
+              <div class="profile-content-item">• "20-30% YoY ROAS compounding"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">Media Buyer / VP Media (Legacy)</div>
+            <div class="profile-section">
+              <div class="profile-label">Native Language</div>
+              <div class="profile-content">Reach, frequency, GRPs, insertion orders, negotiations</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Challenge</div>
+              <div class="profile-content">Trained on linear, still thinking in impressions not outcomes</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">Bridge language, performance framework, programmatic efficiency</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "45% migration from linear"</div>
+              <div class="profile-content-item">• "Performance > reach"</div>
+              <div class="profile-content-item">• "No weekly IO negotiations"</div>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <div class="profile-name">Performance Agency Leader</div>
+            <div class="profile-section">
+              <div class="profile-label">Motivation</div>
+              <div class="profile-content">New revenue stream, client differentiation, higher margins</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Challenge</div>
+              <div class="profile-content">TTD commoditized, need white-label differentiation</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Wants</div>
+              <div class="profile-content">White-label platform, outcome-based pitch, recurring revenue model</div>
+            </div>
+            <div class="profile-section">
+              <div class="profile-label">Language to Use</div>
+              <div class="profile-content-item">• "$2M-$10M Industry AI revenue stream"</div>
+              <div class="profile-content-item">• "Your proprietary Industry AI engine"</div>
+              <div class="profile-content-item">• "Margin expansion on media spend"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messaging Themes Library -->
+      <div class="section" id="themes">
+        <h2 class="section-title">Messaging Themes</h2>
+        <div class="controls">
+          <input
+            type="text"
+            id="search-input"
+            class="search-box"
+            placeholder="Search themes, audiences, channels..."
+            onkeyup="filterMessages()"
+          >
+        </div>
+        <div class="controls">
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Filter by Audience:</div>
+          <div class="filter-chips" id="audience-filters"></div>
+        </div>
+        <div class="controls">
+          <div style="font-size: 0.85rem; color: var(--text-muted);">Filter by Channel:</div>
+          <div class="filter-chips" id="channel-filters"></div>
+        </div>
+
+        <div class="messaging-grid" id="messages-grid"></div>
+      </div>
+
+      <!-- Channel Playbook -->
+      <div class="section" id="channels">
+        <h2 class="section-title">Channel Playbook</h2>
+        <div class="playbook-grid" id="playbook-grid"></div>
+      </div>
+
+      <!-- Competitive Cheat Sheet -->
+      <div class="section" id="competitive">
+        <h2 class="section-title">Competitive Positioning Cheat Sheet</h2>
+        <table class="cheat-sheet-table">
+          <thead>
+            <tr>
+              <th>Competitor</th>
+              <th>Their Story</th>
+              <th>Your Counter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="competitor-name">Microsoft Copilot/E7</span></td>
+              <td>Reach + scale on Industry AI</td>
+              <td><span class="position-point">E7 bundling locks you to single model. Vertex AI runs Gemini, Claude, Llama—your choice, your governance.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Salesforce Agentforce</span></td>
+              <td>Industry AI simplified, managed service</td>
+              <td><span class="position-point">Requires CRM lock-in. Google ships vertical solutions alongside existing Salesforce/SAP/Oracle—no rip-and-replace.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Anthropic Claude</span></td>
+              <td>First-party data + Amazon ecosystem</td>
+              <td><span class="position-point">Safety-first model lacks infrastructure, compliance architecture, and vertical solutions at enterprise scale.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">AWS Bedrock</span></td>
+              <td>Google ecosystem play</td>
+              <td><span class="position-point">Multi-model flexibility but lacks vertical application layer and compliance-native governance.</span></td>
+            </tr>
+            <tr>
+              <td><span class="competitor-name">Status quo/DIY</span></td>
+              <td>Roku-only, unified measurement</td>
+              <td><span class="position-point">Custom builds, fragmented governance, no vertical playbooks. Google ships compliance + accelerators pre-built.</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Copy Examples -->
+      <div class="section" id="examples">
+        <h2 class="section-title">Copy Examples</h2>
+        <div class="examples-grid" id="examples-grid"></div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        Google Cloud Industry & Applied AI Messaging Guide • Last Updated April 2026 • For Internal Marketing Use Only
+      </div>
+    </div>
+  </div>
+
+  <!-- Data & Interactivity -->
+  <script>
+    // Messaging themes data
+    const messagingThemes = [
+      {
+        id: 1,
+        theme: "Compliance moat",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "Pre-built HIPAA audit trails, OCR-ready governance dashboards, and automatic compliance logging in Vertex AI mean healthcare systems deploy production AI without a 6-month compliance review cycle.",
+        howDifferent: "Competitors bundle compliance as add-on modules or require custom integration; Google\'s compliance is platform-native. Microsoft, AWS, Anthropic all lack healthcare-specific governance templates.",
+        proof: "OCR enforcement actions against healthcare AI systems jumped 340% in 2026. Google Cloud\'s compliance-by-design architecture addressed the top blocker in 90% of healthcare AI deployments per recent Deloitte survey.",
+        channels: ["sales_enablement"],
+        keywords: ["compliance","moat"]
+      },
+      {
+        id: 2,
+        theme: "Multi-model reality",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "68% of enterprises now deploy 3+ foundation models (Gemini for scale, Claude for reasoning, Llama for cost). Vertex AI\'s unified governance layer orchestrates multi-model workflows under one compliance audit and cost framework.",
+        howDifferent: "Monolithic model-vendors (Anthropic Claude, OpenAI GPT) force single-model lock-in. Cloud vendors (Microsoft, AWS) are catching up on multi-model support but lack vertical application orchestration. Google\'s Vertex platform is model-agnostic + application-focused.",
+        proof: "Gartner forecasts 54% of enterprises will adopt model-agnostic platforms by end of 2026 (vs. 34% today). Model selection is commoditizing; platform + governance is the new battleground.",
+        channels: ["analyst_relations"],
+        keywords: ["multi-model","reality"]
+      },
+      {
+        id: 3,
+        theme: "Vertical depth",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "Healthcare DocAI + MedGemma, Retail Search + Recs with inventory integration, Contact Center AI with claims verification—vertical solutions are pre-built, compliance-ready, and deployable in 6 weeks with measurable ROI in 4-6 months.",
+        howDifferent: "Competitors offer generic AI platforms and force customers to build vertical solutions themselves. Microsoft Dragon Copilot requires Epic partnership; Salesforce Agentforce requires CRM lock-in; Anthropic Claude requires custom integration. Google ships vertical AI ready-to-use.",
+        proof: "CVS Health, Humana, Gap Inc., and Papa Johns deployed Google Industry AI solutions in 6-8 weeks. Healthcare prior-auth agents save health systems $2M+/year. Retail personalization drives 10-15% revenue lift.",
+        channels: ["thought_leadership"],
+        keywords: ["vertical","depth"]
+      },
+      {
+        id: 4,
+        theme: "Time to production",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "From zero to revenue-generating AI in 6 weeks. Vertical accelerators eliminate months of custom integration and compliance engineering that slow competitors\' deployments.",
+        howDifferent: "Microsoft requires Epic partnership integration (3-6 months); Salesforce requires CRM data standardization (4-6 months); AWS requires custom compliance middleware (3-9 months). Google\'s accelerators ship compliance, integration, and ROI proof pre-built.",
+        proof: "Hackensack Meridian (healthcare system, 18 hospitals) deployed prior-auth agent from first meeting to production in 8 weeks, recovering $1.2M in denied claims in first quarter.",
+        channels: ["digital_ads"],
+        keywords: ["time","to","production"]
+      },
+      {
+        id: 5,
+        theme: "Data leverage",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "Enterprises already invested in BigQuery unlock AI at the same cost and governance level as existing BI. Real-time streaming, HIPAA BAA, and SQL analytics native to platform—no ETL, no data migration, no new compliance frameworks.",
+        howDifferent: "Competitors treat AI as separate from data infrastructure. Microsoft Copilot sits alongside Azure analytics. AWS Bedrock is decoupled from data lake. Google\'s data + AI stack are integrated: BigQuery IS the AI data foundation.",
+        proof: "Retailers using BigQuery now deploy dynamic pricing and inventory optimization without rebuilding data pipelines. Per-query cost is 5-10x lower than custom ETL. Healthcare systems with BigQuery achieve HIPAA compliance for AI at zero additional infrastructure cost.",
+        channels: ["thought_leadership"],
+        keywords: ["data","leverage"]
+      },
+      {
+        id: 6,
+        theme: "Governance at scale",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "Unified AI governance across all models (Gemini, Claude, fine-tuned Llama) in one control plane. Audit trails, bias detection, drift monitoring, and regulatory compliance dashboards eliminate point solutions and fragmented governance.",
+        howDifferent: "Enterprises deploying multiple models today manage separate governance stacks per vendor. Google\'s Vertex AI Governance (Beta) consolidates audit, fairness, and compliance into one queryable system.",
+        proof: "Enterprises using Vertex AI governance report 60-70% reduction in compliance engineering overhead vs. managing Claude + Gemini + Llama governance separately. Audit prep time compresses from 6 weeks to 2 weeks.",
+        channels: ["webinar"],
+        keywords: ["governance","at","scale"]
+      },
+      {
+        id: 7,
+        theme: "Regulatory resilience",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "Pre-built templates for OCR audit readiness, EU AI Act compliance, FDA medical device evaluation, and state AI enforcement (Texas RAIGA, Colorado AI Act, California CPRA) let partners confidently sell AI into regulated verticals without legal review delays.",
+        howDifferent: "Partners selling on other platforms must hire compliance specialists or delay deployments for legal review (3-6 months). Google\'s ready-made compliance templates reduce partner sales friction and enable faster deal closure.",
+        proof: "Partners deploying Google Cloud Industry AI solutions report 40% faster sales cycles in healthcare and financial services. Compliance is no longer a negotiation point; it\'s a selling advantage.",
+        channels: ["partner_marketing"],
+        keywords: ["regulatory","resilience"]
+      },
+      {
+        id: 8,
+        theme: "Model agnosticism",
+        audience: "CDO/CIO/Chief Compliance Officer",
+        coolThing: "Run Gemini, Claude, GPT-5, or fine-tuned Llama on Vertex AI without renegotiating contracts or migrating infrastructure. Model-agnostic platform lets enterprises optimize per use case (Gemini for multimodal at scale, Claude for specialized reasoning, Llama for cost-sensitive tasks).",
+        howDifferent: "Monolithic model vendors (OpenAI, Anthropic, Meta) force single-model adoption. Hyperscalers (Microsoft, AWS) are adding multi-model support but still couple models to infrastructure. Google decouples model choice from infrastructure commitment.",
+        proof: "Enterprises adopting Vertex AI\'s multi-model strategy report 15-25% cost savings over single-model contracts while maintaining best-in-class reasoning capability. Model updates or vendor changes incur zero switching cost.",
+        channels: ["sales_enablement"],
+        keywords: ["model","agnosticism"]
+      }
+    ];
+
+    // Channel playbook data
+    const channelPlaybook = [
+      {
+        channel: "Email",
+        messaging: "Lead with outcome (ROAS, LTV lift). Mention specific competitor weakness. CTA to demo or docs.",
+        tone: "Direct, data-driven, personalized by role",
+        format: "Subject: $4.50-$8.50 ROAS guarantee. 1-2 paragraphs + CTA + proof link."
+      },
+      {
+        channel: "LinkedIn",
+        messaging: "Position as performance leadership thought. Share roadmap BUILD items. Name competitors tactfully.",
+        tone: "Authoritative, industry insights, battle-tested",
+        format: "300-400 word article with visuals. Tag key personas. Link to dossier or research."
+      },
+      {
+        channel: "Digital Ads",
+        messaging: "Hook on pain point (reach curves fail, $7.4B fraud). Offer specific benchmark (ROAS range).",
+        tone: "Conversational, outcome-focused, CTA-heavy",
+        format: "Headline (10 words max) + subheading + proof image + CTA button."
+      },
+      {
+        channel: "Social",
+        messaging: "Thread format: 1. Problem (reach doesn't = ROI). 2. Why (ML per advertiser). 3. Proof (8.75 ROAS).",
+        tone: "Conversational, relatable, thread-able",
+        format: "5-7 tweet thread. 1 proof image. CTA at end."
+      },
+      {
+        channel: "Thought Leadership",
+        messaging: "Deep dive: Vertical Applied AI market opportunity. How enterprise AI is fragmenting: generic productivity tools vs. vertical platforms. Google Cloud's structural advantages.",
+        tone: "Expert, analytical, visionary",
+        format: "2000-2500 word article. Analyst quotes. Primary research. Published via own and partner channels."
+      },
+      {
+        channel: "Webinars",
+        messaging: "'Vertical Applied AI in Production.' Panel: Healthcare CDO + Google Cloud product. Live demo of prior-auth agent. ROI proof. Q&A.",
+        tone: "Educational, interactive, peer-to-peer",
+        format: "45 min: intro (5min) + marketer story (15min) + demo (15min) + Q&A (10min)."
+      },
+      {
+        channel: "Analyst Relations",
+        messaging: "Google Cloud is establishing Vertical Applied AI as a distinct category. Roadmap: compliance architecture, multi-model orchestration, vertical accelerators.",
+        tone: "Strategic, visionary, analyst-friendly",
+        format: "Quarterly briefing + research participation + quote + press release."
+      },
+      {
+        channel: "Partner Marketing",
+        messaging: "White-label opportunity. Revenue stream. Client sticky. Google Cloud Industry & Applied AI handles the ML, you own the relationship.",
+        tone: "Partnership-focused, win-win, business case",
+        format: "Partner datasheet + co-marketing playbook + case study + revenue model."
+      },
+      {
+        channel: "Event Marketing",
+        messaging: "Host: 'Industry AI in Production Summit.' Speakers: Healthcare CDOs, Retail CMOs, Auto CTOs. Booth: live compliance demo, 15-min discovery calls.",
+        tone: "Community, collaborative, peer learning",
+        format: "Virtual or in-person. 1-day summit. 5 speakers. 30-min Google Cloud Industry & Applied AI workshop. Networking."
+      },
+      {
+        channel: "Sales Enablement",
+        messaging: "Battlecards by competitor. ROI calculator. Roadmap BUILD items. Cheat sheets by role. One-pagers.",
+        tone: "Sales-ready, fast-scannable, proof-heavy",
+        format: "1-2 pagers. Competitor matrix. Objection handles. Numbers anchored to roadmap status."
+      }
+    ];
+
+    // Copy examples data
+    const copyExamples = [
+      {
+        type: "Email Subject Lines",
+        theme: "Compliance & Production Speed",
+        examples: [
+          "6 weeks from zero to healthcare AI in production",
+          "340% rise in OCR enforcement actions. Google's compliance-by-design beats custom governance.",
+          "From pilot to $2M+/year ROI: how health systems are deploying AI responsibly"
+        ]
+      },
+      {
+        type: "Email Subject Lines",
+        theme: "Multi-model Reality",
+        examples: [
+          "68% of enterprises now deploy 3+ models. Google's Vertex AI unifies governance across all.",
+          "Gemini + Claude + Llama in one control plane—no vendor lock-in, one compliance audit",
+          "Model flexibility without renegotiating contracts"
+        ]
+      },
+      {
+        type: "Email Subject Lines",
+        theme: "Vertical Depth",
+        examples: [
+          "Healthcare DocAI delivered prior auth automation in 8 weeks. Saving $1.2M in denied claims.",
+          "Retail personalization + inventory optimization in 6 weeks with BigQuery integration",
+          "Contact center triage deflecting 30-40% of calls with native HIPAA logging"
+        ]
+      },
+      {
+        type: "Ad Headlines",
+        theme: "Time to Production",
+        examples: [
+          "6 weeks from zero to revenue-generating healthcare AI. Compliance pre-built.",
+          "Accelerators, not APIs. Vertical solutions ready to deploy.",
+          "Production AI in weeks. Compliance audits pass day one."
+        ]
+      },
+      {
+        type: "Ad Headlines",
+        theme: "Governance at Scale",
+        examples: [
+          "One governance layer for Gemini, Claude, Llama, fine-tuned models. Zero compliance friction.",
+          "Audit-ready AI. HIPAA compliance native to Vertex AI.",
+          "Multi-model orchestration with built-in fairness, drift monitoring, regulatory dashboards."
+        ]
+      },
+      {
+        type: "LinkedIn Posts",
+        theme: "Category Leadership",
+        examples: [
+          "Enterprise AI is fragmenting. Generic copilots (Copilot, ChatGPT) commoditize chat. Vertical Applied AI platforms are the new battleground. Google Cloud's Industry & Applied AI combines frontier models + compliance architecture + vertical solutions. Others are catching up.",
+          "68% of enterprises deploy 3+ foundation models. The problem: fragmented governance, audit sprawl, model lock-in. Vertex AI solves this with model-agnostic orchestration under one compliance control plane.",
+          "Healthcare systems save $2M+/year deploying prior-auth agents on Google Cloud. Retail drives 10-15% revenue lift with personalization. The common thread: vertical solutions + compliance-by-default + production speed."
+        ]
+      },
+      {
+        type: "Website Copy",
+        theme: "Compliance Moat",
+        examples: [
+          "HIPAA audit trails, OCR-ready governance, confidential computing—compliance is platform-native, not bolted-on. Healthcare systems deploy production AI without 6-month compliance review cycles.",
+          "340% surge in OCR enforcement actions targeting healthcare AI. Google's compliance-by-design architecture is the only platform addressing this at scale.",
+          "EU AI Act, FDA medical device guidance, state AI laws—regulatory urgency is real. Google's pre-built compliance templates compress deployment from 6+ months to 6 weeks."
+        ]
+      },
+      {
+        type: "Website Copy",
+        theme: "Vertical Solutions",
+        examples: [
+          "Not raw models. Vertical solutions: Healthcare DocAI for prior auth and claims. Retail search + recs + inventory. Contact center triage with HIPAA logging. Pre-built, compliance-ready, deployable in weeks.",
+          "CVS Health, Humana, Gap Inc., Papa Johns deployed Google Cloud vertical solutions in 6-8 weeks. Production scale, not pilots. Published outcomes tied to board KPIs.",
+          "Competitors offer generic platforms. Google ships vertical playbooks: healthcare prior-auth (saves $2M+/year), retail personalization (10-15% revenue lift), contact center automation (30-40% call deflection)."
+        ]
+      }
+    ];
+
+
+    // Initialize messaging cards
+    function initializeMessages() {
+      const grid = document.getElementById('messages-grid');
+      grid.innerHTML = '';
+
+      messagingThemes.forEach(theme => {
+        const card = document.createElement('div');
+        card.className = 'message-card';
+        card.setAttribute('data-theme', theme.theme.toLowerCase());
+        card.setAttribute('data-audience', theme.audience.toLowerCase());
+        card.setAttribute('data-channels', theme.channels.join(','));
+        card.setAttribute('data-keywords', theme.keywords.join(','));
+
+        const channelHTML = theme.channels.map(ch =>
+          `<span class="channel-tag">${ch.replace(/_/g, ' ')}</span>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="message-card-header" onclick="toggleCard(this.closest('.message-card'))">
+            <div>
+              <div class="message-theme">${theme.theme}</div>
+              <div class="message-audience">${theme.audience}</div>
+            </div>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div class="message-card-body">
+            <div class="message-section">
+              <div class="message-label">Something Cool We Do</div>
+              <div class="message-content">${theme.coolThing}</div>
+              <button class="copy-button" onclick="copyToClipboard('${theme.coolThing.replace(/'/g, "\\'")}')">Copy</button>
+            </div>
+            <div class="message-section">
+              <div class="message-label">How It's Different</div>
+              <div class="message-content">${theme.howDifferent}</div>
+              <button class="copy-button" onclick="copyToClipboard('${theme.howDifferent.replace(/'/g, "\\'")}')">Copy</button>
+            </div>
+            <div class="message-section">
+              <div class="message-label">Show Some Proof</div>
+              <div class="message-content">${theme.proof}</div>
+              <button class="copy-button" onclick="copyToClipboard('${theme.proof.replace(/'/g, "\\'")}')">Copy</button>
+            </div>
+            <div class="message-section">
+              <div class="message-label">Best for Channels</div>
+              <div class="channels-list">${channelHTML}</div>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      initializeFilters();
+    }
+
+    // Initialize filters
+    function initializeFilters() {
+      const audiences = [...new Set(messagingThemes.map(t => t.audience))];
+      const channels = [...new Set(messagingThemes.flatMap(t => t.channels))];
+
+      const audienceFilters = document.getElementById('audience-filters');
+      audiences.forEach(aud => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = aud;
+        chip.onclick = () => {
+          chip.classList.toggle('active');
+          filterMessages();
+        };
+        audienceFilters.appendChild(chip);
+      });
+
+      const channelFilters = document.getElementById('channel-filters');
+      channels.forEach(ch => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.textContent = ch.replace(/_/g, ' ');
+        chip.setAttribute('data-channel', ch);
+        chip.onclick = () => {
+          chip.classList.toggle('active');
+          filterMessages();
+        };
+        channelFilters.appendChild(chip);
+      });
+    }
+
+    // Filter messages
+    function filterMessages() {
+      const searchText = document.getElementById('search-input').value.toLowerCase();
+      const activeAudiences = Array.from(document.querySelectorAll('#audience-filters .chip.active')).map(c => c.textContent.toLowerCase());
+      const activeChannels = Array.from(document.querySelectorAll('#channel-filters .chip.active')).map(c => c.getAttribute('data-channel'));
+
+      const cards = document.querySelectorAll('.message-card');
+      cards.forEach(card => {
+        const theme = card.getAttribute('data-theme');
+        const audience = card.getAttribute('data-audience');
+        const channels = card.getAttribute('data-channels').split(',');
+        const keywords = card.getAttribute('data-keywords').split(',');
+
+        const matchesSearch = !searchText ||
+          theme.includes(searchText) ||
+          audience.includes(searchText) ||
+          keywords.some(k => k.includes(searchText));
+
+        const matchesAudience = activeAudiences.length === 0 || activeAudiences.some(a => audience.includes(a));
+        const matchesChannel = activeChannels.length === 0 || activeChannels.some(ch => channels.includes(ch));
+
+        card.style.display = matchesSearch && matchesAudience && matchesChannel ? '' : 'none';
+      });
+    }
+
+    // Toggle card expansion
+    function toggleCard(card) {
+      card.classList.toggle('expanded');
+    }
+
+    // Copy to clipboard
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+
+    // Initialize playbook
+    function initializePlaybook() {
+      const grid = document.getElementById('playbook-grid');
+      grid.innerHTML = '';
+
+      channelPlaybook.forEach(pb => {
+        const card = document.createElement('div');
+        card.className = 'playbook-card';
+        card.innerHTML = `
+          <div class="playbook-channel">${pb.channel}</div>
+          <div class="playbook-section">
+            <div class="playbook-label">Messaging Approach</div>
+            <div class="playbook-content">${pb.messaging}</div>
+          </div>
+          <div class="playbook-section">
+            <div class="playbook-label">Tone & Voice</div>
+            <div class="playbook-content">${pb.tone}</div>
+          </div>
+          <div class="playbook-section">
+            <div class="playbook-label">Format & Structure</div>
+            <div class="playbook-content">${pb.format}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Initialize examples
+    function initializeExamples() {
+      const grid = document.getElementById('examples-grid');
+      grid.innerHTML = '';
+
+      copyExamples.forEach(eg => {
+        const card = document.createElement('div');
+        card.className = 'example-card';
+        const examplesHTML = eg.examples.map(ex =>
+          `<div class="example-copy">"${ex}"</div>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="example-type">${eg.type}</div>
+          <div style="font-size: 0.85rem; color: var(--accent); margin-bottom: 0.75rem; font-weight: 600;">Theme: ${eg.theme}</div>
+          ${examplesHTML}
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Scroll to section
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeMessages();
+      initializePlaybook();
+      initializeExamples();
+    });
+  </script>
+</body>
+</html>
