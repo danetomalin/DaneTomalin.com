@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moloco CTV Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #A78BFA;
+    --accent-strong: #7C3AED;
+    --accent-bg: rgba(167, 139, 250, 0.12);
+    --bullish: #66BB6A;
+    --bullish-bg: rgba(102, 187, 106, 0.12);
+    --bearish: #EF5350;
+    --bearish-bg: rgba(239, 83, 80, 0.12);
+    --neutral: #FFA726;
+    --neutral-bg: rgba(255, 167, 38, 0.12);
+    --high-impact: #FFA726;
+    --high-impact-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Site header — sticky top bar matching CI Dossier */
+  .site-header {
+    position: sticky; top: 0;
+    background: rgba(13,13,18,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 200;
+  }
+  .site-header-name {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+    color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Header — matches CI Dossier */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Trend Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card.clickable { cursor: pointer; user-select: none; }
+  .scorecard-card.clickable:hover { transform: translateY(-1px); }
+  .scorecard-card.active-filter { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+  .scorecard-card[data-scorecard="bullish"].active-filter { border-color: var(--bullish); box-shadow: 0 0 0 2px var(--bullish-bg); }
+  .scorecard-card[data-scorecard="bearish"].active-filter { border-color: var(--bearish); box-shadow: 0 0 0 2px var(--bearish-bg); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-bullish { border-left: 3px solid var(--bullish); }
+  .scorecard-card.overall-bearish { border-left: 3px solid var(--bearish); }
+  .scorecard-card.overall-neutral { border-left: 3px solid var(--neutral); }
+
+  /* Sentiment Badge */
+  .sentiment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .sentiment-badge.bullish { background: var(--bullish-bg); color: var(--bullish); }
+  .sentiment-badge.bearish { background: var(--bearish-bg); color: var(--bearish); }
+  .sentiment-badge.neutral { background: var(--neutral-bg); color: var(--neutral); }
+  .sentiment-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Pillar Sections */
+  .pillar-section {
+    margin-bottom: 32px;
+  }
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .pillar-icon.velocity { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .pillar-icon.inventory { background: rgba(124,58,237,0.15); color: var(--accent-strong); }
+  .pillar-icon.regulatory { background: rgba(255,167,38,0.15); color: var(--neutral); }
+  .pillar-icon.competitive { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .pillar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .pillar-header .count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Signal Cards */
+  .signal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .signal-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .signal-card.high-impact {
+    border-left: 3px solid var(--high-impact);
+    background: var(--high-impact-bg);
+  }
+  .signal-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .signal-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+  }
+  .impact-badge .bar-track {
+    width: 40px; height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .impact-badge .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .signal-card .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .signal-card .commentary {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .signal-card .commentary .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .signal-card .commentary p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .signal-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state p { font-size: 15px; }
+
+  /* Footer */
+  .engine-footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .engine-footer a { color: var(--accent); text-decoration: none; }
+  .engine-footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .engine-header h1 { font-size: 1.6em; }
+    .scorecard { grid-template-columns: 1fr 1fr; }
+    .filter-bar { flex-direction: column; }
+    .search-input { min-width: unset; width: 100%; }
+    .signal-card .card-top { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+  <a href="https://danetomalin.com/demo/" class="site-header-back">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+    Back to Moloco Plan
+  </a>
+</header>
+
+<header class="engine-header">
+  <h1>Moloco CTV Intelligence <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Generated: <span id="dossier-date">April 06, 2026</span></p>
+  <span class="classification">Internal Only</span>
+  <div class="meta">
+    <span>14 signals</span>
+    <span>4 high-impact</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Trend Scorecard -->
+  <div class="scorecard" id="scorecard">
+    
+    <div class="scorecard-card overall-bullish clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Overall Sentiment</div>
+      <div class="value" style="color:var(--bullish)">BULLISH</div>
+      <div class="detail">CTV programmatic spend crossing $38B with 90%+ transacted programmatically validates Moloco&#x27;s ML-driven bidding infrastructure, though Amazon&#x27;s first-party data moat and state privacy enforcement on ACR data create emerging headwinds for independent DSPs.</div>
+    </div>
+    <div class="scorecard-card clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Total Signals</div>
+      <div class="value" style="color:var(--accent)">14</div>
+      <div class="detail">4 high-impact (score 8+)</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bullish" onclick="filterFromScorecard('bullish')" title="Click to filter bullish signals">
+      <div class="label">Bullish Signals</div>
+      <div class="value" style="color:var(--bullish)">8</div>
+      <div class="detail">Trends favoring Moloco's ML approach</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bearish" onclick="filterFromScorecard('bearish')" title="Click to filter bearish signals">
+      <div class="label">Bearish Signals</div>
+      <div class="value" style="color:var(--bearish)">4</div>
+      <div class="detail">Threats to watch &amp; counter-position</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Pillar</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterSignals('all', this)">All</button>
+    <button class="filter-btn" data-filter="ad_spend_velocity" onclick="filterSignals('ad_spend_velocity', this)">Ad Spend</button>
+    <button class="filter-btn" data-filter="inventory_expansion" onclick="filterSignals('inventory_expansion', this)">Inventory</button>
+    <button class="filter-btn" data-filter="regulatory_watch" onclick="filterSignals('regulatory_watch', this)">Regulatory</button>
+    <button class="filter-btn" data-filter="competitive_positioning" onclick="filterSignals('competitive_positioning', this)">Competitive</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Sentiment</span>
+    <button class="filter-btn" data-sentiment="bullish" onclick="filterSentiment('bullish', this)">Bullish</button>
+    <button class="filter-btn" data-sentiment="bearish" onclick="filterSentiment('bearish', this)">Bearish</button>
+    <div class="filter-separator"></div>
+    <input type="text" class="search-input" placeholder="Search signals..." oninput="searchSignals(this.value)" id="search-box">
+  </div>
+
+  <!-- Signal Content -->
+  <div id="dossier-content">
+    
+    <div class="pillar-section" data-pillar-section="ad_spend_velocity">
+      <div class="pillar-header">
+        <div class="pillar-icon velocity">↑</div>
+        <h2>Ad Spend Velocity</h2>
+        <span class="count">4 signals</span>
+      </div>
+      
+    <div class="signal-card high-impact" data-pillar="ad_spend_velocity" data-sentiment="bullish" data-score="9">
+      <div class="card-top">
+        <h3>Netflix ad revenue targets $3B in 2026 with 80% programmatic CTV buys<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Jan 21, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Netflix&#x27;s programmatic expansion creates premium biddable inventory at scale, ideal for ML-optimized outcome bidding</div>
+      <p class="summary">Netflix expects ad revenue to nearly double to $3B in 2026 from $1.5B in 2025, contributing 25% of the streamer&#x27;s $6B incremental revenue guidance. 80% of Netflix CTV ad buys now run programmatically. Netflix expanded DSP partnerships with Amazon, Google DV360, The Trade Desk, and Yahoo DSP, with expanded targeting via Amazon Audiences launching in Q2.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>Netflix opening 80% of its inventory to programmatic buying through multiple DSPs is a massive inventory unlock for ML-optimized bidders. The Amazon Audiences integration on Netflix means first-party commerce data now flows into premium CTV inventory — this is the exact use case Moloco&#x27;s app marketer and commerce media clients need. If Moloco can access Netflix inventory through DSP partnerships, this is a greenfield opportunity for outcome-based campaigns on the world&#x27;s largest streaming platform.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Netflix</span><span class="tag">programmatic</span><span class="tag">DSP-partnerships</span><span class="tag">premium-inventory</span><span class="tag">Amazon-Audiences</span>
+        <span style="flex:1"></span>
+        <a href="https://www.adexchanger.com/streaming/netflix-doubled-its-ad-revenue-last-year-and-expects-to-do-the-same-in-2026/" class="source-link" target="_blank" rel="noopener">adexchanger.com <span style="color:var(--text-muted);font-size:11px;">(Jan 21)</span> &#x2197;</a><a href="https://www.streamtvinsider.com/advertising/netflix-expands-ad-targeting-outcomes-capabilities" class="source-link" target="_blank" rel="noopener">streamtvinsider.com <span style="color:var(--text-muted);font-size:11px;">(Mar 15)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="ad_spend_velocity" data-sentiment="bullish" data-score="8">
+      <div class="card-top">
+        <h3>IAB forecasts 13.8% US CTV ad spend growth to $38B in 2026<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Feb 20, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Programmatic CTV growth at scale directly expands the market for Moloco&#x27;s ML-driven bidding technology</div>
+      <p class="summary">The IAB projects US CTV advertising will reach approximately $38 billion in 2026, growing 13.8% year-over-year from $33.35B in 2025. CTV growth trails only social media (14.6%) among digital channels. Major cyclical events including FIFA World Cup and US midterm elections will drive incremental spend.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>The $38B CTV market growing at nearly 14% means the total addressable market for ML-optimized CTV bidding expands by ~$4.6B this year alone. With 90%+ of CTV now transacted programmatically, Moloco&#x27;s pitch that outcome-based bidding beats manual IO buying becomes self-evident. Sales teams should lead with this IAB data to establish market inevitability in every pitch.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">IAB</span><span class="tag">market-size</span><span class="tag">programmatic</span><span class="tag">growth-forecast</span>
+        <span style="flex:1"></span>
+        <a href="https://www.streamtvinsider.com/advertising/iab-forecasts-138-us-ctv-ad-spend-growth-2026" class="source-link" target="_blank" rel="noopener">streamtvinsider.com <span style="color:var(--text-muted);font-size:11px;">(Feb 20)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="ad_spend_velocity" data-sentiment="bullish" data-score="7">
+      <div class="card-top">
+        <h3>70% of CTV advertisers plan 17% average spend increase in 2026</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Jan 15, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Linear-to-CTV migration creates demand for the performance measurement capabilities Moloco provides</div>
+      <p class="summary">A survey of CTV advertisers found that nearly 70% expect to increase spending by an average of 17% in 2026. The majority of new CTV budgets are being reallocated from linear TV, with 45% of marketers moving budgets directly from linear to CTV. Digital display, paid search, and social media are secondary funding sources.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>The 45% linear-to-CTV reallocation rate means a wave of advertisers accustomed to broad demo buys are entering a precision-targeting environment for the first time. These advertisers need hand-holding on outcome measurement — exactly where Moloco&#x27;s attribution and ML optimization stack creates differentiation. Sales should target linear-transitioning brands as a priority segment this quarter.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">budget-shift</span><span class="tag">linear-decline</span><span class="tag">advertiser-survey</span><span class="tag">linear-migration</span>
+        <span style="flex:1"></span>
+        <a href="https://tvnewscheck.com/business/article/survey-70-of-ctv-advertisers-to-increase-spending-in-2026/" class="source-link" target="_blank" rel="noopener">tvnewscheck.com <span style="color:var(--text-muted);font-size:11px;">(Jan 15)</span> &#x2197;</a><a href="https://www.comscore.com/Insights/Press-Releases/2026/1/Comscore-2026-State-of-Programmatic-Report" class="source-link" target="_blank" rel="noopener">comscore.com <span style="color:var(--text-muted);font-size:11px;">(Jan 22)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="ad_spend_velocity" data-sentiment="bullish" data-score="7">
+      <div class="card-top">
+        <h3>$7.4B in CTV ad value wasted due to inaccurate data and fraud in 2026</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Mar 15, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">High fraud rates create demand for ML-driven bid optimization and fraud detection — core Moloco capabilities</div>
+      <p class="summary">Approximately 40% of every dollar spent in the open CTV programmatic market is wasted due to inaccurate data, translating to $7.4B in lost CTV value in 2026. Bot fraud accounts for 65% of all CTV fraud, and 20.8% of CTV impressions never reached a real screen. Among UK advertisers, only 28% feel confident their CTV ads appear in fraud-free placements.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>The $7.4B waste figure is simultaneously alarming and opportunistic for Moloco. ML-driven bid optimization that can identify and avoid fraudulent inventory in real-time is a concrete, quantifiable value proposition. If Moloco&#x27;s models can reduce waste by even 10% compared to competitors, that&#x27;s hundreds of millions in recovered ad value. This data point should be in every sales deck: &#x27;The CTV market wastes $7.4B on bad data. Our ML models are trained to separate signal from noise.&#x27; The 65% bot fraud rate in CTV also argues for investing in pre-bid fraud detection as a product differentiator.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">fraud</span><span class="tag">data-quality</span><span class="tag">waste</span><span class="tag">bot-traffic</span><span class="tag">measurement</span><span class="tag">verification</span>
+        <span style="flex:1"></span>
+        <a href="https://truthset.com/news/heres-how-much-inaccurate-data-will-cost-ctv-advertisers-in-2026/" class="source-link" target="_blank" rel="noopener">truthset.com <span style="color:var(--text-muted);font-size:11px;">(Mar 15)</span> &#x2197;</a><a href="https://the.dtctimes.com/p/2026-ctv-playbook-don-t-get-f-ed-by-fraud" class="source-link" target="_blank" rel="noopener">dtctimes.com <span style="color:var(--text-muted);font-size:11px;">(Mar 01)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="inventory_expansion">
+      <div class="pillar-header">
+        <div class="pillar-icon inventory">▦</div>
+        <h2>Inventory Expansion</h2>
+        <span class="count">4 signals</span>
+      </div>
+      
+    <div class="signal-card" data-pillar="inventory_expansion" data-sentiment="bullish" data-score="7">
+      <div class="card-top">
+        <h3>Roku holds 32% share of open CTV ad platform market, $6.8B segment growing</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Feb 20, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">PMP growth and search/social migration both favor performance-oriented CTV platforms like Moloco</div>
+      <p class="summary">Roku maintains dominant 32% share of the open programmatic CTV market, which is estimated to reach $6.8B in 2026 (up from $6B in 2025). However, the supply side is shifting from open auctions to controlled deals — PMP deals grew from 41% in 2023 to 59% in 2024. Up to 50% of streaming advertisers expect to fund CTV increases by pulling from search and social budgets.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>The PMP deal shift from 41% to 59% is a structural change that favors DSPs with strong publisher relationships and ML-driven deal optimization — both Moloco strengths. Open auction shrinkage means performance-based bidders who can win in curated environments will outperform spray-and-pray approaches. Moloco&#x27;s outcome-based bidding is well-suited for PMPs where CPMs are higher but conversion intent is stronger. The search/social budget migration is also notable — advertisers bringing lower-funnel expectations to CTV will demand the ROAS accountability Moloco delivers.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Roku</span><span class="tag">open-programmatic</span><span class="tag">PMP</span><span class="tag">market-share</span><span class="tag">budget-migration</span>
+        <span style="flex:1"></span>
+        <a href="https://www.mediapost.com/publications/article/412954/roku-remains-top-ctv-open-ad-platform-with-32-sha.html" class="source-link" target="_blank" rel="noopener">mediapost.com <span style="color:var(--text-muted);font-size:11px;">(Feb 20)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="inventory_expansion" data-sentiment="bullish" data-score="6">
+      <div class="card-top">
+        <h3>Sports FAST channels accelerate: Scripps Sports Network launches across major platforms</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Mar 24, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">New biddable sports inventory on FAST platforms expands the programmatic supply pool for ML-optimized campaigns</div>
+      <p class="summary">E.W. Scripps launched Scripps Sports Network on March 24 as a free ad-supported streaming channel featuring 100+ live events annually including women&#x27;s sports and emerging leagues. Separately, MotoAmerica secured an exclusive Samsung TV Plus FAST deal for live racing through 2027. Complex TV launched April 1 across Amazon Prime, Roku, Samsung TV Plus, and six other platforms.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>Live sports on FAST channels is significant because sports inventory commands premium CPMs and delivers highly engaged, lean-forward audiences — ideal for performance measurement. Scripps Sports across multiple FAST platforms means this inventory is biddable through programmatic pipes. Moloco should monitor whether these sports FAST channels open programmatic guaranteed paths, as app marketers running CTV campaigns during live sports see higher conversion rates.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">FAST</span><span class="tag">sports</span><span class="tag">Scripps</span><span class="tag">Samsung-TV-Plus</span><span class="tag">live-sports</span><span class="tag">inventory</span>
+        <span style="flex:1"></span>
+        <a href="https://thedesk.net/2026/03/scripps-sports-network-streaming-channel-launch/" class="source-link" target="_blank" rel="noopener">thedesk.net <span style="color:var(--text-muted);font-size:11px;">(Mar 24)</span> &#x2197;</a><a href="https://variety.com/2026/tv/news/motoamerica-races-samsung-tv-plus-fast-channel-1236673443/" class="source-link" target="_blank" rel="noopener">variety.com <span style="color:var(--text-muted);font-size:11px;">(Mar 18)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="inventory_expansion" data-sentiment="bullish" data-score="6">
+      <div class="card-top">
+        <h3>IAB NewFronts 2026 pitches dominated by performance, data, and Amazon DSP deals</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Mar 27, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Industry shift toward performance-based selling at NewFronts validates Moloco&#x27;s outcome-driven positioning</div>
+      <p class="summary">The 2026 IAB NewFronts were defined by three themes: performance measurement, first-party data integration, and Amazon DSP distribution deals. Publishers are increasingly pitching advertisers on outcome-based metrics rather than reach, and Amazon DSP is becoming the common distribution layer for CTV inventory across multiple platforms.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>NewFronts shifting from &#x27;reach and frequency&#x27; pitches to &#x27;performance and data&#x27; pitches confirms the market narrative Moloco has been building. When publishers themselves lead with outcomes, it validates Moloco&#x27;s buyer-side optimization story. However, Amazon DSP becoming the default distribution layer is a structural risk — if Amazon controls both supply (Prime Video) and demand (DSP), independent performance platforms face intermediation. Moloco should aggressively pursue direct publisher integrations to avoid Amazon toll-gating.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">NewFronts</span><span class="tag">IAB</span><span class="tag">performance</span><span class="tag">Amazon-DSP</span><span class="tag">publisher-shift</span>
+        <span style="flex:1"></span>
+        <a href="https://www.newscaststudio.com/2026/03/27/performance-data-and-amazon-dsp-deals-define-iab-newfronts-2026-pitches/" class="source-link" target="_blank" rel="noopener">newscaststudio.com <span style="color:var(--text-muted);font-size:11px;">(Mar 27)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="inventory_expansion" data-sentiment="bullish" data-score="5">
+      <div class="card-top">
+        <h3>Cadent sets 100% direct supply path standard for CTV SSP inventory</h3>
+        <div class="impact-badge">
+          <span>5/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:50%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Mar 01, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Cleaner supply paths improve ML model performance and validate programmatic CTV quality narrative</div>
+      <p class="summary">Cadent announced that 100% of its SSP CTV supply paths are now direct, far exceeding the industry benchmark of 75%. This sets a new standard for supply path transparency in programmatic CTV, addressing advertiser concerns about resold or opaque inventory chains.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>Supply path quality is a prerequisite for ML optimization — garbage in, garbage out. Cadent&#x27;s 100% direct standard means every impression Moloco bids on through Cadent has verified provenance, which improves model training data quality and campaign outcomes. This is a proof point Moloco can reference when advertisers raise CTV fraud concerns: &#x27;We prioritize SSPs with direct supply paths like Cadent&#x27;s standard.&#x27; It also differentiates from competitors running on murkier supply chains.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Cadent</span><span class="tag">supply-path</span><span class="tag">SSP</span><span class="tag">transparency</span><span class="tag">fraud-prevention</span>
+        <span style="flex:1"></span>
+        <a href="https://www.prnewswire.com/news-releases/cadents-inventory-manager-sets-new-standard-with-commitment-to-100-premium-direct-ctv-inventory-302673338.html" class="source-link" target="_blank" rel="noopener">prnewswire.com <span style="color:var(--text-muted);font-size:11px;">(Mar 01)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="regulatory_watch">
+      <div class="pillar-header">
+        <div class="pillar-icon regulatory">⚠</div>
+        <h2>Regulatory Watch</h2>
+        <span class="count">3 signals</span>
+      </div>
+      
+    <div class="signal-card" data-pillar="regulatory_watch" data-sentiment="neutral" data-score="7">
+      <div class="card-top">
+        <h3>Texas AG sues five TV manufacturers over ACR data collection, wins restraining orders</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          &#x25C6; neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Dec 15, 2025</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">ACR restrictions create targeting signal loss but advantage Moloco&#x27;s first-party data approach over ACR-dependent competitors</div>
+      <p class="summary">Texas AG Ken Paxton filed lawsuits against Sony, Samsung, LG, Hisense, and TCL for alleged privacy violations through automatic content recognition (ACR) technology. Courts granted temporary restraining orders against Hisense and Samsung, halting certain ACR data collection in Texas. This is the first major ACR enforcement since the FTC&#x27;s 2017 Vizio case.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>ACR restrictions are a double-edged sword for Moloco. On the bearish side, ACR data powers household-level viewing graphs that some CTV platforms use for targeting — if collection is curtailed, those targeting signals degrade. On the bullish side, Moloco&#x27;s ML approach using first-party advertiser data and contextual signals is less dependent on ACR than competitors relying on device-level viewing data. This regulatory trend advantages platforms with robust first-party data activation — a core Moloco differentiator. Sales teams should position this as &#x27;our targeting doesn&#x27;t depend on data practices under legal scrutiny.&#x27;</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">ACR</span><span class="tag">Texas</span><span class="tag">privacy</span><span class="tag">enforcement</span><span class="tag">Samsung</span><span class="tag">LG</span><span class="tag">targeting</span>
+        <span style="flex:1"></span>
+        <a href="https://iapp.org/news/a/automated-content-recognition-technology-takes-privacy-enforcement-spotlight" class="source-link" target="_blank" rel="noopener">iapp.org <span style="color:var(--text-muted);font-size:11px;">(Dec 15)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="regulatory_watch" data-sentiment="bullish" data-score="6">
+      <div class="card-top">
+        <h3>Three new state privacy laws take effect; Kentucky adds ACR as sensitive data</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bullish">
+          <span class="dot"></span>
+          &#x25B2; bullish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Jan 01, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">State-level ACR restrictions advantage Moloco&#x27;s first-party data ML approach over device-data-dependent competitors</div>
+      <p class="summary">Kentucky, Indiana, and Rhode Island privacy laws took effect January 1, 2026. Kentucky&#x27;s HB 692 notably adds &#x27;automatic content recognition&#x27; as a category of sensitive data, requiring explicit consent for ACR data collection on smart TVs. New laws impose stricter limits on targeted ads to minors, profiling, cross-site tracking, and geolocation-based marketing.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>Kentucky classifying ACR as &#x27;sensitive data&#x27; is a bellwether — expect other states to follow. This fragments the CTV data landscape state-by-state, making consent management operationally complex for CTV platforms relying on device-level data. For Moloco, this accelerates the value proposition of ML models trained on advertiser first-party data rather than third-party device signals. Every new state ACR restriction is a sales talking point: Moloco&#x27;s optimization doesn&#x27;t rely on data regulators are cracking down on.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">state-privacy</span><span class="tag">Kentucky</span><span class="tag">ACR</span><span class="tag">sensitive-data</span><span class="tag">consent</span><span class="tag">COPPA</span>
+        <span style="flex:1"></span>
+        <a href="https://www.hunton.com/privacy-and-information-security-law/new-u-s-state-privacy-social-media-and-ai-laws-take-effect-in-january-2026" class="source-link" target="_blank" rel="noopener">hunton.com <span style="color:var(--text-muted);font-size:11px;">(Jan 01)</span> &#x2197;</a><a href="https://www.ketch.com/blog/posts/us-privacy-laws-2026" class="source-link" target="_blank" rel="noopener">ketch.com <span style="color:var(--text-muted);font-size:11px;">(Jan 10)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="regulatory_watch" data-sentiment="neutral" data-score="6">
+      <div class="card-top">
+        <h3>California CPPA hits record $2.75M settlement against streaming company for opt-out failures</h3>
+        <div class="impact-badge">
+          <span>6/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:60%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge neutral">
+          <span class="dot"></span>
+          &#x25C6; neutral
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Feb 15, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Increased enforcement creates compliance costs industry-wide but Moloco&#x27;s first-party approach is less exposed</div>
+      <p class="summary">The California Privacy Protection Agency imposed its largest-ever settlement — $2.75M against a streaming company for opt-out failures — following a $1.35M record against Tractor Supply Company. Enforcement is shifting from policy to penalties, with regulators now scrutinizing the actual mechanics of data flow, how pixels fire, how data is shared with adtech partners, and whether consent actually means consent.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>The CPPA&#x27;s focus on adtech data flow mechanics means every programmatic CTV player&#x27;s data pipeline is under the microscope. Platforms with opaque or convoluted data sharing practices face real financial exposure. Moloco should ensure its data processing documentation is audit-ready and position its privacy posture as a competitive advantage. For sales: &#x27;Our ML optimization runs on consented first-party signals, not the kind of third-party data sharing that just cost a streamer $2.75M.&#x27;</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">CPPA</span><span class="tag">California</span><span class="tag">enforcement</span><span class="tag">streaming</span><span class="tag">opt-out</span><span class="tag">penalties</span>
+        <span style="flex:1"></span>
+        <a href="https://insights.audiencex.com/privacy-enforcement-in-2026-the-shift-from-policy-to-penalties/" class="source-link" target="_blank" rel="noopener">audiencex.com <span style="color:var(--text-muted);font-size:11px;">(Feb 15)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+    <div class="pillar-section" data-pillar-section="competitive_positioning">
+      <div class="pillar-header">
+        <div class="pillar-icon competitive">⌖</div>
+        <h2>Competitive Positioning</h2>
+        <span class="count">3 signals</span>
+      </div>
+      
+    <div class="signal-card high-impact" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="9">
+      <div class="card-top">
+        <h3>Amazon DSP outpaces Trade Desk in CTV with 23% vs 14% ad revenue growth<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>9/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:90%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Feb 10, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Amazon&#x27;s first-party data moat and closed-loop attribution narrow the differentiation gap for all independent CTV performance platforms including Moloco</div>
+      <p class="summary">Amazon reported 23% YoY ad revenue growth in Q4 2025, outpacing CTV market growth by 10 points, while The Trade Desk reported 14% growth with Q1 2026 guidance projecting just 10%. Amazon&#x27;s growth is credited to DSP improvements, deeper CTV partnerships with Roku and Disney, and first-party audiences across Prime Video, Fire TV, and live sports. Prime Video investment grew 127% YoY.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>Amazon&#x27;s divergence from TTD exposes a critical market dynamic: walled gardens with first-party commerce data are winning the CTV performance war. This is DIRECTLY relevant to Moloco&#x27;s competitive positioning. Amazon&#x27;s closed-loop attribution (see ad → buy on Amazon) is the gold standard for outcome measurement. Moloco must differentiate by offering similar closed-loop attribution for non-Amazon commerce — app installs, DTC purchases, in-store visits. The &#x27;open internet&#x27; narrative that TTD champions is losing to Amazon&#x27;s data gravity. Moloco should avoid positioning alongside TTD&#x27;s &#x27;open web&#x27; framing and instead lead with measurable outcomes regardless of inventory source.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Amazon-DSP</span><span class="tag">Trade-Desk</span><span class="tag">first-party-data</span><span class="tag">closed-loop</span><span class="tag">revenue-growth</span><span class="tag">walled-garden</span>
+        <span style="flex:1"></span>
+        <a href="https://www.adexchanger.com/on-tv-and-video/why-amazon-is-gaining-ground-in-ctv-and-the-trade-desk-is-losing-its-lead/" class="source-link" target="_blank" rel="noopener">adexchanger.com <span style="color:var(--text-muted);font-size:11px;">(Feb 10)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card high-impact" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="8">
+      <div class="card-top">
+        <h3>MNTN doubles down on &#x27;Performance TV&#x27; positioning with 100+ KPIs and attribution suite<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span></h3>
+        <div class="impact-badge">
+          <span>8/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:var(--high-impact)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Jan 10, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">MNTN&#x27;s &#x27;Performance TV&#x27; narrative directly competes with Moloco&#x27;s outcome-based CTV positioning</div>
+      <p class="summary">MNTN continues to position itself as the &#x27;Performance TV&#x27; platform, emphasizing lower-funnel outcomes with 100+ KPIs, integrated creative services, and real-time attribution. MNTN&#x27;s bidding system uses multiple algorithms to automate media buying with dynamic daily pacing and predictive bid optimization. The platform is popular with direct-response advertisers seeking CTV ROI accountability.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>MNTN is the most direct competitive threat to Moloco&#x27;s CTV performance positioning. They own the &#x27;Performance TV&#x27; brand identity and are executing on it with attribution infrastructure that speaks directly to the same buyers Moloco targets. The 100+ KPI messaging is a quantity play — Moloco should counter with quality: not just tracking outcomes, but optimizing toward them in real-time with ML. The key differentiation is that MNTN automates media buying while Moloco optimizes it — automation follows rules, ML finds patterns humans can&#x27;t. Sales teams need a crisp MNTN battle card emphasizing ML-driven optimization vs. rule-based automation.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">MNTN</span><span class="tag">performance-TV</span><span class="tag">attribution</span><span class="tag">direct-response</span><span class="tag">battle-card</span>
+        <span style="flex:1"></span>
+        <a href="https://mountain.com/" class="source-link" target="_blank" rel="noopener">mountain.com <span style="color:var(--text-muted);font-size:11px;">(Jan 10)</span> &#x2197;</a><a href="https://mountain.com/tech/part-two-inside-mntns-bidding-architecture/" class="source-link" target="_blank" rel="noopener">mountain.com <span style="color:var(--text-muted);font-size:11px;">(Jan 10)</span> &#x2197;</a>
+      </div>
+    </div>
+
+    <div class="signal-card" data-pillar="competitive_positioning" data-sentiment="bearish" data-score="7">
+      <div class="card-top">
+        <h3>Roku pivots to &#x27;commerce engine&#x27; narrative, treats CTV as performance channel</h3>
+        <div class="impact-badge">
+          <span>7/10</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%;background:var(--accent)"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <span class="sentiment-badge bearish">
+          <span class="dot"></span>
+          &#x25BC; bearish
+        </span>
+        <span style="font-size:12px;color:var(--text-muted);">Published Jan 15, 2026</span>
+        <span style="font-size:12px;color:var(--text-muted);">&bull; Captured Apr 06, 2026</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-style:italic;">Roku adopting performance/commerce narrative closes differentiation gap between platform owners and independent performance DSPs</div>
+      <p class="summary">Roku is repositioning CTV as a &#x27;commerce engine&#x27; for 2026, seeing growing demand from marketers to treat CTV as a true performance channel. Roku predicts up to 50% of streaming advertisers will subsidize CTV increases with budgets from search and social. Roku is expanding data integrations with Amazon and The Trade Desk for personalized TV advertising.</p>
+      <div class="commentary">
+        <div class="label">Hot Take</div>
+        <p>Roku&#x27;s &#x27;commerce engine&#x27; pivot is a narrative land-grab that should concern Moloco. When the #1 CTV platform by market share starts talking &#x27;performance&#x27; and &#x27;commerce,&#x27; it normalizes outcome-based CTV but also means Roku becomes a competitor, not just a supply partner. Roku has the device graph, the viewer data, and now the commerce framing. Moloco&#x27;s counter-argument must emphasize independence from walled gardens: &#x27;Roku optimizes for Roku. Moloco optimizes for your business outcomes across ALL CTV inventory.&#x27; The search/social budget migration Roku predicts is good news — it means lower-funnel advertisers are arriving, which plays to Moloco&#x27;s strengths.</p>
+      </div>
+      <div class="card-footer">
+        <span class="tag">Roku</span><span class="tag">commerce-engine</span><span class="tag">performance-pivot</span><span class="tag">walled-garden</span><span class="tag">narrative-shift</span>
+        <span style="flex:1"></span>
+        <a href="https://www.advanced-television.com/2025/12/11/roku-ctv-becomes-a-commerce-engine-in-2026/" class="source-link" target="_blank" rel="noopener">advanced-television.com <span style="color:var(--text-muted);font-size:11px;">(Dec 11)</span> &#x2197;</a><a href="https://www.beet.tv/2026/01/post-100405.html" class="source-link" target="_blank" rel="noopener">beet.tv <span style="color:var(--text-muted);font-size:11px;">(Jan 15)</span> &#x2197;</a>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">&#x1F50D;</div>
+    <p>No signals match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+<footer class="engine-footer">
+  <p>Moloco CTV Signal Engine v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Moloco CTV Product Intelligence &mdash; <a href="https://danetomalin.com/demo/roadmap">Product Roadmap Steering</a> | <a href="https://danetomalin.com/demo/competitive-intelligence">Competitive Intel</a></p>
+</footer>
+
+<script>
+// --- State ---
+var activeFilter = 'all';
+var activeSentiment = null;
+var searchQuery = '';
+
+// --- Pillar Filter ---
+function filterSignals(pillar, btn) {
+  activeFilter = pillar;
+  // Update button states
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Sentiment Filter (toggle) ---
+function filterSentiment(sentiment, btn) {
+  if (activeSentiment === sentiment) {
+    activeSentiment = null;
+    btn.classList.remove('active');
+  } else {
+    activeSentiment = sentiment;
+    var btns = document.querySelectorAll('.filter-btn[data-sentiment]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchSignals(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.signal-card');
+  var sections = document.querySelectorAll('.pillar-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var pillar = card.getAttribute('data-pillar');
+    var sentiment = card.getAttribute('data-sentiment');
+    var text = card.textContent.toLowerCase();
+
+    var pillarMatch = (activeFilter === 'all' || pillar === activeFilter);
+    var sentimentMatch = (!activeSentiment || sentiment === activeSentiment);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (pillarMatch && sentimentMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Show/hide pillar sections based on visible cards
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.signal-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  // Empty state
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Scorecard click-to-filter ---
+function filterFromScorecard(sentiment) {
+  // Always reset pillar filter to 'all' when clicking a scorecard tile
+  activeFilter = 'all';
+  var pillarBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  pillarBtns.forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-filter') === 'all');
+  });
+
+  // Clear search
+  searchQuery = '';
+  var searchBox = document.getElementById('search-box');
+  if (searchBox) searchBox.value = '';
+
+  // Handle sentiment toggle
+  var sentimentBtns = document.querySelectorAll('.filter-btn[data-sentiment]');
+  sentimentBtns.forEach(function(b) { b.classList.remove('active'); });
+  var scorecardCards = document.querySelectorAll('.scorecard-card[data-scorecard]');
+  scorecardCards.forEach(function(c) { c.classList.remove('active-filter'); });
+
+  if (sentiment === 'all' || activeSentiment === sentiment) {
+    // Reset — show everything
+    activeSentiment = null;
+  } else {
+    activeSentiment = sentiment;
+    // Sync the corresponding filter button
+    var matchBtn = document.querySelector('.filter-btn[data-sentiment="' + sentiment + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    // Highlight the scorecard tile
+    var matchCard = document.querySelector('.scorecard-card[data-scorecard="' + sentiment + '"]');
+    if (matchCard) matchCard.classList.add('active-filter');
+  }
+
+  applyFilters();
+
+  // Scroll to signals
+  var content = document.getElementById('dossier-content');
+  if (content) content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// --- Impact bar color ---
+function getImpactColor(score) {
+  if (score >= 8) return 'var(--high-impact)';
+  if (score >= 5) return 'var(--accent)';
+  return 'var(--text-muted)';
+}
+</script>
+
+</body>
+</html>

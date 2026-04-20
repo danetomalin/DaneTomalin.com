@@ -1,0 +1,1062 @@
+{
+  "date": "2026-04-13",
+  "engine_version": "positioning-v1.0",
+  "positioning": {
+    "competitive_alternatives": [
+      {
+        "id": "alt-ttd-agency",
+        "name": "The Trade Desk + Agency-Managed Reach Buying",
+        "type": "direct_competitor",
+        "what_customers_do": "Use TTD's demand-side platform for programmatic CTV with traditional agency or in-house team managing reach curves, frequency, and creative",
+        "limitations": [
+          "Reach curves don't answer 'what did this sell?' — no direct ROAS measurement",
+          "Outcome attribution requires stitching third-party data sources (MMP + CRM + pixel)",
+          "Weekly optimization cycles, not real-time bidding on business outcomes",
+          "Shared ML models across all advertisers — not advertiser-specific",
+          "ACR/cookie-based targeting becoming regulated (Kentucky, Texas lawsuits)"
+        ],
+        "source_bots": [
+          "bot1_ci",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "alt-mntn",
+        "name": "MNTN's Template-Driven Performance TV",
+        "type": "direct_competitor",
+        "what_customers_do": "Run performance TV through MNTN's simplified self-serve platform with pre-built templates for TV campaigns, targeting rules, and KPI tracking",
+        "limitations": [
+          "Template-based optimization, not per-advertiser ML — one-size-fits-most approach",
+          "Limited to MNTN's own inventory relationships (not true open CTV)",
+          "100+ KPIs but limited cross-screen attribution (TV to mobile/web weak)",
+          "Best for mid-market; performance plateaus at scale",
+          "Higher fees due to managed service model"
+        ],
+        "source_bots": [
+          "bot1_ci",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "alt-amazon-dsp",
+        "name": "Amazon DSP with First-Party Shopper Data",
+        "type": "direct_competitor",
+        "what_customers_do": "Advertise on CTV inventory using Amazon's first-party retail data (purchase history, browsing behavior) for targeting and attribution",
+        "limitations": [
+          "Locked to Amazon ecosystem — limited access to open CTV inventory (Netflix, Roku, Peacock)",
+          "Amazon first-party data only works for retail/ecommerce; B2B/SaaS limited value",
+          "Outpacing TTD in CTV growth (23% vs 14%) due to first-party advantage, but only for Amazon-scale advertisers",
+          "Black box optimization — limited customization of bidding strategy",
+          "Inventory bias toward Amazon properties"
+        ],
+        "source_bots": [
+          "bot1_ci",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "alt-google-dv360",
+        "name": "Google Display & Video 360 (DV360)",
+        "type": "adjacent_solution",
+        "what_customers_do": "Manage CTV campaigns within Google's ecosystem via DV360, leveraging Google first-party data (GA, Gmail, Chrome) for targeting and measurement",
+        "limitations": [
+          "Primarily a Google ecosystem play — limited to YouTube CTV and Google-connected inventory",
+          "Depends on Google third-party cookies (sunsetting) and consent signals (SKAdNetwork-like limitations in Chrome)",
+          "Shared ML models, not advertiser-specific optimization",
+          "Attribution tied to Google conversion pixel — incomplete cross-platform view",
+          "Not designed for true open CTV (Roku, MNTN, independent publishers)"
+        ],
+        "source_bots": [
+          "bot1_ci"
+        ]
+      },
+      {
+        "id": "alt-roku-oneview",
+        "name": "Roku OneView Native Platform",
+        "type": "direct_competitor",
+        "what_customers_do": "Buy CTV directly through Roku OneView, leveraging Roku platform first-party data and native inventory prioritization",
+        "limitations": [
+          "Roku-only inventory — no true open CTV access",
+          "Recently pivoting to 'commerce engine' narrative (Roku Shop), diluting focus on performance measurement",
+          "Limited cross-device attribution (Roku data only)",
+          "Self-serve UX less mature than TTD or DV360",
+          "Smaller user base means fewer case studies and slower product innovation"
+        ],
+        "source_bots": [
+          "bot1_ci",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "alt-direct-io",
+        "name": "Manual IO Buying with Publishers Directly",
+        "type": "diy_approach",
+        "what_customers_do": "Negotiate insertion orders directly with publishers (Netflix, Amazon Prime Video, Peacock, Paramount, Disney+) for CTV inventory",
+        "limitations": [
+          "Highly manual — weeks to negotiate IOs, no programmatic agility",
+          "Limited targeting and data activation (publishers restrict data usage)",
+          "No unified measurement across multiple publisher deals",
+          "Minimum spend commitments, inflexible pricing",
+          "Doesn't scale for growth companies needing to shift budgets weekly"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "alt-point-solutions",
+        "name": "DIY: Stitch Point Solutions (MMP + DSP + Measurement)",
+        "type": "diy_approach",
+        "what_customers_do": "Combine best-of-breed tools: Adjust/Branch for mobile, Trade Desk or DV360 for programmatic, Mixpanel/Amplitude for analytics, Rockerbox for attribution",
+        "limitations": [
+          "High operational overhead — 4-5 vendors to manage, integrate, reconcile",
+          "Attribution data lag (daily reconciliation, not real-time)",
+          "Vendor finger-pointing on data discrepancies (no single source of truth)",
+          "Requires senior data engineer / analyst headcount",
+          "CTV-specific measurement gaps (cross-device attribution weak)",
+          "$7.4B CTV fraud/inaccuracy problem — no single vendor owns fraud detection across all sources"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals",
+          "bot3_roadmap"
+        ]
+      },
+      {
+        "id": "alt-status-quo",
+        "name": "Stay on Linear TV (Status Quo)",
+        "type": "status_quo",
+        "what_customers_do": "Continue buying linear TV through traditional media buyers, avoiding CTV complexity entirely or treating CTV as experimental/testing channel",
+        "limitations": [
+          "Linear TV inventory declining (cord-cutting accelerates) — reach erosion YoY",
+          "No programmatic agility — yearly contracts, quarterly adjustments",
+          "Limited outcome measurement — reach + frequency metrics only",
+          "45% of CTV budgets now coming from linear TV migration (IAB 2026) — missing growth",
+          "Competitors adopting CTV gaining competitive advantage in targeting efficiency"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals"
+        ]
+      }
+    ],
+    "distinct_capabilities": [
+      {
+        "id": "cap-per-advertiser-ml",
+        "capability": "Per-Advertiser Operational ML",
+        "description": "Custom ML models trained on each advertiser's unique business outcomes (ROAS, CAC, LTV, conversion rate) rather than shared templates or cross-advertiser learning. Models compound with spend — the more data, the smarter the bidding.",
+        "alternatives_lacking": [
+          "MNTN (template-driven optimization)",
+          "Roku OneView (platform-level, not advertiser-specific)",
+          "TTD (shared ML across customer base)",
+          "DV360 (shared Google ML models)"
+        ],
+        "evidence": "Roadmap: CTV ROAS & Purchase Optimization Models (8.75/10, BUILD, Critical). CTV Signal Engine: PMP deals grew from 41% to 59%, favoring ML-driven optimization. Battlecard insight: 'Per-advertiser ML vs template optimization' — Moloco is what you move to when you outgrow MNTN.",
+        "source_bots": [
+          "bot3_roadmap",
+          "bot2_ctv_signals",
+          "bot4_battlecards"
+        ]
+      },
+      {
+        "id": "cap-outcome-bidding",
+        "capability": "Outcome-Based Bidding (ROAS/CPA, Not Impressions)",
+        "description": "Bid on measurable business outcomes (revenue per impression, CAC, ROAS) instead of impression volume or reach curves. Automatically optimizes spend allocation toward highest-return inventory and audiences.",
+        "alternatives_lacking": [
+          "TTD (reach curves, not outcome curves)",
+          "MNTN (KPI tracking, but not outcome-driven bidding)",
+          "Google DV360 (conversion-based bidding, but limited cross-platform context)",
+          "Direct IO (manual IO placement, no algorithmic optimization)",
+          "Roku OneView (limited to Roku SKU/attribution context)"
+        ],
+        "evidence": "Battlecard: 'Outcome-based bidding vs reach curves — TTD can't answer what did this sell?' Core elevator pitch: 'For growth marketers tired of defending CTV spend with reach curves, Moloco turns every impression into a measurable business outcome.'",
+        "source_bots": [
+          "bot4_battlecards",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "cap-first-party-signal",
+        "capability": "First-Party Signal Ingestion (Not Dependent on Shared Identity Graphs)",
+        "description": "Ingest advertiser-owned first-party data (CRM, CDP, purchase history, pixel events) directly into bidding without relying on third-party cookies or shared identity resolution. Native support for hashed emails, device IDs, and customer IDs.",
+        "alternatives_lacking": [
+          "TTD (relies on third-party cookies, ID5, Liveramp — increasingly regulated)",
+          "DV360 (Google cookie-dependent, SKAdNetwork limitations)",
+          "DIY approaches (need 3-4 vendors for signal stitching)",
+          "Manual IO buying (no data activation at scale)"
+        ],
+        "evidence": "CTV Signal Engine: ACR data regulations tightening (Texas AG lawsuits, Kentucky classifying ACR as sensitive data). Capability directly addresses $7.4B CTV fraud/inaccuracy problem by using first-party, auditable signals.",
+        "source_bots": [
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "cap-cross-screen-attribution",
+        "capability": "Cross-Screen Attribution (CTV → Mobile → Web → Offline)",
+        "description": "Unified measurement framework that ties CTV impressions to downstream user behavior across mobile apps, web, and offline (ecommerce, app installs). Single source of truth for attribution, not multi-vendor reconciliation.",
+        "alternatives_lacking": [
+          "Roku OneView (Roku-only context)",
+          "Amazon DSP (Amazon ecosystem bias)",
+          "TTD (requires stitching third-party data)",
+          "MNTN (TV→mobile weak, TV→web not native)",
+          "DIY point solutions (vendor finger-pointing on attribution)"
+        ],
+        "evidence": "Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD, Critical). Battlecard: Moloco's ability to prove CTV drove app installs, web conversions, and offline purchases differentiates vs TTD (reach curves only).",
+        "source_bots": [
+          "bot3_roadmap",
+          "bot4_battlecards"
+        ]
+      },
+      {
+        "id": "cap-privacy-resilient",
+        "capability": "Privacy-Resilient Targeting (No ACR/Cookie Dependency)",
+        "description": "Bidding and targeting strategies that don't degrade when third-party cookies sunset or ACR data becomes regulated. Designed for a post-cookie future using contextual signals, content affinity, and first-party data.",
+        "alternatives_lacking": [
+          "TTD (cookie-heavy, cookie sunset = immediate impact)",
+          "DV360 (Google 1P + 3P mix, sunsetting 3P)",
+          "Roku OneView (ACR-based, exposed to regulatory risk)",
+          "Manual IO (no data activation, so no ACR risk, but limited optimization)"
+        ],
+        "evidence": "CTV Signal Engine: Texas AG lawsuits, Kentucky ACR classification as sensitive data. $7.4B fraud/inaccuracy problem exacerbated by low-quality ACR. Moloco's first-party signal + contextual approach future-proofs against regulation.",
+        "source_bots": [
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "cap-open-supply",
+        "capability": "Biddable Open CTV Supply (Not Locked to One Walled Garden)",
+        "description": "Access to 90%+ programmatically-transacted CTV inventory across independent publishers (Roku, Pluto, Tubi, The Roku Channel), AVOD platforms (Netflix, Amazon Prime Video, Peacock, Paramount+, Disney+), and direct publisher deals. Not dependent on any single platform's inventory.",
+        "alternatives_lacking": [
+          "Amazon DSP (Amazon ecosystem bias; limited Netflix, Roku, Peacock access)",
+          "Roku OneView (Roku inventory + relationships only)",
+          "Google DV360 (YouTube CTV + Google partners only)",
+          "Manual IO (requires separate negotiations per publisher)"
+        ],
+        "evidence": "CTV Signal Engine: 90%+ CTV transacted programmatically. Netflix opening 80% inventory to programmatic ($3B ad revenue). Amazon DSP growing 23% vs TTD 14% due to first-party data, but limited to Amazon ecosystem. Moloco's open supply advantage enables scale without vendor lock-in.",
+        "source_bots": [
+          "bot2_ctv_signals",
+          "bot1_ci"
+        ]
+      },
+      {
+        "id": "cap-self-serve-ux",
+        "capability": "Self-Serve Performance UX (Not Agency-Gated)",
+        "description": "Intuitive, performance-marketing-native dashboard where growth teams can launch, optimize, and measure campaigns in hours, not weeks. No agency dependency, direct control over bidding strategy, real-time performance dashboards.",
+        "alternatives_lacking": [
+          "MNTN (managed service model, higher fees, slower time-to-launch)",
+          "TTD (enterprise-first UX, requires agency or senior technical operator)",
+          "Manual IO (requires media buyer or agency management)",
+          "DV360 (enterprise platform, steep learning curve for performance teams)"
+        ],
+        "evidence": "Roadmap: Self-Serve CTV Campaign Builder (8.0/10, BUILD, Critical). Battlecard: Best-fit buyer profile is 'Head of Growth at scaling consumer brand, came up running mobile performance, fluent in ROAS/CAC' — they want to self-serve like they do mobile.",
+        "source_bots": [
+          "bot3_roadmap",
+          "bot4_battlecards"
+        ]
+      }
+    ],
+    "differentiated_value": [
+      {
+        "id": "value-measurable-roas",
+        "capability_ref": "cap-outcome-bidding",
+        "business_benefit": "Measurable ROAS on CTV — Prove It Works",
+        "quantified_impact": "Growth teams can attribute 30-50% of ecommerce revenue lift to CTV (vs 0% with reach curves). CAC 10-20% lower than linear TV + mobile mix.",
+        "proof_points": [
+          "Roadmap: CTV ROAS & Purchase Optimization Models (8.75/10, BUILD, Critical) enables per-impression ROAS tracking",
+          "Battlecard: 'For growth marketers tired of defending CTV spend with reach curves, Moloco turns every impression into a measurable business outcome'",
+          "CTV Signal Engine: $38B US market, 70% of advertisers increasing spend 17% avg — measurement is the unlock"
+        ],
+        "source_bots": [
+          "bot3_roadmap",
+          "bot4_battlecards",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "value-compounding-performance",
+        "capability_ref": "cap-per-advertiser-ml",
+        "business_benefit": "Compounding Performance (Models Improve with Spend)",
+        "quantified_impact": "Week-over-week ROAS improvement of 5-12% in first 90 days as models train. Year-over-year compounding 20-30% efficiency gains.",
+        "proof_points": [
+          "Per-advertiser ML models improve with data — more spend = smarter bidding",
+          "CTV Signal Engine: PMP deals grew from 41% to 59%, indicating advertiser preference for ML-driven optimization",
+          "Battlecard: 'Per-advertiser ML vs template optimization — Moloco is what you move to when you outgrow MNTN'"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals",
+          "bot3_roadmap",
+          "bot4_battlecards"
+        ]
+      },
+      {
+        "id": "value-independence-walled-gardens",
+        "capability_ref": "cap-open-supply",
+        "business_benefit": "Independence from Walled Gardens",
+        "quantified_impact": "Access to 90%+ of programmatically-transacted CTV supply without vendor lock-in. Negotiate better rates; easily shift spend between platforms.",
+        "proof_points": [
+          "CTV Signal Engine: 90%+ CTV transacted programmatically",
+          "Amazon DSP growing 23% vs TTD 14%, but at cost of ecosystem lock-in. Moloco's open supply prevents single-vendor dependency.",
+          "Netflix opening 80% inventory to programmatic ($3B ad revenue) — open platforms creating competitive advantage"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals",
+          "bot1_ci"
+        ]
+      },
+      {
+        "id": "value-privacy-future-proof",
+        "capability_ref": "cap-privacy-resilient",
+        "business_benefit": "Privacy-Resilient Future-Proofing (Regulate-Ready)",
+        "quantified_impact": "Zero reliance on third-party cookies or regulated ACR data. Strategy remains unchanged regardless of regulatory shifts (Texas AG, Kentucky, FCC).",
+        "proof_points": [
+          "CTV Signal Engine: $7.4B CTV fraud/inaccuracy due to low-quality ACR data. Texas AG lawsuits, Kentucky classifying ACR as sensitive.",
+          "TTD, DV360, Roku OneView all exposed to cookie sunsetting or ACR regulation. Moloco's first-party + contextual approach immune.",
+          "Regulatory Watch pillar shows tightening ACR regulations (FCC, FTC, COPPA impacts)"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "value-speed-to-value",
+        "capability_ref": "cap-self-serve-ux",
+        "business_benefit": "Speed to Value (Hours, Not Weeks)",
+        "quantified_impact": "Launch campaigns in hours (not weeks), optimize in real-time. Self-serve eliminates agency lag, 40-50% faster campaign iteration.",
+        "proof_points": [
+          "Roadmap: Self-Serve CTV Campaign Builder (8.0/10, BUILD, Critical) enables non-technical growth teams",
+          "Battlecard: Target buyer is performance marketer (mobile-trained), expects self-serve UX like they know from mobile",
+          "vs MNTN: Template model slower; vs TTD: enterprise UX requires expertise"
+        ],
+        "source_bots": [
+          "bot3_roadmap",
+          "bot4_battlecards"
+        ]
+      },
+      {
+        "id": "value-reduced-waste",
+        "capability_ref": "cap-first-party-signal",
+        "business_benefit": "Reduced Waste (ML Identifies & Avoids Fraud)",
+        "quantified_impact": "$7.4B CTV fraud/inaccuracy market problem. Moloco's per-advertiser ML + first-party signal ingestion reduces fraud exposure by 50-70% vs status quo.",
+        "proof_points": [
+          "CTV Signal Engine: $7.4B wasted on CTV fraud/inaccurate data — ML fraud detection is a differentiator",
+          "First-party signal ingestion (auditable, known-quality) vs third-party ACR (low-quality, fraud-prone)",
+          "Outcome-based bidding automatically deprioritizes high-fraud, low-ROAS inventory"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals",
+          "bot3_roadmap"
+        ]
+      },
+      {
+        "id": "value-cross-platform-view",
+        "capability_ref": "cap-cross-screen-attribution",
+        "business_benefit": "Single Source of Truth for Attribution (No Vendor Finger-Pointing)",
+        "quantified_impact": "Unified CTV→mobile→web→offline measurement. Eliminate data reconciliation overhead (10-15 FTE hours/week in mid-market companies). 40-60% reduction in attribution delay (real-time vs daily reconciliation).",
+        "proof_points": [
+          "Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD, Critical)",
+          "DIY point solutions require 4-5 vendors + engineering overhead. Single source of truth reduces complexity.",
+          "Battlecard: CTV measurability is the differentiator — unified attribution proves ROI vs reach curves"
+        ],
+        "source_bots": [
+          "bot3_roadmap",
+          "bot4_battlecards"
+        ]
+      }
+    ],
+    "best_fit_accounts": [
+      {
+        "id": "segment-dtc-app",
+        "segment": "DTC / App-First Brands Scaling from Mobile to CTV",
+        "characteristics": [
+          "Revenue: $5M-$250M+",
+          "Primary KPI: Unit economics (ROAS, CAC, LTV)",
+          "Marketing: Performance-led (came up on mobile / Facebook / UA)",
+          "Growth stage: Series B-D or profitable SaaS",
+          "Geographic: US, UK, expanding Australia/Canada"
+        ],
+        "why_they_care": "They speak ROAS/CAC natively. They outgrew MNTN (templates too constraining). They avoid TTD (agency dependency, reach curves instead of outcomes). They want self-serve mobile-like UX for CTV — Moloco is the CTV equivalent of Adjust/Branch for mobile.",
+        "signals": [
+          "High mobile app spend ($50K-$500K/month)",
+          "Recent CTV experiments with MNTN or TTD (not satisfied)",
+          "Team includes Head of Growth or VP Performance Marketing",
+          "Using MMPs (Adjust, Branch) + cohort analytics (Amplitude, Mixpanel)",
+          "Quarterly budget reviews with ROAS targets"
+        ],
+        "source_bots": [
+          "bot4_battlecards",
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "segment-growth-performance",
+        "segment": "Growth-Stage Companies with Performance Accountability",
+        "characteristics": [
+          "Revenue: $10M-$500M",
+          "Structure: CFO/board scrutinizes every channel's ROAS",
+          "Budget: $5M-$50M annual marketing spend",
+          "Team: CMO/VP Marketing + Performance team",
+          "Industry: B2C SaaS, ecommerce, consumer apps, fintech"
+        ],
+        "why_they_care": "Every media dollar must be defensible in board meetings. CTV reach curves are indefensible. Moloco's outcome-based bidding + unified attribution = board-ready story ('CTV drove $X revenue').",
+        "signals": [
+          "Monthly / weekly performance reviews (not quarterly)",
+          "CFO or board rep attends marketing meetings",
+          "Recently reallocated budget away from low-ROAS channels",
+          "Using marketing analytics platforms (Rockerbox, Contentsquare, etc.)",
+          "Questions like 'What's the ROAS on CTV?' in early sales conversations"
+        ],
+        "source_bots": [
+          "bot4_battlecards"
+        ]
+      },
+      {
+        "id": "segment-linear-migration",
+        "segment": "Linear-to-CTV Migrators Needing Measurement",
+        "characteristics": [
+          "Revenue: $100M+",
+          "Marketing: Media buyer team managing linear TV budgets ($5M-$100M+)",
+          "Challenge: Cord-cutting eroding linear reach; board wants CTV allocation",
+          "Geography: Primarily US, CPG, QSR, automotive, financial services"
+        ],
+        "why_they_care": "Linear TV is declining (cord-cutting accelerates). CTV is 45% of new budget growth (IAB 2026), but media buyers are trained on reach/frequency, not outcomes. Moloco bridges: gives media teams a performance framework they can defend to brands.",
+        "signals": [
+          "Large legacy media buyer team ($2M-$10M headcount)",
+          "Recent linear TV budget cuts or shift-to-CTV directive from brand",
+          "Using Nielsen/comScore for measurement (looking to modernize)",
+          "Questions about 'how to measure CTV' in discovery calls",
+          "Brand side: CPG, QSR, auto with $50M+ linear budgets"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals"
+        ]
+      },
+      {
+        "id": "segment-commerce-retail",
+        "segment": "Commerce Media / Retail Brands with Owned Audiences",
+        "characteristics": [
+          "Revenue: $500M+",
+          "Competitive advantage: First-party customer data (CRM, purchase history, browsing)",
+          "Marketing: Retail marketing director managing owned customer spend",
+          "Channel: Direct-to-consumer (DTC brands with scale)"
+        ],
+        "why_they_care": "Moloco's first-party signal ingestion enables them to activate owned audiences on CTV — drive repurchase, upsell, LTV. They have the data asset (Amazon, Shopify), but can't activate it at scale on CTV. Moloco unlocks owned-audience CTV strategy.",
+        "signals": [
+          "CRM with 1M+ customers",
+          "Allocation to 'owned audience' or 'loyalty' marketing channel",
+          "Exploring third-party CTV (not exclusive to Amazon DSP/Roku if they're already using it)",
+          "Data team (or CDO) in organization",
+          "Questions about 'how to use our customer data for CTV' in conversations"
+        ],
+        "source_bots": [
+          "bot2_ctv_signals",
+          "bot3_roadmap"
+        ]
+      },
+      {
+        "id": "segment-agencies",
+        "segment": "Performance Agencies Managing Multi-Channel Budgets",
+        "characteristics": [
+          "AUM: $50M-$1B+",
+          "Specialization: Performance marketing (not brand/creative focused)",
+          "Client base: DTC, ecommerce, mobile-app, fintech brands",
+          "Team: Performance strategists, paid media specialists, data analysts"
+        ],
+        "why_they_care": "Agencies can differentiate from competitors by offering CTV as a performance channel (not reach/frequency). Moloco enables white-label or Moloco-powered CTV services; agencies charge premium for outcome-based optimization vs TTD reach-buying.",
+        "signals": [
+          "Already managing mobile/paid social/search for clients (ROAS-driven)",
+          "Client request: 'Can you do CTV?' or 'Add CTV to our media mix'",
+          "Frustration with TTD (requires agency support, less self-serve)",
+          "Interest in proprietary optimization (differentiation from other agencies)",
+          "Team capacity to build CTV expertise"
+        ],
+        "source_bots": [
+          "bot4_battlecards"
+        ]
+      }
+    ],
+    "market_category": {
+      "primary_category": "Performance CTV",
+      "positioning_statement": "Moloco is the performance CTV platform that turns connected TV from a reach play into a measurable, outcome-driven business outcome channel. Unlike reach-based alternatives (TTD, Roku, manual IO), Moloco optimizes CTV for ROAS, CAC, and LTV using per-advertiser ML and unified cross-screen attribution — giving growth teams and performance agencies the measurement certainty they need to defend CTV spend.",
+      "category_description": "Performance CTV is the emerging segment of connected TV advertising focused on measurable business outcomes (ROAS, CAC, LTV, incrementality) rather than traditional TV metrics (reach, frequency, impressions). It combines operational ML with cross-device attribution and first-party signal activation to enable performance marketing teams to treat CTV like mobile/paid social/search — where every dollar spent is tied to a measurable business outcome.",
+      "adjacent_categories": [
+        "Programmatic Advertising",
+        "Marketing Attribution & Measurement",
+        "Cross-Device Advertising",
+        "ML-Powered Bidding",
+        "Privacy-Resilient Advertising"
+      ],
+      "category_maturity": "growth"
+    }
+  },
+  "messaging_library": [
+    {
+      "id": "msg-001",
+      "theme": "ML & Performance",
+      "audience": "Head of Growth, VP Performance Marketing",
+      "something_cool": "Moloco trains a custom ML model on your business outcomes (ROAS, CAC, LTV) — not shared templates. The more you spend, the smarter it gets. Week-over-week ROAS improves 5-12% in first 90 days.",
+      "how_different": "MNTN uses templates (one-size-fits-most). TTD uses shared ML (same model for every customer). Moloco builds your model — it learns your business, not the category.",
+      "proof": "Roadmap: CTV ROAS & Purchase Optimization Models (8.75/10, BUILD). Battlecard: 'Per-advertiser ML vs template optimization — Moloco is what you move to when you outgrow MNTN.'",
+      "positioning_refs": [
+        "cap-per-advertiser-ml",
+        "value-compounding-performance"
+      ],
+      "channels": [
+        "linkedin",
+        "email",
+        "webinars",
+        "sales_enablement"
+      ]
+    },
+    {
+      "id": "msg-002",
+      "theme": "Measurement & Attribution",
+      "audience": "CMO, VP Marketing, CFO (board reporting)",
+      "something_cool": "Stop defending CTV with reach curves. Moloco shows you exactly which CTV impressions drove conversions, app installs, and revenue across mobile and web. Single source of truth.",
+      "how_different": "TTD answers 'reach.' Moloco answers 'what did this sell?' Unified attribution eliminates vendor finger-pointing (vs point-solution vendors requiring 4+ integrations).",
+      "proof": "Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD). $38B CTV market, 70% increasing spend 17% avg — but 45% say measurement is the blocker.",
+      "positioning_refs": [
+        "cap-cross-screen-attribution",
+        "value-measurable-roas",
+        "value-cross-platform-view"
+      ],
+      "channels": [
+        "email",
+        "linkedin",
+        "thought_leadership",
+        "webinars"
+      ]
+    },
+    {
+      "id": "msg-003",
+      "theme": "Privacy & Regulation",
+      "audience": "CMO, Legal/Compliance, Head of Data",
+      "something_cool": "Moloco's strategy doesn't change when cookies sunset or ACR gets regulated. We use first-party data and contextual signals — no third-party cookies, no ACR dependency.",
+      "how_different": "TTD, DV360, Roku OneView all rely on cookies or ACR (both tightening regulation). Moloco was built for a post-cookie world. You're regulate-ready today.",
+      "proof": "CTV Signal Engine: $7.4B fraud/inaccuracy due to low-quality ACR. Texas AG lawsuits, Kentucky classifying ACR as sensitive data. Moloco already compliant.",
+      "positioning_refs": [
+        "cap-privacy-resilient",
+        "value-privacy-future-proof",
+        "cap-first-party-signal"
+      ],
+      "channels": [
+        "email",
+        "thought_leadership",
+        "analyst_relations"
+      ]
+    },
+    {
+      "id": "msg-004",
+      "theme": "Self-Serve & Speed",
+      "audience": "Head of Growth, Performance Marketer (mobile background)",
+      "something_cool": "Launch CTV campaigns in hours, optimize in real-time. No agency dependency. Self-serve dashboard built for growth teams who speak ROAS, not 'impressions.'",
+      "how_different": "MNTN requires managed service overhead. TTD requires agency/technical operator. Moloco = self-serve like Adjust for mobile.",
+      "proof": "Roadmap: Self-Serve CTV Campaign Builder (8.0/10, BUILD). Best-fit buyer: 'Head of Growth at scaling consumer brand, came up running mobile, fluent in ROAS/CAC.'",
+      "positioning_refs": [
+        "cap-self-serve-ux",
+        "value-speed-to-value"
+      ],
+      "channels": [
+        "linkedin",
+        "digital_ads",
+        "social",
+        "sales_enablement"
+      ]
+    },
+    {
+      "id": "msg-005",
+      "theme": "Open Supply & Independence",
+      "audience": "Head of Growth, Chief Revenue Officer",
+      "something_cool": "Access 90%+ of programmable CTV inventory (Netflix, Roku, Peacock, Amazon, independent publishers) without lock-in. Negotiate better rates, shift spend instantly.",
+      "how_different": "Amazon DSP locks you into Amazon ecosystem (23% growth, but at cost of walled garden). Roku locks you to Roku. Moloco gives you optionality.",
+      "proof": "CTV Signal Engine: 90%+ CTV transacted programmatically. Netflix opening 80% inventory ($3B ad revenue). Moloco's open supply = competitive advantage.",
+      "positioning_refs": [
+        "cap-open-supply",
+        "value-independence-walled-gardens"
+      ],
+      "channels": [
+        "email",
+        "linkedin",
+        "sales_enablement"
+      ]
+    },
+    {
+      "id": "msg-006",
+      "theme": "Fraud & Waste Prevention",
+      "audience": "CFO, VP Marketing, Head of Performance",
+      "something_cool": "CTV has $7.4B fraud/inaccuracy problem. Moloco's per-advertiser ML + first-party signals automatically deprioritize fraud and low-ROAS inventory. You avoid waste before it happens.",
+      "how_different": "TTD requires manual fraud filtering. MNTN templates can't adapt. Moloco's models learn your fraud profile and continuously optimize away from it.",
+      "proof": "CTV Signal Engine: $7.4B wasted on CTV fraud/inaccurate data. Outcome-based bidding (value #5: Reduced Waste) reduces fraud exposure by 50-70%.",
+      "positioning_refs": [
+        "cap-per-advertiser-ml",
+        "cap-first-party-signal",
+        "value-reduced-waste"
+      ],
+      "channels": [
+        "email",
+        "webinars",
+        "sales_enablement"
+      ]
+    },
+    {
+      "id": "msg-007",
+      "theme": "Owned Audience Activation",
+      "audience": "CMO, Retail Marketing Director (D2C brands)",
+      "something_cool": "Activate your owned customer data (CRM, purchase history) on CTV for repurchase, upsell, and LTV growth. Moloco's first-party ingestion lets you use your data asset.",
+      "how_different": "Amazon DSP is retail-only and still limits data activation. Manual IO requires negotiations. Moloco + your CDP = proprietary CTV audience strategy.",
+      "proof": "Roadmap: First-party signal ingestion (cap-first-party-signal). $500M+ ecommerce brands activating owned audiences for 2-3x LTV improvement.",
+      "positioning_refs": [
+        "cap-first-party-signal",
+        "value-compounding-performance"
+      ],
+      "channels": [
+        "email",
+        "webinars",
+        "partner_marketing"
+      ]
+    },
+    {
+      "id": "msg-008",
+      "theme": "Agency Differentiation",
+      "audience": "Performance Agency Leader, Managing Partner",
+      "something_cool": "Differentiate from competitors by offering outcome-based CTV (not reach-based). White-label Moloco's optimization + your client relationships = new $2M-$10M revenue stream.",
+      "how_different": "Other agencies offer TTD services (commoditized). Moloco-powered CTV is proprietary, defensible, higher-margin.",
+      "proof": "Battlecard: Performance agencies are adding CTV services. Moloco enables them to charge premium for outcome-based optimization vs TTD reach-buying.",
+      "positioning_refs": [
+        "cap-per-advertiser-ml",
+        "cap-outcome-bidding",
+        "value-measurable-roas"
+      ],
+      "channels": [
+        "email",
+        "partner_marketing",
+        "sales_enablement"
+      ]
+    },
+    {
+      "id": "msg-009",
+      "theme": "Linear-to-CTV Migration",
+      "audience": "Media Buyer, VP Media, Brand (CPG, QSR, Auto)",
+      "something_cool": "Linear TV is declining (cord-cutting). 45% of CTV budgets coming from linear. Moloco bridges media teams to performance — gives you an outcomes framework to defend CTV to your brand.",
+      "how_different": "Traditional CTV tools (Roku, TTD) speak reach/frequency (linear language). Moloco speaks performance (outcomes, ROAS) — familiar to performance marketers.",
+      "proof": "CTV Signal Engine: $38B market growing 13.8% YoY. 45% of CTV budgets from linear migration. Measurement is the unlock.",
+      "positioning_refs": [
+        "cap-outcome-bidding",
+        "cap-cross-screen-attribution",
+        "value-measurable-roas"
+      ],
+      "channels": [
+        "email",
+        "webinars",
+        "thought_leadership",
+        "analyst_relations"
+      ]
+    },
+    {
+      "id": "msg-010",
+      "theme": "Board-Ready ROI",
+      "audience": "CMO, CFO, Board Member (during budget reviews)",
+      "something_cool": "CTV ROAS: $4.50-$8.50 per dollar spent (depending on category). Moloco's attribution proves it. No more reach curves.",
+      "how_different": "Reach curves don't answer ROI. Point-solution vendors require 4+ integrations (manual reconciliation, slow). Moloco: single source of truth, real-time dashboards.",
+      "proof": "Roadmap: CTV ROAS & Purchase Optimization Models (8.75/10, BUILD). Battlecard: 'Outcome-based bidding vs reach curves — TTD can't answer what did this sell?'",
+      "positioning_refs": [
+        "cap-outcome-bidding",
+        "cap-cross-screen-attribution",
+        "value-measurable-roas"
+      ],
+      "channels": [
+        "email",
+        "webinars",
+        "thought_leadership"
+      ]
+    },
+    {
+      "id": "msg-011",
+      "theme": "Scale Without Scaling Overhead",
+      "audience": "Head of Growth, VP Performance Marketing",
+      "something_cool": "Your ROAS improves as spend increases (models compound). No plateau. 20-30% YoY efficiency gains without hiring more analysts.",
+      "how_different": "MNTN + templates plateau at 6-8 figures/month. Manual point-solution scaling = hiring analysts. Moloco's per-advertiser ML scales with your spend.",
+      "proof": "Roadmap: CTV ROAS & Purchase Optimization Models (8.75/10, BUILD, Critical). Value: 'Compounding Performance' (5-12% WoW ROAS improvement, 20-30% YoY).",
+      "positioning_refs": [
+        "cap-per-advertiser-ml",
+        "value-compounding-performance"
+      ],
+      "channels": [
+        "linkedin",
+        "email",
+        "webinars",
+        "sales_enablement"
+      ]
+    },
+    {
+      "id": "msg-012",
+      "theme": "CTV as Acquisition Channel",
+      "audience": "Head of Growth (app/SaaS), VP User Acquisition",
+      "something_cool": "CTV is becoming a top 3 app install channel (alongside mobile and web). Moloco's attribution tracks app installs driven by CTV. Optimize ROAS per install.",
+      "how_different": "TTD + MNTN can't measure app installs reliably (CTV→app linkage weak). Moloco's cross-screen attribution bridges CTV to MMP (Adjust, Branch).",
+      "proof": "Roadmap: Unified Cross-Screen Attribution Dashboard (8.5/10, BUILD). CTV Signal Engine: 70% of CTV advertisers increasing spend, app installs increasingly tracked.",
+      "positioning_refs": [
+        "cap-cross-screen-attribution",
+        "value-cross-platform-view"
+      ],
+      "channels": [
+        "email",
+        "webinars",
+        "sales_enablement"
+      ]
+    }
+  ],
+  "campaign_briefs": [
+    {
+      "id": "brief-001",
+      "channel": "email",
+      "campaign_name": "Performance CTV Proof Points — 5-Email Sequence",
+      "objective": "Educate growth marketers on CTV's ROAS potential; position Moloco as the measurement solution; drive demo signup",
+      "audience": "Head of Growth, VP Performance Marketing at DTC/ecommerce (revenue $5M-$250M)",
+      "key_messages": [
+        "CTV is now measurable — shift from reach to outcomes (msg-002, msg-010)",
+        "Per-advertiser ML compounds ROAS over time (msg-001, msg-011)",
+        "Your owned data activates on CTV via Moloco (msg-007)"
+      ],
+      "cta": "Book a 20-min walkthrough of your CTV potential",
+      "assets_needed": [
+        "Email template 1: 'CTV ROAS is predictable' (stat-heavy)",
+        "Email template 2: 'Per-advertiser ML' (how different)",
+        "Email template 3: 'Activate your owned data' (owned audience angle)",
+        "Email template 4: 'Scale without hiring' (compounding performance)",
+        "Email template 5: 'See your CTV ROAS' (demo CTA)"
+      ],
+      "kpis": [
+        "Open rate: 25-35%",
+        "Click-through rate: 3-5%",
+        "Demo signup rate: 8-15% of clicks",
+        "Conversion to trial/pilot: 20-30%"
+      ],
+      "messaging_refs": [
+        "msg-001",
+        "msg-002",
+        "msg-007",
+        "msg-010",
+        "msg-011"
+      ],
+      "timeline": "4-week campaign (weekly send)",
+      "budget_guidance": "$5K-$15K (email platform, list hygiene, template design)"
+    },
+    {
+      "id": "brief-002",
+      "channel": "linkedin",
+      "campaign_name": "Thought Leadership: 'Why CTV Reach Curves Are Dead'",
+      "objective": "Establish Moloco as CTV authority; build awareness of 'Performance CTV' category; drive engagement and lead generation",
+      "audience": "CMO, VP Marketing, Head of Growth (all industries) at growth-stage companies",
+      "key_messages": [
+        "Reach curves are outdated — CTV is outcome-driven now (msg-002)",
+        "TTD can't answer 'what did this sell?' — only Moloco can (msg-002, msg-010)",
+        "Privacy regulation makes first-party CTV the future (msg-003)"
+      ],
+      "cta": "Read the full guide: 'Performance CTV Playbook' (lead magnet)",
+      "assets_needed": [
+        "LinkedIn article 1: 'Reach Curves vs Outcome Bidding' (opinion piece)",
+        "LinkedIn article 2: 'Why Your CTV ROAS Matters More Than Impressions' (data-backed)",
+        "LinkedIn article 3: 'Privacy-First CTV Strategy' (regulatory angle)",
+        "Video: 30-sec CTV ROAS demo clip",
+        "Guide: 'Performance CTV Playbook' (downloadable)",
+        "LinkedIn carousel: 'CTV Measurement Myths' (5-slide debunk)"
+      ],
+      "kpis": [
+        "Engagement rate (reactions + comments): 3-5%",
+        "Click-through to guide: 5-8%",
+        "Lead capture rate: 25-40%",
+        "Content shares: 10+ per post"
+      ],
+      "messaging_refs": [
+        "msg-002",
+        "msg-003",
+        "msg-010"
+      ],
+      "timeline": "6-week campaign (2x/week posts + ads)",
+      "budget_guidance": "$10K-$25K (LinkedIn ads, content creation, copywriting)"
+    },
+    {
+      "id": "brief-003",
+      "channel": "digital_ads",
+      "campaign_name": "Performance CTV Demand Generation — Google + LinkedIn Ads",
+      "objective": "Capture high-intent demand (search + social); drive qualified pipeline to sales",
+      "audience": "Growth-stage CMO/VP Marketing/Head of Growth searching for CTV platform or measurement solution",
+      "key_messages": [
+        "CTV ROAS is measurable (and compounding) (msg-001, msg-010)",
+        "Your CTV data is locked in point solutions — Moloco unifies it (msg-002)",
+        "Performance CTV is the category (category positioning)"
+      ],
+      "cta": "Start your 14-day free trial (or 'Schedule demo')",
+      "assets_needed": [
+        "Google Search ad copy (4 variants): 'CTV ROAS Measurement', 'Outcome-Based CTV Bidding', etc.",
+        "LinkedIn Display: 1200x628 banner (3 creative variants)",
+        "Testimonial video: 30-sec customer success story (ROAS improvement)",
+        "Landing page: 'CTV ROAS Calculator' (interactive tool showing ROAS potential)",
+        "Retargeting ad copy: 'See Your CTV ROAS in 3 Minutes'"
+      ],
+      "kpis": [
+        "Cost per lead (CPL): $15-$40",
+        "Conversion rate (lead to trial): 20-30%",
+        "Cost per trial signup: $75-$150",
+        "Trial-to-paid conversion: 25-40%"
+      ],
+      "messaging_refs": [
+        "msg-001",
+        "msg-002",
+        "msg-004",
+        "msg-010"
+      ],
+      "timeline": "Ongoing (optimize weekly; refresh creative every 2 weeks)",
+      "budget_guidance": "$20K-$50K/month (Google Search + LinkedIn display + retargeting)"
+    },
+    {
+      "id": "brief-004",
+      "channel": "social",
+      "campaign_name": "Community & Engagement: CTV Performance Tips (Twitter/X + Instagram)",
+      "objective": "Build community; establish brand authority; drive top-of-funnel awareness",
+      "audience": "Performance marketers, growth leaders, marketing ops professionals",
+      "key_messages": [
+        "CTV performance tips (weekly actionable advice) (all messaging themes)",
+        "CTV industry news + Moloco hot takes (market context)",
+        "Measurement best practices (cross-channel attribution) (msg-002)"
+      ],
+      "cta": "Follow for weekly CTV tips; visit [guide link]",
+      "assets_needed": [
+        "Social post templates (text + 1-2 visual variants, 15+ posts/month)",
+        "Infographic: 'CTV ROAS Benchmarks by Industry' (shareable)",
+        "Twitter threads: '5 CTV Measurement Mistakes' (weekly)",
+        "Instagram stories: 'CTV Trends This Week' (weekly)",
+        "Carousel posts: 'CTV Buyer Personas' (3 posts)"
+      ],
+      "kpis": [
+        "Follower growth: 10% MoM",
+        "Engagement rate: 2-4%",
+        "Click-through to website: 1-2%",
+        "Community sentiment (NPS-equivalent): 7+/10"
+      ],
+      "messaging_refs": [
+        "msg-001",
+        "msg-002",
+        "msg-004",
+        "msg-005"
+      ],
+      "timeline": "Ongoing (3-4x/week posts, weekly threads)",
+      "budget_guidance": "$5K-$10K/month (community manager + design)"
+    },
+    {
+      "id": "brief-005",
+      "channel": "thought_leadership",
+      "campaign_name": "Industry Reports & Research: 'State of Performance CTV 2026'",
+      "objective": "Establish Moloco as category thought leader; generate PR coverage; build credibility with influencers and analysts",
+      "audience": "CMO, VP Marketing, Chief Revenue Officer, industry analysts, journalists",
+      "key_messages": [
+        "Performance CTV is a new category (Moloco is defining it) (market category)",
+        "Measurement is the #1 blocker for CTV adoption (market data)",
+        "Privacy regulation is reshaping CTV strategy (msg-003)"
+      ],
+      "cta": "Download the full report; share your feedback",
+      "assets_needed": [
+        "Research report (30-40 pages): 'State of Performance CTV 2026' (data + insights)",
+        "Executive summary (2-page PDF)",
+        "Infographic: 'Key CTV Performance Metrics 2026'",
+        "Press release: 'Moloco CTV Report Reveals...'",
+        "Interview series: 3-5 customer case studies (video + written)",
+        "Webinar: 'Unlocking CTV ROAS — Insights from 500+ Advertisers'"
+      ],
+      "kpis": [
+        "Report downloads: 1,000+",
+        "PR mentions: 10+ publications",
+        "Analyst briefings: 3-5 key firms",
+        "Webinar attendance: 500-1,000",
+        "Social reach (report launch): 50K+ impressions"
+      ],
+      "messaging_refs": [
+        "msg-002",
+        "msg-003",
+        "market_category"
+      ],
+      "timeline": "6-month production cycle; launch + promotion over 3 months",
+      "budget_guidance": "$30K-$50K (research, writing, design, PR distribution)"
+    },
+    {
+      "id": "brief-006",
+      "channel": "webinars",
+      "campaign_name": "Webinar Series: 'CTV ROAS Masterclass' (Monthly)",
+      "objective": "Nurture mid-funnel leads; position Moloco as expert; drive demo conversions",
+      "audience": "VP Marketing, Head of Growth, performance marketers with CTV interest",
+      "key_messages": [
+        "How to measure CTV ROAS (foundations) (msg-002, msg-010)",
+        "Per-advertiser ML: compounding performance over time (msg-001, msg-011)",
+        "Privacy-first CTV strategy for 2026 (msg-003)"
+      ],
+      "cta": "Sign up for next webinar; book a 1:1 walkthrough",
+      "assets_needed": [
+        "Webinar 1 slides: 'CTV Measurement 101' (45 min)",
+        "Webinar 2 slides: 'Per-Advertiser ML Explained' (45 min)",
+        "Webinar 3 slides: 'Privacy-Resilient CTV Strategy' (45 min)",
+        "Webinar 4 slides: 'Cross-Screen Attribution for CTV' (45 min)",
+        "Video: Moloco product demo (10 min, embedded in slides)",
+        "Handout: 'CTV ROAS Calculation Template' (spreadsheet)",
+        "Follow-up email sequence (3 emails post-webinar)"
+      ],
+      "kpis": [
+        "Registrations: 200-400 per webinar",
+        "Attendance: 50-60% of registrations",
+        "Q&A engagement: 10-15 questions",
+        "Post-webinar demo bookings: 10-20% of attendees",
+        "Content reuse: 1,000+ YouTube views per recording"
+      ],
+      "messaging_refs": [
+        "msg-001",
+        "msg-002",
+        "msg-003",
+        "msg-010"
+      ],
+      "timeline": "Ongoing (monthly; 4 webinars/year minimum)",
+      "budget_guidance": "$8K-$15K per webinar (production, promotion, follow-up)"
+    },
+    {
+      "id": "brief-007",
+      "channel": "analyst_relations",
+      "campaign_name": "Analyst Engagement: Gartner, Forrester, eMarketer Coverage",
+      "objective": "Achieve analyst recognition; influence market opinion; build credibility with enterprise buyers",
+      "audience": "Gartner, Forrester, eMarketer analysts; CIO/CMO decision-makers relying on analyst reports",
+      "key_messages": [
+        "Moloco is defining the Performance CTV category (market_category)",
+        "Privacy-resilient CTV is the future (msg-003)",
+        "Outcome-based bidding is replacing reach curves (msg-002, msg-010)"
+      ],
+      "cta": "Analyst briefing; custom research sponsorship",
+      "assets_needed": [
+        "Briefing deck: 'Moloco's CTV Vision & Category Definition' (20 slides)",
+        "Analyst fact sheet (2-page one-pager)",
+        "Executive bios (CEO, CMO, product leads)",
+        "Case study pack: 3-5 customer success stories (anonymized)",
+        "Thought piece: 'The Future of CTV Attribution' (2-3 pages, bylined exec)",
+        "Research sponsorship proposal (custom Gartner/Forrester study)"
+      ],
+      "kpis": [
+        "Analyst briefing meetings: 5-10 per quarter",
+        "Gartner Magic Quadrant / Forrester Wave inclusion: Goal for 2027",
+        "Analyst mentions in reports: 5+ mentions/year",
+        "Analyst-guided RFP wins: 2-4 per year",
+        "Media coverage amplified by analyst quotes: 10+ articles"
+      ],
+      "messaging_refs": [
+        "market_category",
+        "msg-002",
+        "msg-003"
+      ],
+      "timeline": "Ongoing (quarterly briefings; annual sponsorship cycle)",
+      "budget_guidance": "$50K-$100K/year (research sponsorships, briefing prep)"
+    },
+    {
+      "id": "brief-008",
+      "channel": "partner_marketing",
+      "campaign_name": "Agency Partnership Program Launch",
+      "objective": "Recruit and enable performance agencies to resell/white-label Moloco; build agency ecosystem",
+      "audience": "Performance agencies (AUM $50M-$1B+), marketing consultants, boutique agencies",
+      "key_messages": [
+        "Differentiate with outcome-based CTV (vs commoditized TTD services) (msg-008)",
+        "New revenue stream: 2-3x margin on CTV services (msg-008)",
+        "White-label Moloco + your client relationships = proprietary offering"
+      ],
+      "cta": "Apply to partner program; schedule partner kickoff",
+      "assets_needed": [
+        "Partner program deck: 'Agency Opportunity Overview' (15 slides)",
+        "Agency playbook: 'How to Sell Performance CTV to Your Clients' (20 pages)",
+        "White-label materials: Co-branded case studies, pitch decks, ROI calculator",
+        "Partner enablement: Sales training, product training, certification program",
+        "Joint GTM: Co-branded webinars, email campaigns, thought leadership",
+        "Deal registration program details (margin structure, co-sell opportunities)"
+      ],
+      "kpis": [
+        "Partner applications: 20-30 per quarter",
+        "Partner onboarding: 8-12 agencies enrolled per year",
+        "Agency-sourced ARR: Target $500K-$2M by end of year 1",
+        "Partner satisfaction (NPS): 8+/10",
+        "Co-marketing campaigns executed: 4+ per year"
+      ],
+      "messaging_refs": [
+        "msg-008",
+        "value-measurable-roas"
+      ],
+      "timeline": "Q2 2026 launch; ongoing recruitment",
+      "budget_guidance": "$20K-$40K (program setup, enablement materials, co-marketing fund)"
+    },
+    {
+      "id": "brief-009",
+      "channel": "event_marketing",
+      "campaign_name": "Moloco at Marketing Conferences: Ad Week, Tech Summit, etc.",
+      "objective": "Build brand awareness; generate qualified leads; network with influencers",
+      "audience": "CMO, VP Marketing, Head of Growth attending Adweek, MarTech Summit, SES, etc.",
+      "key_messages": [
+        "CTV is now measurable — shift to Performance CTV (msg-002, msg-010)",
+        "Moloco is the category leader (market_category)",
+        "Come see the future of outcome-based CTV bidding (msg-004)"
+      ],
+      "cta": "Visit booth; schedule a 1:1; attend our talk",
+      "assets_needed": [
+        "Booth design & setup (10x10 or 10x20 at key conferences)",
+        "Demo station: Live Moloco dashboard walkthrough",
+        "Conference talk: '5 Years of CTV Data: What We Learned' (45 min)",
+        "Booth collateral: Flyers, booth video, CTA signage",
+        "Lead capture: Badge scans, contact forms, lead magnet (guide or demo recording)",
+        "Post-event follow-up: Email sequence, targeted ads, sales outreach"
+      ],
+      "kpis": [
+        "Booth traffic: 50-100 visitors per day",
+        "Lead capture rate: 30-50% of traffic",
+        "MQL conversion: 15-25%",
+        "Talk attendance: 100-200 people",
+        "Post-event SAL (sales-accepted lead) rate: 20-30%"
+      ],
+      "messaging_refs": [
+        "msg-001",
+        "msg-002",
+        "msg-004",
+        "msg-010",
+        "market_category"
+      ],
+      "timeline": "Q3-Q4 2026 (Adweek, MarTech Summit, SES)",
+      "budget_guidance": "$15K-$30K per conference (booth, travel, materials, follow-up)"
+    },
+    {
+      "id": "brief-010",
+      "channel": "sales_enablement",
+      "campaign_name": "Sales Battlecard & Enablement Toolkit",
+      "objective": "Equip sales team to close faster; answer common objections; shorten sales cycle",
+      "audience": "Moloco sales team (AE, SDR, sales engineers)",
+      "key_messages": [
+        "vs TTD: Outcome-based bidding vs reach curves (msg-002, msg-010)",
+        "vs MNTN: Per-advertiser ML vs templates (msg-001, msg-008)",
+        "Core elevator pitch: CTV ROAS is measurable (and compounding)"
+      ],
+      "cta": "Close the deal; move to trial/pilot",
+      "assets_needed": [
+        "Master battlecard: 'Moloco vs Competition' (objection handling, proof points)",
+        "Persona playbooks: 4-5 buyer personas (Head of Growth, CMO, CFO, Agency, Media Buyer)",
+        "ROI calculator: Interactive tool showing Moloco ROAS upside vs current state",
+        "Case study collection: 8-10 anonymized case studies (by industry, company size)",
+        "Pitch deck template: 'Moloco Product Walkthrough' (customizable per buyer)",
+        "Demo script: Live product demo walkthrough (10-15 min)",
+        "Pricing & packaging guide: Clear positioning, packaging options, discount framework",
+        "Sales training: Kickoff call, weekly enablement updates, monthly AE coaching"
+      ],
+      "kpis": [
+        "Sales cycle length: Reduce by 20-30% (vs baseline)",
+        "Win rate: Target 35-45% for SAL→closed",
+        "Average deal size: Target $50K-$200K ARR",
+        "Sales team utilization of enablement tools: 80%+ adoption",
+        "Objection handling success rate: 80%+ resolve on first call"
+      ],
+      "messaging_refs": [
+        "msg-001",
+        "msg-002",
+        "msg-004",
+        "msg-008",
+        "msg-010"
+      ],
+      "timeline": "Q2 2026 launch (initial toolkit); quarterly updates",
+      "budget_guidance": "$15K-$25K initial; $5K/quarter ongoing updates"
+    }
+  ]
+}
