@@ -517,17 +517,120 @@
   }
   .engine-footer a:hover { text-decoration: underline; }
   .engine-footer p { margin: 4px 0; }
+
+  /* Signal Connections */
+  .signal-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, background-color 0.2s;
+    font-family: var(--font);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .signal-toggle:hover { border-color: var(--accent); background-color: var(--bg-secondary); }
+  .signal-toggle .arrow { transition: transform 0.2s; font-size: 10px; }
+  .signal-toggle .arrow.open { transform: rotate(90deg); }
+  .signal-connections {
+    display: none;
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--investigate);
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .signal-connections.visible { display: block; }
+  .signal-connections .sc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--investigate);
+    margin-bottom: 10px;
+  }
+  .signal-link-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .signal-link-item:last-child { border-bottom: none; }
+  .signal-link-item .sl-headline {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+  .signal-link-item .sl-reason {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .signal-count-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--investigate);
+    background: var(--investigate-bg);
+    padding: 1px 7px;
+    border-radius: 10px;
+  }
+
+  /* Alignment Summary */
+  .alignment-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .alignment-summary h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--investigate);
+    margin-bottom: 16px;
+  }
+  .takeaway-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+  }
+  .takeaway-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--build);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .takeaway-card .tc-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .takeaway-card .tc-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
 </style>
 </head>
 <body>
 
 <div class="engine-header">
   <h1>Gradial Product Roadmap<span class="beta-badge">STEERING</span></h1>
-  <div class="subtitle">Gradial marketing automation research + UVFV Assessment Framework</div>
+  <div class="subtitle">UVFV Assessment Framework + Market Signal Alignment</div>
   <div class="classification">CONFIDENTIAL — Job Application Portfolio</div>
   <div class="meta">
     <span>Generated 2026-05-06</span>
     <span>12 items assessed</span>
+    <span>16 market signals mapped</span>
     <span>6 categories</span>
   </div>
   <a href="https://danetomalin.com/gradial/" class="nav-link">← Back to Gradial Plan</a>
@@ -594,6 +697,28 @@
     </div>
   </div>
 
+  <!-- Signal Alignment Summary -->
+  <div class="alignment-summary">
+    <h3>Market Signal Alignment</h3>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5;">
+      Every roadmap item is anchored to real market evidence. Expand any item below to see which signals validate it. 16 market signals tracked across 12 roadmap items.
+    </p>
+    <div class="takeaway-grid">
+      <div class="takeaway-card">
+        <div class="tc-title">Compliance is the #1 forcing function</div>
+        <div class="tc-body">ADA lawsuits + EU Accessibility Act create urgent buyer need for accessibility agents. Lean into regulatory risk mitigation.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="tc-title">Agentic AI is crossing the chasm</div>
+        <div class="tc-body">17% adoption today, 60% expected in 2 years. Gradial's pre-built agents position for the inflection wave.</div>
+      </div>
+      <div class="takeaway-card" style="border-left-color:var(--investigate);">
+        <div class="tc-title">Implementation complexity is the real blocker</div>
+        <div class="tc-body">52% struggle with data quality, 40% face integration complexity. Position Gradial as turnkey solution that removes friction.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Filter Bar -->
   <div class="filter-bar">
     <span class="filter-label">Category:</span>
@@ -626,8 +751,8 @@
 </div>
 
 <footer class="engine-footer">
-  <p>Gradial Product Roadmap Steering v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
-  <p style="margin-top:4px;">Gradial Marketing Intelligence &mdash; <a href="https://danetomalin.com/gradial-ci/">Competitive Intel</a> | <a href="https://danetomalin.com/gradial-signals/">Market Signals</a></p>
+  <p>Gradial Product Roadmap v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Gradial Marketing Intelligence &mdash; <a href="https://danetomalin.com/gradial-ci/">Competitive Intel</a> | <a href="https://danetomalin.com/gradial-signals/">Market Signals</a> | <a href="https://danetomalin.com/gradial-positioning/">Positioning</a></p>
 </footer>
 
 <script>
@@ -644,6 +769,76 @@ fetch('./items-latest.json')
     console.error('Error loading items:', error);
     document.getElementById('items-container').innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:32px;">Failed to load roadmap items. Please check the items-latest.json file.</p>';
   });
+
+// --- Signal-to-Roadmap Mapping (merged from Roadmap Alignment) ---
+const signalMap = {
+  'Multi-Format Content Assembly': [
+    { headline: 'Enterprise MarTech budgets hit record growth; AI automation tools top investment priority', reason: 'Validates customer appetite for content production automation.' },
+    { headline: 'Sales and Marketing agents deliver 2-3x pipeline velocity improvements', reason: 'Speed-to-launch multiplier validates multi-format consolidation ROI.' },
+    { headline: 'Only 17% of enterprises deployed AI agents; 60% expect deployment within 2 years', reason: 'Massive adoption inflection — Gradial captures the turnkey wave.' }
+  ],
+  'Automated variant generation with A/B test orchestration': [
+    { headline: '81% of high-performing teams use data-driven optimization', reason: 'A/B testing is core to modern CRO; Gradial can own this workflow.' },
+    { headline: 'Sales and Marketing agents deliver 2-3x pipeline velocity improvements', reason: 'Agent-driven variant generation accelerates test velocity.' }
+  ],
+  'Dynamic design system management': [
+    { headline: 'AI-powered brand compliance automation reduces manual review time by 90%', reason: 'Design system automation is core to governance moat.' },
+    { headline: 'Enterprise experiential marketing investment at 88% vs 78% for broader B2B', reason: 'Brand consistency across channels demands automated design systems.' }
+  ],
+  'Compliance rule engine with auto-remediation': [
+    { headline: '5,000+ ADA Title III web accessibility lawsuits filed in 2025; 37% increase from 2024', reason: 'ADA litigation risk makes compliance automation essential, not optional.' },
+    { headline: 'EU Accessibility Act in force since June 2025; WCAG 2.1 AA now global de-facto standard', reason: 'Regulatory mandates create forcing function for compliance agents.' },
+    { headline: 'AI-powered brand compliance automation reduces manual review time by 90%', reason: 'Pre-publication compliance catches violations before legal exposure.' },
+    { headline: 'Public sector accessibility deadline extended to 2027-2028', reason: 'Private enterprises face increasing pressure even as public sector deadlines slip.' }
+  ],
+  'Cross-CMS campaign orchestration': [
+    { headline: 'Enterprise MarTech budgets hit record growth; AI automation tools top investment priority', reason: 'Global enterprises are desperate for orchestration efficiency.' },
+    { headline: 'Only 17% of enterprises deployed AI agents; 60% expect deployment within 2 years', reason: 'Cross-system orchestration is the killer app for enterprise agents.' },
+    { headline: 'Agentic AI projected to power 2/3 of current marketing activities by 2028', reason: 'Orchestration demand will accelerate as agent adoption scales.' }
+  ],
+  'Real-time personalization orchestration': [
+    { headline: 'Sales and Marketing agents deliver 2-3x pipeline velocity improvements', reason: 'Personalization drives conversion lift; Gradial can own this layer.' },
+    { headline: 'Enterprise experiential marketing investment at 88% vs 78% for broader B2B', reason: 'Personalization at scale requires real-time orchestration.' }
+  ],
+  'Intelligent automated QA suite': [
+    { headline: 'Sales and Marketing agents deliver 2-3x pipeline velocity improvements', reason: 'QA automation saves 15-20% of production time.' },
+    { headline: 'Enterprise MarTech budgets hit record growth; AI automation tools top investment priority', reason: 'Quality automation is foundational for enterprise trust.' },
+    { headline: 'Critical adoption blockers: data quality (52%), integration complexity (40%)', reason: 'QA automation directly addresses data quality concerns.' }
+  ],
+  'Real-time alt text generation and image accessibility auditing': [
+    { headline: '5,000+ ADA Title III web accessibility lawsuits filed in 2025; 37% increase from 2024', reason: 'Alt text is most common WCAG failure; automation saves legal risk.' },
+    { headline: 'EU Accessibility Act in force since June 2025; WCAG 2.1 AA now global de-facto standard', reason: 'Image accessibility is a hard compliance requirement globally.' },
+    { headline: 'AI-powered brand compliance automation reduces manual review time by 90%', reason: 'Vision model-powered alt text scales compliance effortlessly.' }
+  ],
+  'Native Bynder DAM integration with smart asset selection': [
+    { headline: 'AI-powered brand compliance automation reduces manual review time by 90%', reason: 'Smart asset recommendations ensure brand compliance at scale.' },
+    { headline: 'Enterprise experiential marketing investment at 88% vs 78% for broader B2B', reason: 'DAM integration streamlines multi-channel asset delivery.' }
+  ],
+  'Universal analytics hook injection': [
+    { headline: 'Enterprise MarTech budgets hit record growth; AI automation tools top investment priority', reason: 'Analytics instrumentation is foundational for ROI measurement.' },
+    { headline: 'Sales and Marketing agents deliver 2-3x pipeline velocity improvements', reason: 'Automated tracking ensures every page is measurable from day one.' },
+    { headline: '81% of high-performing teams use data-driven optimization', reason: 'Measurement infrastructure is table-stakes for optimization culture.' }
+  ],
+  'Content engagement intelligence': [
+    { headline: '81% of high-performing teams use data-driven optimization', reason: 'Engagement metrics are critical for page optimization.' },
+    { headline: 'Data-driven attribution models drive 37% higher marketing ROI', reason: 'Content performance data feeds attribution models.' }
+  ],
+  'Multi-touch attribution for Gradial pages': [
+    { headline: 'Data-driven attribution models drive 37% higher marketing ROI', reason: 'ROI measurement is critical for enterprise budget conversations.' },
+    { headline: '81% of high-performing teams use data-driven optimization', reason: 'Attribution enables data-driven budget allocation.' }
+  ]
+};
+
+// Helper to find signals for a given item title (case-insensitive match)
+function findSignals(title) {
+  const titleLower = title.toLowerCase();
+  for (const [key, signals] of Object.entries(signalMap)) {
+    if (titleLower.includes(key.toLowerCase()) || key.toLowerCase().includes(titleLower.split(':')[0].trim().toLowerCase())) {
+      return signals;
+    }
+  }
+  return [];
+}
 
 // --- Category Labels ---
 const categoryLabels = {
@@ -709,13 +904,31 @@ function renderItems() {
           ${renderAssessment('Feasible', item.assessment.feasible)}
           ${renderAssessment('Viable', item.assessment.viable)}
         </div>
-        <button class="assess-toggle" onclick="toggleRationale('rationale-${item.id}')">Show Detailed Rationale</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+          <button class="assess-toggle" onclick="toggleRationale('rationale-${item.id}')">Show Detailed Rationale</button>
+          ${(() => {
+            const signals = findSignals(item.title);
+            if (signals.length > 0) {
+              return '<button class="signal-toggle" onclick="toggleSignals(\'signals-' + item.id + '\', this)"><span class="arrow">▶</span> Market Signal Connections <span class="signal-count-badge">' + signals.length + '</span></button>';
+            }
+            return '';
+          })()}
+        </div>
         <div class="assess-rationale" id="rationale-${item.id}">
           <strong>Usable (${item.assessment.usable.score}/10 — ${item.assessment.usable.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.usable.rationale)}<br>
           <strong>Valuable (${item.assessment.valuable.score}/10 — ${item.assessment.valuable.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.valuable.rationale)}<br>
           <strong>Feasible (${item.assessment.feasible.score}/10 — ${item.assessment.feasible.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.feasible.rationale)}<br>
           <strong>Viable (${item.assessment.viable.score}/10 — ${item.assessment.viable.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.viable.rationale)}
         </div>
+        ${(() => {
+          const signals = findSignals(item.title);
+          if (signals.length > 0) {
+            return '<div class="signal-connections" id="signals-' + item.id + '"><div class="sc-label">Market Signal Connections</div>' +
+              signals.map(s => '<div class="signal-link-item"><div class="sl-headline">' + escapeHtml(s.headline) + '</div><div class="sl-reason">' + escapeHtml(s.reason) + '</div></div>').join('') +
+              '</div>';
+          }
+          return '';
+        })()}
         <div class="card-footer">
           ${item.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
           <span style="flex:1"></span>
@@ -825,6 +1038,16 @@ function toggleRationale(id) {
   var el = document.getElementById(id);
   if (el) {
     el.classList.toggle('visible');
+  }
+}
+
+// --- Toggle Signal Connections ---
+function toggleSignals(id, btn) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('visible');
+    var arrow = btn.querySelector('.arrow');
+    if (arrow) arrow.classList.toggle('open');
   }
 }
 </script>
