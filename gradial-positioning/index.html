@@ -78,6 +78,21 @@
     font-weight: 600;
     margin-bottom: 8px;
   }
+  .beta-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.35em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px solid rgba(167,139,250,0.25);
+    border-radius: 4px;
+    padding: 2px 8px;
+    vertical-align: super;
+    margin-left: 10px;
+  }
   .engine-header .subtitle { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px; }
   .stats-bar {
     display: flex;
@@ -926,7 +941,7 @@
 </header>
 
 <div class="engine-header">
-  <h1>Gradial Positioning Engine</h1>
+  <h1>Gradial Positioning Engine<span class="beta-badge">BETA</span></h1>
   <div class="subtitle">Strategic positioning framework, messaging library, and campaign deployment</div>
   <div class="stats-bar">
     <div class="stat-item">
@@ -1519,7 +1534,7 @@ function renderCampaigns() {
     content.innerHTML = `
       <div class="campaign-brief">
         <div class="brief-header">
-          <h4>${brief.channel.replace(/_/g, ' ').toUpperCase()} Strategy</h4>
+          <h4>${brief.channel.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} Strategy</h4>
           <span class="brief-channel">${brief.channel}</span>
         </div>
         <div class="brief-grid">
