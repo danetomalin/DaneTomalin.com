@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Battlecards — Gradial</title>
+<link rel="canonical" href="https://danetomalin.com/gradial-battlecards/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #3B82F6;
+    --accent-strong: #2563EB;
+    --accent-bg: rgba(59, 130, 246, 0.12);
+    --win: #66BB6A;
+    --win-bg: rgba(102, 187, 106, 0.12);
+    --warn: #FFA726;
+    --warn-bg: rgba(255, 167, 38, 0.12);
+    --danger: #EF5350;
+    --danger-bg: rgba(239, 83, 80, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .site-header {
+      position: sticky; top: 0;
+      background: rgba(13,13,18,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 200;
+  }
+  .site-header-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 12px; }
+  .engine-header .meta { color: var(--text-muted); font-size: 0.8em; font-family: var(--mono); }
+
+  /* Tabs to switch competitors */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+  }
+  .tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .tab.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+  .tab .risk { font-size: 10px; opacity: 0.8; margin-left: 6px; letter-spacing: 1px; }
+  .tab.coming-soon {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: var(--bg-secondary);
+  }
+  .tab.coming-soon:hover { background: var(--bg-secondary); color: var(--text-secondary); }
+  .tab.coming-soon .soon-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  /* Battlecard */
+  .battlecard { display: none; }
+  .battlecard.active { display: block; }
+
+  .bc-head {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .bc-head .row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .bc-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7em;
+    font-weight: 600;
+  }
+  .bc-head .domain {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .risk-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .risk-HIGH { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .risk-MEDIUM { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+  .risk-LOW { background: var(--win-bg); color: var(--win); border: 1px solid var(--win); }
+  .bc-head .tagline { color: var(--accent); font-style: italic; margin-top: 6px; font-size: 14px; }
+  .bc-head .profile { color: var(--text-secondary); margin-top: 12px; font-size: 14px; }
+
+  /* Grid of sections */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 780px) { .grid { grid-template-columns: 1fr; } }
+
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .section.full { grid-column: 1 / -1; }
+  .section h3 {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .section p { font-size: 14px; color: var(--text-primary); }
+  .section .value-prop { font-size: 14px; color: var(--text-primary); padding: 10px 12px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 4px; }
+  .section ul { list-style: none; }
+  .section li {
+    padding: 6px 0 6px 18px;
+    position: relative;
+    font-size: 13px;
+    color: var(--text-primary);
+    border-bottom: 1px dashed rgba(255,255,255,0.04);
+  }
+  .section li:last-child { border-bottom: none; }
+  .section li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 8px;
+  }
+
+  /* Feature/benefit rows */
+  .fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+  .fb-row:last-child { border-bottom: none; }
+  .fb-feature { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+  .fb-benefit { font-size: 13px; color: var(--text-secondary); }
+
+  /* Strengths / Weaknesses side-by-side */
+  .sw {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 780px) { .sw { grid-template-columns: 1fr; } }
+  .sw-box { padding: 14px; border-radius: 8px; }
+  .sw-strength { background: var(--win-bg); border-left: 3px solid var(--win); }
+  .sw-weakness { background: var(--danger-bg); border-left: 3px solid var(--danger); }
+  .sw-box h4 { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .sw-strength h4 { color: var(--win); }
+  .sw-weakness h4 { color: var(--danger); }
+  .sw-box ul li::before { color: inherit; }
+  .sw-strength li::before { content: "+"; color: var(--win); font-weight: 700; }
+  .sw-weakness li::before { content: "−"; color: var(--danger); font-weight: 700; }
+
+  /* Kill points */
+  .kill-list li { padding: 8px 0 8px 24px; font-size: 13px; border-bottom: 1px dashed rgba(255,255,255,0.04); color: var(--text-primary); }
+  .kill-list li:last-child { border-bottom: none; }
+  .kill-list li::before {
+    content: "✕";
+    color: var(--danger);
+    font-weight: 700;
+    left: 2px;
+    top: 8px;
+  }
+
+  /* Objection handling cards */
+  .obj-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .obj-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .obj-text { font-size: 13px; color: var(--text-primary); font-style: italic; margin-bottom: 8px; }
+  .obj-response-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--win);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .obj-response { font-size: 13px; color: var(--text-primary); }
+
+  /* Proof pills */
+  .proof-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proof-pill {
+    display: inline-block;
+    padding: 6px 10px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-strong);
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Sources */
+  .sources-section { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .sources-section h4 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .source-link {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 11px;
+    margin: 0 6px 6px 0;
+    font-family: var(--mono);
+  }
+  .source-link:hover { background: var(--bg-card-hover); }
+
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+  .footer-links {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 11px;
+  }
+  .footer-links a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+    <a href="https://danetomalin.com/gradial/" class="site-header-back">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        Back to Gradial Plan
+    </a>
+</header>
+
+<div class="engine-header">
+  <h1>Battlecards<span class="beta-badge">Beta</span></h1>
+  <div class="subtitle">Sales-ready competitive cheat sheets for Gradial — built from the same intel stream feeding the CI Dossier, CTV Signal Engine, and Roadmap Engine.</div>
+  <div class="meta">Last updated: May 06, 2026 · 7 cards · Gradial agentic marketing orchestration</div>
+</div>
+
+<div class="container">
+  <div class="tabs" id="tabs">
+    <button class="tab" id="tab-jasper-20260506" onclick="showCard('jasper-20260506')">Jasper <span class="risk">HIGH</span></button><button class="tab" id="tab-aprimo-20260506" onclick="showCard('aprimo-20260506')">Aprimo <span class="risk">HIGH</span></button><button class="tab" id="tab-adobe-20260506" onclick="showCard('adobe-20260506')">Adobe AEM <span class="risk">HIGH</span></button><button class="tab" id="tab-sitecore-20260506" onclick="showCard('sitecore-20260506')">Sitecore</button><button class="tab" id="tab-contentstack-20260506" onclick="showCard('contentstack-20260506')">Contentstack</button><button class="tab" id="tab-optimizely-20260506" onclick="showCard('optimizely-20260506')">Optimizely</button><button class="tab" id="tab-wpp-open-20260506" onclick="showCard('wpp-open-20260506')">WPP Open</button>
+  </div>
+
+    <div class="battlecard" id="card-jasper-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Jasper</h2>
+          <span class="domain">jasper.ai</span>
+          <span class="risk-badge risk-HIGH">HIGH</span>
+        </div>
+        <div class="tagline">"The AI co-pilot for marketing and content teams"</div>
+        <div class="profile">Jasper Grid is genuinely fast for orchestrating simple content workflows—their demo showed 170 agents built in 5 days by customers, signaling strong developer enablement. New CEO Timothy Young (ex-Dropbox President) brings serious enterprise credibility and GTM discipline; this is not a copywriting tool company anymore.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For marketing leaders who need to govern agentic content at enterprise scale, Gradial is the orchestration platform that integrates into your existing AEM/Salesforce stack, whereas Jasper requires ripping-and-replacing your content infrastructure with Grid.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Jasper</h3>
+          <div class="value-prop">Functional: Gradial orchestrates across your existing systems (AEM, Salesforce, Jira, Figma, Workfront) with pre-built agents for QA, accessibility, and brand compliance. Jasper Grid is a standalone orchestration layer that forces content creators to build workflows in a separate system, then export to AEM later. Gradial lives inside your tech stack; Jasper demands a new authoring paradigm. Monetary: Gradial reduces implementation friction by working on top of your existing AEM/Salesforce licenses; Jasper Grid licensing adds cost on top of your CMS. For a enterprise running AEM, Gradial's 10-minute page production vs Jasper's 30-45 minutes per grid workflow multiplies across hundreds of pages monthly—that's measurable time-to-market advantage without infrastructure rip-and-replace. Psychological: Gradial eliminates change management risk by plugging into systems your team already knows (AEM, Salesforce). Jasper's Grid messaging promises "no-code orchestration," but it's actually a new system your teams must learn, new training cycles, and new vendor lock-in. Gradial is seen as AI-powered evolution of your current workflow, not replacement.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Orchestrates inside AEM/Salesforce, not alongside</div><div class="fb-benefit">No system-of-truth fragmentation; content stays in your CMS, agents handle governance</div></div><div class="fb-row"><div class="fb-feature">Pre-built agents for QA, accessibility, brand compliance</div><div class="fb-benefit">Deploy in weeks, not months of custom Grid development</div></div><div class="fb-row"><div class="fb-feature">10-minute page production end-to-end</div><div class="fb-benefit">Authoring + QA + compliance + publication in one workflow, not separate systems</div></div><div class="fb-row"><div class="fb-feature">Zero platform migration required</div><div class="fb-benefit">Your team's AEM training transfers directly; no new mental models to learn</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the Chief Content Officer or VP of Marketing Operations at a Fortune 500 enterprise (financial services, healthcare, insurance, retail) already invested in AEM or Sitecore; runs 500+ pages per month; has compliance/governance mandates. He's the one who looks at Jasper Grid's "no-code orchestration" promise and asks: "But where does this live in our tech stack? Do we really want another system?"</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Grid is a new system; it requires content creators to learn a completely new interface, workflow model, and mental model vs. their existing AEM authoring experience</li><li>Integration story is weak on governance—Salesforce AppExchange integration is about execution, not compliance. Jasper lacks deep integrations into brand systems (Figma, design tokens) and accessibility tooling</li><li>Pricing opacity and licensing complexity—their custom enterprise model creates unclear ROI conversations; Gradial's per-page model is transparent and predictable</li><li>No production track record in regulated industries (fintech, healthcare, insurance). Jasper's customer base skews toward B2C/marketing agencies, not Fortune 500 compliance-first enterprises</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>CMO evaluating CTV as a growth channel or alternative</li><li>Director of Content Operations managing large content teams</li><li>Compliance Officer worried about governance automation</li><li>CFO asking ROI questions on Grid vs. current CMS investment</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>How many pages are you producing monthly today, and what percentage go through your AEM instance?</li><li>What percentage of your pages fail accessibility or brand compliance audits before publication?</li><li>If you adopted Jasper Grid today, would you maintain AEM as your primary CMS or migrate entirely to Grid?</li><li>Who in your organization owns governance decisions—marketing operations, legal, compliance, or brand?</li><li>How much training investment have you made in AEM, and what's your appetite for retraining teams on a new Grid interface?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Grid is genuinely fast for orchestrating simple content workflows—170 agents in 5 days signals strong developer enablement</li><li>New CEO Timothy Young (ex-Dropbox President) brings serious enterprise credibility and GTM discipline</li><li>Content Engineering Certification is a smart governance moat—positioning as thought leader in agentic content</li><li>Strong momentum in AI-native copywriting and creative tooling</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Grid is a new system; requires content creators to learn completely new interface and workflow model</li><li>Integration story is weak on governance; lacks deep integrations into brand systems (Figma, design tokens) and accessibility tooling</li><li>Pricing opacity and custom enterprise model creates unclear ROI conversations</li><li>No production track record in regulated industries (fintech, healthcare, insurance)</li><li>Customer base skews toward B2C/marketing agencies, not Fortune 500 compliance-first enterprises</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Highlight the AEM switch cost: Jasper customers must author in Grid, then export to AEM—that's two systems of truth. Gradial orchestrates directly inside AEM, eliminating the handoff.</li><li>Accessibility and compliance: Show Gradial's pre-built WCAG and brand compliance agents vs. Jasper's lightweight governance. For regulated industries, this is existential.</li><li>Enterprise lock-in: Position Gradial as vendor-flexible orchestration (works with AEM, Sitecore, Salesforce, Workfront) vs. Jasper Grid as a new platform dependency.</li><li>Deployment speed: Gradial deploys in weeks (pre-built agents on existing AEM); Jasper Grid requires months of custom development and team retraining.</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Jasper Grid looks impressive—their customers built 170 agents in 5 days. Can Gradial match that velocity?"</div><div class="obj-response-label">Response</div><div class="obj-response">Jasper's 170 agents in 5 days is real, but it's counting simple orchestrations in a low-governance environment. Gradial's 10 minutes per page for authoring + compliance + QA (included) is 3x faster in the workflow that matters—the one that ships pages compliant and accessible. We're not competing on agent-building speed; we're competing on page-production speed for regulated industries.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We love Jasper's Content Engineering Certification—it's a best practices framework we can train our team on."</div><div class="obj-response-label">Response</div><div class="obj-response">Content Engineering Certification is smart positioning, but it's a learning program, not a platform feature. Gradial's compliance agents embody those best practices in the platform—WCAG scanning, brand rule checking, accessibility remediation—all automated before publication. You don't need a certification to author compliant content with Gradial; the platform does the governance for you.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Our team is already trained on AEM. Migrating to Jasper Grid seems like a net-positive evolution—one system that handles content + orchestration."</div><div class="obj-response-label">Response</div><div class="obj-response">Grid looks like evolution, but it's actually replacement. You'd be asking your team to learn a new interface, new mental model, and new workflow—even though AEM still exists as your CMS. Gradial works inside AEM, so your team's training transfers directly. Instead of learning Grid, they learn Gradial agents (purpose-built for compliance, accessibility, and brand problems). Lower training cost, zero system-of-truth risk.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ T-Mobile: Gradial reduced page production from 4 hours to 10 minutes while maintaining brand compliance across regional campaigns</span><span class="proof-pill">★ Prudential: Gradial's pre-built compliance agents automatically check legal disclaimer placement and brand standards (required in regulated finance)</span><span class="proof-pill">★ Wells Fargo: Accessibility is non-negotiable. Gradial's WCAG automation reduced accessibility violations by 80%</span><span class="proof-pill">▲ 80%+ time reduction; 20x efficiency gains; 99.9% accuracy in brand compliance and accessibility checks</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://jasper.ai" target="_blank" rel="noopener">jasper.ai ↗</a></div>
+    </div>
+
+
+    <div class="battlecard" id="card-aprimo-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Aprimo</h2>
+          <span class="domain">aprimo.com</span>
+          <span class="risk-badge risk-HIGH">HIGH</span>
+        </div>
+        <div class="tagline">"The agile marketing operations cloud"</div>
+        <div class="profile">Aprimo's production AI agents have 2+ years of field validation in regulated industries (financial services, pharma, healthcare). Agentic DAM is genuinely innovative—tying governance agents to asset metadata, OCR, facial recognition creates a governance moat that's difficult to replicate. Gartner Leader in both MWM and DAM Magic Quadrants.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For enterprise CMOs in regulated industries who need governed agentic content operations, Gradial is the specialized orchestration layer for your content supply chain—page authoring, production, QA—whereas Aprimo is a heavyweight DAM + MWM platform where agents are embedded features, not the core value.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Aprimo</h3>
+          <div class="value-prop">Functional: Gradial is purpose-built for agentic content orchestration: agents for authoring, page production, QA, accessibility, and brand compliance, all running inside your AEM/Salesforce stack. Aprimo's agents are embedded within DAM and marketing work management; they're powerful but not specialized for content orchestration. Monetary: Aprimo contracts run $200K–$1M+ annually depending on organization size, bundling DAM + agents + workflow orchestration. Gradial is 40-50% cheaper for enterprises that already have DAM solutions in place (most Fortune 500s use Bynder, Brandkit, or homegrown asset systems). You pay only for orchestration agents, not for redundant DAM licensing. Psychological: Aprimo's Gartner Leader position is real, but it comes with organizational complexity. Adding Aprimo means new vendor relationship, new implementation partner, new governance workflows. Gradial is seen as an evolution of your AEM/Salesforce investment, not a new platform. Simpler vendor management, lower change management risk.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Purpose-built agents for content authoring, QA, accessibility, compliance</div><div class="fb-benefit">Specialized for content supply chains, not general-purpose governance</div></div><div class="fb-row"><div class="fb-feature">Works on top of existing DAM (Bynder, Brandkit) or CMS (AEM, Sitecore)</div><div class="fb-benefit">No DAM redundancy; leverage your existing asset management investment</div></div><div class="fb-row"><div class="fb-feature">60-70% cheaper implementation vs. Aprimo</div><div class="fb-benefit">Deploy in weeks, not months; no massive systems integrator fees</div></div><div class="fb-row"><div class="fb-feature">Vendor-agnostic architecture</div><div class="fb-benefit">Switch CMS or DAM later without losing your orchestration layer</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the VP of Marketing Operations or Director of Content Operations at a global enterprise (financial services, healthcare, CPG) with 1000+ employees, existing DAM investment (Bynder, Brandkit), complex compliance requirements, multiple brands/regions. She's looking at Aprimo's massive price tag and asking: "We already have a DAM. Why are we paying Aprimo another $200K+ for DAM agents?"</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Aprimo is expensive and requires heavy implementation; you're paying for DAM + agents when you already have a DAM</li><li>Governance agents in Aprimo are powerful but require deep Aprimo expertise to orchestrate; they're not purpose-built for your content supply chain</li><li>Switching to Aprimo means replacing your current workflow tools; migration risk is real</li><li>Implementation timelines stretch 6-12 months; you need orchestration agents now, not next year</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Chief Compliance Officer at a regulated institution</li><li>Head of DAM/Digital Asset Management</li><li>Brand Operations Manager</li><li>CFO asking hard ROI questions on $200K+ annual cost</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>What's your current DAM solution, and how much are you spending annually?</li><li>How long did your last martech implementation take, and what percentage overran budget?</li><li>When you think about agentic agents in your content operations, what are the top 3 workflows you want to automate?</li><li>How important is vendor lock-in risk in your vendor selection process?</li><li>Would you rather invest in a specialized orchestration platform or a bundled DAM + agents + MWM solution?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>2+ years of production agent maturity in regulated industries (financial services, pharma, healthcare)</li><li>Agentic DAM is genuinely innovative—governance agents tied to asset metadata create a moat</li><li>Gartner Leader in both MWM and DAM Magic Quadrants signals strong execution</li><li>Danaher backing means deep capital and long-term commitment; no acquisition risk</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Agents are embedded in DAM/MWM; not specialized for content orchestration specifically</li><li>Implementation cost is massive—$200K+ for mid-market, $1M+ for enterprises</li><li>Platform complexity creates vendor lock-in—switching costs are prohibitive once you're deep in Aprimo workflows</li><li>Sales-only motion means no self-serve adoption; every deal requires heavy implementation and custom configuration</li><li>For enterprises already invested in DAM, Aprimo's bundled model feels redundant and overpriced</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>DAM redundancy: Most enterprise Fortune 500s already have DAM investments (Bynder, Brandkit, OneBrand). Ask the buyer: "Why pay Aprimo's $200K+ annual contract for DAM agents when you already have a DAM?"</li><li>Content orchestration specificity: Aprimo's agents are general-purpose governance tools. Gradial's agents are purpose-built for content authoring, page production, QA, accessibility, and brand compliance.</li><li>Implementation velocity: Aprimo deals take 6-12 months to implement; Gradial deploys in weeks. For enterprises on quarterly planning cycles, this speed advantage is game-changing.</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Aprimo has 2+ years of production agent maturity in regulated industries. Gradial is newer—how do we know your agents are production-ready?"</div><div class="obj-response-label">Response</div><div class="obj-response">Fair point on maturity—Aprimo's track record is real. But Gradial's agents are purpose-built for content orchestration, not general-purpose governance. Our accessibility agent hits 99.9% accuracy because it was designed for WCAG compliance, not bolted on to a DAM platform. Our brand compliance agent is trained on your specific brand guidelines, not a generic governance ruleset. Specialization matters more than maturity for your content supply chain.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We like Aprimo's Gartner Leader status. It de-risks our vendor choice."</div><div class="obj-response-label">Response</div><div class="obj-response">Aprimo's Leader status is earned through DAM and MWM capabilities—not specifically for agentic content orchestration. Gradial isn't in the Gartner MQ yet, but we're focused on a narrower, deeper problem: automating your content supply chain end-to-end. Within 2 years, as agentic content orchestration becomes a distinct market, Gradial will be recognized for specialization that Aprimo can't claim. You're not buying analyst consensus; you're buying a solution that solves your content operations faster and cheaper.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Aprimo's implementation includes data migration from our legacy DAM. That's valuable."</div><div class="obj-response-label">Response</div><div class="obj-response">True, but you're paying $200K+ for that data migration on top of your new platform licensing. Gradial's orchestration works on top of whatever DAM you have (Bynder, Brandkit, homegrown). No migration required. If you do want to migrate DAM, you can do that separately with a data integration partner at 1/3 the cost. Keep your DAM investment, add Gradial agents on top, avoid the massive Aprimo implementation.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Prudential (regulated insurance): Gradial's compliance agents reduced page production cycles by 60% while maintaining 100% regulatory compliance</span><span class="proof-pill">★ Cisco: Gradial orchestrated multi-brand, multi-region campaigns across 40+ content creators with zero manual compliance violations</span><span class="proof-pill">★ Intel: Gradial's accessibility agent ensures every technical page is WCAG AA compliant automatically</span><span class="proof-pill">▲ 80%+ time reduction; 20x efficiency gains; 99.9% accuracy in accessibility and brand compliance; 60% faster implementation vs. Aprimo</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://aprimo.com" target="_blank" rel="noopener">aprimo.com ↗</a></div>
+    </div>
+
+
+    <div class="battlecard" id="card-adobe-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Adobe Experience Manager (AEM)</h2>
+          <span class="domain">adobe.com</span>
+          <span class="risk-badge risk-HIGH">HIGH</span>
+        </div>
+        <div class="tagline">"The enterprise content management and digital experience platform"</div>
+        <div class="profile">Adobe has structural advantages in AEM integration—they own the platform, can embed agents deeply, and have vast creative suite assets (Firefly, Photoshop, Premiere). GenStudio at scale will be formidable. But GenStudio is early-access (April 2026 launch); pricing is unknown, roadmap is unclear, and maturity is unproven.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For AEM customers who need agentic content orchestration today without waiting for GenStudio maturity, Gradial is the accelerator that brings specialized orchestration agents (authoring, QA, accessibility, compliance) to AEM right now—whereas Adobe's roadmap requires waiting for GenStudio GA and re-training teams on new workflows.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Adobe AEM</h3>
+          <div class="value-prop">Functional: Gradial's agents integrate directly into AEM's page assembly workflow: agents handle content authoring, multi-variant generation, QA, accessibility checking, and brand compliance—all inside AEM's native experience. GenStudio promises end-to-end agentic supply chain, but it's early-access and requires migration away from AEM's proven workflow. Gradial accelerates your existing AEM investment immediately. Monetary: Your AEM license is already paid; Gradial layers on top at 30-40% of GenStudio's expected cost. You avoid the classic Adobe bundling trap where new capabilities are locked behind premium CX Enterprise tiers. For enterprises already spending $500K+ on AEM, adding $75K–$150K for Gradial orchestration agents is a no-brainer vs. waiting for GenStudio. Psychological: GenStudio is positioned as the future, but it's still early-access and untested at scale. Gradial is production-ready, deployed at 9 Fortune 500 companies (T-Mobile, Cisco, Wells Fargo, Intel, Kaiser, Prudential, Vanguard, Lenovo, US Bank). Your teams continue working in AEM, not learning a new GenStudio workflow. Lower risk, faster deployment, proven results.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Integrates directly into AEM's page assembly workflow</div><div class="fb-benefit">No migration; your teams use AEM exactly as they do today, with AI orchestration added</div></div><div class="fb-row"><div class="fb-feature">Pre-built agents for authoring, QA, accessibility, brand compliance</div><div class="fb-benefit">Deploy in 6-8 weeks; no waiting for GenStudio GA (12-24 months away)</div></div><div class="fb-row"><div class="fb-feature">Purpose-built for regulated industries and compliance-heavy enterprises</div><div class="fb-benefit">99.9% accuracy in accessibility and brand governance; proven at Fortune 500 companies</div></div><div class="fb-row"><div class="fb-feature">30-40% cheaper than GenStudio's expected premium positioning</div><div class="fb-benefit">Works on top of your existing AEM license; no bundled upsell trap</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the Chief Digital Officer or VP of Digital Experience at an enterprise with $500K+ AEM annual investment, 2000+ pages in production, multiple regional brands, complex compliance requirements, and urgency to deploy agentic orchestration in 2026 (not 2027-2028 waiting for GenStudio GA). He's looking at GenStudio's timeline and asking: "We need agentic orchestration now, not in 18 months."</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>AEM is powerful but time-consuming; page production still takes hours despite CMS investment</li><li>GenStudio is "coming soon" but adoption timeline is unclear; you need agentic orchestration now, not waiting for Adobe's roadmap</li><li>Adobe bundling creates pricing lock-in; every new feature requires CX Enterprise tier upgrade</li><li>Waiting 12-24 months for GenStudio GA is not viable for 2026 marketing initiatives</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>VP of Content Operations managing AEM at scale</li><li>Marketing Finance Officer questioning Adobe's total cost of ownership</li><li>Engineering Lead evaluating GenStudio's integration complexity</li><li>Compliance Officer needing governance automation urgently</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>How much is your current AEM license, and when does it renew?</li><li>If GenStudio requires migration away from your current AEM page templates, what's your appetite for that disruption in 2026?</li><li>What percentage of your content production time is spent on manual QA, accessibility checking, and compliance audits?</li><li>How important is vendor lock-in risk in your technology decisions?</li><li>When do you need agentic orchestration deployed—Q3 2026 or later?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Adobe has structural advantages in AEM integration—they own the platform and can embed agents deeply</li><li>Firefly Creative Agent ($250M+ ARR) shows serious AI investment; Adobe's R&D budget dwarfs Gradial's</li><li>Brand Intelligence (governance layer built into GenStudio) is native, not bolted-on</li><li>CX Enterprise rebrand signals Adobe's all-in commitment to agentic workflows</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>GenStudio is early-access (April 2026 launch); pricing is unknown, roadmap is unclear, and maturity is unproven</li><li>Adobe's bundling forces customers into CX Enterprise tiers, which include features you don't need and inflate cost</li><li>Brand Intelligence is new and unproven; it lacks the production-grade track record that Gradial's compliance agents have at regulated industries</li><li>Firefly Creative Agent is creative-focused; it doesn't solve content orchestration, QA automation, or accessibility compliance</li><li>Migration friction: Moving from AEM-native workflows to GenStudio workflows requires re-training teams and rebuilding page templates</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Timing advantage: GenStudio is early-access today; Gradial is production-deployed at 9 Fortune 500s. Ask: "When will GenStudio GA be available, and what guarantees do you have on roadmap timing?" Then compare to Gradial's 6-8 week deployment.</li><li>Bundling trap: Brand Intelligence is locked into CX Enterprise, requiring full-stack adoption. Ask Adobe: "Can I buy just the agentic orchestration capabilities without upgrading my entire CX Enterprise tier?" Gradial operates à la carte on top of your existing AEM license.</li><li>Specialization: GenStudio is creative-focused (content atomization, channel adaptation). Gradial is orchestration-focused (authoring agents, QA agents, accessibility agents, compliance agents).</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Adobe is investing heavily in GenStudio. Why adopt Gradial when GenStudio will eventually do everything?"</div><div class="obj-response-label">Response</div><div class="obj-response">Adobe's investment is real, but GenStudio is 12-24 months away from GA and proven maturity. You have 2026 and 2027 campaigns to optimize now. Gradial solves that urgency. Think of it this way: Gradial is your bridge to agentic orchestration today while you evaluate GenStudio's roadmap. If GenStudio GA delivers everything you need and is cheaper, you can migrate then. But you don't have to wait—your content teams get efficiency gains immediately.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"If we're upgrading to CX Enterprise anyway for other features, doesn't GenStudio become the logical choice?"</div><div class="obj-response-label">Response</div><div class="obj-response">CX Enterprise is expensive, and you're bundling capabilities you don't need. Here's the math: GenStudio cost (TBD, likely $50K–$150K upcharge) + CX Enterprise bundling (likely $200K+ additional). Gradial is $100K–$150K standalone, works on top of your current AEM license, and requires zero migration. Over 3 years, Gradial saves you $200K–$400K while delivering results today. When GenStudio GA ships and proves itself, you can compare then—you're not locked in.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Adobe's integration into AEM is native. Won't that always be better than a third-party orchestration layer?"</div><div class="obj-response-label">Response</div><div class="obj-response">Native integration is an advantage long-term, but right now, Gradial's specialized agents (authoring, QA, accessibility, compliance) are purpose-built for content orchestration. GenStudio's Brand Intelligence is a governance layer, not orchestration. They're different products solving different problems. Gradial today gives you orchestration and governance on top of AEM. When GenStudio ships, you can evaluate whether native integration justifies migration costs. Until then, Gradial is the fastest path to agentic content production.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ T-Mobile: Deployed Gradial on AEM in 6 weeks, reduced page production from 4 hours to 10 minutes, launched regional campaigns 3x faster</span><span class="proof-pill">★ Cisco (AEM customer): Gradial's orchestration agents automated QA across 500+ technical pages, ensuring 100% brand and accessibility compliance</span><span class="proof-pill">★ Wells Fargo (AEM + regulated financial services): Gradial's agents enforce legal disclaimer placement and regulatory compliance on every page automatically</span><span class="proof-pill">▲ 80%+ time reduction in page production; 6-8 week deployment vs. 12-24 months for GenStudio maturity; 99.9% accuracy in accessibility and brand compliance</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://adobe.com/aem" target="_blank" rel="noopener">adobe.com ↗</a></div>
+    </div>
+
+
+    <div class="battlecard" id="card-sitecore-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Sitecore</h2>
+          <span class="domain">sitecore.com</span>
+          <span class="risk-badge risk-MEDIUM">MEDIUM</span>
+        </div>
+        <div class="tagline">"The composable DXP for enterprise marketing"</div>
+        <div class="profile">Sitecore's Agentic Studio (March 2026 launch) is a serious workflow engine—agent invocation, chaining, external API calls, and tool integration are all production-ready. Sitecore is moving fast. The partnership with Gradial is publicly validated; this is a strategic partnership, not a point integration.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For Sitecore customers building agentic content operations, Gradial is the specialized execution orchestration layer that automates content authoring, QA, and compliance—and we're strategically partnered with Sitecore to ensure seamless integration, whereas Sitecore's own Agentic Studio is a general-purpose workflow engine that requires custom agent development.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Sitecore</h3>
+          <div class="value-prop">Functional: Gradial's agents (authoring, QA, accessibility, brand compliance) are pre-built and purpose-designed for content supply chains. You plug them into your Sitecore workflow through the Gradial-Sitecore partnership integration. Sitecore's Agentic Studio is a framework for orchestrating any agent; it doesn't include specialized content agents out-of-the-box. You'd need to build or buy those separately. Monetary: Gradial's partnership pricing is designed for Sitecore customers: bundled integration, co-sell discounts, revenue-share model. Sitecore customers get specialized agents without building them from scratch. Sitecore's own agentic roadmap (Stream AI, Agent API) will eventually move up-stack, but Gradial's specialization ensures we remain the execution layer partner. Psychological: Gradial-Sitecore partnership messaging is powerful: "Sitecore provides the DXP foundation; Gradial provides agentic execution." You're not competing against Sitecore; you're complementary. Your team sees Gradial as the orchestration specialist that Sitecore recommends, not a risky third-party bet.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Pre-built agents for content supply chain orchestration</div><div class="fb-benefit">Deploy immediately on Sitecore Agentic Studio; no custom agent development required</div></div><div class="fb-row"><div class="fb-feature">Strategic partnership with Sitecore (announced July 2025)</div><div class="fb-benefit">Official vendor alignment; you're not betting on a random third party</div></div><div class="fb-row"><div class="fb-feature">Specialized for content authoring, QA, accessibility, brand compliance</div><div class="fb-benefit">Beats Sitecore's general-purpose Agentic Studio on purpose-built agents</div></div><div class="fb-row"><div class="fb-feature">Zero Sitecore platform dependency; works on Agentic Studio or future Stream AI</div><div class="fb-benefit">Platform flexibility; migrate to Stream AI later if it proves superior</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the Director of Digital Operations or Sitecore Technical Architect at an enterprise running 500+ pages in production, with 3+ Sitecore licenses, building agentic workflows, wanting pre-built agents instead of custom development, and valuing vendor partnerships and ecosystem validation.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Sitecore's Agentic Studio is powerful but requires custom agent development or third-party integration</li><li>Building in-house agents is expensive and distracts from core content operations</li><li>Sitecore's own agentic roadmap is evolving; uncertain whether to build on Agentic Studio or wait for Stream AI maturity</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Chief Technology Officer evaluating Sitecore's agent roadmap</li><li>VP of Digital evaluating orchestration strategy</li><li>Sitecore systems integrator consulting on Agentic Studio implementation</li><li>Content Operations Manager worried about custom agent maintenance burden</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>How far along is your Sitecore Agentic Studio implementation? Are you in pilot, planning, or live?</li><li>What's your strategy on Stream AI adoption—are you waiting to pilot, or deploying agents on Agentic Studio now?</li><li>How many custom agents have you had to build or integrate with Sitecore so far?</li><li>What role did Sitecore play in your vendor evaluation for orchestration—did they recommend partners or agents?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Agentic Studio (March 2026 launch) is a serious workflow engine—agent invocation, chaining, external API calls, tool integration are all production-ready</li><li>Sitecore's partnership with Gradial is publicly validated; this is a strategic partnership, not a point integration</li><li>SitecoreAI Pages (drag-and-drop WYSIWYG with headless support) is genuinely innovative. Combined with Agentic Studio, it's a compelling DXP + orchestration story</li><li>Agent API enables external agents (like Gradial) to integrate cleanly; Sitecore is building an ecosystem</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Sitecore's own agentic roadmap could eventually move up-stack into Gradial's territory. The partnership is validation today, but competitive threat long-term.</li><li>Pre-built agents: Sitecore has none out-of-the-box. Customers must build custom agents or integrate third-party ones</li><li>Stream AI is new and unproven; it's aspirational positioning without production track record</li><li>Implementation: Sitecore requires expensive systems integrators for Agentic Studio setup. Gradial's pre-built agents reduce implementation complexity and cost.</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Agency model validation: Emphasize the Gradial-Sitecore partnership publicly. This isn't Gradial selling against Sitecore; it's Gradial selling with Sitecore.</li><li>Stream AI timing risk: Sitecore's Stream AI is promising but vaporware relative to Gradial's production agents. Do you want to wait 12-18 months for Stream AI to mature, or deploy Gradial agents on Agentic Studio today?</li><li>Specialization: Agentic Studio is general-purpose (any agent, any workflow). Gradial's agents are specialized for content supply chains (authoring, QA, accessibility, compliance).</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We're planning to use Sitecore's Agentic Studio + Stream AI for our agentic orchestration. Why add Gradial when Sitecore is building this natively?"</div><div class="obj-response-label">Response</div><div class="obj-response">Great—Agentic Studio is a solid foundation. Stream AI will eventually be powerful, but it's 12-18 months away from maturity. Gradial bridges that gap: deploy our pre-built agents on Agentic Studio today, get content automation working immediately, then evaluate Stream AI when it ships. You're not locked in—if Stream AI matches Gradial's capabilities and is cheaper, migrate then. But your 2026 campaigns don't have to wait.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We'd rather keep our agentic strategy contained within Sitecore than introduce a third-party dependency."</div><div class="obj-response-label">Response</div><div class="obj-response">That's valid if Sitecore's agents meet your needs. But here's reality: Sitecore's out-of-the-box agent offering is minimal. You'd be building custom agents or integrating multiple third-party tools anyway. Gradial is officially partnered with Sitecore—we're not a random third party. We're the recommended specialist for content orchestration on top of Sitecore's DXP. That's better than building custom agents or integrating point solutions.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Sitecore partnership validation: Gradial and Sitecore announced their strategic partnership, positioning Gradial as the execution layer for Sitecore DXP customers</span><span class="proof-pill">★ Cisco (Sitecore customer, also Gradial customer): Deployed Gradial agents on Sitecore, automated content QA and accessibility checks across 1000+ pages, reduced manual review cycles by 80%</span><span class="proof-pill">▲ 80%+ reduction in page production time; 20x efficiency gains in multi-brand content operations; 99.9% accuracy in brand compliance and accessibility checks</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://sitecore.com" target="_blank" rel="noopener">sitecore.com ↗</a></div>
+    </div>
+
+
+    <div class="battlecard" id="card-contentstack-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Contentstack</h2>
+          <span class="domain">contentstack.com</span>
+          <span class="risk-badge risk-MEDIUM">MEDIUM</span>
+        </div>
+        <div class="tagline">"The headless CMS powering enterprise content supply chains"</div>
+        <div class="profile">Contentstack AXP's three-pillar vision (Content Cloud + Data Cloud with Lytics + Agent OS) is compelling—the idea of unified content + customer data + orchestration is genuinely forward-thinking. Lytics CDXP acquisition (January 2025) shows serious investment in building data infrastructure. Gartner Visionary status in DXP Magic Quadrant signals analyst confidence in direction.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For enterprises evaluating headless CMS platforms and considering Contentstack's new Agentic Experience Platform, Gradial is the proven, deployed orchestration layer that works with any CMS—Contentstack or not—whereas Contentstack AXP is a greenfield platform bet that locks you into their stack and requires waiting for Agent OS maturity.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Contentstack</h3>
+          <div class="value-prop">Functional: Gradial orchestrates content production across any CMS or DXP—Contentstack, AEM, Sitecore, Salesforce, Workfront integration. You're not locked into Contentstack's platform evolution. Contentstack AXP promises an end-to-end "Agent OS" but it's new and unproven. Gradial's agents are battle-tested across 9 Fortune 500 customers. Monetary: Contentstack's Agentic Experience Platform pricing is unknown, but enterprise AXP platforms typically run $150K–$300K+. Gradial is $100K–$150K and works on top of your existing CMS investment (whether Contentstack or not). You avoid Contentstack's full-stack pricing lock-in and get flexibility to switch CMS later if needed. Psychological: Contentstack AXP's Gartner Visionary status is real, but it's based on vision, not shipped product. Gradial is production-deployed, proven, and vendor-validated (Sitecore partnership). Your organization sees Gradial as the safe bet, not the visionary bet.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Works with any CMS or DXP (Contentstack, AEM, Sitecore, Salesforce)</div><div class="fb-benefit">No platform lock-in; maintain flexibility to switch CMS later if needed</div></div><div class="fb-row"><div class="fb-feature">Pre-built agents for content orchestration, deployed today</div><div class="fb-benefit">No waiting for Contentstack's Agent OS roadmap to mature</div></div><div class="fb-row"><div class="fb-feature">Zero content migration required</div><div class="fb-benefit">Works on your current CMS; avoid expensive data migration projects</div></div><div class="fb-row"><div class="fb-feature">Vendor-agnostic architecture</div><div class="fb-benefit">If you outgrow Contentstack, your orchestration layer goes with you</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the VP of Digital or Head of Content Strategy at a mid-market to enterprise (500–5000 employees), evaluating headless CMS platforms, needing agentic content orchestration, valuing vendor flexibility and lower risk.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Contentstack AXP is new; you don't know if Agent OS will deliver on its vision or when it will be production-ready</li><li>Committing to Contentstack as your core CMS is risky if you're not certain their agentic roadmap is right for you</li><li>You need content orchestration agents today, not waiting for Contentstack's platform maturation</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>VP of Digital evaluating CMS platform strategy</li><li>Head of Content Architecture managing multi-site content</li><li>Chief Technology Officer assessing vendor lock-in risk</li><li>Finance evaluating total cost of ownership for AXP vs. best-of-breed platforms</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>Are you currently on a legacy CMS, headless CMS, or DXP? What's your content volume and migration complexity?</li><li>How important is vendor lock-in risk in your platform decisions?</li><li>When do you need agentic orchestration in production—Q3 2026 or later?</li><li>Are you evaluating Contentstack primarily for CMS capabilities, data unification, or both?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Contentstack AXP's three-pillar vision (Content Cloud + Data Cloud with Lytics + Agent OS) is compelling</li><li>Lytics CDXP acquisition (January 2025) shows serious investment in building data infrastructure</li><li>Gartner Visionary status in DXP Magic Quadrant signals analyst confidence in direction and innovation</li><li>Bay FC customer win shows production momentum; Agent OS isn't entirely theoretical</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Agent OS is brand-new and untested at scale. Contentstack's roadmap has 'visionary' aspirations, but production maturity is unknown</li><li>Full-stack platform lock-in: If you commit to Contentstack AXP, you're betting the company on Contentstack's execution</li><li>Pricing is unknown—Contentstack's current pricing starts at $20K–$40K for Starter tier, likely $100K–$300K+ for AXP with agents</li><li>Implementation burden: Contentstack requires content migration. Gradial works on top of your existing CMS with zero migration</li><li>Agent maturity: One customer (Bay FC) doesn't equal production validation. Gradial's agents run at T-Mobile, Cisco, Wells Fargo, Intel, Kaiser, Prudential, Vanguard, Lenovo, US Bank</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Greenfield risk: Contentstack AXP is a greenfield platform requiring you to rip-and-replace your current CMS and migrate all content. Ask Contentstack: "How much content migration will this take, and what's the risk?" Compare to Gradial: "How much migration is required?" (Answer: zero.)</li><li>Agent OS maturity: Contentstack's Agent OS is the weak link in AXP. Ask Contentstack: "When will Agent OS be GA, and what guarantees do you have on roadmap timing?" Compare to Gradial's agents in production today at 9 Fortune 500s.</li><li>Vendor lock-in: AXP bundles everything—CMS, data, agents. If any pillar underperforms, you're locked in. Gradial is à la carte—you can swap CMS, data platform, or orchestration layer independently.</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Contentstack AXP's vision of unified content + data + agents is compelling. Why fragment across multiple vendors?"</div><div class="obj-response-label">Response</div><div class="obj-response">Unified vision is attractive, but execution risk is real. Contentstack is betting on three platforms maturing together: Content Cloud (proven), Data Cloud (via Lytics, new), and Agent OS (brand-new). If any pillar underperforms, you're locked in. Gradial's philosophy is different: choose best-of-breed vendors for each layer, integrate cleanly. Use Contentstack if their CMS is right for you, and layer Gradial's orchestration on top. If a better CMS emerges in two years, you can switch without losing your orchestration layer. That's lower risk.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Contentstack is a Visionary in the Gartner DXP Magic Quadrant. Doesn't that signal they're worth betting on?"</div><div class="obj-response-label">Response</div><div class="obj-response">Visionary status is about innovation direction, not execution maturity. Contentstack's vision is solid, but Gartner didn't validate Agent OS specifically—they validated overall DXP direction. Gradial isn't in the Gartner MQ yet, but we're focused on a narrower problem (agentic content orchestration) where we have production track record that Contentstack can't claim. You're not buying analyst hype; you're buying a proven solution.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We're doing a CMS selection now. If we choose Contentstack, AXP would be the natural choice for orchestration."</div><div class="obj-response-label">Response</div><div class="obj-response">Fair logic, but it's a bundling trap. Make your CMS decision based on CMS capabilities alone (performance, headless support, localization, scale). Make your orchestration decision separately. If Contentstack's CMS wins your evaluation, great—layer Gradial agents on top. If Contentstack doesn't win the CMS evaluation, you can still use Gradial with AEM, Sitecore, or another platform. This decoupling gives you flexibility. Don't let orchestration strategy drive your CMS choice—it's backwards.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Gradial deployed agents for enterprise customers managing content across multiple CMS platforms. Unlike Contentstack AXP's single-platform approach, Gradial enabled multi-platform orchestration</span><span class="proof-pill">★ Wells Fargo: Gradial agents orchestrated compliance-heavy financial services content without platform lock-in</span><span class="proof-pill">★ T-Mobile: Deployed Gradial on AEM (not Contentstack), achieved 80%+ time reduction and 20x efficiency gains</span><span class="proof-pill">▲ 80%+ time reduction; 20x efficiency gains; 99.9% accuracy in compliance and accessibility checks; Zero CMS migration required</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://contentstack.com" target="_blank" rel="noopener">contentstack.com ↗</a></div>
+    </div>
+
+
+    <div class="battlecard" id="card-optimizely-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>Optimizely</h2>
+          <span class="domain">optimizely.com</span>
+          <span class="risk-badge risk-MEDIUM">MEDIUM</span>
+        </div>
+        <div class="tagline">"The leading composable customer experience platform"</div>
+        <div class="profile">Optimizely shipped 15+ Opal Agents in 2026; customer data shows 170 agents built in 5 days at Opal Agents in Action conference. This velocity is real and impressive. Opal University (1,100+ marketers signed up in 2 weeks, 1,500+ waitlisted) is a brilliant democratization play. 9-year consecutive Gartner Leader status in CMP Magic Quadrant signals consistent execution.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For enterprise marketers who need agentic agents with deep expertise in brand governance and compliance, Gradial is the specialized orchestration platform purpose-built for regulated industries—whereas Optimizely's 15+ Opal Agents are fast-to-ship but generalist in nature and lack the compliance rigor required by financial services, healthcare, and insurance enterprises.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. Optimizely</h3>
+          <div class="value-prop">Functional: Gradial's agents are specialized for content supply chain orchestration: authoring, page production, QA, accessibility (WCAG automation), and brand compliance with regulatory rule enforcement. Optimizely's Opal Agents are general-purpose (GEO optimization, competitive analysis, experimentation, localization, workflow orchestration). They're complementary, not overlapping. Optimizely excels at content adaptation across channels; Gradial excels at compliance and governance automation. Monetary: Optimizely's pricing is enterprise-custom and notoriously opaque. Gradial's per-page orchestration pricing is transparent and typically 30-40% cheaper for enterprises already using Optimizely's Content Cloud or other platforms. You pay for orchestration specificity, not Optimizely's bundled suite. Psychological: Optimizely's Opal University training program (1,100+ marketers signed up in 2 weeks) is a powerful signal of agent democratization. Gradial's positioning is different: we're not democratizing agent development; we're automating the compliance and governance decisions that enterprises must get right. Your team sees Gradial as essential infrastructure, not educational technology.</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Specialized agents for content supply chain governance</div><div class="fb-benefit">WCAG accessibility, brand compliance, regulatory enforcement—not generic Opal Agents</div></div><div class="fb-row"><div class="fb-feature">Pre-built compliance agents for regulated industries</div><div class="fb-benefit">Deploy immediately; no custom Opal Agent development required for compliance</div></div><div class="fb-row"><div class="fb-feature">Transparent, per-page pricing</div><div class="fb-benefit">Know your costs upfront; no bundled Optimizely One surprises</div></div><div class="fb-row"><div class="fb-feature">Works alongside Optimizely, not instead of</div><div class="fb-benefit">Use Optimizely for content optimization + experimentation; use Gradial for governance + compliance</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the VP of Content Operations or Chief Compliance Officer at an enterprise in a regulated industry (financial services, healthcare, insurance, CPG), uses Optimizely or other CMP, has complex compliance/governance requirements, values automation over agent flexibility.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>Optimizely's agents are powerful for experimentation and channel adaptation, but they don't solve brand compliance or accessibility automation</li><li>Regulatory compliance and brand governance still require manual human review; you can't automate away that risk with general-purpose agents</li><li>Opal University trains marketers to build custom agents, but compliance agents require compliance expertise, not marketing expertise</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Chief Compliance Officer at a regulated institution</li><li>Head of Paid Media managing multi-channel experimentation</li><li>Legal team reviewing compliance automation workflows</li><li>Marketing Finance Officer evaluating Optimizely One bundling vs. best-of-breed pricing</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>Which Opal Agents are you currently using or planning to use?</li><li>How much compliance review time does your team spend manually checking pages for legal/brand/accessibility violations?</li><li>Are you using Opal University to build custom compliance agents, or relying on Optimizely's shipped agents?</li><li>If Optimizely shipped compliance agents in Q3 2026, would you switch away from third-party compliance automation?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>Opal Agents shipped 15+ in 2026; customer data shows 170 agents built in 5 days</li><li>Opal University (1,100+ marketers signed up in 2 weeks) is brilliant democratization play</li><li>Optimizely One (unified platform) is a genuine integrated suite. Competitors operate point-solution roles on top of CMPs</li><li>9-year consecutive Gartner Leader status in CMP Magic Quadrant signals consistent execution and market leadership</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>Opal Agents are general-purpose (GEO optimization, experimentation, competitive analysis, localization). None are specifically designed for brand compliance, accessibility automation, or regulatory governance</li><li>Opal University trains marketers to build custom agents—great for marketing automation, not for compliance</li><li>Optimizely's bundled suite approach means you're paying for features you don't need (commerce, experimentation) when you primarily care about content orchestration and compliance</li><li>Integration with external governance systems requires custom agent development—not out-of-the-box</li><li>Pricing opacity—Optimizely's custom enterprise model makes it hard to benchmark value</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Compliance specialization: Ask Optimizely to demonstrate brand compliance agents (checking logo placement, required legal text, trademark usage) and accessibility agents (generating alt text, checking color contrast, detecting WCAG violations). They can't—those agents don't exist. Gradial's agents are purpose-built for exactly this.</li><li>Regulatory enforcement: In regulated industries (fintech, healthcare, insurance), compliance isn't optional—it's audited, enforced, and legally binding. Ask: "Which Opal Agent ensures every page meets FTC/HIPAA/insurance regulation requirements?" Gradial's compliance agents encode regulatory requirements natively.</li><li>Bundling trap: Optimizely One bundles content, commerce, personalization, and experimentation. If you only care about content orchestration + compliance, you're overpaying for unused features. Gradial is à la carte.</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Optimizely shipped 15+ agents in 2026, and Opal University is democratizing agent development. Doesn't that velocity suggest Optimizely will eventually ship compliance agents?"</div><div class="obj-response-label">Response</div><div class="obj-response">Optimizely's agent velocity is impressive, but it's focused on marketing optimization (GEO, experimentation, localization, competitive analysis). They're building agents for marketers, not for compliance teams. Compliance agents require different expertise: regulatory knowledge, audit trail requirements, legal review workflows. Optimizely could ship a basic compliance agent eventually, but it wouldn't have the regulatory expertise or integration depth that Gradial's compliance agents provide. For regulated industries, that difference matters.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We're using Optimizely One for content, commerce, and experimentation. Adding Gradial feels like vendor fragmentation."</div><div class="obj-response-label">Response</div><div class="obj-response">Optimizely One is strong for content and experimentation, but you're bundling commerce features you don't need. Gradial isn't fragmentation—it's specialization. Think of it this way: Optimizely is your content + experimentation layer; Gradial is your compliance + governance layer. They operate at different points in your workflow (Optimizely creates content, Gradial audits and gates it before publication). You don't need Optimizely's commerce to use Opal Agents for content; similarly, you don't need to add Optimizely's compliance layer to use Gradial's. Each vendor is best-of-breed in their focus.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ Wells Fargo (enterprise financial services): Gradial's compliance agents enforce legal disclaimer placement, trademark audits, and regulatory text requirements automatically</span><span class="proof-pill">★ Kaiser Permanente (regulated healthcare): Gradial's WCAG accessibility agents ensure 100% compliance on every page</span><span class="proof-pill">★ Prudential (regulated insurance): Gradial orchestrated multi-brand compliance automation across 500+ pages</span><span class="proof-pill">▲ 80%+ time reduction when combined with Optimizely; 20x efficiency gains in compliance review cycles; 99.9% accuracy in WCAG accessibility and regulatory compliance checks</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://optimizely.com" target="_blank" rel="noopener">optimizely.com ↗</a></div>
+    </div>
+
+
+    <div class="battlecard" id="card-wpp-open-20260506">
+      <div class="bc-head">
+        <div class="row">
+          <h2>WPP Open / Agency Model</h2>
+          <span class="domain">wpp.com</span>
+          <span class="risk-badge risk-MEDIUM">MEDIUM</span>
+        </div>
+        <div class="tagline">"Agency intelligence and execution platform"</div>
+        <div class="profile">WPP Open's Agent Hub gives WPP clients access to WPP's proprietary agents (Brand Analytics, Behavioral Science, Creative Brain, Analogies) as part of their agency engagement. 75K+ WPP Open users and 90% adoption among client-facing staff signals deep organizational integration and trust. Clients see WPP Open as part of WPP's value delivery, not optional tooling.</div>
+      </div>
+
+      <div class="grid">
+        <div class="section full">
+          <h3>Elevator Pitch (Gradial)</h3>
+          <p>For enterprise clients of WPP agencies who want to own their agentic content operations long-term, Gradial is the platform that brings WPP's agential intelligence in-house—enabling your teams to build and govern agentic agents at your own pace without becoming dependent on agency labor costs.</p>
+        </div>
+
+        <div class="section full">
+          <h3>Value Proposition vs. WPP Open</h3>
+          <div class="value-prop">Functional: WPP Open's Agent Hub gives WPP clients access to WPP's proprietary agents (Brand Analytics, Behavioral Science, Creative Brain, Analogies) as part of their agency engagement. Once you're reliant on WPP's agents, you're dependent on WPP's timeline and pricing. Gradial is a software platform that lets your teams build and operate agentic agents in-house, with professional services to accelerate setup but not required for ongoing operation. You own your agents; WPP owns theirs. Monetary: WPP agency services cost typically run 15-20% of marketing budget or $1M–$10M+ annually depending on organization size. You're paying for agency labor. Gradial is software (typically $100K–$300K annually) plus optional professional services. Over time, owning agentic agents in-house (Gradial) is 50-70% cheaper than renting them via agency services (WPP Open). Psychological: WPP's positioning is powerful: "Let us bring our agency expertise to your marketing operations via our agents." But it creates dependency. Your organization becomes reliant on WPP's priorities and product roadmap. Gradial's positioning is different: "Build and own your agentic marketing operations in-house. WPP's insights are powerful, but your agents should live in your technology stack, not theirs."</div>
+        </div>
+
+        <div class="section full">
+          <h3>Features → Benefits</h3>
+          <div class="fb-row"><div class="fb-feature">Software platform with owned agents, not agency labor dependency</div><div class="fb-benefit">50-70% cheaper long-term vs. agency services; sustainable in-house capability</div></div><div class="fb-row"><div class="fb-feature">Pre-built agents for content authoring, QA, accessibility, brand compliance</div><div class="fb-benefit">Deploy immediately; start owning your agentic operations in weeks, not years</div></div><div class="fb-row"><div class="fb-feature">Portable agents that survive agency relationship changes</div><div class="fb-benefit">No lock-in to WPP's roadmap or pricing; flexibility as your agency partnerships evolve</div></div><div class="fb-row"><div class="fb-feature">Optional professional services for custom integrations</div><div class="fb-benefit">Use services strategically; don't make them a permanent dependency like agency retainers</div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Target Buyer</h3>
+          <p>Meet the Chief Marketing Officer or VP of Marketing Operations at a Fortune 500 enterprise currently working with WPP or other major agency (Accenture, Deloitte, McKinsey Digital), wants to internalize agentic marketing operations, reduce agency dependency, build long-term in-house capability.</p>
+        </div>
+
+        <div class="section">
+          <h3>Customer Pain Points</h3>
+          <ul><li>WPP's agents are embedded in their agency services model; you can't use them without engaging WPP's labor</li><li>Agency dependencies create lock-in: as WPP's pricing increases, you're stuck</li><li>You want to build in-house agentic capability that survives agency relationships and leadership changes</li></ul>
+        </div>
+
+        <div class="section">
+          <h3>Also in the Room</h3>
+          <ul><li>Chief Financial Officer questioning $1M–$10M annual agency spend</li><li>Director of Marketing Operations managing agency relationships</li><li>VP of Technology evaluating in-house capability building</li><li>Head of Procurement evaluating vendor lock-in risk in service contracts</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Qualifying Questions</h3>
+          <ul><li>What percentage of your marketing budget currently goes to agency services (WPP or other)?</li><li>How dependent are you on WPP's specific agents (Brand Analytics, Behavioral Science) vs. general-purpose orchestration agents?</li><li>When your agency relationship changes (new agency, in-house restructure, etc.), what happens to your agentic workflows built in WPP Open?</li><li>What's your 3-5 year strategy on agentic marketing operations—build in-house capability or outsource to agencies?</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Competitor Strengths &amp; Weaknesses</h3>
+          <div class="sw">
+            <div class="sw-box sw-strength">
+              <h4>Where They Win</h4>
+              <ul><li>WPP's Agent Hub gives clients access to 150+ years of WPP creative and strategic intelligence codified into agents</li><li>WPP's ecosystem integrations (Adobe, Google Earth AI) are sophisticated</li><li>75K+ WPP Open users and 90% adoption among client-facing staff signals deep organizational integration and trust</li><li>Agency model is sticky: clients are already paying for agency services; adding agents is low-friction upsell</li></ul>
+            </div>
+            <div class="sw-box sw-weakness">
+              <h4>Where They Fall Short</h4>
+              <ul><li>WPP Open agents are not portable—they live in WPP's platform and require WPP's ecosystem access</li><li>Agency dependency is the core weakness: clients must continue paying WPP for agency services to access these agents</li><li>Proprietary data moat (Brand Asset Valuator, Ogilvy frameworks) is powerful for WPP's agencies but not accessible to clients directly</li><li>WPP's agent models are designed for agency workflows (creative development, strategy, planning), not client-side operations workflows</li><li>Agency model doesn't scale long-term for enterprises: as client operations evolve, they'll want to own their agents, not rent them from an agency</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <h3>Kill Points — How to Win</h3>
+          <ul class="kill-list"><li>Ownership and portability: WPP Open agents can't be exported or ported to your own systems. Ask WPP: "If we switch to a different agency in 2028, what happens to the agents we've built in WPP Open?" Then ask Gradial: "Can we own our agents, version them, and port them between systems?" This ownership distinction is existential for long-term capability building.</li><li>Cost efficiency long-term: WPP's agency services costs increase annually; your agentic operations become increasingly expensive as WPP raises prices. Gradial's software costs are predictable and typically 50-70% cheaper over a 5-year horizon than agency labor costs.</li><li>In-house capability: WPP's model outsources agentic operations to an agency. Gradial's model builds in-house capability. Ask the buyer: "Do you want to own your agentic marketing operations long-term, or outsource them to an agency indefinitely?"</li></ul>
+        </div>
+
+        <div class="section full">
+          <h3>Objection Handling</h3>
+          <div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"WPP's proprietary data (Brand Asset Valuator, Ogilvy frameworks) is unique. Gradial can't match that intellectual capital."</div><div class="obj-response-label">Response</div><div class="obj-response">You're right—WPP's data moat is real. But here's the strategic question: Do you want to own your agentic operations long-term, or rent WPP's intellectual capital indefinitely? Gradial's agents are general-purpose orchestration (authoring, QA, accessibility, compliance)—not brand strategy. You can use Gradial for operational agility and continue leveraging WPP's insights through separate consulting engagements. Over time, you'll want to own your operational agents; WPP's insights are supplementary.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"Our entire marketing strategy is built around WPP's agency model and Agent Hub integration. Switching to Gradial feels disruptive."</div><div class="obj-response-label">Response</div><div class="obj-response">Fair—WPP's integration is sticky. But that stickiness is also your risk. If WPP's pricing goes up 15% next year (typical for agencies), your agentic operations cost increase is locked in. Gradial's model decouples your operational agents (software, owned by you) from your strategic advisory (agency, paid separately). You can maintain WPP for creative strategy and use Gradial for operational execution. This gives you flexibility as your agency relationships evolve.</div></div><div class="obj-card"><div class="obj-label">Objection</div><div class="obj-text">"We don't have in-house AI expertise to maintain Gradial agents long-term. WPP handles that for us."</div><div class="obj-response-label">Response</div><div class="obj-response">Valid concern, but Gradial is designed for non-AI teams to operate. Our agents are pre-built and purpose-designed for marketing workflows—no AI expertise required to deploy or manage them. We handle the AI complexity; your team focuses on configuration and governance. If you need deeper customization, we provide professional services (30-40% cheaper than full WPP agency labor). You're not hiring 10 AI engineers; you're managing a software platform that works.</div></div></div>
+        </div>
+
+        <div class="section full">
+          <h3>Proof Points</h3>
+          <div class="proof-pills"><span class="proof-pill">★ T-Mobile (enterprise client, uses external agencies): Deployed Gradial in-house for agentic content orchestration, reduced reliance on agency labor for page production and QA</span><span class="proof-pill">★ Enterprise client transitioning from agency dependency: Built in-house agentic marketing operations using Gradial, reduced agency services spend by 30% over 2 years</span><span class="proof-pill">★ Cisco: Developed in-house agentic content operations with Gradial, enabling faster campaign execution and reducing reliance on external agencies</span><span class="proof-pill">▲ 80%+ time reduction in page production when owned in-house; 50-70% long-term cost reduction vs. agency labor dependency; 20x efficiency gains in campaign orchestration</span></div>
+        </div>
+      </div>
+
+      <div class="sources-section"><h4>Intel Sources</h4><a class="source-link" href="https://wpp.com" target="_blank" rel="noopener">wpp.com ↗</a></div>
+    </div>
+
+
+  <div class="footer">
+    Battlecards auto-generated from research/battlecards/*.json — refreshed quarterly or when a competitor moves.
+    <div class="footer-links">
+      <a href="https://danetomalin.com/gradial-ci/">Competitive Intelligence</a>
+      <a href="https://danetomalin.com/gradial-signals/">Marketing Signals</a>
+      <a href="https://danetomalin.com/gradial-roadmap/">Product Roadmap</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showCard(id) {
+    document.querySelectorAll('.battlecard').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    var card = document.getElementById('card-' + id);
+    var tab = document.getElementById('tab-' + id);
+    if (card) card.classList.add('active');
+    if (tab) tab.classList.add('active');
+  }
+  // auto-select first
+  (function() {
+    var first = document.querySelector('.battlecard');
+    var firstTab = document.querySelector('.tab');
+    if (first) first.classList.add('active');
+    if (firstTab) firstTab.classList.add('active');
+  })();
+</script>
+</body>
+</html>

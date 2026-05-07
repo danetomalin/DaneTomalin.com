@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradial Product Roadmap</title>
+<link rel="canonical" href="https://danetomalin.com/gradial-roadmap/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #3B82F6;
+    --accent-dark: #2563EB;
+    --accent-bg: rgba(59, 130, 246, 0.12);
+    --build: #66BB6A;
+    --build-bg: rgba(102, 187, 106, 0.12);
+    --investigate: #FFA726;
+    --investigate-bg: rgba(255, 167, 38, 0.12);
+    --defer: #EF5350;
+    --defer-bg: rgba(239, 83, 80, 0.12);
+    --kill: #78909C;
+    --kill-bg: rgba(120, 144, 156, 0.12);
+    --critical: #FFA726;
+    --critical-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Header */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-dark);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-dark);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+  .nav-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-family: var(--mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 12px;
+  }
+  .nav-link:hover { text-decoration: underline; }
+
+  /* Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-strong { border-left: 3px solid var(--build); }
+  .scorecard-card.overall-moderate { border-left: 3px solid var(--investigate); }
+  .scorecard-card.overall-weak { border-left: 3px solid var(--defer); }
+
+  /* UVFV Framework Legend */
+  .framework-legend {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .framework-legend h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .framework-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .framework-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+  .framework-item .fw-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .framework-item .fw-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Recommendation Badge */
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .rec-badge.build { background: var(--build-bg); color: var(--build); }
+  .rec-badge.investigate { background: var(--investigate-bg); color: var(--investigate); }
+  .rec-badge.defer { background: var(--defer-bg); color: var(--defer); }
+  .rec-badge.kill { background: var(--kill-bg); color: var(--kill); }
+  .rec-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Priority Badge */
+  .priority-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .priority-badge.critical { background: var(--critical-bg); color: var(--critical); }
+  .priority-badge.high { background: var(--accent-bg); color: var(--accent); }
+  .priority-badge.medium { background: var(--investigate-bg); color: var(--investigate); }
+  .priority-badge.low { background: var(--kill-bg); color: var(--kill); }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Category Sections */
+  .category-section { margin-bottom: 32px; }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .category-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font);
+  }
+  .category-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  /* Roadmap Card */
+  .roadmap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .roadmap-card:hover { border-color: var(--accent); background-color: var(--bg-card-hover); }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .card-top h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex: 1;
+  }
+  .card-top h3 .priority-badge { margin-left: 8px; }
+  .impact-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 80px;
+  }
+  .impact-badge span {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-primary);
+  }
+  .bar-track {
+    width: 60px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  /* Evidence Section */
+  .evidence {
+    background: var(--bg-secondary);
+    border-left: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .evidence .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .evidence p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Assessment Grid */
+  .assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .assess-cell {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .assess-cell.pass { border-left: 3px solid var(--build); }
+  .assess-cell.fail { border-left: 3px solid var(--defer); }
+  .assess-cell .a-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .assess-cell .a-score {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .assess-cell .a-verdict {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  /* Rationale Toggle */
+  .assess-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, background-color 0.2s;
+    font-family: var(--font);
+  }
+  .assess-toggle:hover { border-color: var(--accent); background-color: var(--bg-secondary); }
+  .assess-rationale {
+    display: none;
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .assess-rationale.visible { display: block; }
+  .assess-rationale strong { color: var(--accent); }
+
+  /* Card Footer */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .tag {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .source-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+  }
+  .empty-state .icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  .empty-state p {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  /* Footer */
+  .engine-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .engine-footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .engine-footer a:hover { text-decoration: underline; }
+  .engine-footer p { margin: 4px 0; }
+</style>
+</head>
+<body>
+
+<div class="engine-header">
+  <h1>Gradial Product Roadmap<span class="beta-badge">STEERING</span></h1>
+  <div class="subtitle">Gradial marketing automation research + UVFV Assessment Framework</div>
+  <div class="classification">CONFIDENTIAL — Job Application Portfolio</div>
+  <div class="meta">
+    <span>Generated 2026-05-06</span>
+    <span>12 items assessed</span>
+    <span>6 categories</span>
+  </div>
+  <a href="https://danetomalin.com/gradial/" class="nav-link">← Back to Gradial Plan</a>
+</div>
+
+<div class="container">
+
+  <!-- Scorecard -->
+  <div class="scorecard">
+    <div class="scorecard-card overall-strong">
+      <div class="label">Build</div>
+      <div class="value">10</div>
+      <div class="detail">Ready to prioritize</div>
+    </div>
+    <div class="scorecard-card overall-moderate">
+      <div class="label">Investigate</div>
+      <div class="value">2</div>
+      <div class="detail">Needs deeper validation</div>
+    </div>
+    <div class="scorecard-card overall-weak">
+      <div class="label">Defer</div>
+      <div class="value">0</div>
+      <div class="detail">Not yet ripe</div>
+    </div>
+    <div class="scorecard-card overall-weak">
+      <div class="label">Kill</div>
+      <div class="value">0</div>
+      <div class="detail">No go items</div>
+    </div>
+  </div>
+
+  <!-- UVFV Framework Legend -->
+  <div class="framework-legend">
+    <h3>UVFV Assessment Framework</h3>
+    <div class="framework-grid">
+      <div class="framework-item">
+        <div class="framework-icon">U</div>
+        <div>
+          <div class="fw-label">Usable</div>
+          <div class="fw-desc">Can users effectively learn and operate this feature? Score 5+ = PASS</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">V</div>
+        <div>
+          <div class="fw-label">Valuable</div>
+          <div class="fw-desc">Does this solve a problem users actually care about? Score 5+ = PASS</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">F</div>
+        <div>
+          <div class="fw-label">Feasible</div>
+          <div class="fw-desc">Can engineering build this with available resources? Score 5+ = PASS</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-icon">V</div>
+        <div>
+          <div class="fw-label">Viable</div>
+          <div class="fw-desc">Does the business case hold up? Score 5+ = PASS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Category:</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterItems('all', this)">All Items</button>
+    <button class="filter-btn" data-filter="content_authoring_page_production" onclick="filterItems('content_authoring_page_production', this)">Content Authoring</button>
+    <button class="filter-btn" data-filter="design_system_brand_intelligence" onclick="filterItems('design_system_brand_intelligence', this)">Design System</button>
+    <button class="filter-btn" data-filter="campaign_execution_orchestration" onclick="filterItems('campaign_execution_orchestration', this)">Campaign Execution</button>
+    <button class="filter-btn" data-filter="quality_assurance_accessibility" onclick="filterItems('quality_assurance_accessibility', this)">QA & Accessibility</button>
+    <button class="filter-btn" data-filter="integrations_enterprise_ecosystem" onclick="filterItems('integrations_enterprise_ecosystem', this)">Integrations</button>
+    <button class="filter-btn" data-filter="analytics_content_performance" onclick="filterItems('analytics_content_performance', this)">Analytics</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Recommendation:</span>
+    <button class="filter-btn" data-rec="build" onclick="filterRec('build', this)">Build</button>
+    <button class="filter-btn" data-rec="investigate" onclick="filterRec('investigate', this)">Investigate</button>
+    <button class="filter-btn" data-rec="defer" onclick="filterRec('defer', this)">Defer</button>
+    <input type="text" class="search-input" placeholder="Search items..." onkeyup="searchItems(this.value)">
+  </div>
+
+  <!-- Items Container -->
+  <div id="items-container">
+    <!-- Items generated by JavaScript -->
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">🔍</div>
+    <p>No items match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+<footer class="engine-footer">
+  <p>Gradial Product Roadmap Steering v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Gradial Marketing Intelligence &mdash; <a href="https://danetomalin.com/gradial-ci/">Competitive Intel</a> | <a href="https://danetomalin.com/gradial-signals/">Market Signals</a></p>
+</footer>
+
+<script>
+// --- Load items from JSON ---
+let items = [];
+
+fetch('./items-latest.json')
+  .then(response => response.json())
+  .then(data => {
+    items = data.items || [];
+    renderItems();
+  })
+  .catch(error => {
+    console.error('Error loading items:', error);
+    document.getElementById('items-container').innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:32px;">Failed to load roadmap items. Please check the items-latest.json file.</p>';
+  });
+
+// --- Category Labels ---
+const categoryLabels = {
+  'content_authoring_page_production': 'Content Authoring & Page Production',
+  'design_system_brand_intelligence': 'Design System & Brand Intelligence',
+  'campaign_execution_orchestration': 'Campaign Execution & Orchestration',
+  'quality_assurance_accessibility': 'Quality Assurance & Accessibility',
+  'integrations_enterprise_ecosystem': 'Integrations & Enterprise Ecosystem',
+  'analytics_content_performance': 'Analytics & Content Performance'
+};
+
+// --- Render Items by Category ---
+function renderItems() {
+  const container = document.getElementById('items-container');
+  const categories = {};
+
+  items.forEach(item => {
+    if (!categories[item.category]) {
+      categories[item.category] = [];
+    }
+    categories[item.category].push(item);
+  });
+
+  let html = '';
+  Object.keys(categories).sort().forEach(cat => {
+    const items_in_cat = categories[cat];
+    html += `<div class="category-section" data-category="${cat}">
+      <div class="category-header">
+        <h2>${categoryLabels[cat] || cat}</h2>
+        <span class="category-count">${items_in_cat.length} items</span>
+      </div>`;
+
+    items_in_cat.forEach(item => {
+      const uvfvPassCount = [item.assessment.usable.pass, item.assessment.valuable.pass, item.assessment.feasible.pass, item.assessment.viable.pass].filter(v => v).length;
+      const progressPct = (item.overall_score / 10) * 100;
+
+      html += `
+      <div class="roadmap-card" data-category="${item.category}" data-rec="${item.recommendation}" data-score="${item.overall_score}">
+        <div class="card-top">
+          <h3>${item.title} <span class="priority-badge ${item.priority}">${item.priority}</span></h3>
+          <div class="impact-badge">
+            <span>${item.overall_score}/10</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${progressPct}%;background:var(--accent)"></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+          <span class="rec-badge ${item.recommendation}">
+            <span class="dot"></span>
+            ${item.recommendation.charAt(0).toUpperCase() + item.recommendation.slice(1)}
+          </span>
+          <span style="font-size:12px;color:var(--text-muted);">Assessed ${item.date}</span>
+        </div>
+        <p class="summary">${escapeHtml(item.summary)}</p>
+        <div class="evidence">
+          <div class="label">Evidence</div>
+          <p>${escapeHtml(item.evidence)}</p>
+        </div>
+        <div class="assessment-grid">
+          ${renderAssessment('Usable', item.assessment.usable)}
+          ${renderAssessment('Valuable', item.assessment.valuable)}
+          ${renderAssessment('Feasible', item.assessment.feasible)}
+          ${renderAssessment('Viable', item.assessment.viable)}
+        </div>
+        <button class="assess-toggle" onclick="toggleRationale('rationale-${item.id}')">Show Detailed Rationale</button>
+        <div class="assess-rationale" id="rationale-${item.id}">
+          <strong>Usable (${item.assessment.usable.score}/10 — ${item.assessment.usable.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.usable.rationale)}<br>
+          <strong>Valuable (${item.assessment.valuable.score}/10 — ${item.assessment.valuable.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.valuable.rationale)}<br>
+          <strong>Feasible (${item.assessment.feasible.score}/10 — ${item.assessment.feasible.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.feasible.rationale)}<br>
+          <strong>Viable (${item.assessment.viable.score}/10 — ${item.assessment.viable.pass ? 'PASS' : 'FAIL'}):</strong> ${escapeHtml(item.assessment.viable.rationale)}
+        </div>
+        <div class="card-footer">
+          ${item.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+          <span style="flex:1"></span>
+          ${item.sources.map(src => `<a href="${escapeHtml(src.url)}" class="source-link" target="_blank" rel="noopener">${escapeHtml(src.domain)} <span style="color:var(--text-muted);font-size:11px;">(${escapeHtml(src.date || 'N/A')})</span> ↗</a>`).join('')}
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function renderAssessment(label, assessment) {
+  const passClass = assessment.pass ? 'pass' : 'fail';
+  return `
+    <div class="assess-cell ${passClass}">
+      <div class="a-label">${label}</div>
+      <div class="a-score">${assessment.score}</div>
+      <div class="a-verdict">${assessment.pass ? 'PASS' : 'FAIL'}</div>
+    </div>
+  `;
+}
+
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+// --- State ---
+var activeFilter = 'all';
+var activeRec = null;
+var searchQuery = '';
+
+// --- Category Filter ---
+function filterItems(category, btn) {
+  activeFilter = category;
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Recommendation Filter (toggle) ---
+function filterRec(rec, btn) {
+  if (activeRec === rec) {
+    activeRec = null;
+    btn.classList.remove('active');
+  } else {
+    activeRec = rec;
+    var btns = document.querySelectorAll('.filter-btn[data-rec]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchItems(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.roadmap-card');
+  var sections = document.querySelectorAll('.category-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var category = card.getAttribute('data-category');
+    var rec = card.getAttribute('data-rec');
+    var text = card.textContent.toLowerCase();
+
+    var catMatch = (activeFilter === 'all' || category === activeFilter);
+    var recMatch = (!activeRec || rec === activeRec);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (catMatch && recMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.roadmap-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Toggle Assessment Rationale ---
+function toggleRationale(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('visible');
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Gradial Signal Engine - Agentic Marketing Operations Intelligence">
+<meta property="og:url" content="https://danetomalin.com/gradial-signals/">
+<title>Gradial Signal Engine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #3B82F6;
+    --accent-strong: #2563EB;
+    --accent-bg: rgba(59, 130, 246, 0.12);
+    --bullish: #66BB6A;
+    --bullish-bg: rgba(102, 187, 106, 0.12);
+    --bearish: #EF5350;
+    --bearish-bg: rgba(239, 83, 80, 0.12);
+    --neutral: #FFA726;
+    --neutral-bg: rgba(255, 167, 38, 0.12);
+    --high-impact: #FFA726;
+    --high-impact-bg: rgba(255, 167, 38, 0.08);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* Site header — sticky top bar */
+  .site-header {
+    position: sticky; top: 0;
+    background: rgba(13,13,18,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 200;
+  }
+  .site-header-name {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+    color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Header — matches template */
+  .engine-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .beta-badge {
+    font-family: var(--font);
+    font-size: 0.35em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent);
+    vertical-align: super;
+    border: 1px solid var(--accent-strong);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-left: 8px;
+  }
+  .engine-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  .classification {
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-strong);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+  .engine-header .meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-top: 8px;
+  }
+  .engine-header .meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Trend Scorecard */
+  .scorecard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .scorecard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .scorecard-card:hover { border-color: var(--accent); }
+  .scorecard-card.clickable { cursor: pointer; user-select: none; }
+  .scorecard-card.clickable:hover { transform: translateY(-1px); }
+  .scorecard-card.active-filter { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-bg); }
+  .scorecard-card[data-scorecard="bullish"].active-filter { border-color: var(--bullish); box-shadow: 0 0 0 2px var(--bullish-bg); }
+  .scorecard-card[data-scorecard="bearish"].active-filter { border-color: var(--bearish); box-shadow: 0 0 0 2px var(--bearish-bg); }
+  .scorecard-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .scorecard-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+  .scorecard-card .detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .scorecard-card.overall-bullish { border-left: 3px solid var(--bullish); }
+  .scorecard-card.overall-bearish { border-left: 3px solid var(--bearish); }
+  .scorecard-card.overall-neutral { border-left: 3px solid var(--neutral); }
+
+  /* Sentiment Badge */
+  .sentiment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .sentiment-badge.bullish { background: var(--bullish-bg); color: var(--bullish); }
+  .sentiment-badge.bearish { background: var(--bearish-bg); color: var(--bearish); }
+  .sentiment-badge.neutral { background: var(--neutral-bg); color: var(--neutral); }
+  .sentiment-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* Filter Bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    align-items: center;
+  }
+  .filter-bar .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+  .filter-btn.active {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #fff;
+  }
+  .filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* Pillar Sections */
+  .pillar-section {
+    margin-bottom: 32px;
+  }
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .pillar-icon.martech { background: rgba(59, 130, 246, 0.15); color: var(--accent); }
+  .pillar-icon.agentic { background: rgba(37, 99, 235, 0.15); color: var(--accent-strong); }
+  .pillar-icon.governance { background: rgba(255, 167, 38, 0.15); color: var(--neutral); }
+  .pillar-icon.competitive { background: rgba(59, 130, 246, 0.15); color: var(--accent); }
+  .pillar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .pillar-header .count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Signal Cards */
+  .signal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .signal-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .signal-card.high-impact {
+    border-left: 3px solid var(--high-impact);
+    background: var(--high-impact-bg);
+  }
+  .signal-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .signal-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .impact-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+  }
+  .impact-badge .bar-track {
+    width: 40px; height: 4px;
+    background: var(--bg-primary);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .impact-badge .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .signal-card .summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+  .signal-card .commentary {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+  }
+  .signal-card .commentary .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .signal-card .commentary p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .signal-card .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state p { font-size: 15px; }
+
+  /* Footer */
+  .engine-footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .engine-footer a { color: var(--accent); text-decoration: none; }
+  .engine-footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .engine-header h1 { font-size: 1.6em; }
+    .scorecard { grid-template-columns: 1fr 1fr; }
+    .filter-bar { flex-direction: column; }
+    .search-input { min-width: unset; width: 100%; }
+    .signal-card .card-top { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .scorecard { grid-template-columns: 1fr; }
+    .engine-header .meta { flex-direction: column; gap: 8px; }
+    .engine-header { padding: 32px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+  <a href="https://danetomalin.com/gradial/" class="site-header-back">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+    Back to Gradial Plan
+  </a>
+</header>
+
+<header class="engine-header">
+  <h1>Gradial Signal Engine <sup class="beta-badge">Beta</sup></h1>
+  <p class="subtitle">Agentic Marketing Operations Intelligence &mdash; Generated: <span id="dossier-date">May 06, 2026</span></p>
+  <span class="classification">Portfolio Only</span>
+  <div class="meta">
+    <span id="signal-count">16 signals</span>
+    <span id="high-impact-count">5 high-impact</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Trend Scorecard -->
+  <div class="scorecard" id="scorecard">
+
+    <div class="scorecard-card overall-bullish clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Overall Sentiment</div>
+      <div class="value" style="color:var(--bullish)">BULLISH</div>
+      <div class="detail">Enterprise MarTech spend accelerating with AI automation as #1 priority; agentic AI adoption crossing the chasm; accessibility lawsuits creating urgent compliance pressure.</div>
+    </div>
+    <div class="scorecard-card clickable" onclick="filterFromScorecard('all')" title="Show all signals">
+      <div class="label">Total Signals</div>
+      <div class="value" style="color:var(--accent)">16</div>
+      <div class="detail">5 high-impact (score 8+)</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bullish" onclick="filterFromScorecard('bullish')" title="Click to filter bullish signals">
+      <div class="label">Bullish Signals</div>
+      <div class="value" style="color:var(--bullish)">11</div>
+      <div class="detail">Trends favoring Gradial's market opportunity</div>
+    </div>
+    <div class="scorecard-card clickable" data-scorecard="bearish" onclick="filterFromScorecard('bearish')" title="Click to filter bearish signals">
+      <div class="label">Bearish Signals</div>
+      <div class="value" style="color:var(--bearish)">1</div>
+      <div class="detail">Competitive threats to monitor</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Pillar</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterSignals('all', this)">All</button>
+    <button class="filter-btn" data-filter="enterprise_martech_spend" onclick="filterSignals('enterprise_martech_spend', this)">MarTech Spend</button>
+    <button class="filter-btn" data-filter="agentic_ai_adoption" onclick="filterSignals('agentic_ai_adoption', this)">Agentic AI</button>
+    <button class="filter-btn" data-filter="content_governance_compliance" onclick="filterSignals('content_governance_compliance', this)">Governance</button>
+    <button class="filter-btn" data-filter="competitive_positioning" onclick="filterSignals('competitive_positioning', this)">Competitive</button>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Sentiment</span>
+    <button class="filter-btn" data-sentiment="bullish" onclick="filterSentiment('bullish', this)">Bullish</button>
+    <button class="filter-btn" data-sentiment="bearish" onclick="filterSentiment('bearish', this)">Bearish</button>
+    <div class="filter-separator"></div>
+    <input type="text" class="search-input" placeholder="Search signals..." oninput="searchSignals(this.value)" id="search-box">
+  </div>
+
+  <!-- Signal Content -->
+  <div id="dossier-content">
+
+    <div class="pillar-section" data-pillar-section="enterprise_martech_spend">
+      <div class="pillar-header">
+        <div class="pillar-icon martech">$</div>
+        <h2>Enterprise MarTech & Content Ops Spend</h2>
+        <span class="count" id="count-martech">4 signals</span>
+      </div>
+    </div>
+
+    <div class="pillar-section" data-pillar-section="agentic_ai_adoption">
+      <div class="pillar-header">
+        <div class="pillar-icon agentic">⚡</div>
+        <h2>Agentic AI in Enterprise Marketing</h2>
+        <span class="count" id="count-agentic">4 signals</span>
+      </div>
+    </div>
+
+    <div class="pillar-section" data-pillar-section="content_governance_compliance">
+      <div class="pillar-header">
+        <div class="pillar-icon governance">✓</div>
+        <h2>Content Governance, Brand & Accessibility</h2>
+        <span class="count" id="count-governance">4 signals</span>
+      </div>
+    </div>
+
+    <div class="pillar-section" data-pillar-section="competitive_positioning">
+      <div class="pillar-header">
+        <div class="pillar-icon competitive">⌖</div>
+        <h2>Competitive Positioning</h2>
+        <span class="count" id="count-competitive">4 signals</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="icon">&#x1F50D;</div>
+    <p>No signals match your filters. Try broadening your search.</p>
+  </div>
+
+</div>
+
+<footer class="engine-footer">
+  <p>Gradial Signal Engine v1.0 &mdash; Built by <a href="https://danetomalin.com">Dane Tomalin</a></p>
+  <p style="margin-top:4px;">Gradial Competitive Intelligence &mdash; <a href="https://danetomalin.com/gradial-ci">Competitive Dossier</a> | <a href="https://danetomalin.com/gradial-roadmap">Product Roadmap</a></p>
+</footer>
+
+<script>
+// --- Load Signals from JSON ---
+var allSignals = [];
+var activeFilter = 'all';
+var activeSentiment = null;
+var searchQuery = '';
+
+// Fetch and render signals
+fetch('./signals-latest.json')
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    allSignals = data.signals || [];
+    renderAllSignals();
+    updateMetadata(data);
+  })
+  .catch(function(error) {
+    console.error('Error loading signals:', error);
+    document.getElementById('dossier-content').innerHTML = '<div class="empty-state"><div class="icon">&#x26A0;</div><p>Error loading signals data.</p></div>';
+  });
+
+// --- Render all signals ---
+function renderAllSignals() {
+  var pillars = {
+    'enterprise_martech_spend': [],
+    'agentic_ai_adoption': [],
+    'content_governance_compliance': [],
+    'competitive_positioning': []
+  };
+
+  allSignals.forEach(function(signal) {
+    if (pillars[signal.pillar]) {
+      pillars[signal.pillar].push(signal);
+    }
+  });
+
+  var content = '';
+  var pillarNames = {
+    'enterprise_martech_spend': 'Enterprise MarTech & Content Ops Spend',
+    'agentic_ai_adoption': 'Agentic AI in Enterprise Marketing',
+    'content_governance_compliance': 'Content Governance, Brand & Accessibility',
+    'competitive_positioning': 'Competitive Positioning'
+  };
+
+  var pillarIcons = {
+    'enterprise_martech_spend': '$',
+    'agentic_ai_adoption': '⚡',
+    'content_governance_compliance': '✓',
+    'competitive_positioning': '⌖'
+  };
+
+  var pillarClasses = {
+    'enterprise_martech_spend': 'martech',
+    'agentic_ai_adoption': 'agentic',
+    'content_governance_compliance': 'governance',
+    'competitive_positioning': 'competitive'
+  };
+
+  for (var pillar in pillars) {
+    var signals = pillars[pillar];
+    if (signals.length === 0) continue;
+
+    content += '<div class="pillar-section" data-pillar-section="' + pillar + '">';
+    content += '<div class="pillar-header">';
+    content += '<div class="pillar-icon ' + pillarClasses[pillar] + '">' + pillarIcons[pillar] + '</div>';
+    content += '<h2>' + pillarNames[pillar] + '</h2>';
+    content += '<span class="count">' + signals.length + ' signals</span>';
+    content += '</div>';
+
+    signals.forEach(function(signal) {
+      var isHighImpact = signal.impact_score >= 8;
+      var highImpactClass = isHighImpact ? 'high-impact' : '';
+      var highImpactBadge = isHighImpact ? '<span style="color:var(--high-impact);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;">HIGH IMPACT</span>' : '';
+
+      var impactColor = signal.impact_score >= 8 ? 'var(--high-impact)' : (signal.impact_score >= 5 ? 'var(--accent)' : 'var(--text-muted)');
+
+      var sentimentIcon = signal.sentiment === 'bullish' ? '▲' : (signal.sentiment === 'bearish' ? '▼' : '◆');
+      var sentimentUpper = signal.sentiment.charAt(0).toUpperCase() + signal.sentiment.slice(1);
+
+      var sourcesHtml = '';
+      if (signal.sources && signal.sources.length > 0) {
+        signal.sources.forEach(function(source) {
+          sourcesHtml += '<a href="' + source.url + '" class="source-link" target="_blank" rel="noopener">' + source.domain + ' <span style="color:var(--text-muted);font-size:11px;">&#x2197;</span></a>';
+        });
+      }
+
+      var tagsHtml = '';
+      if (signal.tags && signal.tags.length > 0) {
+        signal.tags.forEach(function(tag) {
+          tagsHtml += '<span class="tag">' + tag + '</span>';
+        });
+      }
+
+      content += '<div class="signal-card ' + highImpactClass + '" data-pillar="' + signal.pillar + '" data-sentiment="' + signal.sentiment + '" data-score="' + signal.impact_score + '">';
+      content += '<div class="card-top">';
+      content += '<h3>' + signal.headline + highImpactBadge + '</h3>';
+      content += '<div class="impact-badge"><span>' + signal.impact_score + '/10</span><div class="bar-track"><div class="bar-fill" style="width:' + (signal.impact_score * 10) + '%;background:' + impactColor + '"></div></div></div>';
+      content += '</div>';
+      content += '<div style="margin-bottom:8px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">';
+      content += '<span class="sentiment-badge ' + signal.sentiment + '"><span class="dot"></span>' + sentimentIcon + ' ' + sentimentUpper + '</span>';
+      content += '<span style="font-size:12px;color:var(--text-muted);">Published ' + signal.published_date + '</span>';
+      content += '<span style="font-size:12px;color:var(--text-muted);">&bull; Captured ' + signal.captured_date + '</span>';
+      content += '</div>';
+      content += '<p class="summary">' + signal.summary + '</p>';
+      content += '<div class="commentary">';
+      content += '<div class="label">Commentary</div>';
+      content += '<p>' + signal.gradial_commentary + '</p>';
+      content += '</div>';
+      content += '<div class="card-footer">';
+      content += tagsHtml;
+      content += '<span style="flex:1"></span>';
+      content += sourcesHtml;
+      content += '</div>';
+      content += '</div>';
+    });
+
+    content += '</div>';
+  }
+
+  document.getElementById('dossier-content').innerHTML = content;
+  applyFilters();
+}
+
+// --- Update metadata ---
+function updateMetadata(data) {
+  document.getElementById('dossier-date').textContent = data.date;
+  document.getElementById('signal-count').textContent = data.signal_count + ' signals';
+  document.getElementById('high-impact-count').textContent = data.high_impact_count + ' high-impact';
+}
+
+// --- Pillar Filter ---
+function filterSignals(pillar, btn) {
+  activeFilter = pillar;
+  var btns = document.querySelectorAll('.filter-btn[data-filter]');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// --- Sentiment Filter (toggle) ---
+function filterSentiment(sentiment, btn) {
+  if (activeSentiment === sentiment) {
+    activeSentiment = null;
+    btn.classList.remove('active');
+  } else {
+    activeSentiment = sentiment;
+    var btns = document.querySelectorAll('.filter-btn[data-sentiment]');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+// --- Search ---
+function searchSignals(query) {
+  searchQuery = query.toLowerCase().trim();
+  applyFilters();
+}
+
+// --- Apply All Filters ---
+function applyFilters() {
+  var cards = document.querySelectorAll('.signal-card');
+  var sections = document.querySelectorAll('.pillar-section');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    var pillar = card.getAttribute('data-pillar');
+    var sentiment = card.getAttribute('data-sentiment');
+    var text = card.textContent.toLowerCase();
+
+    var pillarMatch = (activeFilter === 'all' || pillar === activeFilter);
+    var sentimentMatch = (!activeSentiment || sentiment === activeSentiment);
+    var searchMatch = (!searchQuery || text.indexOf(searchQuery) !== -1);
+
+    if (pillarMatch && sentimentMatch && searchMatch) {
+      card.style.display = '';
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  sections.forEach(function(section) {
+    var sectionCards = section.querySelectorAll('.signal-card');
+    var anyVisible = false;
+    sectionCards.forEach(function(c) {
+      if (c.style.display !== 'none') anyVisible = true;
+    });
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  document.getElementById('empty-state').style.display = visibleCount === 0 ? '' : 'none';
+}
+
+// --- Scorecard click-to-filter ---
+function filterFromScorecard(sentiment) {
+  activeFilter = 'all';
+  var pillarBtns = document.querySelectorAll('.filter-btn[data-filter]');
+  pillarBtns.forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-filter') === 'all');
+  });
+
+  searchQuery = '';
+  var searchBox = document.getElementById('search-box');
+  if (searchBox) searchBox.value = '';
+
+  var sentimentBtns = document.querySelectorAll('.filter-btn[data-sentiment]');
+  sentimentBtns.forEach(function(b) { b.classList.remove('active'); });
+  var scorecardCards = document.querySelectorAll('.scorecard-card[data-scorecard]');
+  scorecardCards.forEach(function(c) { c.classList.remove('active-filter'); });
+
+  if (sentiment === 'all' || activeSentiment === sentiment) {
+    activeSentiment = null;
+  } else {
+    activeSentiment = sentiment;
+    var matchBtn = document.querySelector('.filter-btn[data-sentiment="' + sentiment + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    var matchCard = document.querySelector('.scorecard-card[data-scorecard="' + sentiment + '"]');
+    if (matchCard) matchCard.classList.add('active-filter');
+  }
+
+  applyFilters();
+
+  var content = document.getElementById('dossier-content');
+  if (content) content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>

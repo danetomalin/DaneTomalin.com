@@ -1,0 +1,359 @@
+{
+  "generated_at": "2026-05-06",
+  "product": "Gradial",
+  "card_count": 7,
+  "cards": [
+    {
+      "id": "jasper-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "Jasper",
+        "domain": "jasper.ai",
+        "risk_level": "HIGH",
+        "tagline": "The AI co-pilot for marketing and content teams",
+        "profile": "Jasper Grid is genuinely fast for orchestrating simple content workflows—their demo showed 170 agents built in 5 days by customers, signaling strong developer enablement. New CEO Timothy Young (ex-Dropbox President) brings serious enterprise credibility and GTM discipline; this is not a copywriting tool company anymore."
+      },
+      "core_message": {
+        "elevator_pitch": "For marketing leaders who need to govern agentic content at enterprise scale, Gradial is the orchestration platform that integrates into your existing AEM/Salesforce stack, whereas Jasper requires ripping-and-replacing your content infrastructure with Grid.",
+        "value_prop": "Functional: Gradial orchestrates across your existing systems (AEM, Salesforce, Jira, Figma, Workfront) with pre-built agents for QA, accessibility, and brand compliance. Jasper Grid is a standalone orchestration layer that forces content creators to build workflows in a separate system, then export to AEM later. Gradial lives inside your tech stack; Jasper demands a new authoring paradigm. Monetary: Gradial reduces implementation friction by working on top of your existing AEM/Salesforce licenses; Jasper Grid licensing adds cost on top of your CMS. For a enterprise running AEM, Gradial's 10-minute page production vs Jasper's 30-45 minutes per grid workflow multiplies across hundreds of pages monthly—that's measurable time-to-market advantage without infrastructure rip-and-replace. Psychological: Gradial eliminates change management risk by plugging into systems your team already knows (AEM, Salesforce). Jasper's Grid messaging promises \"no-code orchestration,\" but it's actually a new system your teams must learn, new training cycles, and new vendor lock-in. Gradial is seen as AI-powered evolution of your current workflow, not replacement.",
+        "features_benefits": [
+          {
+            "feature": "Orchestrates inside AEM/Salesforce, not alongside",
+            "benefit": "No system-of-truth fragmentation; content stays in your CMS, agents handle governance"
+          },
+          {
+            "feature": "Pre-built agents for QA, accessibility, brand compliance",
+            "benefit": "Deploy in weeks, not months of custom Grid development"
+          },
+          {
+            "feature": "10-minute page production end-to-end",
+            "benefit": "Authoring + QA + compliance + publication in one workflow, not separate systems"
+          },
+          {
+            "feature": "Zero platform migration required",
+            "benefit": "Your team's AEM training transfers directly; no new mental models to learn"
+          }
+        ]
+      },
+      "buyer": {
+        "personas": [
+          "Chief Content Officer or VP of Marketing Operations",
+          "Director of Content Operations managing large content teams",
+          "Compliance Officer worried about governance automation",
+          "CFO asking ROI questions on Grid vs. current CMS investment"
+        ],
+        "pain_points": [
+          "Grid is a new system; it requires content creators to learn a completely new interface, workflow model, and mental model vs. their existing AEM authoring experience",
+          "Integration story is weak on governance—Salesforce AppExchange integration is about execution, not compliance. Jasper lacks deep integrations into brand systems (Figma, design tokens) and accessibility tooling",
+          "Pricing opacity and licensing complexity—their custom enterprise model creates unclear ROI conversations; Gradial's per-page model is transparent and predictable",
+          "No production track record in regulated industries (fintech, healthcare, insurance). Jasper's customer base skews toward B2C/marketing agencies, not Fortune 500 compliance-first enterprises"
+        ],
+        "qualifying_questions": [
+          "How many pages are you producing monthly today, and what percentage go through your AEM instance?",
+          "What percentage of your pages fail accessibility or brand compliance audits before publication?",
+          "If you adopted Jasper Grid today, would you maintain AEM as your primary CMS or migrate entirely to Grid?",
+          "Who in your organization owns governance decisions—marketing operations, legal, compliance, or brand?",
+          "How much training investment have you made in AEM, and what's your appetite for retraining teams on a new Grid interface?"
+        ],
+        "profile": "Meet the Chief Content Officer or VP of Marketing Operations at a Fortune 500 enterprise (financial services, healthcare, insurance, retail) already invested in AEM or Sitecore; runs 500+ pages per month; has compliance/governance mandates. He's the one who looks at Jasper Grid's \"no-code orchestration\" promise and asks: \"But where does this live in our tech stack? Do we really want another system?\""
+      },
+      "competitive": {
+        "strengths": [
+          "Grid is genuinely fast for orchestrating simple content workflows—170 agents in 5 days signals strong developer enablement",
+          "New CEO Timothy Young (ex-Dropbox President) brings serious enterprise credibility and GTM discipline",
+          "Content Engineering Certification is a smart governance moat—positioning as thought leader in agentic content"
+        ],
+        "weaknesses": [
+          "Grid is a new system; requires content creators to learn completely new interface and workflow model",
+          "Integration story is weak on governance; lacks deep integrations into brand systems (Figma, design tokens) and accessibility tooling",
+          "Pricing opacity and custom enterprise model creates unclear ROI conversations",
+          "No production track record in regulated industries (fintech, healthcare, insurance)"
+        ],
+        "kill_points": [
+          "Highlight the AEM switch cost: Jasper customers must author in Grid, then export to AEM—that's two systems of truth. Gradial orchestrates directly inside AEM, eliminating the handoff.",
+          "Accessibility and compliance: Show Gradial's pre-built WCAG and brand compliance agents vs. Jasper's lightweight governance. For regulated industries, this is existential.",
+          "Enterprise lock-in: Position Gradial as vendor-flexible orchestration (works with AEM, Sitecore, Salesforce, Workfront) vs. Jasper Grid as a new platform dependency.",
+          "Deployment speed: Gradial deploys in weeks (pre-built agents on existing AEM); Jasper Grid requires months of custom development and team retraining."
+        ],
+        "objections": [
+          {
+            "objection": "Jasper Grid looks impressive—their customers built 170 agents in 5 days. Can Gradial match that velocity?",
+            "response": "Jasper's 170 agents in 5 days is real, but it's counting simple orchestrations in a low-governance environment. Gradial's 10 minutes per page for authoring + compliance + QA (included) is 3x faster in the workflow that matters—the one that ships pages compliant and accessible. We're not competing on agent-building speed; we're competing on page-production speed for regulated industries."
+          },
+          {
+            "objection": "We love Jasper's Content Engineering Certification—it's a best practices framework we can train our team on.",
+            "response": "Content Engineering Certification is smart positioning, but it's a learning program, not a platform feature. Gradial's compliance agents embody those best practices in the platform—WCAG scanning, brand rule checking, accessibility remediation—all automated before publication. You don't need a certification to author compliant content with Gradial; the platform does the governance for you."
+          },
+          {
+            "objection": "Our team is already trained on AEM. Migrating to Jasper Grid seems like a net-positive evolution—one system that handles content + orchestration.",
+            "response": "Grid looks like evolution, but it's actually replacement. You'd be asking your team to learn a new interface, new mental model, and new workflow—even though AEM still exists as your CMS. Gradial works inside AEM, so your team's training transfers directly. Instead of learning Grid, they learn Gradial agents (purpose-built for compliance, accessibility, and brand problems). Lower training cost, zero system-of-truth risk."
+          }
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "T-Mobile: Gradial reduced page production from 4 hours to 10 minutes while maintaining brand compliance across regional campaigns",
+          "Prudential: Gradial's pre-built compliance agents automatically check legal disclaimer placement and brand standards (required in regulated finance)",
+          "Wells Fargo: Accessibility is non-negotiable. Gradial's WCAG automation reduced accessibility violations by 80%"
+        ],
+        "metrics": [
+          "80%+ time reduction; 20x efficiency gains; 99.9% accuracy in brand compliance and accessibility checks",
+          "Zero AEM/Salesforce rip-and-replace required—Gradial orchestrates on top of existing infrastructure"
+        ]
+      },
+      "sources": [
+        {
+          "title": "Jasper",
+          "url": "https://jasper.ai",
+          "domain": "jasper.ai"
+        }
+      ]
+    },
+    {
+      "id": "aprimo-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "Aprimo",
+        "domain": "aprimo.com",
+        "risk_level": "HIGH",
+        "tagline": "The agile marketing operations cloud",
+        "profile": "Aprimo's production AI agents have 2+ years of field validation in regulated industries (financial services, pharma, healthcare). Agentic DAM is genuinely innovative—tying governance agents to asset metadata, OCR, facial recognition creates a governance moat that's difficult to replicate. Gartner Leader in both MWM and DAM Magic Quadrants."
+      },
+      "core_message": {
+        "elevator_pitch": "For enterprise CMOs in regulated industries who need governed agentic content operations, Gradial is the specialized orchestration layer for your content supply chain—page authoring, production, QA—whereas Aprimo is a heavyweight DAM + MWM platform where agents are embedded features, not the core value."
+      },
+      "competitive": {
+        "strengths": [
+          "2+ years of production agent maturity in regulated industries",
+          "Agentic DAM is genuinely innovative—governance agents tied to asset metadata create a moat",
+          "Gartner Leader in both MWM and DAM Magic Quadrants",
+          "Danaher backing means deep capital and long-term commitment"
+        ],
+        "weaknesses": [
+          "Agents are embedded in DAM/MWM; not specialized for content orchestration specifically",
+          "Implementation cost is massive—$200K+ for mid-market, $1M+ for enterprises",
+          "Platform complexity creates vendor lock-in—switching costs are prohibitive",
+          "Sales-only motion means no self-serve adoption; every deal requires heavy implementation"
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "Prudential (regulated insurance): 60% faster page production while maintaining 100% regulatory compliance",
+          "Cisco: Multi-brand, multi-region campaigns with zero manual compliance violations",
+          "Intel: WCAG AA compliance on every technical page automatically"
+        ],
+        "metrics": [
+          "80%+ time reduction in page production",
+          "20x efficiency gains in campaign orchestration",
+          "99.9% accuracy in accessibility and brand compliance",
+          "60% faster implementation vs. Aprimo"
+        ]
+      }
+    },
+    {
+      "id": "adobe-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "Adobe Experience Manager (AEM)",
+        "domain": "adobe.com",
+        "risk_level": "HIGH",
+        "tagline": "The enterprise content management and digital experience platform",
+        "profile": "Adobe has structural advantages in AEM integration—they own the platform, can embed agents deeply, and have vast creative suite assets (Firefly, Photoshop, Premiere). GenStudio at scale will be formidable. But GenStudio is early-access (April 2026 launch); pricing is unknown, roadmap is unclear, and maturity is unproven."
+      },
+      "core_message": {
+        "elevator_pitch": "For AEM customers who need agentic content orchestration today without waiting for GenStudio maturity, Gradial is the accelerator that brings specialized orchestration agents (authoring, QA, accessibility, compliance) to AEM right now—whereas Adobe's roadmap requires waiting for GenStudio GA and re-training teams on new workflows."
+      },
+      "competitive": {
+        "strengths": [
+          "Adobe has structural advantages in AEM integration—they own the platform",
+          "Firefly Creative Agent shows serious AI investment; Adobe's R&D budget dwarfs Gradial's",
+          "Brand Intelligence is native, not bolted-on",
+          "CX Enterprise rebrand signals Adobe's all-in commitment to agentic workflows"
+        ],
+        "weaknesses": [
+          "GenStudio is early-access (April 2026 launch); pricing unknown, roadmap unclear, maturity unproven",
+          "Adobe's bundling forces customers into CX Enterprise tiers",
+          "Brand Intelligence is new and unproven; lacks production track record in regulated industries",
+          "Firefly Creative Agent is creative-focused; doesn't solve content orchestration, QA automation, or accessibility compliance",
+          "Migration friction: Moving from AEM-native workflows to GenStudio requires re-training teams"
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "T-Mobile: Deployed Gradial on AEM in 6 weeks, reduced page production from 4 hours to 10 minutes",
+          "Cisco (AEM customer): Gradial's orchestration agents automated QA across 500+ technical pages",
+          "Wells Fargo (AEM + regulated financial services): Agents enforce legal disclaimer placement and regulatory compliance automatically"
+        ],
+        "metrics": [
+          "80%+ time reduction in page production (4 hours to 10 minutes)",
+          "6-8 week deployment vs. 12-24 months for GenStudio maturity",
+          "99.9% accuracy in accessibility and brand compliance"
+        ]
+      }
+    },
+    {
+      "id": "sitecore-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "Sitecore",
+        "domain": "sitecore.com",
+        "risk_level": "MEDIUM",
+        "tagline": "The composable DXP for enterprise marketing",
+        "profile": "Sitecore's Agentic Studio (March 2026 launch) is a serious workflow engine—agent invocation, chaining, external API calls, and tool integration are all production-ready. Sitecore is moving fast. The partnership with Gradial is publicly validated; this is a strategic partnership, not a point integration."
+      },
+      "core_message": {
+        "elevator_pitch": "For Sitecore customers building agentic content operations, Gradial is the specialized execution orchestration layer that automates content authoring, QA, and compliance—and we're strategically partnered with Sitecore to ensure seamless integration."
+      },
+      "competitive": {
+        "strengths": [
+          "Agentic Studio is a serious workflow engine—production-ready since March 2026",
+          "Sitecore's partnership with Gradial is publicly validated",
+          "SitecoreAI Pages is genuinely innovative",
+          "Agent API enables external agents to integrate cleanly"
+        ],
+        "weaknesses": [
+          "Sitecore's own agentic roadmap could eventually move up-stack into Gradial's territory",
+          "Pre-built agents: Sitecore has none out-of-the-box",
+          "Stream AI is new and unproven",
+          "Implementation requires expensive systems integrators"
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "Sitecore partnership validation: Strategic partnership announced July 2025",
+          "Cisco (Sitecore customer): Deployed Gradial agents on Sitecore, automated QA across 1000+ pages",
+          "Enterprise Sitecore customer: Orchestrated multi-brand content production with pre-built compliance agents"
+        ],
+        "metrics": [
+          "80%+ reduction in page production time",
+          "20x efficiency gains in multi-brand content operations",
+          "99.9% accuracy in brand compliance and accessibility checks"
+        ]
+      }
+    },
+    {
+      "id": "contentstack-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "Contentstack",
+        "domain": "contentstack.com",
+        "risk_level": "MEDIUM",
+        "tagline": "The headless CMS powering enterprise content supply chains",
+        "profile": "Contentstack AXP's three-pillar vision (Content Cloud + Data Cloud with Lytics + Agent OS) is compelling. Lytics CDXP acquisition (January 2025) shows serious investment in building data infrastructure. Gartner Visionary status in DXP Magic Quadrant signals analyst confidence in direction."
+      },
+      "core_message": {
+        "elevator_pitch": "For enterprises evaluating headless CMS platforms and considering Contentstack's new Agentic Experience Platform, Gradial is the proven, deployed orchestration layer that works with any CMS—Contentstack or not—whereas Contentstack AXP is a greenfield platform bet."
+      },
+      "competitive": {
+        "strengths": [
+          "Contentstack AXP's three-pillar vision is compelling",
+          "Lytics CDXP acquisition shows serious investment",
+          "Gartner Visionary status signals analyst confidence",
+          "Bay FC customer win shows production momentum"
+        ],
+        "weaknesses": [
+          "Agent OS is brand-new and untested at scale",
+          "Full-stack platform lock-in risk",
+          "Pricing unknown—likely $100K–$300K+ for AXP with agents",
+          "Implementation requires content migration",
+          "Agent maturity: One customer doesn't equal production validation"
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "Gradial deployed agents across multiple CMS platforms for multi-platform orchestration",
+          "Wells Fargo: Orchestrated compliance-heavy financial services content without platform lock-in",
+          "T-Mobile: Deployed Gradial on AEM, achieved 80%+ time reduction and 20x efficiency gains"
+        ],
+        "metrics": [
+          "80%+ time reduction in page production",
+          "20x efficiency gains in campaign orchestration",
+          "99.9% accuracy in compliance and accessibility checks",
+          "Zero CMS migration required"
+        ]
+      }
+    },
+    {
+      "id": "optimizely-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "Optimizely",
+        "domain": "optimizely.com",
+        "risk_level": "MEDIUM",
+        "tagline": "The leading composable customer experience platform",
+        "profile": "Optimizely shipped 15+ Opal Agents in 2026; customer data shows 170 agents built in 5 days. Opal University (1,100+ marketers signed up in 2 weeks) is a brilliant democratization play. 9-year consecutive Gartner Leader status in CMP Magic Quadrant signals consistent execution."
+      },
+      "core_message": {
+        "elevator_pitch": "For enterprise marketers who need agentic agents with deep expertise in brand governance and compliance, Gradial is the specialized orchestration platform purpose-built for regulated industries—whereas Optimizely's 15+ Opal Agents are fast-to-ship but generalist in nature."
+      },
+      "competitive": {
+        "strengths": [
+          "Opal Agents shipped 15+ in 2026 with impressive velocity",
+          "Opal University is a brilliant democratization play",
+          "Optimizely One is a genuine integrated suite",
+          "9-year consecutive Gartner Leader status"
+        ],
+        "weaknesses": [
+          "Opal Agents are general-purpose (GEO, experimentation, localization)",
+          "None are specifically designed for brand compliance or accessibility automation",
+          "Opal University trains marketers to build custom agents—not for compliance",
+          "Bundled suite means you're paying for features you don't need",
+          "Pricing opacity—custom enterprise model"
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "Wells Fargo (enterprise financial services): Compliance agents enforce legal disclaimer placement and regulatory text requirements automatically",
+          "Kaiser Permanente (regulated healthcare): WCAG accessibility agents ensure 100% compliance",
+          "Prudential (regulated insurance): Multi-brand compliance automation across 500+ pages"
+        ],
+        "metrics": [
+          "80%+ time reduction when combined with Optimizely content optimization",
+          "20x efficiency gains in compliance review cycles",
+          "99.9% accuracy in WCAG accessibility and regulatory compliance checks"
+        ]
+      }
+    },
+    {
+      "id": "wpp-open-20260506",
+      "date": "2026-05-06",
+      "competitor": {
+        "name": "WPP Open / Agency Model",
+        "domain": "wpp.com",
+        "risk_level": "MEDIUM",
+        "tagline": "Agency intelligence and execution platform",
+        "profile": "WPP Open's Agent Hub gives WPP clients access to WPP's proprietary agents (Brand Analytics, Behavioral Science, Creative Brain, Analogies). 75K+ WPP Open users and 90% adoption among client-facing staff signals deep organizational integration."
+      },
+      "core_message": {
+        "elevator_pitch": "For enterprise clients of WPP agencies who want to own their agentic content operations long-term, Gradial is the platform that brings WPP's agential intelligence in-house—enabling your teams to build and govern agentic agents at your own pace without becoming dependent on agency labor costs."
+      },
+      "competitive": {
+        "strengths": [
+          "WPP's Agent Hub gives access to 150+ years of WPP creative and strategic intelligence",
+          "WPP's ecosystem integrations (Adobe, Google Earth AI) are sophisticated",
+          "75K+ WPP Open users and 90% adoption signals deep integration",
+          "Agency model is sticky: clients already paying for agency services"
+        ],
+        "weaknesses": [
+          "WPP Open agents are not portable—they live in WPP's platform",
+          "Agency dependency is the core weakness: clients must continue paying WPP for agency services",
+          "Proprietary data moat not accessible to clients directly",
+          "Agent models designed for agency workflows, not client-side operations",
+          "Agency model doesn't scale long-term; clients eventually want to own their agents"
+        ]
+      },
+      "proof": {
+        "success_stories": [
+          "T-Mobile (enterprise client, uses external agencies): Deployed Gradial in-house, reduced reliance on agency labor",
+          "Enterprise client: Built in-house agentic operations, reduced agency services spend by 30% over 2 years",
+          "Cisco: Developed in-house agentic content operations, reduced reliance on external agencies"
+        ],
+        "metrics": [
+          "80%+ time reduction in page production when owned in-house",
+          "50-70% long-term cost reduction vs. agency labor dependency",
+          "20x efficiency gains in campaign orchestration"
+        ]
+      }
+    }
+  ]
+}

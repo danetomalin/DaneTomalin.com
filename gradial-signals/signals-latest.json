@@ -1,0 +1,293 @@
+{
+  "date": "2026-05-06",
+  "engine_version": "1.0.0",
+  "signal_count": 16,
+  "high_impact_count": 5,
+  "trend_scorecard": {
+    "bullish": 11,
+    "bearish": 1,
+    "neutral": 4,
+    "overall": "bullish",
+    "summary": "Enterprise MarTech spend accelerating with AI automation as #1 priority; agentic AI adoption crossing the chasm (17% deployed, 60% plan deployment in 2 years); accessibility lawsuits hitting 5,000+ in 2025 (+37% YoY) creating urgent compliance pressure; Sitecore positioned as direct competitive threat in agentic content operations space."
+  },
+  "signals": [
+    {
+      "id": "martech-spend-20260506-001",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "enterprise_martech_spend",
+      "headline": "Enterprise MarTech budgets hit record growth; AI automation tools top investment priority",
+      "summary": "Most enterprise organizations are planning double-digit MarTech budget increases in 2026, with AI-powered tools cited as the #1 investment priority by 45% of marketers. Marketing automation platforms now account for 62% of campaigns running end-to-end automated workflows.",
+      "gradial_commentary": "This validates Gradial's core thesis: enterprise marketing teams are desperate to scale content production and campaign execution without linear headcount growth. The shift from point solutions to integrated automation platforms creates tailwinds for Gradial's positioning as the agentic operations backbone that orchestrates the entire content supply chain end-to-end.",
+      "impact_score": 9,
+      "sentiment": "bullish",
+      "sentiment_reason": "Record budget growth + explicit AI automation prioritization directly validates Gradial's market opportunity and enterprise buyer intent to invest in agentic systems.",
+      "tags": ["martech-budget", "ai-investment", "marketing-automation", "enterprise-spending"],
+      "sources": [
+        {"title": "What Enterprise MarTech Leaders Are Really Optimizing for in 2026", "url": "https://stensul.com/blog/what-enterprise-martech-leaders-are-really-optimizing-for-in-2026/", "domain": "stensul.com"},
+        {"title": "Gartner Forecasts Worldwide IT Spending to Grow 13.5% in 2026, Totaling $6.31 Trillion", "url": "https://www.gartner.com/en/newsroom/press-releases/2026-04-22-gartner-forecasts-worldwide-it-spending-to-grow-13-point-5-percent-in-2026-totaling-6-point-31-trillion-dollars", "domain": "gartner.com"},
+        {"title": "Marketing Automation Statistics By Market Size, Usage And Trends (2026)", "url": "https://bayelsawatch.com/marketing-automation-statistics/", "domain": "bayelsawatch.com"}
+      ]
+    },
+    {
+      "id": "martech-spend-20260506-002",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "enterprise_martech_spend",
+      "headline": "Marketing automation market to reach $14.98B by 2031, growing 12.92% CAGR",
+      "summary": "Global marketing automation software market stands at $8.16B in 2026 and is projected to reach $14.98B by 2031 at 12.92% CAGR. Services segment is the fastest-growing component, advancing at 13.28% as enterprises increasingly outsource integration and managed operations.",
+      "gradial_commentary": "For Gradial, this market expansion signals growing demand for managed services and implementation partners. As automation platforms mature, enterprises will look to vendors like Gradial who combine software automation with professional services to deploy agents and orchestrate content supply chains across enterprise systems.",
+      "impact_score": 7,
+      "sentiment": "bullish",
+      "sentiment_reason": "Double-digit market growth + accelerating services demand creates expansion opportunity for Gradial's positioning as a services-backed agentic platform.",
+      "tags": ["market-size", "marketing-automation", "services-growth", "enterprise-adoption"],
+      "sources": [
+        {"title": "Marketing Automation Software Market Size, Share & Industry Growth Outlook, 2031", "url": "https://www.mordorintelligence.com/industry-reports/global-marketing-automation-software-market-industry", "domain": "mordorintelligence.com"},
+        {"title": "Marketing Automation Market Size, Share Report [2026-2034]", "url": "https://www.fortunebusinessinsights.com/marketing-automation-software-market-108852", "domain": "fortunebusinessinsights.com"}
+      ]
+    },
+    {
+      "id": "martech-spend-20260506-003",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "enterprise_martech_spend",
+      "headline": "B2B organizations 64% more likely to invest in marketing automation vs B2C",
+      "summary": "Enterprise B2B organizations show dramatically higher investment appetite for marketing automation (64% lift vs B2C), reflecting prioritization of standardization, process efficiency, and operational leverage over personalization engines.",
+      "gradial_commentary": "Gradial's customer base (T-Mobile, Prudential, Cisco, Intel, Kaiser, Wells Fargo, Vanguard, Lenovo, US Bank) skews B2B and enterprise B2C. This data confirms that their buyer personas value operational efficiency and compliance automation — core differentiators for Gradial's agents across AEM, Salesforce, Jira, Figma, and Workfront integration points.",
+      "impact_score": 8,
+      "sentiment": "bullish",
+      "sentiment_reason": "Strong buyer preference for process automation in Gradial's exact market segment (B2B/B2C enterprise) validates product-market fit for agentic content operations.",
+      "tags": ["b2b-marketing", "enterprise-priorities", "operational-efficiency", "buyer-behavior"],
+      "sources": [
+        {"title": "Enterprise Content and Marketing Trends: Insights for 2026", "url": "https://contentmarketinginstitute.com/enterprise-research/enterprise-content-marketing-research-findings", "domain": "contentmarketinginstitute.com"}
+      ]
+    },
+    {
+      "id": "martech-spend-20260506-004",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "enterprise_martech_spend",
+      "headline": "Enterprise experiential marketing investment at 88% vs 78% for broader B2B cohort",
+      "summary": "Enterprise-level organizations allocate marketing budgets to experiential marketing at significantly higher rates (88% vs 78% for B2B overall), signaling shift toward omnichannel campaign orchestration and content personalization at scale.",
+      "gradial_commentary": "Experiential marketing at scale requires coordinated content production, asset management, and compliance across web, email, mobile, and event channels. This spending signal validates Gradial's positioning as the orchestration engine that automates content authoring, page production, and campaign execution across enterprise systems.",
+      "impact_score": 6,
+      "sentiment": "bullish",
+      "sentiment_reason": "Enterprise emphasis on experiential marketing amplifies demand for Gradial's content supply chain automation across multiple channels and touchpoints.",
+      "tags": ["experiential-marketing", "omnichannel", "budget-allocation", "enterprise-campaigns"],
+      "sources": [
+        {"title": "Enterprise Content and Marketing Trends: Insights for 2026", "url": "https://contentmarketinginstitute.com/enterprise-research/enterprise-content-marketing-research-findings", "domain": "contentmarketinginstitute.com"}
+      ]
+    },
+    {
+      "id": "agentic-ai-20260506-001",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "agentic_ai_adoption",
+      "headline": "Only 17% of enterprises deployed AI agents; 60% expect deployment within 2 years",
+      "summary": "Current AI agent adoption sits at 17% across enterprises, yet 60% expect to deploy agents within the next two years. For marketing agencies specifically, 40% have at least one agent in production as of April 2026, signaling rapid inflection in agentic workflows.",
+      "gradial_commentary": "This adoption curve directly benefits Gradial: enterprises are moving from 'considering agentic AI' to 'we need agentic AI for content operations NOW.' Gradial's pre-built agents for content authoring, page production, QA, accessibility, and brand compliance position the company as a turnkey solution for the 60% of enterprises entering the deployment phase.",
+      "impact_score": 9,
+      "sentiment": "bullish",
+      "sentiment_reason": "Massive adoption inflection (17% today → 60% in 2 years) validates that agentic marketing operations is crossing the chasm from early adopter to mainstream. Gradial is perfectly positioned to capture this wave.",
+      "tags": ["agent-adoption", "enterprise-inflection", "marketing-agencies", "production-deployment"],
+      "sources": [
+        {"title": "Agentic AI Adoption: 250-Agency Survey 2026 Results", "url": "https://www.digitalapplied.com/blog/agentic-ai-adoption-survey-2026-250-agencies", "domain": "digitalapplied.com"},
+        {"title": "2026 Hype Cycle for Agentic AI", "url": "https://www.gartner.com/en/articles/hype-cycle-for-agentic-ai", "domain": "gartner.com"}
+      ]
+    },
+    {
+      "id": "agentic-ai-20260506-002",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "agentic_ai_adoption",
+      "headline": "Sales and Marketing agents deliver 2-3x pipeline velocity improvements",
+      "summary": "Early adopters of agentic AI in sales and marketing report 2-3x improvements in pipeline velocity. Advanced advertising platforms are deploying autonomous agents to optimize campaigns across digital channels, adjusting bids, budgets, and creative targeting continuously.",
+      "gradial_commentary": "These ROI metrics are mission-critical for Gradial's buyer value proposition. Showing that agentic AI delivers 2-3x velocity gains in campaign execution and content production gives enterprises a quantified reason to adopt Gradial's agents. Positioning messaging should highlight speed-to-launch multipliers, not just cost reduction.",
+      "impact_score": 8,
+      "sentiment": "bullish",
+      "sentiment_reason": "Measurable 2-3x ROI gains from agentic marketing workflows provide powerful proof points for Gradial's positioning and help justify enterprise budget investment in agentic content operations.",
+      "tags": ["agent-roi", "pipeline-velocity", "marketing-optimization", "campaign-automation"],
+      "sources": [
+        {"title": "Reinventing marketing workflows with agentic AI", "url": "https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/reinventing-marketing-workflows-with-agentic-ai", "domain": "mckinsey.com"},
+        {"title": "2026 Hype Cycle for Agentic AI", "url": "https://www.gartner.com/en/articles/hype-cycle-for-agentic-ai", "domain": "gartner.com"}
+      ]
+    },
+    {
+      "id": "agentic-ai-20260506-003",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "agentic_ai_adoption",
+      "headline": "Agentic AI projected to power 2/3 of current marketing activities by 2028",
+      "summary": "Gartner projects that by end of 2026, 40% of enterprise applications will include task-specific AI agents. Agentic AI is estimated to power two-thirds of current marketing activities by 2028, enabling autonomous content generation, audience testing, and media planning.",
+      "gradial_commentary": "If agentic AI will power 2/3 of marketing activities within 2 years, Gradial's agents for content authoring, page production, campaign execution, QA, accessibility, and brand compliance must be positioned as essential infrastructure — not 'nice to have.' This signal validates Gradial's betting-the-company thesis on agentic marketing operations.",
+      "impact_score": 9,
+      "sentiment": "bullish",
+      "sentiment_reason": "Projected 67% adoption of agentic AI in marketing by 2028 represents massive TAM expansion and validates Gradial's market timing and core product strategy.",
+      "tags": ["market-penetration", "agentic-adoption", "enterprise-applications", "2028-projection"],
+      "sources": [
+        {"title": "2026 Hype Cycle for Agentic AI", "url": "https://www.gartner.com/en/articles/hype-cycle-for-agentic-ai", "domain": "gartner.com"},
+        {"title": "How AI Agents Are Transforming Marketing Workflows", "url": "https://www.jasper.ai/blog/how-ai-agents-transform-marketing-workflows", "domain": "jasper.ai"}
+      ]
+    },
+    {
+      "id": "agentic-ai-20260506-004",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "agentic_ai_adoption",
+      "headline": "Critical adoption blockers: data quality (52%), integration complexity (40%), skills gaps (33%)",
+      "summary": "Despite agentic AI momentum, 33% of organizations cite skills gaps preventing effective adoption; 52% struggle with data quality in underlying CRM/MAP systems; 40% face integration complexity challenges connecting automation platforms to existing tech stacks. Failed pilots cite three blockers: data quality, telemetry/measurement, and unclear human-in-the-loop ownership.",
+      "gradial_commentary": "This signal is critical for Gradial's positioning. While everyone wants agentic AI, most enterprises will struggle with implementation. Gradial's positioning should emphasize: (1) pre-built agents that work out-of-the-box with AEM, Salesforce, Jira, Figma, Workfront; (2) strong data quality requirements documentation; (3) clear agent governance and human-in-the-loop workflows. These are the three adoption pain points Gradial can solve.",
+      "impact_score": 8,
+      "sentiment": "bullish",
+      "sentiment_reason": "Identified adoption blockers present clear differentiation opportunity for Gradial. Enterprises will gravitate toward vendors who solve implementation complexity, not just promise AI magic.",
+      "tags": ["adoption-blockers", "skills-gap", "data-quality", "integration-complexity"],
+      "sources": [
+        {"title": "Marketing Operations Statistics 2026: Teams & Tools", "url": "https://www.digitalapplied.com/blog/marketing-operations-statistics-2026-team-tooling", "domain": "digitalapplied.com"},
+        {"title": "Marketing Automation in 2026: How Growing Businesses Cut ...", "url": "https://n8nlogic.com/blog/marketing-automation-in-2026-how-growing-businesses-cut-campaign-time-in-half", "domain": "n8nlogic.com"}
+      ]
+    },
+    {
+      "id": "governance-20260506-001",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "content_governance_compliance",
+      "headline": "5,000+ ADA Title III web accessibility lawsuits filed in 2025; 37% increase from 2024",
+      "summary": "By end of 2025, more than 5,000 digital accessibility lawsuits were filed, with first-half 2025 seeing 2,014 cases (37% increase from 2024). Florida and New York alone accounted for 55.8% of cases. AI-assisted pro se filings increased 40% year-over-year, enabled by ChatGPT, Copilot, and Gemini.",
+      "gradial_commentary": "This signal directly validates Gradial's accessibility agent as a core differentiator. Enterprise marketing teams face existential risk from ADA lawsuits if their digital properties lack accessibility compliance. Gradial's automated accessibility monitoring and remediation agents positioned as 'lawsuit risk mitigation' will resonate powerfully with enterprise legal, risk, and compliance stakeholders — not just marketing.",
+      "impact_score": 9,
+      "sentiment": "bullish",
+      "sentiment_reason": "5,000+ lawsuits + 37% YoY growth creates urgent regulatory compliance pressure that positions Gradial's accessibility agent as essential infrastructure, not optional feature.",
+      "tags": ["ada-lawsuits", "digital-accessibility", "compliance-risk", "litigation-trends"],
+      "sources": [
+        {"title": "2026 ADA Website Compliance Predictions: More Lawsuits, AI Has Big Impact", "url": "https://accessible.org/2026-ada-website-compliance-lawsuits-ai/", "domain": "accessible.org"},
+        {"title": "ADA Lawsuit Statistics 2025–2026: Data & Trends", "url": "https://wcagsafe.com/blog/ada-lawsuit-statistics", "domain": "wcagsafe.com"},
+        {"title": "2025 Mid-Year ADA Website Accessibility Lawsuit Report", "url": "https://www.ecomback.com/ada-website-lawsuits-recap-report/2025-mid-year-ada-website-lawsuit-report", "domain": "ecomback.com"}
+      ]
+    },
+    {
+      "id": "governance-20260506-002",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "content_governance_compliance",
+      "headline": "EU Accessibility Act in force since June 2025; WCAG 2.1 AA now global de-facto standard",
+      "summary": "European Accessibility Act (EAA) became law across all EU member states on June 28, 2025, applying to any organization providing products/services to EU consumers. EAA requires WCAG 2.1 Level AA compliance for all digital properties. Non-compliance penalties range from written warnings to substantial fines. WCAG 2.1 AA has solidified as the de-facto legal standard for private business digital properties globally.",
+      "gradial_commentary": "For Gradial's global enterprise customers, EAA + WCAG 2.1 AA compliance is now a hard requirement, not a 'nice to have.' This regulatory shift creates a forcing function for enterprises to implement automated accessibility validation across their content supply chains. Gradial's positioning should frame accessibility agents as compliance infrastructure — required by law, automatically validated by agents, embedded into every page build workflow.",
+      "impact_score": 9,
+      "sentiment": "bullish",
+      "sentiment_reason": "Mandatory compliance deadline (June 2025 already passed) + global adoption of WCAG 2.1 AA standard creates urgent buyer urgency for Gradial's accessibility automation.",
+      "tags": ["eu-compliance", "wcag-standards", "accessibility-requirements", "regulatory-enforcement"],
+      "sources": [
+        {"title": "European Accessibility Act - Wikipedia", "url": "https://en.wikipedia.org/wiki/European_Accessibility_Act", "domain": "wikipedia.org"},
+        {"title": "The European Accessibility Act: Technical Aspects of Compliance", "url": "https://www.wcag.com/compliance/european-accessibility-act/", "domain": "wcag.com"},
+        {"title": "WCAG 2.2 in 2026: Enterprise Web Accessibility Requirements, Checklist, and Implementation Plan", "url": "https://almcorp.com/blog/wcag-2-2-enterprise-web-accessibility-requirements-2026/", "domain": "almcorp.com"}
+      ]
+    },
+    {
+      "id": "governance-20260506-003",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "content_governance_compliance",
+      "headline": "AI-powered brand compliance automation reduces manual review time by 90%",
+      "summary": "Automated brand compliance tools using computer vision and AI-powered content review now scan marketing materials across visual and text domains, flagging off-brand elements, regulatory violations, and compliance issues pre-publication. Automation reduces manual review time by 90% while cutting error risk through instantaneous compliance checking against legal, brand, and ethical guidelines.",
+      "gradial_commentary": "Gradial's brand compliance agent becomes more valuable as enterprises scale content production across channels. 90% reduction in manual review time means that Gradial can position brand compliance automation as a force multiplier for marketing operations teams — enabling faster campaign velocity without sacrificing brand integrity or regulatory compliance.",
+      "impact_score": 7,
+      "sentiment": "bullish",
+      "sentiment_reason": "Demonstrated 90% time savings in compliance workflows validate brand compliance agents as high-ROI component of Gradial's content supply chain.",
+      "tags": ["compliance-automation", "brand-governance", "content-review", "operational-efficiency"],
+      "sources": [
+        {"title": "Adobe Brand Intelligence | Enterprise Brand Governance AI", "url": "https://business.adobe.com/products/brand-intelligence.html", "domain": "adobe.com"},
+        {"title": "Marketing Compliance Software: 2025 Guide for Enterprises", "url": "https://haast.io/blog/marketing-compliance-software-guide-for-enterprise-businesses", "domain": "haast.io"},
+        {"title": "Top Marketing Compliance Software Providers In 2025", "url": "https://www.blee.com/blogs/top-marketing-compliance-software-providers-in-2025", "domain": "blee.com"}
+      ]
+    },
+    {
+      "id": "governance-20260506-004",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "content_governance_compliance",
+      "headline": "Public sector accessibility deadline extended to 2027-2028; private enterprise pressure intensifies",
+      "summary": "ADA Title II compliance deadline for state/local governments extended: April 2027 for entities with population >50K, April 2028 for <50K. However, private-sector enterprises already feel downstream pressure through procurement requirements, partner mandates, and platform comparisons. WCAG 2.1 AA has solidified as the de-facto legal standard in Title III lawsuits against private businesses.",
+      "gradial_commentary": "While public sector deadlines slip, private enterprises (Gradial's actual customer base) face increasing legal and procurement pressure to demonstrate accessibility compliance. This creates asymmetric opportunity: Gradial should position accessibility agents as enterprise risk mitigation, not just compliance checkbox. Enterprise procurement teams will increasingly demand accessibility proof-of-work from vendors like Gradial.",
+      "impact_score": 6,
+      "sentiment": "bullish",
+      "sentiment_reason": "Public sector deadline extension paradoxically increases private enterprise urgency for accessibility automation, validating Gradial's market positioning.",
+      "tags": ["compliance-deadline", "procurement-pressure", "accessibility-standards", "legal-risk"],
+      "sources": [
+        {"title": "WCAG 2.2 in 2026: Enterprise Web Accessibility Requirements, Checklist, and Implementation Plan", "url": "https://almcorp.com/blog/wcag-2-2-enterprise-web-accessibility-requirements-2026/", "domain": "almcorp.com"},
+        {"title": "US ADA Website Compliance 2026: WCAG 2.1 Accessibility Guide", "url": "https://d2itechnology.com/blogs/ada-website-accessibility-compliance-2026-wcag-guide/", "domain": "d2itechnology.com"}
+      ]
+    },
+    {
+      "id": "competitive-20260506-001",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "competitive_positioning",
+      "headline": "Adobe launches Firefly AI Assistant for orchestrating Creative Cloud multi-step workflows",
+      "summary": "Adobe unveiled Firefly AI Assistant that orchestrates multi-step workflows across Creative Cloud apps (Firefly, Photoshop, Premiere, Lightroom, Express, Illustrator) with natural language commands. Will integrate with third-party AI models including Claude. New productivity agent transforms document workflows across Acrobat ecosystem.",
+      "gradial_commentary": "Adobe is building agentic orchestration across the creative/content production layer — but NOT the enterprise marketing operations layer (AEM, Salesforce, Jira, Workfront, campaign execution). This is Gradial's differentiation: Adobe controls creation tools, but Gradial controls the operational workflows that govern content approval, compliance, accessibility, and campaign deployment. Messaging should position these as complementary, not competitive.",
+      "impact_score": 6,
+      "sentiment": "neutral",
+      "sentiment_reason": "Adobe's agent expansion validates agentic marketing movement, but in a complementary (creative tools) layer, not competitive (operations orchestration) space. Good for Gradial's ecosystem positioning.",
+      "tags": ["adobe-agents", "creative-automation", "workflow-orchestration", "competitive-analysis"],
+      "sources": [
+        {"title": "Adobe Ushers in a New Era of Creativity with New Creative Agent and Generative AI Innovations in Adobe Firefly", "url": "https://news.adobe.com/news/2026/04/adobe-new-creative-agent", "domain": "adobe.com"},
+        {"title": "Adobe extends leadership in video: unleashing new AI-powered creation in Firefly, reinventing color for editors in Premiere", "url": "https://blog.adobe.com/en/publish/2026/04/15/adobe-extends-leadership-video-unleashing-new-ai-powered-creation-firefly-reinventing-color-editors-in-premiere", "domain": "adobe.com"},
+        {"title": "Adobe's New Productivity Agent Redefines How People Understand, Create and Share Information", "url": "https://news.adobe.com/news/2026/05/adobes-new-productivity-agent", "domain": "adobe.com"}
+      ]
+    },
+    {
+      "id": "competitive-20260506-002",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "competitive_positioning",
+      "headline": "Jasper pivots to 'Marketing Hub' enterprise platform with AI agents and governance focus",
+      "summary": "Jasper transformed from AI writing assistant into enterprise Marketing Hub orchestrating AI agents for content execution at scale. January 2026 launch added Optimization Agent for SEO/GEO/AI-native search. 95% of marketers plan increased AI spending in 2026; 66% allocating 10%+ of budget to AI. Scaling high-quality content is now 2.4x growth priority vs 2025.",
+      "gradial_commentary": "Jasper is moving upmarket and embracing agentic orchestration — validating Gradial's positioning. But Jasper's agents focus on content generation and SEO optimization, not enterprise system integration (AEM, Salesforce, Jira, Workfront, Figma). Gradial should position as the system-of-record for enterprise content operations, where Jasper is a content authoring component that feeds into Gradial's governance, compliance, and deployment workflows.",
+      "impact_score": 7,
+      "sentiment": "neutral",
+      "sentiment_reason": "Jasper's enterprise pivot validates agentic marketing trend and enterprise buyer appetite, but in complementary (authoring) rather than competitive (orchestration) layer. Good industry validation.",
+      "tags": ["jasper-positioning", "content-generation", "enterprise-agents", "competitive-analysis"],
+      "sources": [
+        {"title": "Report: The State of AI in Marketing 2026", "url": "https://www.jasper.ai/state-of-ai-marketing-2026", "domain": "jasper.ai"},
+        {"title": "New Jasper Research Shows AI Is Now Core to Marketing, With Scale and Governance Emerging as Top Barriers", "url": "https://www.prnewswire.com/news-releases/new-jasper-research-shows-ai-is-now-core-to-marketing-with-scale-and-governance-emerging-as-top-barriers-302671894.html", "domain": "prnewswire.com"},
+        {"title": "Jasper AI for Enterprise: 2026 Review — Features, Pricing & Use Cases", "url": "https://ai-cmo.net/intelligence/reviews/jasper-ai-enterprise", "domain": "ai-cmo.net"}
+      ]
+    },
+    {
+      "id": "competitive-20260506-003",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "competitive_positioning",
+      "headline": "Sitecore recognized as Gartner Leader in Content Marketing Platforms; doubles down on SitecoreAI agents",
+      "summary": "Sitecore recognized as Gartner Leader (April 2026) in Content Marketing Platforms, positioned farthest on Completeness of Vision. SitecoreAI brings 20+ AI-powered agents orchestrating workflows from campaign planning to content production, testing, and optimization. Agentic Studio enables multi-step automation within brand/compliance guardrails across AEM integrations.",
+      "gradial_commentary": "Sitecore is a DIRECT COMPETITIVE THREAT to Gradial in the enterprise content operations space. Both target the same buyer personas (marketing operations, AEM admins, compliance teams) with agentic orchestration platforms. Key difference: Sitecore owns the content creation/personalization layer end-to-end; Gradial is system-agnostic and integrates across AEM, Salesforce, Jira, Figma, Workfront. Messaging should emphasize Gradial's flexibility for enterprises already invested in Salesforce or Workfront ecosystems.",
+      "impact_score": 8,
+      "sentiment": "bearish",
+      "sentiment_reason": "Sitecore's Gartner Leader status + agentic platform expansion in same market segment as Gradial represents direct competitive threat that requires sharp positioning differentiation.",
+      "tags": ["sitecore-threat", "content-operations", "gartner-leader", "competitive-positioning"],
+      "sources": [
+        {"title": "Sitecore recognized as a Leader in the Gartner® Magic Quadrant™ for Content Marketing Platforms", "url": "https://www.prnewswire.com/news-releases/sitecore-recognized-as-a-leader-in-the-gartner-magic-quadrant-for-content-marketing-platforms-302736168.html", "domain": "prnewswire.com"},
+        {"title": "Sitecore Unveils SitecoreAI, Ushering in the AI-First Era of Digital Experience", "url": "https://www.prnewswire.com/news-releases/sitecore-unveils-sitecoreai-ushering-in-the-ai-first-era-of-digital-experience-302604123.html", "domain": "prnewswire.com"},
+        {"title": "SitecoreAI: Sitecore's Boldest Step Toward Autonomous Marketing", "url": "https://www.cmswire.com/digital-experience/sitecore-unveils-sitecoreai-and-a-vision-for-smarter-digital-experience/", "domain": "cmswire.com"}
+      ]
+    },
+    {
+      "id": "competitive-20260506-004",
+      "captured_date": "2026-05-06",
+      "published_date": "2026-05-06",
+      "pillar": "competitive_positioning",
+      "headline": "WPP launches Agent Hub with 'super agents' for marketing strategy, creative, and media planning",
+      "summary": "WPP launched Agent Hub on WPP Open platform (Jan 2026) providing access to suite of AI-powered 'Super Agents' designed for marketing strategy, creative development, and behavioral insights. 85,000 of WPP's 108,000 employees now use WPP Open monthly (up from 30,000 in Feb 2024). WPP Open integrates OpenAI, Google Gemini, and Claude; agents save creative teams 14 hours per week (~90 days/year per 4-person team).",
+      "gradial_commentary": "WPP is building agentic orchestration for AGENCIES, not enterprises. This is a different buyer persona and business model than Gradial. However, it signals that leading-edge marketing organizations expect agent-driven workflows as standard. For Gradial: opportunity to position as the enterprise equivalent of WPP Open — giving in-house marketing teams agent-powered productivity without relying on external agencies. Marketing ops teams will increasingly demand internal versions of WPP's agent capabilities.",
+      "impact_score": 6,
+      "sentiment": "neutral",
+      "sentiment_reason": "WPP's agent expansion validates agentic marketing workflows but targets agency buyer, not enterprise. Complementary signal for Gradial's enterprise positioning.",
+      "tags": ["wpp-agents", "agency-automation", "workflow-efficiency", "market-validation"],
+      "sources": [
+        {"title": "WPP launches Agent Hub on WPP Open, providing clients with access to advanced agentic AI marketing expertise", "url": "https://www.wpp.com/en/news/2026/01/wpp-launches-agent-hub-on-wpp-open-providing-clients-with-access-to-advanced-agentic-ai", "domain": "wpp.com"},
+        {"title": "CES 2026: WPP launches AI-powered 'super agents' on WPP Open", "url": "https://mediaincanada.com/2026/01/05/ces-2026-wpp-openai-super-agents/", "domain": "mediaincanada.com"},
+        {"title": "WPP advances its AI push with WPP Open Pro", "url": "https://www.emarketer.com/content/wpp-advances-its-ai-push-with-wpp-open-pro", "domain": "emarketer.com"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building the PMM Function - Agentic Marketing Operations</title>
+    <link rel="canonical" href="https://danetomalin.com/gradial/">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="Dane Tomalin">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --background: #0D0D12;
+            --surface: #16161E;
+            --text: #F0F0F4;
+            --text-secondary: #9B9BAF;
+            --accent: #3B82F6;
+            --accent-dark: #2563EB;
+            --border: #2A2A3A;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+        section {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+        }
+
+        .section-intro {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 720px;
+            margin-bottom: 2rem;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: var(--accent-dark); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            padding: 3.5rem 2rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(59,130,246,0.06) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-2%, 1%) scale(1.05); }
+        }
+        .hero-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 0.25rem;
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+            position: relative;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        /* ── EXECUTIVE SUMMARY ── */
+        .exec-summary {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .exec-brief {
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 780px;
+        }
+        .exec-brief strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .pillar-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+        }
+        .pillar-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .pillar-card:hover {
+            border-color: var(--accent);
+        }
+        .pillar-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(59,130,246,0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pillar-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .pillar-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.4rem;
+        }
+        .pillar-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .stat-row { grid-template-columns: 1fr; }
+            .pillar-row { grid-template-columns: 1fr; }
+            .stat-number { font-size: 2.2rem; }
+        }
+
+        /* ── MARKET CONTEXT ── */
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .ctv-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .ctv-stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem 1.2rem;
+            text-align: center;
+        }
+        .ctv-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+        }
+        .ctv-stat-label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        .ctv-summary {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 800px;
+            margin-bottom: 0;
+        }
+
+        .position-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2.5rem;
+        }
+        .position-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+        }
+        .position-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            max-width: 720px;
+        }
+
+        .diff-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.8rem;
+        }
+        .diff-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+        .diff-chip svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .comp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .comp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s;
+        }
+        .comp-card:hover {
+            border-color: rgba(59,130,246,0.3);
+        }
+        .comp-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+        .comp-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+        .comp-positioning {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        .comp-diff {
+            background: rgba(59,130,246,0.06);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            padding: 0.7rem 1rem;
+            font-size: 0.82rem;
+            color: var(--accent);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .ctv-grid { grid-template-columns: repeat(2, 1fr); }
+            .comp-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── BRAND VOICE ── */
+        .thesis-card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+        }
+        .thesis-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-dark));
+        }
+        .thesis-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-dark);
+            background: rgba(37,99,235,0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 1.2rem;
+        }
+        .thesis-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .thesis-body {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .thesis-body strong {
+            color: var(--accent);
+        }
+
+        .voice-pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+        .voice-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.8rem 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .voice-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .voice-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(59,130,246,0.08) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+        .voice-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .voice-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .voice-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .throughline {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+        }
+        .throughline-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .throughline-items {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+        .throughline-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .throughline-item svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+        }
+        .throughline-arrow {
+            color: var(--border);
+            font-size: 1.2rem;
+            padding: 0 0.3rem;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .voice-pillars { grid-template-columns: 1fr; }
+            .thesis-title { font-size: 1.5rem; }
+            .throughline-items { flex-direction: column; align-items: flex-start; }
+            .throughline-arrow { display: none; }
+        }
+
+        /* ── AGENT TOOLING ── */
+        .agent-tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        .agent-tab {
+            padding: 0.8rem 1.4rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .agent-tab:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+        .agent-tab.active {
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .agent-panel { display: none; animation: fadeIn 0.3s ease-out; }
+        .agent-panel.active { display: block; }
+        .agent-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .agent-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .agent-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(59,130,246,0.08));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .agent-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+        .agent-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; }
+        .agent-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .agent-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .agent-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .agent-meta-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        .agent-meta-value {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .agent-meta-value.accent { color: var(--accent); }
+        .agent-impl {
+            background: rgba(59,130,246,0.04);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            padding: 1rem 1.2rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .agent-impl-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+        .nav-hint {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .nav-hint button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.7rem 1.4rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .nav-hint button:hover:not(:disabled) {
+            background: rgba(59,130,246,0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .nav-hint button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .nav-hint button svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ── CLOSING ── */
+        .achieve-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+        .achieve-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .achieve-card:hover {
+            border-color: var(--accent);
+        }
+        .achieve-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(59,130,246,0.08));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .achieve-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        .achieve-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .achieve-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .cta-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .cta-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+        }
+        .cta-text strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .cta-subtext {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .author-footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .author-footer strong {
+            color: var(--text);
+        }
+
+    </style>
+</head>
+<body>
+
+    <section id="hero">
+        <div class="container">
+            <div class="hero">
+                <div class="hero-label">GRADIAL PORTFOLIO</div>
+                <h1>Building the PMM Function</h1>
+                <p class="hero-subtitle">Agentic Marketing Operations</p>
+                <p class="hero-tagline">Competitive Intelligence, Signal Engine, Roadmap Steering, Battlecards & Positioning — built for Gradial's Agentic Marketing Operations platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="executive-summary">
+        <div class="container">
+            <h2>Executive Summary</h2>
+
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="stat-number">$14.98B</div>
+                    <div class="stat-label">Marketing Automation Market by 2031</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-label">Content Deployment Time Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">ADA Lawsuits Filed in 2025</div>
+                </div>
+            </div>
+
+            <p class="exec-brief">Enterprise marketing operations faces a critical inflection point. Manual content production consumes 60-80% of team capacity. Regulatory pressure explodes (ADA lawsuits up 37% YoY). Simultaneously, agentic AI is crossing from research labs into production workflows. Gradial is positioned at this inflection: the platform that deploys autonomous agents directly into enterprise marketing stacks (AEM, Salesforce, Jira, Figma, Workfront) to orchestrate content production end-to-end — from brief to live — without platform migration or training overhead.</p>
+
+            <p class="exec-brief">This portfolio demonstrates how a solo PMM can research, analyze, and position Gradial's agentic marketing operations platform using AI-native intelligence systems. Five autonomous bots deliver competitive insights, market signals, product recommendations, sales battlecards, and positioning strategy — all synthesized into a coherent, data-driven narrative that drives pipeline creation and win rates.</p>
+
+            <div class="pillar-row">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <div class="pillar-label">Competitive Intelligence</div>
+                    <div class="pillar-desc">Weekly monitoring of 7 competitors across positioning, pricing, product, and talent signals.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg>
+                    </div>
+                    <div class="pillar-label">Market Signals</div>
+                    <div class="pillar-desc">4-pillar tracking: MarTech spend, agentic AI adoption, compliance landscape, competitive positioning.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+                    </div>
+                    <div class="pillar-label">Product Roadmap</div>
+                    <div class="pillar-desc">UVFV assessment across 6 categories: content authoring, design systems, orchestration, QA, integrations, analytics.</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="market-context">
+        <div class="container">
+            <h2>Market Context</h2>
+
+            <div class="ctv-grid">
+                <div class="ctv-stat">
+                    <div class="ctv-stat-num">67%</div>
+                    <div class="ctv-stat-label">Marketing activities powered by agentic AI by 2028 (Gartner)</div>
+                </div>
+                <div class="ctv-stat">
+                    <div class="ctv-stat-num">60%</div>
+                    <div class="ctv-stat-label">Enterprises expect agentic AI deployment within 2 years</div>
+                </div>
+                <div class="ctv-stat">
+                    <div class="ctv-stat-num">37%</div>
+                    <div class="ctv-stat-label">YoY increase in ADA accessibility lawsuits (2025)</div>
+                </div>
+                <div class="ctv-stat">
+                    <div class="ctv-stat-num">$14.98B</div>
+                    <div class="ctv-stat-label">Marketing automation market by 2031</div>
+                </div>
+            </div>
+
+            <p class="ctv-summary">Enterprise marketing operations hit an inflection point in 2025. Content production remains stubbornly manual (4 hours per page in AEM despite $500K+ investments). Simultaneously, agentic AI adoption is accelerating (60% expect deployment within 2 years), but implementation blockers are real: integration complexity, data quality, skills gaps. Regulatory pressure explodes: 5,000+ ADA lawsuits filed in 2025 (37% YoY increase), EU Accessibility Act in force, WCAG 2.1 AA as de-facto legal standard. This creates a market dynamic where enterprises need to:</p>
+
+            <div class="position-card">
+                <h3>Gradial's Market Position</h3>
+                <p class="position-desc">Deploy autonomous agents into their existing enterprise stack (AEM, Salesforce, Jira, Figma, Workfront) to orchestrate content production end-to-end without platform migration, training, or vendor lock-in.</p>
+                <div class="diff-chips">
+                    <div class="diff-chip">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        No AEM rip-and-replace
+                    </div>
+                    <div class="diff-chip">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        80% time reduction per page
+                    </div>
+                    <div class="diff-chip">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Compliance automation built-in
+                    </div>
+                    <div class="diff-chip">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Production-ready 6-8 weeks
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem;">Competitive Landscape</h3>
+            <div class="comp-grid">
+                <div class="comp-card">
+                    <div class="comp-name">Jasper</div>
+                    <div class="comp-type">Content Generation Platform</div>
+                    <div class="comp-positioning">$1.5B valuation, 100K+ customers. Content Pipelines (Grid) overlaps Gradial's content automation, but focuses on generation velocity, not execution-to-live orchestration.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        Cross-CMS orchestration, compliance automation, vendor independence
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-name">Aprimo</div>
+                    <div class="comp-type">Marketing Work Management</div>
+                    <div class="comp-positioning">Gartner MQ leader with AI Agents (Critic, Compliance, Librarian). Closest functional competitor in enterprise content ops space.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        Native AEM/Salesforce orchestration, no platform lock-in
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-name">Adobe Experience Manager</div>
+                    <div class="comp-type">Digital Experience Platform</div>
+                    <div class="comp-positioning">Incumbent DXP. Adding native AI (Firefly, Sensei), positioning AI as an upgrade path within AEM ecosystem.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        Complementary positioning, no GenStudio migration required
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-name">Sitecore</div>
+                    <div class="comp-type">Composable DXP + AI</div>
+                    <div class="comp-positioning">Announced July 2025 partnership with Gradial. Competitor on native AI, strategic partner on agentic execution.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        Embedded orchestration in Sitecore DXP stack
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-name">Contentstack</div>
+                    <div class="comp-type">Headless CMS</div>
+                    <div class="comp-positioning">Pivoting to 'Agentic Experience Platform.' $179M raised, Gartner MQ Visionary. Composable camp adding agentic capabilities.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        Cross-system orchestration, not single-platform locked
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-name">Optimizely</div>
+                    <div class="comp-type">Experience Platform</div>
+                    <div class="comp-positioning">DXP with experimentation and personalization. Adding AI content generation and workflow automation.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        Vendor-independent orchestration, no bundling costs
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-name">WPP / Stagwell</div>
+                    <div class="comp-type">Agency-as-AI Model</div>
+                    <div class="comp-positioning">Holding companies building agentic platforms (WPP Open, The Machine) to defend agency revenue. 'Agency alternative' threat.</div>
+                    <div class="comp-diff">
+                        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.2rem;opacity:0.7;">Gradial Edge</div>
+                        In-house teams can achieve agency execution without agency costs
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="brand-voice">
+        <div class="container">
+            <h2>Brand Voice & Strategic Narrative</h2>
+
+            <div class="thesis-card">
+                <div class="thesis-label">Central Thesis</div>
+                <div class="thesis-title">Agentic Marketing Operations is Production Reality</div>
+                <div class="thesis-body"><strong>Marketing operations hit an inflection point in 2025.</strong> Agentic AI adoption is accelerating across enterprise teams, but 60% expect deployment within 2 years while only 17% have deployed today. Gradial closes this gap: production-deployed agents orchestrate content authoring, QA, compliance, and deployment inside your existing AEM/Salesforce stack—no migration, no training, no vendor lock-in. The result: 80% time reduction per page, 5-10x content scale without new headcount, 99.9% compliance accuracy. <strong>Gradial is the agentic marketing operations operating system enterprises build upon to compete in a 67%-agentic-AI-powered 2028 marketing landscape.</strong></div>
+            </div>
+
+            <h3 style="margin-bottom: 1.5rem;">Voice Pillars</h3>
+            <div class="voice-pillars">
+                <div class="voice-card">
+                    <div class="voice-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12a9 9 0 11-18 0 9 9 0 0118 0m3.879-7.364l-.707.707M12 3v1m6.364 1.636l-.707.707M12 3v1m0 0a9 9 0 110 18 9 9 0 010-18m0 0h.01"/></svg>
+                    </div>
+                    <div class="voice-card-title">Production-First</div>
+                    <div class="voice-card-desc">Gradial is production-deployed at 9 Fortune 500 companies achieving measurable results (80% time reduction, 20x efficiency, 99.9% accuracy). Not visionary positioning or early-access—production reality.</div>
+                </div>
+                <div class="voice-card">
+                    <div class="voice-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div class="voice-card-title">ROI-Obsessed</div>
+                    <div class="voice-card-desc">Conversations with CFOs focus on budget avoidance (stop hiring QA/compliance specialists) and scale (5-10x content without headcount). Gradial's ROI is immediate and measurable.</div>
+                </div>
+                <div class="voice-card">
+                    <div class="voice-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg>
+                    </div>
+                    <div class="voice-card-title">Compliance as Existential</div>
+                    <div class="voice-card-desc">5,000+ ADA lawsuits in 2025 (37% YoY increase). EU Accessibility Act in force. Compliance automation isn't nice-to-have—it's litigation risk mitigation and existential insurance.</div>
+                </div>
+            </div>
+
+            <div class="throughline">
+                <div class="throughline-label">Through-Line: What Ties It All Together</div>
+                <div class="throughline-items">
+                    <div class="throughline-item">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Agentic AI adoption is now
+                    </div>
+                    <span class="throughline-arrow">→</span>
+                    <div class="throughline-item">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Implementation is the bottleneck
+                    </div>
+                    <span class="throughline-arrow">→</span>
+                    <div class="throughline-item">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Gradial solves implementation
+                    </div>
+                    <span class="throughline-arrow">→</span>
+                    <div class="throughline-item">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Scale without headcount
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="automation">
+        <div class="container">
+            <h2>Automation & Agent Tooling</h2>
+            <p class="section-intro">A founding PMM doesn't have the luxury of a large team. AI-native tooling closes much of that gap. Five buildable agent workflows deliver competitive insights, market signals, product recommendations, sales battlecards, and positioning strategy—all synthesized into a coherent, data-driven narrative.</p>
+
+            <div class="agent-tab-bar" id="agentTabBar">
+                <div class="agent-tab active" onclick="showAgent(0)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>CI Monitor</div>
+                <div class="agent-tab" onclick="showAgent(1)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Signal Engine</div>
+                <div class="agent-tab" onclick="showAgent(2)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Roadmap Steering</div>
+                <div class="agent-tab" onclick="showAgent(3)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Battle Cards</div>
+                <div class="agent-tab" onclick="showAgent(4)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Positioning</div>
+                <div class="agent-tab" onclick="showAgent(5)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Narrative</div>
+                <div class="agent-tab" onclick="showAgent(6)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Messaging</div>
+                <div class="agent-tab" onclick="showAgent(7)"><span style="color:var(--accent);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:2px;">In Beta</span>Roadmap Align</div>
+            </div>
+
+            <!-- Agent 0: CI Monitor -->
+            <div class="agent-panel active" id="agent-0">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-ci/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Competitive Intelligence Monitor</a>
+                    </div>
+                    <p class="agent-desc">Monitors 7 competitors (Jasper, Aprimo, Adobe, Sitecore, Contentstack, Optimizely, WPP/Stagwell) across positioning, pricing, product updates, talent signals, and market moves. Flags high-priority competitive threats and messaging drift.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-ci/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Weekly competitive dossier</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Claude Cowork web crawling, competitive research pipeline, GitHub publishing. Data: company websites, press releases, job postings, LinkedIn, analyst reports.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 1: Signal Engine -->
+            <div class="agent-panel" id="agent-1">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-signals/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Market Signal Engine</a>
+                    </div>
+                    <p class="agent-desc">Aggregates data across 4 pillars: Enterprise MarTech spend shifts, Agentic AI adoption curves, Content governance & compliance landscape, Competitive positioning narratives. Generates live dashboard with strategic commentary on what matters for Gradial.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-signals/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Daily market intelligence</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Claude research, LLM reasoning pipeline with Moloco-First filters (So What test, Strategic Divergence, Impact Scoring 1-10). Data: Gartner, Forrester, industry reports, analyst calls, vendor announcements.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 2: Roadmap Steering -->
+            <div class="agent-panel" id="agent-2">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-roadmap/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Product Roadmap Steering</a>
+                    </div>
+                    <p class="agent-desc">Researches and evaluates product roadmap items across 6 categories (content authoring, design systems, orchestration, QA/accessibility, integrations, analytics) through UVFV framework (Usable, Valuable, Feasible, Viable). Recommends BUILD, INVESTIGATE, DEFER, or KILL for each feature.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-roadmap/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Evidence-based prioritization</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Claude research, UVFV scoring framework, GitHub publishing. Data: customer feedback, competitive analysis, G2 reviews, Gartner Wave reports, product changelogs.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 3: Battle Cards -->
+            <div class="agent-panel" id="agent-3">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-battlecards/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Battle Card Generator</a>
+                    </div>
+                    <p class="agent-desc">Synthesizes intel from CI Monitor, Signal Engine, and Roadmap Steering into 1-2 page, scannable battlecards for all 7 competitors. Each card follows Core Message → Buyer → Competitive Intel → Proof structure optimized for live-call readability.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-battlecards/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Sales-ready Intel</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Python generator compiles battlecard JSON (synthesized from Bots 1-3) into interactive HTML dashboard with per-competitor tabs. Refreshed quarterly or on any competitor move.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 4: Positioning -->
+            <div class="agent-panel" id="agent-4">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-positioning/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Positioning Engine</a>
+                    </div>
+                    <p class="agent-desc">Synthesizes intel from all four source bots into a structured positioning framework (April Dunford method): Competitive Alternatives, Distinct Capabilities, Differentiated Value, Best Fit Accounts, Market Category. Includes messaging library and campaign briefs.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-positioning/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Strategic framework</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Synthesizes from Bots 1-3. Generates 5-element positioning framework, messaging library (8 templates filtered by theme/channel), and 6 campaign briefs (email, LinkedIn, ads, events, analyst relations, partner marketing).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 5: Narrative -->
+            <div class="agent-panel" id="agent-5">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3.042.525A9.006 9.006 0 002.25 9m12.042 0a9.006 9.006 0 01.75 6.75M12 6.042a9.006 9.006 0 00-.75-6.75m0 0H9M21 12a9 9 0 01-9 9m9-9H3m9 9a9 9 0 01-9-9m9 9c1.425 0 2.821-.483 3.90-1.354M15 12A3 3 0 106.07 3.25"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-narrative/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Narrative Builder</a>
+                    </div>
+                    <p class="agent-desc">Generates a 5-act narrative arc: Act 1 (world changed), Act 2 (new way forward), Act 3 (what's possible), Act 4 (proof), Act 5 (call to action). The narrative ties competitive intel, market signals, and positioning into a compelling story for executives.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-narrative/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Executive storytelling</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Synthesizes from Bots 1-3, Positioning Engine. Generates 5-act narrative with supporting data, proof points, and CFO ROI messages. Used in pitches, keynotes, analyst briefings.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 6: Messaging -->
+            <div class="agent-panel" id="agent-6">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-messaging/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Messaging Library</a>
+                    </div>
+                    <p class="agent-desc">Generates 8 message templates (one-liners + full narratives) across key themes: Content Supply Chain Speed, Brand Governance, Agentic Execution, Cross-System Orchestration, Compliance Infrastructure, Content Scale, Category Creation, Vendor Independence. Filterable by channel and audience.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-messaging/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Sales + marketing messaging</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Synthesizes from Bots 1-3, Positioning, Narrative. Interactive dashboard with 8 message templates, filtered by theme (speed, governance, scale, compliance, etc.) and channel (sales_deck, email, LinkedIn, webinar, analyst_briefing, etc.).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent 7: Roadmap Alignment -->
+            <div class="agent-panel" id="agent-7">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg></div>
+                        <a href="https://danetomalin.com/gradial-roadmap-alignment/" target="_blank" rel="noopener noreferrer" class="agent-name" style="color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">Roadmap Alignment</a>
+                    </div>
+                    <p class="agent-desc">Maps Gradial's product roadmap against competitive roadmaps, customer requests, and market signals to identify strategic gaps, opportunities, and threats. Ensures roadmap prioritization is grounded in market reality.</p>
+                    <div class="agent-meta">
+                        <div class="agent-meta-item">
+                            <a href="https://danetomalin.com/gradial-roadmap-alignment/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.2rem;background:var(--accent-dark);color:#fff;border-radius:6px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--accent-dark)'">View Live Demo <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+                        </div>
+                        <div class="agent-meta-item">
+                            <div class="agent-meta-label">Impact</div>
+                            <div class="agent-meta-value accent">Market-driven roadmap</div>
+                        </div>
+                    </div>
+                    <div class="agent-impl">
+                        <div class="agent-impl-label">Implementation</div>
+                        Synthesizes from Bots 1-3, Roadmap Steering. Maps Gradial roadmap (6 categories) against competitor roadmaps, customer feedback themes, and market signals to identify strategic alignment, gaps, and threats.
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-hint">
+                <button id="agentPrev" onclick="navAgent(-1)" disabled>
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>Previous
+                </button>
+                <button id="agentNext" onclick="navAgent(1)">
+                    Next<svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="closing">
+        <div class="container">
+            <h2>What Good Looks Like at Month 12</h2>
+            <p class="section-intro">Twelve months in, a well-executed PMM function for Gradial should have delivered:</p>
+
+            <div class="achieve-grid">
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
+                    </div>
+                    <div class="achieve-title">Unified Positioning</div>
+                    <div class="achieve-desc">A clear, differentiated story about agentic marketing operations that entire go-to-market team can articulate.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div class="achieve-title">Sales Arsenal</div>
+                    <div class="achieve-desc">Battle cards, messaging library, and case studies actively used by sales team and correlated with deal velocity.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+                    </div>
+                    <div class="achieve-title">Thought Leadership</div>
+                    <div class="achieve-desc">Pipeline of content positioning Gradial as authority on agentic marketing operations at enterprise scale.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                    </div>
+                    <div class="achieve-title">Pipeline Impact</div>
+                    <div class="achieve-desc">Measurable impact on pipeline creation, deal velocity, and win rates for agentic marketing operations deals.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+                    </div>
+                    <div class="achieve-title">Automated Workflows</div>
+                    <div class="achieve-desc">Five agent-based systems (CI, Signals, Roadmap, Battlecards, Positioning) handling intelligence at scale continuously.</div>
+                </div>
+
+                <div class="achieve-card">
+                    <div class="achieve-icon">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                    </div>
+                    <div class="achieve-title">Go-to-Market Alignment</div>
+                    <div class="achieve-desc">Positioning, messaging, battlecards, and narrative in sync across sales, marketing, and product teams.</div>
+                </div>
+            </div>
+
+            <a href="https://danetomalin.com/gradial-positioning" class="cta-card" style="display:block; text-decoration:none; cursor:pointer; margin-top: 3rem; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor=''; this.style.transform='';">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #FFFFFF; margin-bottom: 1.25rem;">Positioning Framework</h2>
+                <p class="cta-text" style="font-size:1.15rem; line-height:1.65; color: #FFFFFF;"><strong>For marketing operations leaders who need to ship more campaigns without growing headcount,</strong> Gradial is the agentic marketing operations platform that deploys AI digital coworkers to automate the content supply chain from brief to live, with built-in brand compliance, QA, and governance at every step.</p>
+                <p class="cta-subtext" style="font-size: 0.95rem; margin-top: 0.75rem; color: #FFFFFF; opacity: 0.85;">Unlike manual workflows, agency partnerships, or monolithic DXP platforms that force bundling — Gradial orchestrates content production inside your existing AEM, Salesforce, Jira, and Workfront investments, eliminating platform lock-in while delivering 80% time reduction and 5-10x content scale.</p>
+                <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--accent); font-weight: 600;">View Full Positioning Framework &rarr;</p>
+            </a>
+
+            <div class="author-footer">
+                <strong>Dane Tomalin</strong> · May 2026 · Gradial Agentic Marketing Operations Intelligence
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var currentAgent = 0;
+        var totalAgents = 8;
+
+        function showAgent(n) {
+            currentAgent = n;
+            var tabs = document.querySelectorAll('#agentTabBar .agent-tab');
+            tabs.forEach(function(t, i) { t.classList.toggle('active', i === n); });
+            for (var i = 0; i < totalAgents; i++) {
+                var panel = document.getElementById('agent-' + i);
+                var isActive = i === n;
+                panel.classList.toggle('active', isActive);
+                if (isActive) { panel.style.animation = 'none'; panel.offsetHeight; panel.style.animation = ''; }
+            }
+            document.getElementById('agentPrev').disabled = (n === 0);
+            document.getElementById('agentNext').disabled = (n === totalAgents - 1);
+        }
+
+        function navAgent(dir) {
+            var next = currentAgent + dir;
+            if (next >= 0 && next < totalAgents) showAgent(next);
+        }
+    </script>
+
+    <script defer src='https://static.cloudflare.com/beacon.min.js' data-cf-beacon='{"token": "69b7d3dcdb724e208ea180c1d81f535c"}'></script>
+</body>
+</html>

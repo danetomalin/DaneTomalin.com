@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Agentic Marketing Operations: The Gradial Narrative">
+  <meta property="og:description" content="How autonomous agents are transforming enterprise content production.">
+  <link rel="canonical" href="https://danetomalin.com/gradial-narrative/">
+  <title>Agentic Marketing Operations: The Gradial Narrative</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Design System */
+    :root {
+      --bg-primary: #0D0D12;
+      --bg-secondary: #16161E;
+      --bg-card: #1C1C28;
+      --bg-card-hover: #22222F;
+      --border: #2A2A3A;
+      --text-primary: #F0F0F4;
+      --text-secondary: #9B9BAF;
+      --text-muted: #6B6B80;
+      --accent: #3B82F6;
+      --accent-dark: #2563EB;
+      --accent-strong: #2563EB;
+      --accent-bg: rgba(59, 130, 246, 0.12);
+      --secondary-accent: #1E40AF;
+      --win: #66BB6A;
+      --win-bg: rgba(102, 187, 106, 0.12);
+      --warn: #FFA726;
+      --warn-bg: rgba(255, 167, 38, 0.12);
+      --info: #4F8CFF;
+      --info-bg: rgba(79, 140, 255, 0.12);
+      --danger: #EF5350;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background-color: rgba(13, 13, 18, 0.8);
+    }
+
+    .site-header-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .site-header-name:hover {
+      color: var(--accent);
+    }
+
+    .site-header-back {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .site-header-back:hover {
+      background: var(--bg-card-hover);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .site-header-back svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* Main Content */
+    .content-wrapper {
+      margin-top: 72px;
+      position: relative;
+    }
+
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 40px;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* Slide 1: Title */
+    .slide-title {
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .slide-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-title p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .slide-title .cta-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--accent-dark), var(--secondary-accent));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .slide-title .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Section Headers */
+    .slide-header {
+      text-align: center;
+      max-width: 1000px;
+      margin-bottom: 80px;
+    }
+
+    .slide-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .slide-header .subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Narrative Block */
+    .narrative-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 900px;
+      margin-bottom: 40px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-primary);
+      transition: all 0.3s;
+    }
+
+    .narrative-block:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+
+    .narrative-block strong {
+      color: var(--accent);
+    }
+
+    /* Navigation Dots */
+    .nav-dots {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .dot:hover {
+      background: var(--accent);
+    }
+
+    .dot.active {
+      background: var(--accent);
+      border-color: var(--text-primary);
+      width: 14px;
+      height: 14px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent-bg), rgba(37, 99, 235, 0.08));
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .cta-section h3 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn-primary {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--accent-dark), var(--secondary-accent));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+    }
+
+    .cta-btn-secondary {
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--accent);
+      text-decoration: none;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+
+    .cta-btn-secondary:hover {
+      background: var(--accent-bg);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 0 20px;
+        flex-direction: column;
+        height: auto;
+      }
+
+      .site-header-back {
+        margin-top: 12px;
+      }
+
+      .slide {
+        padding: 40px 20px;
+      }
+
+      .slide-title h1 {
+        font-size: 48px;
+      }
+
+      .slide-header h2 {
+        font-size: 40px;
+      }
+
+      .nav-dots {
+        display: none;
+      }
+
+      .narrative-block {
+        padding: 24px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="site-header">
+    <a class="site-header-name" href="https://danetomalin.com/gradial">Gradial Narrative</a>
+    <a class="site-header-back" href="https://danetomalin.com/gradial/">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Back to Gradial Plan
+    </a>
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="nav-dots">
+    <div class="dot active" data-slide="0"></div>
+    <div class="dot" data-slide="1"></div>
+    <div class="dot" data-slide="2"></div>
+    <div class="dot" data-slide="3"></div>
+    <div class="dot" data-slide="4"></div>
+    <div class="dot" data-slide="5"></div>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Slide 1: Title Slide -->
+    <div class="slide slide-title">
+      <h1>Agentic Marketing Operations</h1>
+      <p>How autonomous agents are transforming enterprise content production</p>
+      <a href="#" class="cta-btn">Request Demo</a>
+    </div>
+
+    <!-- Slide 2: Act 1 - The World Changed -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Act I: The World Changed</h2>
+        <p class="subtitle">Why 2025 became an inflection point</p>
+      </div>
+      <div class="narrative-block">
+        <p>Marketing operations reached an inflection point in 2025. Enterprise content production stayed stubbornly manual (4 hours per page in AEM despite $500K+ CMS investments) while competitors launched agentic AI assistants and platforms. Simultaneously, regulatory pressure exploded: <strong>5,000+ ADA lawsuits in 2025 (37% increase YoY)</strong>, EU Accessibility Act in force, WCAG 2.1 AA as global legal standard.</p>
+        <p style="margin-top: 20px;">Enterprises faced a choice: hire more QA/compliance staff to keep pace with content scale, or find a fundamentally different way to orchestrate content production.</p>
+      </div>
+    </div>
+
+    <!-- Slide 3: Act 2 - The New Way -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Act II: The New Way</h2>
+        <p class="subtitle">Agentic orchestration changes everything</p>
+      </div>
+      <div class="narrative-block">
+        <p><strong>Agentic marketing operations</strong> changes the equation. Instead of tools that assist humans step-by-step, autonomous agents orchestrate the entire content supply chain in parallel: authoring variants, running QA, checking accessibility, enforcing compliance, and deploying to multiple systems simultaneously.</p>
+        <p style="margin-top: 20px;">Gradial is the only platform that deploys these agents directly into enterprise systems (AEM, Salesforce, Jira, Figma, Workfront) without requiring migration or replacement. Agents operate 24/7, improve continuously, and require zero training—they work inside systems teams already know.</p>
+      </div>
+    </div>
+
+    <!-- Slide 4: Act 3 - What's Possible -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Act III: What's Possible</h2>
+        <p class="subtitle">When automation orchestrates the entire workflow</p>
+      </div>
+      <div class="narrative-block">
+        <p>With agentic orchestration, the impossible becomes routine.</p>
+        <ul style="margin-top: 20px; margin-left: 20px; line-height: 2;">
+          <li><strong>A page that took 4 hours</strong> to produce now takes <strong>10 minutes</strong></li>
+          <li><strong>Global campaigns</strong> that required 2-3 days of manual coordination across 5-10 CMS platforms now deploy in <strong>hours</strong></li>
+          <li><strong>Compliance automation</strong> runs on every page pre-publication, eliminating lawsuit risk and reducing review time from hours to minutes</li>
+          <li><strong>Content production scales 3-5x</strong> without hiring additional QA specialists or compliance auditors</li>
+          <li><strong>The CFO conversation</strong> shifts from 'how much does the platform cost' to 'how much do we save by not hiring more people'</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 5: Act 4 - Proof -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Act IV: Proof</h2>
+        <p class="subtitle">Production-deployed at 9 Fortune 500 companies</p>
+      </div>
+      <div class="narrative-block">
+        <p>This isn't theoretical. Nine Fortune 500 companies are in production achieving measurable results:</p>
+        <ul style="margin-top: 20px; margin-left: 20px; line-height: 2;">
+          <li><strong>T-Mobile</strong> deployed Gradial on AEM in 6 weeks and reduced page production from 4 hours to 10 minutes, launching regional campaigns 3x faster</li>
+          <li><strong>Cisco</strong> orchestrated 500+ technical pages with 100% brand/accessibility compliance, eliminating manual QA bottlenecks</li>
+          <li><strong>Wells Fargo</strong> reduced compliance review time by 80%, freeing legal teams from page-by-page audits</li>
+          <li><strong>Kaiser Permanente</strong> reduced WCAG violations by 80% and faces near-zero ADA lawsuit risk</li>
+          <li><strong>Prudential</strong> stopped hiring QA specialists and scaled content 5x with the same team</li>
+        </ul>
+        <p style="margin-top: 20px;">All are achieving <strong>80% time reduction</strong> and <strong>20x efficiency gains</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Slide 6: Act 5 - The Call to Action -->
+    <div class="slide">
+      <div class="slide-header">
+        <h2>Act V: The Imperative</h2>
+        <p class="subtitle">2026 is the year of agentic adoption</p>
+      </div>
+      <div class="narrative-block">
+        <p>Agentic marketing operations is no longer a 2028 roadmap item—it's a 2026 imperative. Gartner projects <strong>67% of marketing activities powered by agentic AI by 2028</strong>, but <strong>60% of enterprises expect to deploy agents within 2 years</strong>. The gap between expectation and implementation is real: data quality, integration complexity, and skills gaps are blocking adoption.</p>
+        <p style="margin-top: 20px;"><strong>Gradial closes that gap.</strong> We deploy autonomous agents directly into your AEM, Salesforce, Jira, and Workfront—no migration, no training, no vendor lock-in. Production deployment takes 6-8 weeks. ROI is immediate: 80% time reduction per page, 3-5x content scale, 90% compliance automation, zero new headcount required.</p>
+        <p style="margin-top: 20px;"><strong>The world changed in 2025. The question now is: Will you orchestrate agentic marketing operations, or will your competitors get there first?</strong></p>
+      </div>
+    </div>
+
+    <!-- Closing CTA -->
+    <div class="slide">
+      <div class="cta-section">
+        <h3>Ready to Transform Content Production?</h3>
+        <p>Join Fortune 500 companies orchestrating agentic marketing operations with Gradial. Reduce production time by 80%, scale content 5x, and eliminate compliance risk.</p>
+        <div class="cta-buttons">
+          <button class="cta-btn-primary" onclick="handleRequestDemo()">Request a Demo</button>
+          <button class="cta-btn-secondary" onclick="handleLearMore()">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="site-footer">
+    <div class="footer-links">
+      <a href="https://danetomalin.com/gradial/">Gradial Plan</a>
+      <a href="https://danetomalin.com/gradial-positioning/">Positioning</a>
+      <a href="https://danetomalin.com/gradial-narrative/">Narrative</a>
+      <a href="https://danetomalin.com/gradial-battlecards/">Battlecards</a>
+      <a href="https://danetomalin.com/">Dane Tomalin</a>
+    </div>
+    <p>A competitive intelligence portfolio for Gradial, built with research and positioning frameworks.</p>
+  </div>
+
+  <script>
+    // Navigation Dots
+    const dots = document.querySelectorAll('.nav-dots .dot');
+    const slides = document.querySelectorAll('.slide');
+
+    function updateActiveDot() {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      slides.forEach((slide, index) => {
+        const slideTop = slide.offsetTop;
+        const slideBottom = slideTop + slide.offsetHeight;
+
+        if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+          dots.forEach(d => d.classList.remove('active'));
+          dots[index].classList.add('active');
+        }
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', updateActiveDot);
+
+    // Button Handlers
+    function handleRequestDemo() {
+      alert('Redirecting to demo request form...\n\nIn production, this would link to your booking system.');
+    }
+
+    function handleLearMore() {
+      window.location.href = 'https://danetomalin.com/gradial/';
+    }
+  </script>
+</body>
+</html>
