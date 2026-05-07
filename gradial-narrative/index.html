@@ -159,6 +159,35 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+    .beta-badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(167,139,250,0.12);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 4px;
+      padding: 2px 8px;
+      vertical-align: super;
+      margin-left: 8px;
+      -webkit-text-fill-color: var(--accent);
+    }
+    .classification {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 12px;
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
 
     .slide-title p {
       font-size: 20px;
@@ -413,8 +442,10 @@
   <div class="content-wrapper">
     <!-- Slide 1: Title Slide -->
     <div class="slide slide-title">
-      <h1>Agentic Marketing Operations</h1>
+      <h1>Gradial Sales Narrative<span class="beta-badge">Beta</span></h1>
       <p>How autonomous agents are transforming enterprise content production</p>
+      <span class="classification">Confidential</span>
+      <br><br>
       <a href="#" class="cta-btn">Request Demo</a>
     </div>
 

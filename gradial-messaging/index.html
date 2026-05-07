@@ -171,6 +171,34 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+    .beta-badge {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.35em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(167,139,250,0.12);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 4px;
+      padding: 2px 8px;
+      vertical-align: super;
+      margin-left: 8px;
+      -webkit-text-fill-color: var(--accent);
+    }
+    .classification {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
 
     .positioning-statement {
       font-size: 1.1rem;
@@ -761,7 +789,8 @@
       <!-- Hero Section -->
       <div class="section" id="hero">
         <div class="hero">
-          <h1 class="hero-title">Gradial Messaging Guide</h1>
+          <h1 class="hero-title">Gradial Messaging Library<span class="beta-badge">Beta</span></h1>
+          <span class="classification">Confidential</span>
           <div class="positioning-statement">
             "For marketing operations leaders who need autonomous agents to execute content production end-to-end, Gradial is the Agentic Marketing Operations platform that orchestrates content authoring, QA, compliance, and deployment across your entire enterprise ecosystem without platform migration or vendor lock-in."
           </div>
