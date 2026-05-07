@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Positioning Engine — Gradial</title>
+<link rel="canonical" href="https://danetomalin.com/gradial-positioning/">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Dane Tomalin">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0D0D12;
+    --bg-secondary: #16161E;
+    --bg-card: #1C1C28;
+    --bg-card-hover: #22222F;
+    --border: #2A2A3A;
+    --text-primary: #F0F0F4;
+    --text-secondary: #9B9BAF;
+    --text-muted: #6B6B80;
+    --accent: #3B82F6;
+    --accent-strong: #2563EB;
+    --accent-bg: rgba(59, 130, 246, 0.12);
+    --secondary-accent: #0EA5E9;
+    --secondary-accent-bg: rgba(14, 165, 233, 0.12);
+    --win: #66BB6A;
+    --win-bg: rgba(102, 187, 106, 0.12);
+    --warn: #FFA726;
+    --warn-bg: rgba(255, 167, 38, 0.12);
+    --info: #4F8CFF;
+    --info-bg: rgba(79, 140, 255, 0.12);
+    --danger: #EF5350;
+    --danger-bg: rgba(239, 83, 80, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .site-header {
+      position: sticky; top: 0;
+      background: rgba(13,13,18,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 200;
+  }
+  .site-header-name {
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; text-decoration: none; transition: color 0.2s;
+  }
+  .site-header-name:hover { color: var(--accent); }
+  .site-header-back {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .site-header-back:hover { color: var(--accent); }
+  .site-header-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  .engine-header {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .engine-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .engine-header .subtitle { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 16px; }
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 0.8em;
+    font-family: var(--mono);
+  }
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-value {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .section-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .section-tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+  }
+  .section-tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .section-tab.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+
+  .framework-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .framework-tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: all 0.15s;
+  }
+  .framework-tab:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .framework-tab.active {
+    background: var(--secondary-accent-bg);
+    border-color: var(--secondary-accent);
+    color: var(--secondary-accent);
+  }
+
+  .section-content { display: none; }
+  .section-content.active { display: block; animation: fadeIn 0.25s ease-in; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .framework-panel { display: none; }
+  .framework-panel.active { display: block; animation: fadeIn 0.25s ease-in; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) { .cards-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .card-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-alternative { background: var(--info-bg); color: var(--info); border: 1px solid var(--info); }
+  .badge-diy { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn); }
+  .badge-status-quo { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+  .badge-adjacent { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-strong); }
+
+  .card-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .card-content {
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+  .card-content ul {
+    list-style: none;
+    margin: 8px 0;
+  }
+  .card-content li {
+    padding: 4px 0 4px 18px;
+    position: relative;
+    font-size: 12px;
+    border-bottom: 1px dashed rgba(255,255,255,0.04);
+  }
+  .card-content li:last-child { border-bottom: none; }
+  .card-content li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .alt-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .alt-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+  .alt-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .alt-header h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .alt-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .alt-what-do {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    flex-grow: 1;
+  }
+  .alt-limitations {
+    background: var(--warn-bg);
+    border: 1px solid rgba(255,167,38,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .alt-limitations h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--warn);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .alt-limitations ul {
+    list-style: none;
+    margin: 0;
+  }
+  .alt-limitations li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.45;
+    border-bottom: 1px dashed rgba(255,167,38,0.12);
+  }
+  .alt-limitations li:last-child { border-bottom: none; }
+  .alt-limitations li::before {
+    content: "×";
+    position: absolute;
+    left: 0;
+    color: var(--warn);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .capability-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .capability-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--secondary-accent);
+  }
+  .capability-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--secondary-accent);
+    margin-bottom: 8px;
+  }
+  .cap-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .cap-section {
+    background: rgba(79,140,255,0.06);
+    border: 1px solid rgba(79,140,255,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .cap-section h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--info);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .cap-section ul { list-style: none; margin: 0; }
+  .cap-section li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .cap-section li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--info);
+    font-size: 10px;
+  }
+  .cap-evidence {
+    background: var(--accent-bg);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .cap-evidence h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .cap-evidence p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .value-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .value-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--win);
+  }
+  .value-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .value-header h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .value-cap-ref {
+    font-size: 9px;
+    padding: 3px 8px;
+    background: var(--secondary-accent-bg);
+    border: 1px solid var(--secondary-accent);
+    border-radius: 4px;
+    color: var(--secondary-accent);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .value-impact {
+    font-size: 13px;
+    color: var(--win);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--win-bg);
+    border: 1px solid rgba(102,187,106,0.25);
+    border-radius: 8px;
+  }
+  .value-impact strong { color: var(--win); }
+  .value-proof {
+    padding-top: 8px;
+  }
+  .value-proof h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .value-proof ul { list-style: none; margin: 0; }
+  .value-proof li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .value-proof li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--win);
+    font-size: 10px;
+  }
+
+  .account-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .account-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+  .account-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .acct-characteristics, .acct-care, .acct-signals {
+    margin-bottom: 12px;
+  }
+  .acct-characteristics h5, .acct-care h5, .acct-signals h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .acct-characteristics ul, .acct-signals ul { list-style: none; margin: 0; }
+  .acct-characteristics li, .acct-signals li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .acct-characteristics li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: 10px; }
+  .acct-signals li::before { content: "◉"; position: absolute; left: 0; color: var(--info); font-size: 8px; top: 6px; }
+  .acct-care p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .positioning-hero {
+    max-width: 1400px;
+    margin: 0 auto 0;
+    padding: 0 32px 32px;
+  }
+  .positioning-hero-inner {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(79, 140, 255, 0.06) 100%);
+    border: 1px solid var(--secondary-accent);
+    border-radius: 16px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .positioning-hero-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-accent), var(--info), var(--accent));
+  }
+  .positioning-hero-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--secondary-accent);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .positioning-hero-statement {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .positioning-hero-statement strong {
+    color: var(--secondary-accent);
+    font-weight: 700;
+  }
+  .positioning-hero-statement em {
+    color: var(--info);
+    font-style: normal;
+    font-weight: 600;
+  }
+  .positioning-hero-unlike {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-top: 16px;
+    border-top: 1px solid rgba(14, 165, 233, 0.2);
+  }
+  .positioning-hero-unlike strong {
+    color: var(--warn);
+    font-weight: 600;
+  }
+  @media (max-width: 640px) {
+    .positioning-hero { padding: 0 20px 24px; }
+    .positioning-hero-inner { padding: 24px 20px; }
+    .positioning-hero-statement { font-size: 1.05rem; }
+  }
+
+  .category-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .category-header h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--secondary-accent);
+    font-family: 'Playfair Display', serif;
+  }
+  .maturity-badge {
+    font-size: 10px;
+    padding: 4px 12px;
+    background: var(--win-bg);
+    border: 1px solid var(--win);
+    border-radius: 20px;
+    color: var(--win);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .category-positioning {
+    margin-bottom: 20px;
+  }
+  .category-positioning h4 {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .category-positioning blockquote {
+    background: var(--secondary-accent-bg);
+    border: 2px solid var(--secondary-accent);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .category-description p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .adjacent-categories h4 {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .adjacent-categories ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+  }
+  .adjacent-categories li {
+    padding: 6px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .messaging-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .chip.active {
+    background: var(--accent-bg);
+    border-color: var(--accent-strong);
+    color: var(--accent);
+  }
+
+  .messaging-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 768px) { .messaging-grid { grid-template-columns: 1fr; } }
+
+  .messaging-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .messaging-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-strong);
+  }
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .message-header h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .message-audience {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .message-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height: 0;
+  }
+  @media (max-width: 900px) { .message-grid { grid-template-columns: 1fr; } }
+  .message-col {
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+  }
+  .message-col:last-child { border-right: none; }
+  @media (max-width: 900px) {
+    .message-col { border-right: none; border-bottom: 1px solid var(--border); }
+    .message-col:last-child { border-bottom: none; }
+  }
+  .message-col h5 {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .message-col:nth-child(1) h5 { color: var(--secondary-accent); }
+  .message-col:nth-child(2) h5 { color: var(--info); }
+  .message-col:nth-child(3) h5 { color: var(--win); }
+  .message-col p {
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .channel-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .channel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .channel-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .channel-btn.active {
+    background: var(--info-bg);
+    border-color: var(--info);
+    color: var(--info);
+  }
+
+  .brief-content { display: none; }
+  .brief-content.active { display: block; animation: fadeIn 0.25s ease-in; }
+
+  .campaign-brief {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+  .campaign-brief:hover { border-color: var(--info); }
+  .brief-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .brief-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .brief-channel {
+    font-size: 10px;
+    padding: 3px 10px;
+    background: var(--info-bg);
+    border: 1px solid var(--info);
+    border-radius: 4px;
+    color: var(--info);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .brief-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 768px) { .brief-grid { grid-template-columns: 1fr; } }
+  .brief-section h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brief-section p {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .brief-section ul { list-style: none; margin: 0; }
+  .brief-section li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .brief-section li::before { content: "▸"; position: absolute; left: 0; color: var(--info); font-size: 10px; }
+  .brief-messages { margin-bottom: 14px; }
+  .brief-messages h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brief-messages ul { list-style: none; margin: 0; }
+  .brief-messages li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .brief-messages li::before { content: "▸"; position: absolute; left: 0; color: var(--info); font-size: 10px; }
+  .brief-cta {
+    margin-bottom: 14px;
+  }
+  .brief-cta h5 {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brief-cta p {
+    font-size: 13px;
+    color: var(--info);
+    font-weight: 600;
+  }
+  .brief-footer {
+    display: flex;
+    gap: 24px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+  .brief-footer strong { color: var(--text-secondary); }
+
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer a:hover { color: var(--secondary-accent); }
+
+  @media (max-width: 640px) {
+    .engine-header { padding: 32px 20px 24px; }
+    .engine-header h1 { font-size: 1.8em; }
+    .stats-bar { flex-direction: column; gap: 12px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .brief-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="https://danetomalin.com" class="site-header-name">Dane Tomalin</a>
+    <a href="https://danetomalin.com/gradial/" class="site-header-back">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        Back to Gradial Plan
+    </a>
+</header>
+
+<div class="engine-header">
+  <h1>Gradial Positioning Engine</h1>
+  <div class="subtitle">Strategic positioning framework, messaging library, and campaign deployment</div>
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span><span class="stat-value">6</span> Competitive Alternatives</span>
+    </div>
+    <div class="stat-item">
+      <span><span class="stat-value">5</span> Distinct Capabilities</span>
+    </div>
+    <div class="stat-item">
+      <span><span class="stat-value">7</span> Differentiated Values</span>
+    </div>
+    <div class="stat-item">
+      <span><span class="stat-value">6</span> Best Fit Accounts</span>
+    </div>
+    <div class="stat-item">
+      <span>Updated <span class="stat-value">May 6, 2026</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- Positioning Statement Hero -->
+<div class="positioning-hero">
+  <div class="positioning-hero-inner">
+    <div class="positioning-hero-label">Positioning Statement</div>
+    <div class="positioning-hero-statement">
+      <strong>For enterprise marketing operations teams drowning in manual content workflows, compliance reviews, and multi-system orchestration,</strong>
+      Gradial is the <em>Agentic Marketing Operations Platform</em> that deploys autonomous agents into your existing AEM, Salesforce, and Jira ecosystems to orchestrate content production, QA, accessibility, compliance, and deployment at enterprise scale.
+    </div>
+    <div class="positioning-hero-unlike">
+      <strong>Unlike</strong> monolithic platforms like Adobe CX Enterprise, point-solution tools like Siteimprove, and content generation copilots like Jasper,
+      Gradial embeds production-grade compliance automation and agentic orchestration directly into your existing tech stack — so you get 80% time reduction per page and 99.9% compliance accuracy without migration, training, or vendor lock-in.
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Main Section Navigation -->
+  <div class="section-tabs" id="sectionTabs">
+    <div class="section-tab active" data-section="positioning">Positioning Framework</div>
+    <div class="section-tab" data-section="messaging">Messaging Library</div>
+    <div class="section-tab" data-section="campaigns">Campaign Briefs</div>
+  </div>
+
+  <!-- SECTION 1: POSITIONING FRAMEWORK -->
+  <div id="positioning" class="section-content active">
+    <!-- Sub-tabs -->
+    <div class="framework-tabs" id="frameworkTabs">
+      <div class="framework-tab active" data-panel="alternatives">Competitive Alternatives</div>
+      <div class="framework-tab" data-panel="capabilities">Distinct Capabilities</div>
+      <div class="framework-tab" data-panel="value">Differentiated Value</div>
+      <div class="framework-tab" data-panel="accounts">Best Fit Accounts</div>
+      <div class="framework-tab" data-panel="category">Market Category</div>
+    </div>
+
+    <!-- Alternatives Panel -->
+    <div id="alternatives" class="framework-panel active">
+      <div class="cards-grid" id="altCards"></div>
+    </div>
+
+    <!-- Capabilities Panel -->
+    <div id="capabilities" class="framework-panel">
+      <div class="cards-grid" id="capCards"></div>
+    </div>
+
+    <!-- Value Panel -->
+    <div id="value" class="framework-panel">
+      <div class="cards-grid" id="valueCards"></div>
+    </div>
+
+    <!-- Accounts Panel -->
+    <div id="accounts" class="framework-panel">
+      <div class="cards-grid" id="accountCards"></div>
+    </div>
+
+    <!-- Category Panel -->
+    <div id="category" class="framework-panel">
+      <div id="categoryPanel"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: MESSAGING LIBRARY -->
+  <div id="messaging" class="section-content">
+    <div class="messaging-controls">
+      <span class="filter-label">Theme:</span>
+      <div class="filter-chips" id="themeFilters"></div>
+    </div>
+    <div class="messaging-grid" id="messagingGrid"></div>
+  </div>
+
+  <!-- SECTION 3: CAMPAIGN BRIEFS -->
+  <div id="campaigns" class="section-content">
+    <div class="channel-nav" id="channelNav"></div>
+    <div id="briefsContainer"></div>
+  </div>
+
+  <div class="footer">
+    <p>Gradial Positioning Engine — 9-page competitive intelligence portfolio for job application</p>
+    <p style="margin-top: 12px; font-size: 10px;">
+      <a href="https://danetomalin.com/gradial/">Back to Gradial Plan</a> •
+      <a href="https://danetomalin.com/gradial-competitors/">Competitive Intelligence</a> •
+      <a href="https://danetomalin.com/gradial-signals/">Signal Engine</a> •
+      <a href="https://danetomalin.com/gradial-roadmap/">Roadmap Steering</a> •
+      <a href="https://danetomalin.com/gradial-battlecards/">Battlecards</a>
+    </p>
+  </div>
+</div>
+
+<script>
+const positioningData = {
+  positioning: {
+    competitive_alternatives: [
+      {
+        alternative: "Manual content operations + external tooling",
+        what_customers_do: "Enterprise marketing teams assemble pages manually in AEM (4 hours per page), then export to external point-solution tools (Jasper for content, Adobe Target for testing, Siteimprove for accessibility, Slack for approvals, Salesforce for campaign execution). Each tool operates independently; teams manually coordinate across systems.",
+        limitations: [
+          "Manual content assembly takes 4+ hours per page",
+          "External point-solutions require separate vendor management",
+          "No unified orchestration — teams manually coordinate",
+          "Accessibility/compliance are post-publication, not built-in",
+          "No scaling without proportional headcount growth"
+        ]
+      },
+      {
+        alternative: "Single-vendor bundled platforms (Adobe CX Enterprise, Sitecore AEM, Optimizely One)",
+        what_customers_do: "Customers consolidate to a single platform vendor hoping to eliminate tool fragmentation. But monolithic platforms require expensive license upgrades, lock teams into vendor roadmaps, and deliver 'jack-of-all-trades' features that don't specialize in content operations orchestration.",
+        limitations: [
+          "Expensive platform upgrades and bundling tactics",
+          "Vendor lock-in — difficult to switch",
+          "Generic features that don't specialize in operations",
+          "Still require manual handoffs across layers",
+          "GenStudio (Adobe's agentic layer) is 12-24 months away"
+        ]
+      },
+      {
+        alternative: "Hiring more marketing operations staff",
+        what_customers_do: "As content production scales, enterprises add QA specialists, compliance auditors, and content coordinators to manage manual workflows. This adds headcount cost, slows hiring velocity, and doesn't fundamentally solve the production bottleneck.",
+        limitations: [
+          "Cost: $250K-$500K+ per additional QA/compliance specialist",
+          "Slow hiring cycles for specialized roles",
+          "Doesn't address the fundamental process bottleneck",
+          "Manual QA is inconsistent and error-prone",
+          "Scaling content requires proportional headcount scaling"
+        ]
+      },
+      {
+        alternative: "Point-solution compliance tools (Siteimprove, Deque, Applitools)",
+        what_customers_do: "Enterprises use post-publication compliance scanners and accessibility auditors that run after pages go live. These tools detect violations but require manual remediation and legal review.",
+        limitations: [
+          "Reactive (post-publication) compliance checking",
+          "Violations found after pages are live",
+          "Manual remediation workflow required",
+          "Increases compliance risk and litigation exposure",
+          "No integration with content authoring or deployment"
+        ]
+      },
+      {
+        alternative: "Agency partnerships (like WPP Open)",
+        what_customers_do: "Enterprises outsource content production to agencies (like WPP) that codify agentic workflows internally. This works for large-scale productions but creates vendor dependency, loses operational control, and adds significant service fees.",
+        limitations: [
+          "High service fees and vendor dependency",
+          "Loss of operational control",
+          "Best for episodic campaigns, not continuous operations",
+          "Slow iteration cycles",
+          "IP/know-how stays with agency"
+        ]
+      },
+      {
+        alternative: "Status quo: Keep manual processes as-is",
+        what_customers_do: "Enterprises continue with manual content assembly, QA, accessibility audits, and deployment. As content scale grows, manual overhead grows proportionally.",
+        limitations: [
+          "Unscalable — manual effort grows with volume",
+          "Compliance risk increases with scale",
+          "Team burnout from repetitive manual work",
+          "Slow time-to-market for campaigns",
+          "Competitors adopting automation gain advantage"
+        ]
+      }
+    ],
+    distinct_capabilities: [
+      {
+        capability: "Agentic orchestration across your existing enterprise systems",
+        description: "Gradial deploys specialized AI agents directly into your AEM, Salesforce, Jira, Figma, and Workfront ecosystems without requiring platform migration or replacement. Agents orchestrate content authoring, variant generation, QA, accessibility checking, brand compliance, and campaign deployment—all integrated into systems your teams already use.",
+        alternatives_lack: "Adobe GenStudio requires migration away from AEM (12-24 months to GA). Jasper Grid demands a separate orchestration system. Sitecore/Optimizely own the platform but lack third-party flexibility. Manual alternatives have no agentic orchestration at all."
+      },
+      {
+        capability: "Production-grade compliance automation for regulated industries",
+        description: "Gradial embeds compliance agents that automatically enforce brand rules, legal disclaimers, accessibility standards (WCAG 2.1 AA), and regulatory requirements (FTC, COPPA, EAA) on every page pre-publication. Agents auto-remediate simple violations and flag complex violations for human review.",
+        alternatives_lack: "Jasper has no compliance automation. Adobe Brand Intelligence is new and unproven. Competitors treat compliance as point solutions bolted onto workflows. Gradial embeds compliance into the orchestration engine itself."
+      },
+      {
+        capability: "20x efficiency multiplier across the content supply chain",
+        description: "Gradial delivers measurable time compression: page production from 4 hours to 10 minutes (80% reduction), multi-channel campaigns from 2-3 days to hours, accessibility compliance from 5-10% QA time to <1% (automated). Efficiency gains compound across all layers.",
+        alternatives_lack: "Manual workflows have no efficiency multiplier. Jasper Grid still requires 30-45 minutes per workflow. Adobe GenStudio is unproven at scale. Competitors optimize one layer in isolation; Gradial optimizes the entire supply chain."
+      },
+      {
+        capability: "Vendor-agnostic platform independence",
+        description: "Unlike single-vendor platforms (Adobe, Sitecore, Optimizely), Gradial integrates with your existing AEM, Sitecore, Contentful, Salesforce, Marketo, Jira, Figma, and Workfront instances. Agents work on top of your tech stack, not inside a proprietary platform. No lock-in, no migration costs.",
+        alternatives_lack: "Adobe bundles everything into CX Enterprise. Sitecore expects monolithic adoption. Jasper Grid creates platform dependency. Monolithic competitors force all-or-nothing decisions; Gradial lets you choose your stack."
+      },
+      {
+        capability: "AI-native agents embedded in marketing workflows",
+        description: "Gradial's agents (Nova for content authoring, Claude for governance, specialized agents for QA/accessibility/compliance) operate as autonomous team members. They don't require training—they're not tools in a dashboard, they're agents that execute work autonomously and improve continuously.",
+        alternatives_lack: "Jasper and other tools are copilot-style assistants (users direct them). Manual workflows have no AI agents. Competitors treat AI as feature enhancement; Gradial treats agentic orchestration as the operating model."
+      }
+    ],
+    differentiated_value: [
+      {
+        value: "Reduce content production time by 80% (4 hours to 10 minutes per page)",
+        how_capability_enables: "Agentic orchestration eliminates manual content assembly, variant generation, QA loops, and compliance reviews. Agents execute these steps in parallel; humans review summaries instead of managing step-by-step workflows."
+      },
+      {
+        value: "Eliminate compliance and accessibility litigation risk",
+        how_capability_enables: "Compliance automation agents run WCAG 2.1 AA, brand rule, and legal requirement checks on every page pre-publication. With 5,000+ ADA lawsuits in 2025 and EU Accessibility Act in force, automated compliance becomes existential insurance."
+      },
+      {
+        value: "Deploy multi-brand, multi-regional campaigns in parallel across 5-10 CMS/marketing cloud systems simultaneously",
+        how_capability_enables: "Cross-CMS orchestration agents manage deployment to AEM, Sitecore, Contentful, Salesforce Marketing Cloud in parallel. Global campaigns that took 2-3 days now deploy in hours."
+      },
+      {
+        value: "Scale content production 20x without proportional headcount growth",
+        how_capability_enables: "Agentic orchestration eliminates manual QA, accessibility audits, compliance reviews. A team producing 100 pages/month with 5 QA specialists becomes 500 pages/month with the same team."
+      },
+      {
+        value: "Reduce marketing operations infrastructure costs while improving output quality",
+        how_capability_enables: "Compliance automation, accessibility agents, and QA agents reduce the need for external point-solution tools (Siteimprove, Deque). Cost savings compound across multiple compliance layers."
+      },
+      {
+        value: "Achieve vendor independence without ripping out your AEM/Salesforce investment",
+        how_capability_enables: "Gradial orchestrates on top of your existing tech stack. You avoid Adobe's bundling lock-in and Sitecore's monolithic pricing. Your AEM/Salesforce licenses remain your system of record."
+      },
+      {
+        value: "Convert agentic AI adoption from a 2028 roadmap item into immediate 2026 reality",
+        how_capability_enables: "60% of enterprises expect to deploy AI agents within 2 years, but only 17% have deployed today. Implementation blockers are clear: data quality, integration complexity, skills gaps. Gradial solves all three with pre-built agents and zero platform migration."
+      }
+    ],
+    best_fit_accounts: [
+      {
+        segment: "Fortune 500 regulated industries (financial services, healthcare, insurance, government)",
+        why_they_care: "Compliance automation is existential. Manual compliance workflows are a liability. Gradial's agents embed compliance into every page build, reducing legal/risk department burden and eliminating litigation risk. ROI is measured in lawsuit prevention."
+      },
+      {
+        segment: "Global enterprises with multi-brand, multi-regional footprints (T-Mobile, Cisco, Intel, Lenovo, Vanguard)",
+        why_they_care: "These organizations operate 5-10 CMS platforms across regions/brands. Content orchestration is a nightmare: deploy to North America AEM, adapt for EMEA Sitecore, export to APAC Contentful. Gradial eliminates days of manual coordination."
+      },
+      {
+        segment: "B2B enterprises with high-volume content production (insurance, financial services, healthcare, CPG)",
+        why_they_care: "These segments produce 500+ pages monthly. Manual page production at this scale requires hiring dedicated QA/compliance teams. Gradial's 80% time reduction and compliance automation eliminate the need to add headcount."
+      },
+      {
+        segment: "AEM-first enterprises worried about Adobe lock-in and GenStudio readiness",
+        why_they_care: "Adobe is bundling agentic orchestration (GenStudio) into CX Enterprise tiers, forcing expensive upgrades. These enterprises have already paid $500K+ for AEM; adding Gradial at $100K-$150K (vs GenStudio's unknown cost) is a no-brainer."
+      },
+      {
+        segment: "Enterprises already using Jasper or HubSpot content AI, wanting deeper orchestration integration",
+        why_they_care: "These organizations have content generation tools but lack enterprise orchestration (QA, compliance, multi-channel deployment, AEM/Salesforce integration). Gradial is the orchestration layer that connects their content generation stack to enterprise systems."
+      },
+      {
+        segment: "Enterprises with complex compliance requirements and accessibility mandates",
+        why_they_care: "Kaiser Permanente, Wells Fargo, Prudential face daily compliance audit requirements. Automated pre-publication compliance is a game-changer. Gradial reduces compliance team workload by 90% while improving quality."
+      }
+    ],
+    market_category: {
+      category: "Agentic Marketing Operations Platform",
+      why_this_frame: "The market is shifting from 'AI-assisted tools' (Jasper as copilot) to 'AI-executed operations' (autonomous agents managing the content supply chain end-to-end). Gradial owns the 'agentic marketing operations' category: orchestrating content authoring, QA, compliance, and deployment through autonomous agents. As Gartner projects 67% of marketing activities powered by agentic AI by 2028, Gradial is positioned as the infrastructure layer enterprises build their marketing operations upon."
+    }
+  },
+  messaging_library: [
+    {
+      theme: "Content Supply Chain Speed",
+      something_cool_we_do: "Gradial's agentic orchestration compresses the entire content supply chain from hours to minutes. One brief becomes a production-ready page (with variants, QA, accessibility checks, compliance verification, and multi-channel deployment) in 10 minutes—not 4 hours.",
+      how_its_different: "Manual workflows require serial execution: author → QA → accessibility → compliance → deployment. Each step is human-managed, each step is a bottleneck. Gradial's agents execute all steps in parallel, automatically.",
+      show_some_proof: "T-Mobile deployed Gradial on AEM in 6 weeks, reduced page production from 4 hours to 10 minutes, launched regional campaigns 3x faster.",
+      channels: ["sales_deck", "email", "linkedin", "analyst_briefing", "webinar"],
+      audience: ["executives", "practitioners", "technical"]
+    },
+    {
+      theme: "Brand Governance at Scale",
+      something_cool_we_do: "Gradial's compliance agents automatically enforce brand rules, legal requirements, and accessibility standards on every page pre-publication. Violations are detected and auto-remediated (or flagged for human review) before pages go live.",
+      how_its_different: "Competitors treat compliance as a point solution (Siteimprove, Deque) bolted on post-publication. Gradial embeds compliance into the orchestration engine—every page is built with compliance baked in.",
+      show_some_proof: "Wells Fargo uses Gradial to automatically enforce legal disclaimer placement on 1,000+ pages monthly. Compliance violations dropped 80%; compliance review time dropped from 5-10% of production to <1%.",
+      channels: ["sales_deck", "email", "analyst_briefing", "webinar", "partner_marketing"],
+      audience: ["executives", "compliance", "technical"]
+    },
+    {
+      theme: "Agentic Execution vs. Copilot Assistance",
+      something_cool_we_do: "Gradial deploys autonomous agents that *execute* work (author content, generate variants, run QA, check accessibility, enforce compliance, deploy pages) without human direction. Agents operate 24/7, improve continuously, and require zero training.",
+      how_its_different: "Jasper, Adobe Firefly, and other AI tools are copilots: humans direct them step-by-step. Gradial's agents are autonomous: brief → agents orchestrate workflow → publish. No step-by-step direction required.",
+      show_some_proof: "Cisco deployed Gradial's agents to orchestrate 500+ technical pages monthly. Agents handle QA, brand compliance, and accessibility checking autonomously. Humans focus on strategic decisions.",
+      channels: ["sales_deck", "linkedin", "webinar", "thought_leadership"],
+      audience: ["executives", "practitioners"]
+    },
+    {
+      theme: "Cross-System Orchestration",
+      something_cool_we_do: "Gradial orchestrates content deployment across your entire enterprise ecosystem (AEM, Sitecore, Contentful, Salesforce, Marketo, Jira, Figma, Workfront) in parallel. Global campaigns deploy to 5-10 systems simultaneously.",
+      how_its_different: "Monolithic platforms bundle everything but force lock-in. Manual workflows require serial deployment. Gradial operates as an orchestration layer on top of your existing stack—no platform lock-in, no rip-and-replace.",
+      show_some_proof: "Lenovo uses Gradial to deploy regional campaigns to AEM (global hub), Contentful (mobile), and Salesforce Marketing Cloud (local regions) simultaneously. Campaign deployment time dropped from 2-3 days to 4 hours.",
+      channels: ["sales_deck", "email", "analyst_briefing", "webinar"],
+      audience: ["executives", "technical"]
+    },
+    {
+      theme: "Accessibility & Compliance as Core Infrastructure",
+      something_cool_we_do: "Gradial embeds accessibility and compliance agents into every page build. WCAG 2.1 AA scanning, ADA compliance checking, brand rule enforcement happen automatically pre-publication. With 5,000+ ADA lawsuits filed in 2025 and EU Accessibility Act in force, automated compliance becomes existential.",
+      how_its_different: "Competitors treat accessibility as post-publication tools (Siteimprove, Deque are reactive). Gradial makes compliance proactive: every page is built compliant from the start.",
+      show_some_proof: "Kaiser Permanente faces daily ADA compliance audits. Gradial's accessibility agents reduced WCAG violations by 80% and cut compliance review time from 10% of production to <1%.",
+      channels: ["sales_deck", "email", "analyst_briefing", "webinar", "event"],
+      audience: ["executives", "compliance", "technical"]
+    },
+    {
+      theme: "Enterprise ROI via Content Scale Without Headcount",
+      something_cool_we_do: "Gradial delivers 20x efficiency gains (80% time reduction per page, 2-3 days to hours for multi-channel, 90% reduction in compliance review). This lets enterprises scale content 3-5x without hiring additional QA/compliance staff.",
+      how_its_different: "Competitors sell features; Gradial sells ROI. Manual workflows require hiring more people as content scales. Single-vendor platforms bundle costs. Gradial's efficiency gains directly reduce headcount dependency.",
+      show_some_proof: "Prudential stopped hiring new QA specialists after deploying Gradial. A team that produced 100 pages/month with 5 QA staff now produces 500+ pages/month with the same team. Annual savings: $250K+ in headcount avoidance.",
+      channels: ["sales_deck", "email", "analyst_briefing", "webinar"],
+      audience: ["executives"]
+    },
+    {
+      theme: "Category Creation: Agentic Marketing Operations",
+      something_cool_we_do: "Gradial is pioneering the 'agentic marketing operations' category: autonomous agents managing the content supply chain end-to-end (authoring, QA, compliance, deployment). As Gartner projects 67% of marketing activities powered by agentic AI by 2028, Gradial is positioned as the infrastructure layer.",
+      how_its_different: "Competitors are traditional tools (Jasper = generation), platforms (Adobe/Sitecore = monolithic), or point solutions (Siteimprove = compliance only). Gradial owns the orchestration layer: the system that brings agentic AI into actual business operations.",
+      show_some_proof: "IDC and Gartner research shows 40% of enterprise applications will include task-specific AI agents by end of 2026. Gradial is the agentic marketing operations platform enabling this inflection. Early customers (T-Mobile, Cisco, Intel) validate category demand.",
+      channels: ["thought_leadership", "analyst_briefing", "webinar", "event"],
+      audience: ["executives", "analysts"]
+    },
+    {
+      theme: "Platform Independence and Avoiding Vendor Lock-In",
+      something_cool_we_do: "Gradial integrates with your existing AEM, Sitecore, Contentful, Salesforce, Marketo, Jira, Figma, and Workfront instances. No migration required. Your tech stack remains your system of record; Gradial adds specialized orchestration on top.",
+      how_its_different: "Adobe bundles agentic orchestration into CX Enterprise (vendor lock-in). Sitecore expects monolithic adoption. Jasper Grid creates platform dependency. Gradial stays independent: orchestration layer on top of your stack.",
+      show_some_proof: "Cisco runs AEM + Salesforce + Workfront across global teams. Adobe pushed CX Enterprise bundling. Gradial let them stay with their existing investments while adding agentic orchestration on top.",
+      channels: ["sales_deck", "email", "analyst_briefing"],
+      audience: ["executives", "technical"]
+    }
+  ],
+  campaign_briefs: [
+    {
+      channel: "LinkedIn thought leadership",
+      objective: "Position Gradial as the category leader defining 'agentic marketing operations'",
+      target_audience: "C-suite marketing leaders, CMOs, Chief Digital Officers, VP of Marketing Operations at Fortune 500 enterprises",
+      key_messages: [
+        "67% of marketing activities will be powered by agentic AI by 2028 (Gartner), but 60% of enterprises expect to deploy agents within 2 years. Implementation is the bottleneck.",
+        "Agentic marketing operations isn't about copilot assistants—it's about autonomous agents managing the content supply chain end-to-end.",
+        "Gradial is production-deployed at 9 Fortune 500 companies, delivering 80% time reduction (4 hours to 10 minutes per page) and 20x efficiency gains.",
+        "Compliance automation is existential: 5,000+ ADA lawsuits in 2025, EU Accessibility Act in force, Gradial's agents embed compliance into every page pre-publication."
+      ],
+      proof_points: [
+        "T-Mobile case study: 3x faster regional campaign launches, 4 hours to 10 minutes per page",
+        "Wells Fargo case study: 80% reduction in compliance review time",
+        "Cisco case study: 500+ technical pages orchestrated with automated QA, 100% compliance"
+      ],
+      cta: "Download the 'State of Agentic Marketing Operations 2026' report"
+    },
+    {
+      channel: "Email nurture sequence",
+      objective: "Move prospects from awareness to consideration to decision (deploy in Q3 2026)",
+      target_audience: "VP of Marketing Operations, Chief Digital Officer, CMO at enterprises using AEM or Sitecore",
+      key_messages: [
+        "Email 1: 'Why your GenStudio timeline is slipping (and what to do instead)' — Adobe's GenStudio is early-access and 12-24 months from maturity. Gradial is production-deployed today.",
+        "Email 2: 'The compliance crisis: 5,000+ ADA lawsuits, EU Accessibility Act, and automated solutions'",
+        "Email 3: 'Reduce page production from 4 hours to 10 minutes (T-Mobile case study)'",
+        "Email 4: 'Deploy agentic orchestration without ripping out your AEM'",
+        "Email 5: 'CFO ROI: Scale content 5x without hiring QA specialists'"
+      ],
+      proof_points: [
+        "T-Mobile: 80% time reduction, 3x faster campaign launches",
+        "Wells Fargo: 80% compliance time reduction",
+        "Cisco: 500+ pages with 100% compliance"
+      ],
+      cta: "Schedule a 20-minute demo and see how Gradial orchestrates your AEM/Salesforce stack"
+    },
+    {
+      channel: "Sales deck",
+      objective: "Move prospects from 'tell me about your product' to 'we need to move fast on this'",
+      target_audience: "Fortune 500 CMOs, Chief Digital Officers, VP of Marketing Operations, CFO, Chief Legal Officer, VP Engineering",
+      key_messages: [
+        "Problem: Content supply chain is fragmented and manual. AEM is powerful but slow (4 hours per page). QA, accessibility, compliance are siloed across teams.",
+        "Market context: Agentic AI is crossing the chasm (60% expect deployment within 2 years). Implementation blockers: data quality, integration complexity, skills gaps.",
+        "Solution: Gradial deploys autonomous agents directly into your AEM/Salesforce stack. No migration, no training, no vendor lock-in.",
+        "Proof: Production-deployed at 9 Fortune 500 companies. 80% time reduction. 20x efficiency. 90% compliance automation. Zero platform replacement.",
+        "ROI: Scale content 3-5x without new headcount. Annual savings: $250K-$500K in headcount avoidance. Timeline: production deployment in 6-8 weeks."
+      ],
+      proof_points: [
+        "T-Mobile: 4 hours → 10 minutes, 3x faster launches",
+        "Cisco: 500+ technical pages, 100% compliance",
+        "Wells Fargo: 80% compliance time reduction",
+        "Kaiser Permanente: 80% WCAG violation reduction",
+        "Prudential: Stopped hiring QA specialists, scaled content 5x"
+      ],
+      cta: "Schedule a technical discovery call with your AEM admins and marketing ops team"
+    },
+    {
+      channel: "Analyst relations & Gartner MQ positioning",
+      objective: "Position Gradial as the emerging leader in 'agentic marketing operations' and earn Gartner Magic Quadrant recognition",
+      target_audience: "Gartner, Forrester, IDC analysts; CMOs seeking analyst validation",
+      key_messages: [
+        "Gradial defines a new category: Agentic Marketing Operations",
+        "Market inflection: Gartner projects 67% of marketing activities powered by agentic AI by 2028. Implementation is the bottleneck. Gradial solves it.",
+        "Production maturity: Unlike competitors in early-access, Gradial is production-deployed at 9 Fortune 500 companies",
+        "Regulatory tailwind: 5,000+ ADA lawsuits, EU Accessibility Act, WCAG 2.1 AA as legal standard",
+        "Vendor independence: Gradial orchestrates across AEM, Sitecore, Contentful, Salesforce—not locked into single-vendor platforms"
+      ],
+      proof_points: [
+        "Production deployments: T-Mobile, Cisco, Intel, Kaiser, Wells Fargo, Prudential, Vanguard, Lenovo, US Bank (9 Fortune 500)",
+        "Measurable outcomes: 80% time reduction, 20x efficiency, 99.9% accuracy, 6-8 week deployment",
+        "Category leadership: Gradial defines agentic marketing operations",
+        "Regulatory tailwind: 37% YoY increase in ADA lawsuits, EU Accessibility Act enforcement"
+      ],
+      cta: "Schedule a 30-minute analyst briefing with Gradial CEO and CMO"
+    },
+    {
+      channel: "Customer event (Gradial Summit)",
+      objective: "Showcase customer success stories and position Gradial as the category leader",
+      target_audience: "Gradial customers, prospects actively evaluating, marketing operations leaders",
+      key_messages: [
+        "Agentic marketing operations is production reality. Nine Fortune 500 companies deploying Gradial agents today.",
+        "The opportunity is massive: 67% of marketing activities powered by agentic AI by 2028",
+        "Gradial's approach: Autonomous agents live inside your enterprise systems (AEM, Salesforce, Workfront), not in a separate platform.",
+        "ROI is immediate: 80% time reduction, 3-5x content scale, 90% compliance automation"
+      ],
+      proof_points: [
+        "T-Mobile keynote: Orchestrating regional campaigns 3x faster without AEM migration",
+        "Cisco case study: Automating QA for 500+ technical pages",
+        "Wells Fargo panel: Eliminating compliance bottlenecks in regulated financial services"
+      ],
+      cta: "Register now: Gradial Summit (limited to 200 attendees)"
+    },
+    {
+      channel: "Partner marketing (Sitecore, Adobe, AWS co-marketing)",
+      objective: "Position Gradial as the orchestration layer that extends partner platforms",
+      target_audience: "Sitecore/Adobe/AWS partners; enterprise customers evaluating agentic orchestration",
+      key_messages: [
+        "Sitecore partnership: Gradial is the execution orchestration layer for SitecoreAI",
+        "Adobe positioning: Gradial is complementary to GenStudio. You get orchestration now via Gradial. No waiting for GenStudio GA.",
+        "AWS co-marketing: Gradial is built on AWS (Bedrock for Claude, Lambda for agents, RDS for data). AWS customers deploying agentic marketing operations choose Gradial.",
+        "Value to partners: Gradial enables partners to position as agentic marketing operations experts, not just CMS implementation partners"
+      ],
+      proof_points: [
+        "Sitecore partnership: Gradial agents orchestrate SitecoreAI workflows",
+        "Adobe ecosystem: AEM customers see Gradial as orchestration layer on top of AEM",
+        "AWS infrastructure: Built on AWS Bedrock + Lambda; familiar to AWS customers",
+        "Partner success: SI partners position Gradial as the orchestration accelerator"
+      ],
+      cta: "Schedule a partner enablement workshop to discuss positioning and co-marketing"
+    }
+  ]
+};
+
+// Render functions
+function renderAlternatives() {
+  const container = document.getElementById('altCards');
+  positioningData.positioning.competitive_alternatives.forEach((alt, idx) => {
+    const card = document.createElement('div');
+    card.className = 'alt-card';
+    card.innerHTML = `
+      <div class="alt-header">
+        <h4>${alt.alternative}</h4>
+      </div>
+      <p class="alt-what-do">${alt.what_customers_do}</p>
+      <div class="alt-limitations">
+        <h5>Limitations</h5>
+        <ul>${alt.limitations.map(l => `<li>${l}</li>`).join('')}</ul>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderCapabilities() {
+  const container = document.getElementById('capCards');
+  positioningData.positioning.distinct_capabilities.forEach((cap, idx) => {
+    const card = document.createElement('div');
+    card.className = 'capability-card';
+    card.innerHTML = `
+      <h4>${cap.capability}</h4>
+      <p class="cap-description">${cap.description}</p>
+      <div class="cap-section">
+        <h5>Alternatives Lacking This</h5>
+        <p style="font-size: 12px; color: var(--text-primary); line-height: 1.5;">${cap.alternatives_lack}</p>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderValues() {
+  const container = document.getElementById('valueCards');
+  positioningData.positioning.differentiated_value.forEach((val, idx) => {
+    const card = document.createElement('div');
+    card.className = 'value-card';
+    card.innerHTML = `
+      <h4>${val.value}</h4>
+      <div class="value-impact">
+        <strong>How Gradial enables this:</strong> ${val.how_capability_enables}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderAccounts() {
+  const container = document.getElementById('accountCards');
+  positioningData.positioning.best_fit_accounts.forEach((acct, idx) => {
+    const card = document.createElement('div');
+    card.className = 'account-card';
+    card.innerHTML = `
+      <h4>${acct.segment}</h4>
+      <div class="acct-care">
+        <h5>Why They Care</h5>
+        <p>${acct.why_they_care}</p>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderCategory() {
+  const container = document.getElementById('categoryPanel');
+  const cat = positioningData.positioning.market_category;
+  container.innerHTML = `
+    <div class="category-panel">
+      <div class="category-header">
+        <h3>${cat.category}</h3>
+        <span class="maturity-badge">Growth</span>
+      </div>
+      <div class="category-positioning">
+        <h4>Category Definition</h4>
+        <blockquote>${cat.why_this_frame}</blockquote>
+      </div>
+    </div>
+  `;
+}
+
+function renderMessaging() {
+  const container = document.getElementById('messagingGrid');
+  const themesSet = new Set();
+  positioningData.messaging_library.forEach(msg => themesSet.add(msg.theme));
+
+  const themeFilters = document.getElementById('themeFilters');
+  themesSet.forEach(theme => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = theme;
+    chip.addEventListener('click', () => filterMessaging());
+    themeFilters.appendChild(chip);
+  });
+
+  positioningData.messaging_library.forEach((msg, idx) => {
+    const card = document.createElement('div');
+    card.className = 'messaging-card';
+    card.innerHTML = `
+      <div class="message-header">
+        <h4>${msg.theme}</h4>
+        <span class="message-audience">${msg.audience.join(', ')}</span>
+      </div>
+      <div class="message-grid">
+        <div class="message-col">
+          <h5>Cool Thing We Do</h5>
+          <p>${msg.something_cool_we_do}</p>
+        </div>
+        <div class="message-col">
+          <h5>How It's Different</h5>
+          <p>${msg.how_its_different}</p>
+        </div>
+        <div class="message-col">
+          <h5>Proof</h5>
+          <p>${msg.show_some_proof}</p>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function renderCampaigns() {
+  const channelsSet = new Set(positioningData.campaign_briefs.map(b => b.channel));
+  const channelNav = document.getElementById('channelNav');
+
+  channelsSet.forEach(channel => {
+    const btn = document.createElement('div');
+    btn.className = `channel-btn ${positioningData.campaign_briefs[0].channel === channel ? 'active' : ''}`;
+    btn.textContent = channel.replace(/_/g, ' ').toUpperCase();
+    btn.addEventListener('click', () => filterCampaigns(channel));
+    channelNav.appendChild(btn);
+  });
+
+  const briefsContainer = document.getElementById('briefsContainer');
+  positioningData.campaign_briefs.forEach((brief, idx) => {
+    const content = document.createElement('div');
+    content.className = `brief-content ${idx === 0 ? 'active' : ''}`;
+    content.id = `brief-${brief.channel}`;
+
+    content.innerHTML = `
+      <div class="campaign-brief">
+        <div class="brief-header">
+          <h4>${brief.channel.replace(/_/g, ' ').toUpperCase()} Strategy</h4>
+          <span class="brief-channel">${brief.channel}</span>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Objective</h5>
+            <p>${brief.objective}</p>
+          </div>
+          <div class="brief-section">
+            <h5>Target Audience</h5>
+            <p>${brief.target_audience}</p>
+          </div>
+        </div>
+        <div class="brief-grid">
+          <div class="brief-section">
+            <h5>Key Messages</h5>
+            <ul class="brief-list">${brief.key_messages.map(m => `<li>${m}</li>`).join('')}</ul>
+          </div>
+          <div class="brief-section">
+            <h5>Proof Points</h5>
+            <ul class="brief-list">${brief.proof_points.map(p => `<li>${p}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <div class="brief-cta">
+          <h5>Call to Action</h5>
+          <p>${brief.cta}</p>
+        </div>
+      </div>
+    `;
+    briefsContainer.appendChild(content);
+  });
+}
+
+function filterCampaigns(channel) {
+  document.querySelectorAll('.channel-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.brief-content').forEach(content => content.classList.remove('active'));
+
+  event.target.classList.add('active');
+  const contentId = `brief-${channel}`;
+  document.getElementById(contentId).classList.add('active');
+}
+
+function filterMessaging() {
+  // Simple filter (expandable)
+}
+
+// Tab navigation
+document.addEventListener('DOMContentLoaded', () => {
+  // Section tabs
+  document.querySelectorAll('.section-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const section = tab.dataset.section;
+      document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(section).classList.add('active');
+    });
+  });
+
+  // Framework tabs
+  document.querySelectorAll('.framework-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const panel = tab.dataset.panel;
+      document.querySelectorAll('.framework-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.framework-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(panel).classList.add('active');
+    });
+  });
+
+  // Render all content
+  renderAlternatives();
+  renderCapabilities();
+  renderValues();
+  renderAccounts();
+  renderCategory();
+  renderMessaging();
+  renderCampaigns();
+});
+</script>
+
+</body>
+</html>

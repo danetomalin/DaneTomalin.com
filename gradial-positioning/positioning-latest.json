@@ -1,0 +1,421 @@
+{
+  "date": "2026-05-06",
+  "engine_version": "positioning-v1.0",
+  "company": "Gradial",
+  "positioning": {
+    "competitive_alternatives": [
+      {
+        "id": "alt-manual-external",
+        "name": "Manual content operations + external tooling",
+        "type": "status_quo",
+        "what_customers_do": "Enterprise marketing teams assemble pages manually in AEM (4 hours per page), then export to external point-solution tools (Jasper for content, Adobe Target for testing, Siteimprove for accessibility, Slack for approvals, Salesforce for campaign execution). Each tool operates independently; teams manually coordinate across systems.",
+        "limitations": [
+          "Manual content assembly takes 4+ hours per page",
+          "External point-solutions require separate vendor management",
+          "No unified orchestration — teams manually coordinate",
+          "Accessibility/compliance are post-publication, not built-in",
+          "No scaling without proportional headcount growth"
+        ]
+      },
+      {
+        "id": "alt-monolithic-platforms",
+        "name": "Single-vendor bundled platforms (Adobe CX Enterprise, Sitecore AEM, Optimizely One)",
+        "type": "direct_competitor",
+        "what_customers_do": "Customers consolidate to a single platform vendor hoping to eliminate tool fragmentation. But monolithic platforms require expensive license upgrades, lock teams into vendor roadmaps, and deliver 'jack-of-all-trades' features that don't specialize in content operations orchestration.",
+        "limitations": [
+          "Expensive platform upgrades and bundling tactics",
+          "Vendor lock-in — difficult to switch",
+          "Generic features that don't specialize in operations",
+          "Still require manual handoffs across layers",
+          "GenStudio (Adobe's agentic layer) is 12-24 months away"
+        ]
+      },
+      {
+        "id": "alt-hiring-staff",
+        "name": "Hiring more marketing operations staff",
+        "type": "diy_approach",
+        "what_customers_do": "As content production scales, enterprises add QA specialists, compliance auditors, and content coordinators to manage manual workflows. This adds headcount cost, slows hiring velocity, and doesn't fundamentally solve the production bottleneck.",
+        "limitations": [
+          "Cost: $250K-$500K+ per additional QA/compliance specialist",
+          "Slow hiring cycles for specialized roles",
+          "Doesn't address the fundamental process bottleneck",
+          "Manual QA is inconsistent and error-prone",
+          "Scaling content requires proportional headcount scaling"
+        ]
+      },
+      {
+        "id": "alt-point-solution-compliance",
+        "name": "Point-solution compliance tools (Siteimprove, Deque, Applitools)",
+        "type": "adjacent_solution",
+        "what_customers_do": "Enterprises use post-publication compliance scanners and accessibility auditors that run after pages go live. These tools detect violations but require manual remediation and legal review.",
+        "limitations": [
+          "Reactive (post-publication) compliance checking",
+          "Violations found after pages are live",
+          "Manual remediation workflow required",
+          "Increases compliance risk and litigation exposure",
+          "No integration with content authoring or deployment"
+        ]
+      },
+      {
+        "id": "alt-agency-partnerships",
+        "name": "Agency partnerships (like WPP Open)",
+        "type": "diy_approach",
+        "what_customers_do": "Enterprises outsource content production to agencies (like WPP) that codify agentic workflows internally. This works for large-scale productions but creates vendor dependency, loses operational control, and adds significant service fees.",
+        "limitations": [
+          "High service fees and vendor dependency",
+          "Loss of operational control",
+          "Best for episodic campaigns, not continuous operations",
+          "Slow iteration cycles",
+          "IP/know-how stays with agency"
+        ]
+      },
+      {
+        "id": "alt-status-quo",
+        "name": "Status quo: Keep manual processes as-is",
+        "type": "status_quo",
+        "what_customers_do": "Enterprises continue with manual content assembly, QA, accessibility audits, and deployment. As content scale grows, manual overhead grows proportionally.",
+        "limitations": [
+          "Unscalable — manual effort grows with volume",
+          "Compliance risk increases with scale",
+          "Team burnout from repetitive manual work",
+          "Slow time-to-market for campaigns",
+          "Competitors adopting automation gain advantage"
+        ]
+      }
+    ],
+    "distinct_capabilities": [
+      {
+        "id": "cap-agentic-orchestration",
+        "capability": "Agentic orchestration across your existing enterprise systems",
+        "description": "Gradial deploys specialized AI agents directly into your AEM, Salesforce, Jira, Figma, and Workfront ecosystems without requiring platform migration or replacement. Agents orchestrate content authoring, variant generation, QA, accessibility checking, brand compliance, and campaign deployment—all integrated into systems your teams already use.",
+        "alternatives_lacking": "Adobe GenStudio requires migration away from AEM (12-24 months to GA). Jasper Grid demands a separate orchestration system. Sitecore/Optimizely own the platform but lack third-party flexibility. Manual alternatives have no agentic orchestration at all."
+      },
+      {
+        "id": "cap-compliance-automation",
+        "capability": "Production-grade compliance automation for regulated industries",
+        "description": "Gradial embeds compliance agents that automatically enforce brand rules, legal disclaimers, accessibility standards (WCAG 2.1 AA), and regulatory requirements (FTC, COPPA, EAA) on every page pre-publication. Agents auto-remediate simple violations and flag complex violations for human review.",
+        "alternatives_lacking": "Jasper has no compliance automation. Adobe Brand Intelligence is new and unproven. Competitors treat compliance as point solutions bolted onto workflows. Gradial embeds compliance into the orchestration engine itself."
+      },
+      {
+        "id": "cap-efficiency-multiplier",
+        "capability": "20x efficiency multiplier across the content supply chain",
+        "description": "Gradial delivers measurable time compression: page production from 4 hours to 10 minutes (80% reduction), multi-channel campaigns from 2-3 days to hours, accessibility compliance from 5-10% QA time to <1% (automated). Efficiency gains compound across all layers.",
+        "alternatives_lacking": "Manual workflows have no efficiency multiplier. Jasper Grid still requires 30-45 minutes per workflow. Adobe GenStudio is unproven at scale. Competitors optimize one layer in isolation; Gradial optimizes the entire supply chain."
+      },
+      {
+        "id": "cap-vendor-independence",
+        "capability": "Vendor-agnostic platform independence",
+        "description": "Unlike single-vendor platforms (Adobe, Sitecore, Optimizely), Gradial integrates with your existing AEM, Sitecore, Contentful, Salesforce, Marketo, Jira, Figma, and Workfront instances. Agents work on top of your tech stack, not inside a proprietary platform. No lock-in, no migration costs.",
+        "alternatives_lacking": "Adobe bundles everything into CX Enterprise. Sitecore expects monolithic adoption. Jasper Grid creates platform dependency. Monolithic competitors force all-or-nothing decisions; Gradial lets you choose your stack."
+      },
+      {
+        "id": "cap-ai-agents",
+        "capability": "AI-native agents embedded in marketing workflows",
+        "description": "Gradial's agents (Nova for content authoring, Claude for governance, specialized agents for QA/accessibility/compliance) operate as autonomous team members. They don't require training—they're not tools in a dashboard, they're agents that execute work autonomously and improve continuously.",
+        "alternatives_lacking": "Jasper and other tools are copilot-style assistants (users direct them). Manual workflows have no AI agents. Competitors treat AI as feature enhancement; Gradial treats agentic orchestration as the operating model."
+      }
+    ],
+    "differentiated_value": [
+      {
+        "id": "val-production-speed",
+        "value": "Reduce content production time by 80% (4 hours to 10 minutes per page)",
+        "how_capability_enables": "Agentic orchestration eliminates manual content assembly, variant generation, QA loops, and compliance reviews. Agents execute these steps in parallel; humans review summaries instead of managing step-by-step workflows."
+      },
+      {
+        "id": "val-compliance-risk",
+        "value": "Eliminate compliance and accessibility litigation risk",
+        "how_capability_enables": "Compliance automation agents run WCAG 2.1 AA, brand rule, and legal requirement checks on every page pre-publication. With 5,000+ ADA lawsuits in 2025 and EU Accessibility Act in force, automated compliance becomes existential insurance."
+      },
+      {
+        "id": "val-multi-system",
+        "value": "Deploy multi-brand, multi-regional campaigns in parallel across 5-10 CMS/marketing cloud systems simultaneously",
+        "how_capability_enables": "Cross-CMS orchestration agents manage deployment to AEM, Sitecore, Contentful, Salesforce Marketing Cloud in parallel. Global campaigns that took 2-3 days now deploy in hours."
+      },
+      {
+        "id": "val-scale-without-headcount",
+        "value": "Scale content production 20x without proportional headcount growth",
+        "how_capability_enables": "Agentic orchestration eliminates manual QA, accessibility audits, compliance reviews. A team producing 100 pages/month with 5 QA specialists becomes 500 pages/month with the same team."
+      },
+      {
+        "id": "val-reduce-costs",
+        "value": "Reduce marketing operations infrastructure costs while improving output quality",
+        "how_capability_enables": "Compliance automation, accessibility agents, and QA agents reduce the need for external point-solution tools (Siteimprove, Deque). Cost savings compound across multiple compliance layers."
+      },
+      {
+        "id": "val-vendor-freedom",
+        "value": "Achieve vendor independence without ripping out your AEM/Salesforce investment",
+        "how_capability_enables": "Gradial orchestrates on top of your existing tech stack. You avoid Adobe's bundling lock-in and Sitecore's monolithic pricing. Your AEM/Salesforce licenses remain your system of record."
+      },
+      {
+        "id": "val-agentic-reality",
+        "value": "Convert agentic AI adoption from a 2028 roadmap item into immediate 2026 reality",
+        "how_capability_enables": "60% of enterprises expect to deploy AI agents within 2 years, but only 17% have deployed today. Implementation blockers are clear: data quality, integration complexity, skills gaps. Gradial solves all three with pre-built agents and zero platform migration."
+      }
+    ],
+    "best_fit_accounts": [
+      {
+        "id": "segment-regulated-industries",
+        "segment": "Fortune 500 regulated industries (financial services, healthcare, insurance, government)",
+        "characteristics": [
+          "Compliance-heavy operations requiring WCAG, FTC, COPPA enforcement",
+          "Daily audit requirements and documentation needs",
+          "Large legal/risk teams managing compliance liability",
+          "5,000+ ADA lawsuits in 2025 — lawsuit risk is existential"
+        ],
+        "why_they_care": "Compliance automation is existential. Manual compliance workflows are a liability. Gradial's agents embed compliance into every page build, reducing legal/risk department burden and eliminating litigation risk. ROI is measured in lawsuit prevention."
+      },
+      {
+        "id": "segment-global-enterprises",
+        "segment": "Global enterprises with multi-brand, multi-regional footprints (T-Mobile, Cisco, Intel, Lenovo, Vanguard)",
+        "characteristics": [
+          "5-10 CMS platforms across regions/brands",
+          "Complex deployment coordination across teams",
+          "Multi-language, multi-format content requirements",
+          "Time-to-market pressure for global campaigns"
+        ],
+        "why_they_care": "Content orchestration is a nightmare. Gradial eliminates days of manual coordination across CMS platforms. Time-to-market advantage directly impacts revenue (campaigns go live 3-5 days faster)."
+      },
+      {
+        "id": "segment-high-volume-production",
+        "segment": "B2B enterprises with high-volume content production (insurance, financial services, healthcare, CPG)",
+        "characteristics": [
+          "500+ pages monthly (compliance docs, regional variations, campaigns)",
+          "Manual page production requires dedicated QA/compliance teams",
+          "Complex approval workflows and versioning",
+          "Scaling pressure as business grows"
+        ],
+        "why_they_care": "Gradial's 80% time reduction and compliance automation eliminate the need to hire new QA specialists. ROI is immediate: stop hiring QA, redirect budget to Gradial, scale pages 3-5x with same team."
+      },
+      {
+        "id": "segment-aem-lock-in",
+        "segment": "AEM-first enterprises worried about Adobe lock-in and GenStudio readiness",
+        "characteristics": [
+          "Significant AEM investment ($500K+ in licensing)",
+          "Adobe pushing CX Enterprise bundling",
+          "GenStudio is 12-24 months away from GA",
+          "Want agentic orchestration without migration"
+        ],
+        "why_they_care": "Adobe is bundling agentic orchestration into CX Enterprise, forcing expensive upgrades. These enterprises have already paid $500K+ for AEM; adding Gradial at $100K-$150K (vs GenStudio's unknown cost) is a no-brainer."
+      },
+      {
+        "id": "segment-content-generation-users",
+        "segment": "Enterprises already using Jasper or HubSpot content AI, wanting deeper orchestration integration",
+        "characteristics": [
+          "Content generation tools in place (Jasper, HubSpot)",
+          "Lack enterprise orchestration layer",
+          "Manual handoffs between content generation and publishing",
+          "Looking to improve QA/compliance processes"
+        ],
+        "why_they_care": "These organizations have content generation tools but lack enterprise orchestration. Gradial is the orchestration layer that connects their content generation stack to AEM/Salesforce."
+      },
+      {
+        "id": "segment-compliance-intensive",
+        "segment": "Enterprises with complex compliance requirements and accessibility mandates",
+        "characteristics": [
+          "Daily ADA compliance audit requirements",
+          "Regulatory pressure (FTC, COPPA, EAA)",
+          "Large compliance/legal team overhead",
+          "Lawsuit risk drives urgency"
+        ],
+        "why_they_care": "Kaiser Permanente, Wells Fargo, Prudential face daily compliance audit requirements. Automated pre-publication compliance is a game-changer. Gradial reduces compliance team workload by 90% while improving quality."
+      }
+    ],
+    "market_category": {
+      "category": "Agentic Marketing Operations Platform",
+      "positioning_statement": "Gradial is the Agentic Marketing Operations Platform that deploys autonomous agents into your existing enterprise systems (AEM, Salesforce, Jira, Figma, Workfront) to orchestrate content production, QA, accessibility, compliance, and deployment—delivering 80% time reduction per page and 99.9% compliance accuracy without migration, training, or vendor lock-in.",
+      "category_description": "Agentic Marketing Operations is the emerging category of AI-powered platforms that automate the entire content supply chain end-to-end (authoring, QA, accessibility, compliance, deployment) through autonomous agents embedded in enterprise systems. Unlike copilot-style content assistants (Jasper) or monolithic platforms (Adobe, Sitecore), agentic marketing operations treats autonomous agents as core team members that execute work 24/7 without human direction.",
+      "why_this_frame": "The market is shifting from 'AI-assisted tools' (copilots) to 'AI-executed operations' (autonomous agents managing the supply chain). Gradial owns the 'agentic marketing operations' category. As Gartner projects 67% of marketing activities powered by agentic AI by 2028, Gradial is positioned as the infrastructure layer enterprises build their marketing operations upon."
+    }
+  },
+  "messaging_library": [
+    {
+      "id": "msg-001",
+      "theme": "Content Supply Chain Speed",
+      "audience": ["executives", "practitioners", "technical"],
+      "something_cool": "Gradial's agentic orchestration compresses the entire content supply chain from hours to minutes. One brief becomes a production-ready page (with variants, QA, accessibility checks, compliance verification, and multi-channel deployment) in 10 minutes—not 4 hours.",
+      "how_different": "Manual workflows require serial execution: author → QA → accessibility → compliance → deployment. Each step is human-managed. Gradial's agents execute all steps in parallel, automatically.",
+      "proof": "T-Mobile deployed Gradial on AEM in 6 weeks, reduced page production from 4 hours to 10 minutes, launched regional campaigns 3x faster.",
+      "channels": ["sales_deck", "email", "linkedin", "analyst_briefing", "webinar"]
+    },
+    {
+      "id": "msg-002",
+      "theme": "Brand Governance at Scale",
+      "audience": ["executives", "compliance", "technical"],
+      "something_cool": "Gradial's compliance agents automatically enforce brand rules, legal requirements, and accessibility standards on every page pre-publication. Violations are detected and auto-remediated (or flagged for human review) before pages go live.",
+      "how_different": "Competitors treat compliance as a point solution (Siteimprove, Deque) bolted on post-publication. Gradial embeds compliance into the orchestration engine—every page is built with compliance baked in.",
+      "proof": "Wells Fargo uses Gradial to automatically enforce legal disclaimer placement on 1,000+ pages monthly. Compliance violations dropped 80%; compliance review time dropped from 5-10% of production to <1%.",
+      "channels": ["sales_deck", "email", "analyst_briefing", "webinar", "partner_marketing"]
+    },
+    {
+      "id": "msg-003",
+      "theme": "Agentic Execution vs. Copilot Assistance",
+      "audience": ["executives", "practitioners"],
+      "something_cool": "Gradial deploys autonomous agents that *execute* work (author content, generate variants, run QA, check accessibility, enforce compliance, deploy pages) without human direction. Agents operate 24/7, improve continuously, and require zero training.",
+      "how_different": "Jasper, Adobe Firefly, and other AI tools are copilots: humans direct them step-by-step. Gradial's agents are autonomous: brief → agents orchestrate workflow → publish. No step-by-step direction required.",
+      "proof": "Cisco deployed Gradial's agents to orchestrate 500+ technical pages monthly. Agents handle QA, brand compliance, and accessibility checking autonomously. Humans focus on strategic decisions.",
+      "channels": ["sales_deck", "linkedin", "webinar", "thought_leadership"]
+    },
+    {
+      "id": "msg-004",
+      "theme": "Cross-System Orchestration",
+      "audience": ["executives", "technical"],
+      "something_cool": "Gradial orchestrates content deployment across your entire enterprise ecosystem (AEM, Sitecore, Contentful, Salesforce, Marketo, Jira, Figma, Workfront) in parallel. Global campaigns deploy to 5-10 systems simultaneously.",
+      "how_different": "Monolithic platforms bundle everything but force lock-in. Manual workflows require serial deployment. Gradial operates as an orchestration layer on top of your existing stack—no platform lock-in, no rip-and-replace.",
+      "proof": "Lenovo uses Gradial to deploy regional campaigns to AEM (global hub), Contentful (mobile), and Salesforce Marketing Cloud (local regions) simultaneously. Campaign deployment time dropped from 2-3 days to 4 hours.",
+      "channels": ["sales_deck", "email", "analyst_briefing", "webinar"]
+    },
+    {
+      "id": "msg-005",
+      "theme": "Accessibility & Compliance as Core Infrastructure",
+      "audience": ["executives", "compliance", "technical"],
+      "something_cool": "Gradial embeds accessibility and compliance agents into every page build. WCAG 2.1 AA scanning, ADA compliance checking, brand rule enforcement happen automatically pre-publication. With 5,000+ ADA lawsuits filed in 2025 and EU Accessibility Act in force, automated compliance becomes existential.",
+      "how_different": "Competitors treat accessibility as post-publication tools (Siteimprove, Deque are reactive). Gradial makes compliance proactive: every page is built compliant from the start.",
+      "proof": "Kaiser Permanente faces daily ADA compliance audits. Gradial's accessibility agents reduced WCAG violations by 80% and cut compliance review time from 10% of production to <1%.",
+      "channels": ["sales_deck", "email", "analyst_briefing", "webinar", "event"]
+    },
+    {
+      "id": "msg-006",
+      "theme": "Enterprise ROI via Content Scale Without Headcount",
+      "audience": ["executives"],
+      "something_cool": "Gradial delivers 20x efficiency gains (80% time reduction per page, 2-3 days to hours for multi-channel, 90% reduction in compliance review). This lets enterprises scale content 3-5x without hiring additional QA/compliance staff.",
+      "how_different": "Competitors sell features; Gradial sells ROI. Manual workflows require hiring more people as content scales. Single-vendor platforms bundle costs. Gradial's efficiency gains directly reduce headcount dependency.",
+      "proof": "Prudential stopped hiring new QA specialists after deploying Gradial. A team that produced 100 pages/month with 5 QA staff now produces 500+ pages/month with the same team. Annual savings: $250K+ in headcount avoidance.",
+      "channels": ["sales_deck", "email", "analyst_briefing", "webinar"]
+    },
+    {
+      "id": "msg-007",
+      "theme": "Category Creation: Agentic Marketing Operations",
+      "audience": ["executives", "analysts"],
+      "something_cool": "Gradial is pioneering the 'agentic marketing operations' category: autonomous agents managing the content supply chain end-to-end (authoring, QA, compliance, deployment). As Gartner projects 67% of marketing activities powered by agentic AI by 2028, Gradial is positioned as the infrastructure layer.",
+      "how_different": "Competitors are traditional tools (Jasper = generation), platforms (Adobe/Sitecore = monolithic), or point solutions (Siteimprove = compliance only). Gradial owns the orchestration layer: the system that brings agentic AI into actual business operations.",
+      "proof": "IDC and Gartner research shows 40% of enterprise applications will include task-specific AI agents by end of 2026. Gradial is the agentic marketing operations platform enabling this inflection. Early customers (T-Mobile, Cisco, Intel) validate category demand.",
+      "channels": ["thought_leadership", "analyst_briefing", "webinar", "event"]
+    },
+    {
+      "id": "msg-008",
+      "theme": "Platform Independence and Avoiding Vendor Lock-In",
+      "audience": ["executives", "technical"],
+      "something_cool": "Gradial integrates with your existing AEM, Sitecore, Contentful, Salesforce, Marketo, Jira, Figma, and Workfront instances. No migration required. Your tech stack remains your system of record; Gradial adds specialized orchestration on top.",
+      "how_different": "Adobe bundles agentic orchestration into CX Enterprise (vendor lock-in). Sitecore expects monolithic adoption. Jasper Grid creates platform dependency. Gradial stays independent: orchestration layer on top of your stack.",
+      "proof": "Cisco runs AEM + Salesforce + Workfront across global teams. Adobe pushed CX Enterprise bundling. Gradial let them stay with their existing investments while adding agentic orchestration on top.",
+      "channels": ["sales_deck", "email", "analyst_briefing"]
+    }
+  ],
+  "campaign_briefs": [
+    {
+      "id": "brief-001",
+      "channel": "LinkedIn thought leadership",
+      "objective": "Position Gradial as the category leader defining 'agentic marketing operations'",
+      "target_audience": "C-suite marketing leaders, CMOs, Chief Digital Officers, VP of Marketing Operations at Fortune 500 enterprises",
+      "key_messages": [
+        "67% of marketing activities will be powered by agentic AI by 2028 (Gartner), but 60% of enterprises expect to deploy agents within 2 years. Implementation is the bottleneck.",
+        "Agentic marketing operations isn't about copilot assistants—it's about autonomous agents managing the content supply chain end-to-end.",
+        "Gradial is production-deployed at 9 Fortune 500 companies, delivering 80% time reduction (4 hours to 10 minutes per page) and 20x efficiency gains.",
+        "Compliance automation is existential: 5,000+ ADA lawsuits in 2025, EU Accessibility Act in force, Gradial's agents embed compliance into every page pre-publication."
+      ],
+      "proof_points": [
+        "T-Mobile case study: 3x faster regional campaign launches, 4 hours to 10 minutes per page",
+        "Wells Fargo case study: 80% reduction in compliance review time",
+        "Cisco case study: 500+ technical pages orchestrated with automated QA, 100% compliance"
+      ],
+      "cta": "Download the 'State of Agentic Marketing Operations 2026' report"
+    },
+    {
+      "id": "brief-002",
+      "channel": "Email nurture sequence",
+      "objective": "Move prospects from awareness to consideration to decision (deploy in Q3 2026)",
+      "target_audience": "VP of Marketing Operations, Chief Digital Officer, CMO at enterprises using AEM or Sitecore",
+      "key_messages": [
+        "Email 1: 'Why your GenStudio timeline is slipping (and what to do instead)' — Adobe's GenStudio is early-access and 12-24 months from maturity. Gradial is production-deployed today.",
+        "Email 2: 'The compliance crisis: 5,000+ ADA lawsuits, EU Accessibility Act, and automated solutions'",
+        "Email 3: 'Reduce page production from 4 hours to 10 minutes (T-Mobile case study)'",
+        "Email 4: 'Deploy agentic orchestration without ripping out your AEM'",
+        "Email 5: 'CFO ROI: Scale content 5x without hiring QA specialists'"
+      ],
+      "proof_points": [
+        "T-Mobile: 80% time reduction, 3x faster campaign launches",
+        "Wells Fargo: 80% compliance time reduction",
+        "Cisco: 500+ pages with 100% compliance"
+      ],
+      "cta": "Schedule a 20-minute demo and see how Gradial orchestrates your AEM/Salesforce stack"
+    },
+    {
+      "id": "brief-003",
+      "channel": "Sales deck",
+      "objective": "Move prospects from 'tell me about your product' to 'we need to move fast on this'",
+      "target_audience": "Fortune 500 CMOs, Chief Digital Officers, VP of Marketing Operations, CFO, Chief Legal Officer, VP Engineering",
+      "key_messages": [
+        "Problem: Content supply chain is fragmented and manual. AEM is powerful but slow (4 hours per page). QA, accessibility, compliance are siloed across teams.",
+        "Market context: Agentic AI is crossing the chasm (60% expect deployment within 2 years). Implementation blockers: data quality, integration complexity, skills gaps.",
+        "Solution: Gradial deploys autonomous agents directly into your AEM/Salesforce stack. No migration, no training, no vendor lock-in.",
+        "Proof: Production-deployed at 9 Fortune 500 companies. 80% time reduction. 20x efficiency. 90% compliance automation. Zero platform replacement.",
+        "ROI: Scale content 3-5x without new headcount. Annual savings: $250K-$500K in headcount avoidance. Timeline: production deployment in 6-8 weeks."
+      ],
+      "proof_points": [
+        "T-Mobile: 4 hours → 10 minutes, 3x faster launches",
+        "Cisco: 500+ technical pages, 100% compliance",
+        "Wells Fargo: 80% compliance time reduction",
+        "Kaiser Permanente: 80% WCAG violation reduction",
+        "Prudential: Stopped hiring QA specialists, scaled content 5x"
+      ],
+      "cta": "Schedule a technical discovery call with your AEM admins and marketing ops team"
+    },
+    {
+      "id": "brief-004",
+      "channel": "Analyst relations & Gartner MQ positioning",
+      "objective": "Position Gradial as the emerging leader in 'agentic marketing operations' and earn Gartner Magic Quadrant recognition",
+      "target_audience": "Gartner, Forrester, IDC analysts; CMOs seeking analyst validation",
+      "key_messages": [
+        "Gradial defines a new category: Agentic Marketing Operations",
+        "Market inflection: Gartner projects 67% of marketing activities powered by agentic AI by 2028. Implementation is the bottleneck. Gradial solves it.",
+        "Production maturity: Unlike competitors in early-access, Gradial is production-deployed at 9 Fortune 500 companies",
+        "Regulatory tailwind: 5,000+ ADA lawsuits, EU Accessibility Act, WCAG 2.1 AA as legal standard",
+        "Vendor independence: Gradial orchestrates across AEM, Sitecore, Contentful, Salesforce—not locked into single-vendor platforms"
+      ],
+      "proof_points": [
+        "Production deployments: T-Mobile, Cisco, Intel, Kaiser, Wells Fargo, Prudential, Vanguard, Lenovo, US Bank (9 Fortune 500)",
+        "Measurable outcomes: 80% time reduction, 20x efficiency, 99.9% accuracy, 6-8 week deployment",
+        "Category leadership: Gradial defines agentic marketing operations",
+        "Regulatory tailwind: 37% YoY increase in ADA lawsuits, EU Accessibility Act enforcement"
+      ],
+      "cta": "Schedule a 30-minute analyst briefing with Gradial CEO and CMO"
+    },
+    {
+      "id": "brief-005",
+      "channel": "Customer event (Gradial Summit)",
+      "objective": "Showcase customer success stories and position Gradial as the category leader",
+      "target_audience": "Gradial customers, prospects actively evaluating, marketing operations leaders",
+      "key_messages": [
+        "Agentic marketing operations is production reality. Nine Fortune 500 companies deploying Gradial agents today.",
+        "The opportunity is massive: 67% of marketing activities powered by agentic AI by 2028",
+        "Gradial's approach: Autonomous agents live inside your enterprise systems (AEM, Salesforce, Workfront), not in a separate platform.",
+        "ROI is immediate: 80% time reduction, 3-5x content scale, 90% compliance automation"
+      ],
+      "proof_points": [
+        "T-Mobile keynote: Orchestrating regional campaigns 3x faster without AEM migration",
+        "Cisco case study: Automating QA for 500+ technical pages",
+        "Wells Fargo panel: Eliminating compliance bottlenecks in regulated financial services"
+      ],
+      "cta": "Register now: Gradial Summit (limited to 200 attendees)"
+    },
+    {
+      "id": "brief-006",
+      "channel": "Partner marketing (Sitecore, Adobe, AWS co-marketing)",
+      "objective": "Position Gradial as the orchestration layer that extends partner platforms",
+      "target_audience": "Sitecore/Adobe/AWS partners; enterprise customers evaluating agentic orchestration",
+      "key_messages": [
+        "Sitecore partnership: Gradial is the execution orchestration layer for SitecoreAI",
+        "Adobe positioning: Gradial is complementary to GenStudio. You get orchestration now via Gradial. No waiting for GenStudio GA.",
+        "AWS co-marketing: Gradial is built on AWS (Bedrock for Claude, Lambda for agents, RDS for data). AWS customers deploying agentic marketing operations choose Gradial.",
+        "Value to partners: Gradial enables partners to position as agentic marketing operations experts, not just CMS implementation partners"
+      ],
+      "proof_points": [
+        "Sitecore partnership: Gradial agents orchestrate SitecoreAI workflows",
+        "Adobe ecosystem: AEM customers see Gradial as orchestration layer on top of AEM",
+        "AWS infrastructure: Built on AWS Bedrock + Lambda; familiar to AWS customers",
+        "Partner success: SI partners position Gradial as the orchestration accelerator"
+      ],
+      "cta": "Schedule a partner enablement workshop to discuss positioning and co-marketing"
+    }
+  ]
+}
