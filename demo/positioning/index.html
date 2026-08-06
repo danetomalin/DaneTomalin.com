@@ -138,11 +138,15 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 8px 14px;
+    padding: 10px 14px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
     letter-spacing: 0.2px;
     transition: all 0.15s;
   }
@@ -151,6 +155,15 @@
     background: var(--secondary-accent-bg);
     border-color: var(--secondary-accent);
     color: var(--secondary-accent);
+  }
+  .framework-tab .tab-sub {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.65;
+    line-height: 1.3;
+  }
+  .framework-tab.active .tab-sub {
+    opacity: 0.85;
   }
 
   /* Section content */
@@ -1272,11 +1285,11 @@
   <div id="positioning" class="section-content active">
     <!-- Sub-tabs -->
     <div class="framework-tabs" id="frameworkTabs">
-      <div class="framework-tab active" data-panel="alternatives">Competitive Alternatives</div>
-      <div class="framework-tab" data-panel="capabilities">Distinct Capabilities</div>
-      <div class="framework-tab" data-panel="value">Differentiated Value</div>
-      <div class="framework-tab" data-panel="accounts">Best Fit Accounts</div>
-      <div class="framework-tab" data-panel="category">Market Category</div>
+      <div class="framework-tab active" data-panel="alternatives">Competitive Alternatives<span class="tab-sub">What would they do without you?</span></div>
+      <div class="framework-tab" data-panel="capabilities">Distinct Capabilities<span class="tab-sub">What can you do that they can't?</span></div>
+      <div class="framework-tab" data-panel="value">Differentiated Value<span class="tab-sub">So what? Why does it matter?</span></div>
+      <div class="framework-tab" data-panel="accounts">Best Fit Accounts<span class="tab-sub">Who cares the most?</span></div>
+      <div class="framework-tab" data-panel="category">Market Category<span class="tab-sub">What market do you win?</span></div>
     </div>
 
     <!-- Alternatives Panel -->
